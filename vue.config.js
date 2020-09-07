@@ -12,6 +12,11 @@ module.exports = {
         // target: 'http://192.168.1.22:9001/',
         target: 'https://www.filpool.io/',
         changeOrigin: true
+      },
+      '/public': {
+        // target: 'http://localhost:8080/filpool',
+        target: 'http://api.filpool.c28e9d7b637474c3a98b2ed559c29434c.cn-hongkong.alicontainer.com/',
+        changeOrigin: true,
       }
     }
   },

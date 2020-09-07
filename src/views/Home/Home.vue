@@ -200,6 +200,8 @@
   import Browser from './browser/Browser';
   import { isH5 } from '@/utils/utilTools';
 
+  import list from '@/net/api/list';
+
   export default {
     name: 'Home',
     data() {
@@ -239,6 +241,10 @@
       this.getGoodList();
       this.videoList();
       this.setStatusStyle("light");
+      // console.log(list.getGeneralBanner());
+      list.getGeneralBanner().then(res=>{
+        console.log('asdasd', res);
+      })
     },
     mounted() {
       this.showContainer = true;
