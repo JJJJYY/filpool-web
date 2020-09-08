@@ -15,16 +15,11 @@ const fetchData = (response, resolve, reject) => {
 }
 
 const doGetFetch = url => new Promise((resolve, reject) => {
-  console.log(url);
   axios(url, {
       method: 'GET',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        language: 0,
-      },
     })
     .then(response => {
+      // resolve(response.data)
       fetchData(response, resolve, reject)
     })
     // .then(res => resolve(res))
@@ -65,13 +60,12 @@ const doFormFetch = (url, form) => new Promise((resolve, reject) => {
     .catch(err => reject(err));
 });
 
-export const get = async (api, params) => {
+export const getRequest = (api, params) => {
   let url = '/public/';
   params = {
     s: api,
     ...params,
   }
-
   if (params) {
     const paramsArray = [];
     // 拼接参数
@@ -82,15 +76,7 @@ export const get = async (api, params) => {
       url += `&${paramsArray.join('&')}`;
     }
   }
-
-  // try {
-    return await doGetFetch(url);
-  // } catch (e) {
-  //   console.log(e, 'url ===> ', url);
-  // }
-  // return {
-  //   response_msg: 'network abort'
-  // };
+  return doGetFetch(url);
 };
 
 export const post = async (api, params) => {

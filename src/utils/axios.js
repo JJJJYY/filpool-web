@@ -1,20 +1,11 @@
 import axios from 'axios';
 import {Toast} from "vant";
 import router from "../router";
-//import { getCookie } from '@/utils/utilTools';
-//import Vue from 'vue';
-// import { Message } from 'element-ui';
-//import { getServiceURL } from './utilTools.js';
-/*import { serviceURL } from './serviceApiURL';*/
-//let vm = new Vue();`
-
-// axios.defaults.baseURL = "http://172.16.0.85:9001/";
-//axios.defaults.baseURL = "http://test.filpool.io/";
-//=>设置请求头
 axios.defaults.headers['Content-Type'] = 'application/json;charset=UTF-8';
 //axios.defaults.withCredentials = true;
 // =>设置请求拦截器
 axios.interceptors.request.use(config => {
+  console.log('config', config);
     // let userInfoStr = sessionStorage.getItem('userInfo');
     // let userInfo = userInfoStr ? JSON.parse(userInfoStr) : {};
     if (config.headers && config.headers.common) {
@@ -33,6 +24,10 @@ axios.interceptors.request.use(config => {
 );
 // =>设置响应拦截器
 axios.interceptors.response.use(response => {
+    console.log('拦截', response);
+    if (response.config.url == "/public/?s=Banner.List") {
+      return Promise.resolve(response);
+    }
     if (response.status === 200) {
       /*特殊处理blob数据*/
       if (response.config.responseType) {

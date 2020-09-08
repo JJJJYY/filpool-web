@@ -1,4 +1,5 @@
-import { get, post } from '../request';
+import { getRequest, post } from '../request';
+
 
 export default {
 
@@ -32,7 +33,7 @@ export default {
     getGeneralBottomCode: () => get(`LinksInfo.Bottom`),
 
     //banner
-    getGeneralBanner: () => get('Banner.List'),
+    getGeneralBanner: () => getRequest('Banner.List'),
 
     //advertisement
     getGeneralAdvertisement: (data) => get('LinksInfo.Advertisement', data),

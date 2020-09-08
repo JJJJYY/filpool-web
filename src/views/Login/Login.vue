@@ -61,18 +61,6 @@
     },
     methods: {
       login() {
-        /*corsRequest({
-          type: "POST",
-          url: "/auth/access/login",
-          data: {
-            phone: this.account,
-            password: md5(this.pwd)
-          }
-        }).then(() => {
-          alert(123456777)
-        }).catch(() => {
-          alert("error")
-        })*/
         if (this.account === '' || this.password === '') {
           Toast("请输入账号密码");
           return;

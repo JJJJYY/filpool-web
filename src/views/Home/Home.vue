@@ -241,10 +241,7 @@
       this.getGoodList();
       this.videoList();
       this.setStatusStyle("light");
-      // console.log(list.getGeneralBanner());
-      list.getGeneralBanner().then(res=>{
-        console.log('asdasd', res);
-      })
+      list.getGeneralBanner()
     },
     mounted() {
       this.showContainer = true;
