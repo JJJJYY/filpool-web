@@ -1,31 +1,56 @@
 <template>
   <div class="home">
-    <div class="home-container page-container" id="page-container" :style="$isH5?{height: 'initial'}:{}">
-      <vue-pull-refresh v-model="refreshing" :on-refresh="onRefresh" ref="pullDown" @scroll.native="handleScroll($event)">
+    <div
+      class="home-container page-container"
+      id="page-container"
+      :style="$isH5?{height: 'initial'}:{}"
+    >
+      <vue-pull-refresh
+        v-model="refreshing"
+        :on-refresh="onRefresh"
+        ref="pullDown"
+        @scroll.native="handleScroll($event)"
+      >
         <!--  Banner  -->
         <Banner ref="Banner"></Banner>
         <!--通知-->
         <Notice></Notice>
         <div class="guide">
           <!-- 引导 -->
-          <div class="guide-item" v-for="item in guideItems" :key="item.title" @click="$router.push(item.router)">
-            <img :src="item.icon" alt="">
+          <div
+            class="guide-item"
+            v-for="item in guideItems"
+            :key="item.title"
+            @click="$router.push(item.router)"
+          >
+            <img :src="item.icon" alt />
             <span>{{item.title}}</span>
           </div>
         </div>
         <!-- 购买 -->
         <div class="buy" style="min-height: 66vw;">
-          <CalcPowerItem v-for="item in goodList" :key="item.id" :good-data="item" @select="onSelect"/>
+          <CalcPowerItem
+            v-for="item in goodList"
+            :key="item.id"
+            :good-data="item"
+            @select="onSelect"
+          />
         </div>
         <!--介绍-->
         <div class="section intro">
           <h3 class="intro-title">IPFS社区介绍</h3>
-          <video v-for="(x, i) in videos" :key="i" :src="x.content" controls="true" :poster="previewImg"></video>
+          <video
+            v-for="(x, i) in videos"
+            :key="i"
+            :src="x.content"
+            controls="true"
+            :poster="previewImg"
+          ></video>
         </div>
         <!-- IPfS特点介绍 -->
         <div class="section intro2">
           <div class="item">
-            <img src="../../assets/img/home_icon_1.png" alt="">
+            <img src="../../assets/img/home_icon_1.png" alt />
             <div class="right">
               <p class="title">IPFS</p>
               <p class="subtitle">Inter Planetary File System</p>
@@ -37,7 +62,7 @@
             </div>
           </div>
           <div class="item">
-            <img src="../../assets/img/home_icon_2.png" alt="">
+            <img src="../../assets/img/home_icon_2.png" alt />
             <div class="right">
               <p class="title">Filecoin</p>
               <p class="subtitle">Filecoin</p>
@@ -51,7 +76,7 @@
             </div>
           </div>
           <div class="item">
-            <img src="../../assets/img/home_icon_3.png" alt="">
+            <img src="../../assets/img/home_icon_3.png" alt />
             <div class="right">
               <p class="title">20亿枚</p>
               <p class="subtitle">Filecoin总发行量</p>
@@ -85,47 +110,47 @@
           </h3>
           <div class="intro3-wrap">
             <div class="intro3-wrap-item">
-              <img src="../../assets/img/home_icon_4.png" alt="">
+              <img src="../../assets/img/home_icon_4.png" alt />
               <span>一键挖矿</span>
               <span>省心省力</span>
             </div>
             <div class="intro3-wrap-item">
-              <img src="../../assets/img/home_icon_5.png" alt="">
+              <img src="../../assets/img/home_icon_5.png" alt />
               <span>智能抢单</span>
               <span>收益更高</span>
             </div>
             <div class="intro3-wrap-item">
-              <img src="../../assets/img/home_icon_7.png" alt="">
+              <img src="../../assets/img/home_icon_7.png" alt />
               <span>收益透明</span>
               <span>随时提取</span>
             </div>
             <div class="intro3-wrap-item">
-              <img src="../../assets/img/home_icon_7.png" alt="">
+              <img src="../../assets/img/home_icon_7.png" alt />
               <span>安全保障</span>
               <span>稳定高效</span>
             </div>
             <div class="intro3-wrap-item">
-              <img src="../../assets/img/home_icon_8.png" alt="">
+              <img src="../../assets/img/home_icon_8.png" alt />
               <span>规模运营</span>
               <span>低耗高效</span>
             </div>
             <div class="intro3-wrap-item">
-              <img src="../../assets/img/home_icon_9.png" alt="">
+              <img src="../../assets/img/home_icon_9.png" alt />
               <span>专业运维</span>
               <span>规范管理</span>
             </div>
             <div class="intro3-wrap-item">
-              <img src="../../assets/img/home_icon_10.png" alt="">
+              <img src="../../assets/img/home_icon_10.png" alt />
               <span>邀请奖励</span>
               <span>合作共赢</span>
             </div>
             <div class="intro3-wrap-item">
-              <img src="../../assets/img/home_icon_11.png" alt="">
+              <img src="../../assets/img/home_icon_11.png" alt />
               <span>社区生态</span>
               <span>持续发展</span>
             </div>
             <div class="intro3-wrap-item">
-              <img src="../../assets/img/home_icon_12.png" alt="">
+              <img src="../../assets/img/home_icon_12.png" alt />
               <span>操作便捷</span>
               <span>轻松认购</span>
             </div>
@@ -139,7 +164,7 @@
         </div>-->
         <!-- <div v-scroll-show="{callback: toggleBrowser,showHeight: -200, container: isH5?'':$refs.pullDown.$el}" v-if="showContainer">
           <Browser v-if="showBrowser"></Browser>
-        </div> -->
+        </div>-->
         <!--  Banner介绍  -->
         <Banner5></Banner5>
         <!--  云算力优势  -->
@@ -151,23 +176,39 @@
         <!--  蜘蛛矿机  -->
         <div class="section intro7">
           <div class="title">蜘蛛矿机</div>
-          <div class="subtitle">支持多设备统一管理<br>存储、CPU、内存、温度、性能等状态实时监控</div>
+          <div class="subtitle">
+            支持多设备统一管理
+            <br />存储、CPU、内存、温度、性能等状态实时监控
+          </div>
           <div class="grid">
             <div class="grid-item">
-              <img class="grid-item-img" src="../../assets/img/home/home_icon_17.png" alt=""/>
-              <div class="grid-item-text">定制化<br>Linux 挖矿系统</div>
+              <img class="grid-item-img" src="../../assets/img/home/home_icon_17.png" alt />
+              <div class="grid-item-text">
+                定制化
+                <br />Linux 挖矿系统
+              </div>
             </div>
             <div class="grid-item">
-              <img class="grid-item-img" src="../../assets/img/home/home_icon_18.png" alt=""/>
-              <div class="grid-item-text">Filecoin 挖矿<br>专用定制主板</div>
+              <img class="grid-item-img" src="../../assets/img/home/home_icon_18.png" alt />
+              <div class="grid-item-text">
+                Filecoin 挖矿
+                <br />专用定制主板
+              </div>
             </div>
             <div class="grid-item">
-              <img class="grid-item-img" src="../../assets/img/home/home_icon_19.png" alt=""/>
-              <div class="grid-item-text">超强多核 CPU <br>测试网全网效率最高</div>
+              <img class="grid-item-img" src="../../assets/img/home/home_icon_19.png" alt />
+              <div class="grid-item-text">
+                超强多核 CPU
+                <br />测试网全网效率最高
+              </div>
             </div>
             <div class="grid-item">
-              <img class="grid-item-img" src="../../assets/img/home/home_icon_20.png" alt=""/>
-              <div class="grid-item-text">24盘位支持热插拔<br>可随时动查调整硬盘空间<br></div>
+              <img class="grid-item-img" src="../../assets/img/home/home_icon_20.png" alt />
+              <div class="grid-item-text">
+                24盘位支持热插拔
+                <br />可随时动查调整硬盘空间
+                <br />
+              </div>
             </div>
           </div>
         </div>
@@ -175,8 +216,13 @@
         <Partner></Partner>
       </vue-pull-refresh>
       <van-popup v-model="show" position="bottom" closeable :safe-area-inset-bottom="true">
-        <calc-power-buy-popup v-on:dismiss="show=false" :number="number" :item="selectedItem" v-on:enterOrder="buySubmit"
-                              @changeNumber="onSelect"/>
+        <CalcPowerBuyPopup
+          v-on:dismiss="show=false"
+          :number="number"
+          :item="selectedItem"
+          v-on:enterOrder="buySubmit"
+          @changeNumber="onSelect"
+        />
       </van-popup>
     </div>
     <foot-box></foot-box>
@@ -184,486 +230,523 @@
 </template>
 
 <script>
-  import 'swiper/css/swiper.css'
-  import CalcPowerItem from "@/views/calcPower/CalcPowerItem";
-  import Banner from '@/components/Banner';
-  import Notice from '@/components/Notice';
-  import Banner5 from '@/components/Banner5';
-  import Banner6 from '@/components/Banner6';
-  import Partner from '@/components/Partner';
-  /*import {Popup, PullRefresh} from "vant";*/
-  import {Popup} from "vant";
-  import VuePullRefresh from 'vue-pull-refresh';
-  import CalcPowerBuyPopup from "../calcPower/CalcPowerBuyPopup";
-  import FootBox from '@/components/FootBox';
-  import plusready from "@/utils/plusReady";
-  import Browser from './browser/Browser';
-  import { isH5 } from '@/utils/utilTools';
+import "swiper/css/swiper.css";
+import CalcPowerItem from "@/views/calcPower/CalcPowerItem";
+import Banner from "@/components/Banner";
+import Notice from "@/components/Notice";
+import Banner5 from "@/components/Banner5";
+import Banner6 from "@/components/Banner6";
+import Partner from "@/components/Partner";
+/*import {Popup, PullRefresh} from "vant";*/
+import { Popup } from "vant";
+import VuePullRefresh from "vue-pull-refresh";
+import CalcPowerBuyPopup from "../calcPower/CalcPowerBuyPopup";
+import FootBox from "@/components/FootBox";
+import plusready from "@/utils/plusReady";
+import Browser from "./browser/Browser";
+import { isH5 } from "@/utils/utilTools";
+import { getGoodListApi, getVideoListApi } from "@/net/api/homeApi";
 
-  import list from '@/net/api/list';
-
-  export default {
-    name: 'Home',
-    data() {
-      return {
-        guideItems: [
-          {icon: require('../../assets/img/home_icon_class.png'), title: '进阶小课堂', router: '/classroom'},
-          {icon: require('../../assets/img/home_icon_invitation.png'), title: '邀请好友', router: '/invite'},
-          {icon: require('../../assets/img/home_icon_produce.png'), title: '项目动态', router: '/dynamic'},
-          {icon: require('../../assets/img/home_icon_help.png'), title: '帮助中心', router: '/helpCenter'}
-        ],
-        videos: [],
-        previewImg: require('@/assets/img/preview.png'),
-        goodList: [],
-        selectedItem: {},
-        show: false,
-        number: 1,
-        refreshing: false,
-        showContainer: false,
-        showBrowser: false,
-        isH5: isH5
+export default {
+  name: "Home",
+  data() {
+    return {
+      guideItems: [
+        {
+          icon: require("../../assets/img/home_icon_class.png"),
+          title: "进阶小课堂",
+          router: "/classroom",
+        },
+        {
+          icon: require("../../assets/img/home_icon_invitation.png"),
+          title: "邀请好友",
+          router: "/invite",
+        },
+        {
+          icon: require("../../assets/img/home_icon_produce.png"),
+          title: "项目动态",
+          router: "/dynamic",
+        },
+        {
+          icon: require("../../assets/img/home_icon_help.png"),
+          title: "帮助中心",
+          router: "/helpCenter",
+        },
+      ],
+      videos: [],
+      previewImg: require("@/assets/img/preview.png"),
+      goodList: [],
+      selectedItem: {},
+      show: false,
+      number: 1,
+      refreshing: false,
+      showContainer: false,
+      showBrowser: false,
+      isH5: isH5,
+    };
+  },
+  components: {
+    CalcPowerBuyPopup,
+    CalcPowerItem,
+    Banner,
+    Notice,
+    Banner5,
+    Banner6,
+    Partner,
+    FootBox,
+    [Popup.name]: Popup,
+    "vue-pull-refresh": VuePullRefresh,
+    Browser,
+    /*[PullRefresh.name]: PullRefresh*/
+  },
+  created() {
+    this.getGoodList();
+    this.videoList();
+    this.setStatusStyle("light");
+  },
+  mounted() {
+    this.showContainer = true;
+  },
+  activated() {
+    this.setStatusStyle("light");
+  },
+  deactivated() {
+    this.setStatusStyle("dark");
+  },
+  methods: {
+    toggleBrowser() {
+      this.showBrowser = true;
+    },
+    setStatusStyle(style) {
+      plusready(() => {
+        window.plus.navigator.setStatusBarStyle(style); //白色
+        this.statusDark = style === "dark";
+      });
+    },
+    handleScroll(event) {
+      if (
+        event.target.scrollTop > this.$refs.Banner.$el.clientHeight &&
+        !this.statusDark
+      ) {
+        this.setStatusStyle("dark");
+      } else if (
+        event.target.scrollTop < this.$refs.Banner.$el.clientHeight &&
+        this.statusDark === true
+      ) {
+        this.setStatusStyle("light");
       }
     },
-    components: {
-      CalcPowerBuyPopup, CalcPowerItem,
-      Banner,
-      Notice,
-      Banner5,
-      Banner6,
-      Partner,
-      FootBox,
-      [Popup.name]: Popup,
-      'vue-pull-refresh': VuePullRefresh,
-      Browser
-      /*[PullRefresh.name]: PullRefresh*/
+    onRefresh() {
+      return Promise.all([this.getGoodList(), this.videoList()]);
     },
-    created() {
-      this.getGoodList();
-      this.videoList();
-      this.setStatusStyle("light");
-      list.getGeneralBanner()
-    },
-    mounted() {
-      this.showContainer = true;
-    },
-    activated() {
-      this.setStatusStyle("light");
-    },
-    deactivated() {
-      this.setStatusStyle("dark");
-    },
-    methods: {
-      toggleBrowser() {
-        this.showBrowser = true;
-      },
-      setStatusStyle (style) {
-        plusready(() => {
-          window.plus.navigator.setStatusBarStyle(style);//白色
-          this.statusDark = style === 'dark';
+    getGoodList() {
+      return getGoodListApi()
+        .then((res) => {
+          this.goodList = res.data;
         })
-      },
-      handleScroll(event) {
-        //console.log(event.target.scrollTop)
-        if (event.target.scrollTop > this.$refs.Banner.$el.clientHeight && !this.statusDark) {
-          this.setStatusStyle("dark");
-        } else if(event.target.scrollTop < this.$refs.Banner.$el.clientHeight &&this.statusDark === true) {
-          this.setStatusStyle("light");
-        }
-      },
-      onRefresh() {
-        /*this.getGoodList();
-        this.videoList()*/
-        return Promise.all([this.getGoodList(), this.videoList()])
-      },
-      getGoodList() {
-        return this.$http.get('/purchase/access/goodsList').then(response => {
-          this.goodList = response.data.slice(0, 2);
-        }).finally(() => this.refreshing = false)
-      },
-      videoList() {
-        return this.$http.get('/general/access/advertisement', {type: 1}).then(response => {
-          this.videos = response.content.filter((item) => {
-            return item.type === 1;
-          });
-        }).finally(() => this.refreshing = false)
-      },
-      onSelect(item) {
-        this.selectedItem = Object.assign({}, item);
-        this.number = this.selectedItem.amount;
-        this.show = true;
-      },
-      buySubmit(item) {
-        /// 确认订单
-        this.show = false
-        /// 下单
-        this.$http.post('/purchase/order', {
-          'asset': 'USDT',
-          'id': item.id,
-          'quantity': item.amount
-        }).then((response) => {
+        .finally(() => (this.refreshing = false));
+      // this.$http
+      //   .get("/purchase/access/goodsList")
+      //   .then((response) => {
+      //     this.goodList = response.data.slice(0, 2);
+      //     console.log(this.goodList);
+      //   })
+      //   .finally(() => (this.refreshing = false));
+    },
+    videoList() {
+      return getVideoListApi().then((res) => {
+        this.videos = res.data.filter((item) => {
+          return item.type === 1;
+        });
+      });
+      // return this.$http
+      //   .get("/general/access/advertisement", { type: 1 })
+      //   .then((response) => {
+      //     this.videos = response.content.filter((item) => {
+      //       return item.type === 1;
+      //     });
+      //   })
+      //   .finally(() => (this.refreshing = false));
+    },
+    onSelect(item) {
+      this.selectedItem = Object.assign({}, item);
+      this.number = this.selectedItem.amount;
+      this.show = true;
+    },
+    buySubmit(item) {
+      /// 确认订单
+      this.show = false;
+      /// 下单
+      this.$http
+        .post("/purchase/order", {
+          asset: "USDT",
+          id: item.id,
+          quantity: item.amount,
+        })
+        .then((response) => {
           this.$router.push({
-            path: '/countPay',
+            path: "/countPay",
             query: {
               amount: item.price * item.amount,
-              id: response.content.id
-            }
-          })
-        })
-      },
-    }
-  }
+              id: response.content.id,
+            },
+          });
+        });
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
-  @import "../../assets/scss/base";
+@import "../../assets/scss/base";
 
-  $section-margin-top: 12px;
-  .home-container{
-    height: 100vh;
-    background: #EEEAED;
+$section-margin-top: 12px;
+.home-container {
+  height: 100vh;
+  background: #eeeaed;
+}
+.section {
+  background: white;
+  margin-top: $section-margin-top;
+}
+
+.banner {
+  background: white;
+
+  &-item {
+    height: 160px;
+    width: 100%;
   }
-  .section {
-    background: white;
-    margin-top: $section-margin-top;
-  }
+}
 
-  .banner {
-    background: white;
+.notify {
+  box-sizing: border-box;
+  padding: 12px;
+  height: 30px;
+  color: $h2-color;
+  font-size: 14px;
 
-    &-item {
-      height: 160px;
-      width: 100%;
-    }
-  }
-
-  .notify {
-    box-sizing: border-box;
-    padding: 12px;
-    height: 30px;
-    color: $h2-color;
-    font-size: 14px;
-
-    van-swipe-item {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      line-break: normal;
-    }
-
-    /*overflow: hidden;*/
+  van-swipe-item {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-break: normal;
   }
 
-  .guide {
-    background: white;
+  /*overflow: hidden;*/
+}
+
+.guide {
+  background: white;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  padding: 22px 12px;
+  margin-bottom: 12px;
+  &-item {
+    flex: 1;
     display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    padding: 22px 12px;
-    margin-bottom: 12px;
-    &-item {
-      flex: 1;
-      display: flex;
-      font-size: 12px;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-
-      img {
-        max-height: 24px
-      }
-
-      span {
-        margin-top: 12px
-      }
-    }
-  }
-
-  .intro {
-    display: flex;
+    font-size: 12px;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
 
-    h3 {
-      text-align: center;
-      color: $h2-color;
-      font-size: 15px;
+    img {
+      max-height: 24px;
     }
 
-    video {
-      width: 92%;
-      height: 160px;
-      margin-bottom: 12px;
+    span {
+      margin-top: 12px;
     }
   }
+}
 
-  .intro2 {
-    padding: 32px;
+.intro {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
-    .item {
-      &:first-child {
-        margin-top: 0;
-      }
-
-      margin-top: 24px;
-      display: flex;
-      align-items: flex-start;
-
-      > img {
-        max-width: 40px;
-      }
-
-      p {
-        margin: 0;
-      }
-
-      .right {
-        margin-left: 30px;
-
-        .title {
-          font-size: 16px;
-          font-weight: bold;
-          color: $h1-color;
-        }
-
-        .subtitle {
-          font-size: 14px;
-          color: $h3-color;
-          margin-top: 6px;
-        }
-
-        .hr {
-          width: 36px;
-          height: 2px;
-          background: $main-color;
-          margin-top: 6px;
-        }
-
-        ul {
-          list-style-type: disc;
-          list-style-position: inside;
-
-          li {
-            color: $h2-color;
-            font-size: 13px;
-            margin-top: 8px;
-          }
-        }
-      }
-    }
-  }
-  .intro-title{
-    margin: 16px 0;
-  }
-  .intro3 {
-    background: white;
-
-    h3 {
-      color: #24375E;
-      font-weight: bold;
-      font-size: 16px;
-      text-align: center;
-      padding-top: 24px;
-    }
-
-    &-wrap {
-      display: grid;
-      grid-template-columns: repeat(3, 33.3%);
-
-      &-item {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        font-size: 12px;
-        color: $h3-color;
-        margin: 16px 0;
-
-        img {
-          max-width: 30px;
-          margin: 4px 0;
-        }
-
-        span {
-          margin-top: 6px;
-        }
-      }
-    }
-  }
-
-  .intro4 {
-    padding: 16px 22px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  h3 {
     text-align: center;
+    color: $h2-color;
+    font-size: 15px;
+  }
 
-    .title {
-      font-size: 16px;
-      font-weight: bold;
-      color: $h1-color;
+  video {
+    width: 92%;
+    height: 160px;
+    margin-bottom: 12px;
+  }
+}
+
+.intro2 {
+  padding: 32px;
+
+  .item {
+    &:first-child {
+      margin-top: 0;
+    }
+
+    margin-top: 24px;
+    display: flex;
+    align-items: flex-start;
+
+    > img {
+      max-width: 40px;
+    }
+
+    p {
       margin: 0;
     }
 
-    .subtitle {
-      font-size: 12px;
-      color: $h3-color;
-      margin: 12px 0 24px;
-    }
+    .right {
+      margin-left: 30px;
 
-    img {
-      display: block;
-      max-width: 96%;
-    }
-  }
+      .title {
+        font-size: 16px;
+        font-weight: bold;
+        color: $h1-color;
+      }
 
-  .intro5 {
-    padding: 12px;
-    position: relative;
+      .subtitle {
+        font-size: 14px;
+        color: $h3-color;
+        margin-top: 6px;
+      }
 
-    &-item {
-      /*padding-top: 144px;*/
-      width: 188px;
-      height: 276px;
+      .hr {
+        width: 36px;
+        height: 2px;
+        background: $main-color;
+        margin-top: 6px;
+      }
 
-      &-text {
-        /*margin-top: 144px;*/
-        padding: 2px 8px;
-        position: absolute;
-        bottom: 8px;
+      ul {
+        list-style-type: disc;
+        list-style-position: inside;
 
-        .title {
-          color: $h3-color;
-          font-size: 10px;
+        li {
+          color: $h2-color;
+          font-size: 13px;
           margin-top: 8px;
         }
-
-        .subtitle {
-          color: #ddd;
-          font-size: 13px;
-          margin-top: 4px;
-        }
       }
     }
+  }
+}
+.intro-title {
+  margin: 16px 0;
+}
+.intro3 {
+  background: white;
 
-    &-img {
-      /*width: 188px;*/
-      /*height: 276px;*/
-      max-width: 188px;
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      z-index: -1;
-    }
+  h3 {
+    color: #24375e;
+    font-weight: bold;
+    font-size: 16px;
+    text-align: center;
+    padding-top: 24px;
   }
 
-  .intro6 {
-    padding: 16px 12px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    .title {
-      font-size: 16px;
-      color: $h1-color;
-      margin-top: 12px;
-      font-weight: bold;
-    }
-
-    .subtitle {
-      margin-top: 8px;
-      font-size: 12px;
-      color: $h2-color;
-    }
+  &-wrap {
+    display: grid;
+    grid-template-columns: repeat(3, 33.3%);
 
     &-item {
-      margin-top: 18px;
-
-      .item-banner {
-        height: 120px;
-      }
-
-      .item-title {
-        margin: 16px auto 0;
-      }
-
-      .item-dir {
-        background: $main-color;
-        height: 4px;
-        width: 28px;
-        margin: 12px 0;
-      }
-
-      .item-content {
-        max-width: 160px;
-        line-height: 150%;
-        text-align: justify;
-        font-size: 13px;
-        color: $h2-color;
-      }
-    }
-  }
-
-  .intro7 {
-    background: $content-backgroun-color url("~@/assets/img/home/home_bg_1.png") no-repeat 100%;
-    background-size: cover;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    padding: 16px;
-    box-sizing: border-box;
-
-    .title {
-      color: $h1-color;
-      font-size: 15px;
-      font-weight: bold;
-      margin-top: 217px;
-    }
-
-    .subtitle {
-      color: $h1-color;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       font-size: 12px;
-      line-height: 160%;
-      text-align: right;
-      margin-top: 18px;
-    }
+      color: $h3-color;
+      margin: 16px 0;
 
-    .grid {
-      margin-top: 40px;
-      display: grid;
-      align-self: stretch;
-      grid-template-columns: repeat(2, 2fr);
+      img {
+        max-width: 30px;
+        margin: 4px 0;
+      }
 
-      .grid-item {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        margin-top: 24px;
-
-        &-img {
-          width: 36px;
-        }
-
-        &-text {
-          margin-top: 12px;
-          color: $h2-color;
-          font-size: 12px;
-          text-align: center;
-          line-height: 140%;
-        }
+      span {
+        margin-top: 6px;
       }
     }
   }
-  .persent{
-    display: inline-block;
-    min-width: 14px;
-    background:rgba(46,18,175,1);
-    border-radius:6px;
-    font-size: 10px;
-    padding: 2px 5px;
-    color: #fff;
-    transform: scale(0.8);
-    text-align: center;
-    margin-left: 6px;
+}
+
+.intro4 {
+  padding: 16px 22px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+
+  .title {
+    font-size: 16px;
+    font-weight: bold;
+    color: $h1-color;
+    margin: 0;
   }
 
+  .subtitle {
+    font-size: 12px;
+    color: $h3-color;
+    margin: 12px 0 24px;
+  }
+
+  img {
+    display: block;
+    max-width: 96%;
+  }
+}
+
+.intro5 {
+  padding: 12px;
+  position: relative;
+
+  &-item {
+    /*padding-top: 144px;*/
+    width: 188px;
+    height: 276px;
+
+    &-text {
+      /*margin-top: 144px;*/
+      padding: 2px 8px;
+      position: absolute;
+      bottom: 8px;
+
+      .title {
+        color: $h3-color;
+        font-size: 10px;
+        margin-top: 8px;
+      }
+
+      .subtitle {
+        color: #ddd;
+        font-size: 13px;
+        margin-top: 4px;
+      }
+    }
+  }
+
+  &-img {
+    /*width: 188px;*/
+    /*height: 276px;*/
+    max-width: 188px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+  }
+}
+
+.intro6 {
+  padding: 16px 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .title {
+    font-size: 16px;
+    color: $h1-color;
+    margin-top: 12px;
+    font-weight: bold;
+  }
+
+  .subtitle {
+    margin-top: 8px;
+    font-size: 12px;
+    color: $h2-color;
+  }
+
+  &-item {
+    margin-top: 18px;
+
+    .item-banner {
+      height: 120px;
+    }
+
+    .item-title {
+      margin: 16px auto 0;
+    }
+
+    .item-dir {
+      background: $main-color;
+      height: 4px;
+      width: 28px;
+      margin: 12px 0;
+    }
+
+    .item-content {
+      max-width: 160px;
+      line-height: 150%;
+      text-align: justify;
+      font-size: 13px;
+      color: $h2-color;
+    }
+  }
+}
+
+.intro7 {
+  background: $content-backgroun-color url("~@/assets/img/home/home_bg_1.png")
+    no-repeat 100%;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  padding: 16px;
+  box-sizing: border-box;
+
+  .title {
+    color: $h1-color;
+    font-size: 15px;
+    font-weight: bold;
+    margin-top: 217px;
+  }
+
+  .subtitle {
+    color: $h1-color;
+    font-size: 12px;
+    line-height: 160%;
+    text-align: right;
+    margin-top: 18px;
+  }
+
+  .grid {
+    margin-top: 40px;
+    display: grid;
+    align-self: stretch;
+    grid-template-columns: repeat(2, 2fr);
+
+    .grid-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 24px;
+
+      &-img {
+        width: 36px;
+      }
+
+      &-text {
+        margin-top: 12px;
+        color: $h2-color;
+        font-size: 12px;
+        text-align: center;
+        line-height: 140%;
+      }
+    }
+  }
+}
+.persent {
+  display: inline-block;
+  min-width: 14px;
+  background: rgba(46, 18, 175, 1);
+  border-radius: 6px;
+  font-size: 10px;
+  padding: 2px 5px;
+  color: #fff;
+  transform: scale(0.8);
+  text-align: center;
+  margin-left: 6px;
+}
 </style>

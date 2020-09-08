@@ -1,7 +1,6 @@
 import axios from 'axios';
 
 const fetchData = (response, resolve, reject) => {
-  console.log(response);
   let json = response.data;
   if (json.ret != 200) {
     const errortext = json.msg;
@@ -79,37 +78,37 @@ export const getRequest = (api, params) => {
   return doGetFetch(url);
 };
 
-export const post = async (api, params) => {
-  let url = '/public/';
-  params = {
-    s: api,
-    ...
-    params,
-  }
-  try {
-    return await doPostFetch(url, params);
-  } catch (e) {}
-  return {
-    response_msg: 'network abort'
-  };
-};
+// export const post = async (api, params) => {
+//   let url = '/public/';
+//   params = {
+//     s: api,
+//     ...
+//     params,
+//   }
+//   try {
+//     return await doPostFetch(url, params);
+//   } catch (e) {}
+//   return {
+//     response_msg: 'network abort'
+//   };
+// };
 
-export const form = async (url, params) => {
-  const formdata = new FormData();
-  for (const i in params) {
-    if (Array.isArray(params[i])) {
-      params[i].forEach((item) => {
-        formdata.append(i, item);
-      });
-    } else {
-      formdata.append(i, params[i]);
-    }
-  }
+// export const form = async (url, params) => {
+//   const formdata = new FormData();
+//   for (const i in params) {
+//     if (Array.isArray(params[i])) {
+//       params[i].forEach((item) => {
+//         formdata.append(i, item);
+//       });
+//     } else {
+//       formdata.append(i, params[i]);
+//     }
+//   }
 
-  try {
-    return await doFormFetch(url, formdata);
-  } catch (e) {}
-  return {
-    response_msg: 'network abort'
-  };
-};
+//   try {
+//     return await doFormFetch(url, formdata);
+//   } catch (e) {}
+//   return {
+//     response_msg: 'network abort'
+//   };
+// };

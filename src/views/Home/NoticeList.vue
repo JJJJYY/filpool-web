@@ -1,37 +1,33 @@
 <template>
-    <div class="NoticeList">
-      <head-nav :styles="{marginBottom: 0}"></head-nav>
-      <div class="listContainer page-container">
-        <van-pull-refresh v-model="refreshing" @refresh="getNotices">
-          <van-list
-            v-model="loading"
-            :finished="finished"
-            finished-text="没有更多了"
-            @load="downRefresh"
-          >
-            <ul class="list">
-              <li v-for="item in notices" :key="item.id" @click="checkDetail(item)">
-                <h3 class="title">{{item.title}}</h3>
-                <div class="content">{{item.simpleContent}}</div>
-                <p class="date">{{item.createTime | formatDate}}</p>
-              </li>
-            </ul>
-          </van-list>
-        </van-pull-refresh>
-      </div>
+  <div class="NoticeList">
+    <head-nav :styles="{marginBottom: 0}"></head-nav>
+    <div class="listContainer page-container">
+      <van-pull-refresh v-model="refreshing" @refresh="getNotices">
+        <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="downRefresh">
+          <ul class="list">
+            <li v-for="item in notices" :key="item.id" @click="checkDetail(item)">
+              <h3 class="title">{{item.title}}</h3>
+              <div class="content">{{item.description}}</div>
+              <p class="date">{{ item.createTime }}</p>
+            </li>
+          </ul>
+        </van-list>
+      </van-pull-refresh>
     </div>
+  </div>
 </template>
 
 <script>
 import HeadNav from "@/components/HeadNav";
-import {PullRefresh, List} from "vant";
-import { formatDate } from '@/utils/utilTools';
+import { PullRefresh, List } from "vant";
+import { formatDate } from "@/utils/utilTools";
+import { getNoticeListApi } from "@/net/api/homeApi";
 export default {
   name: "NoticeList",
   components: {
     HeadNav,
     [PullRefresh.name]: PullRefresh,
-    [List.name]: List
+    [List.name]: List,
   },
   data() {
     return {
@@ -39,109 +35,122 @@ export default {
       pageSize: 5,
       notices: [],
       refreshing: false,
-      loading: true,
-      finished: false
-    }
+      loading: false,
+      finished: false,
+    };
   },
   created() {
     this.getNotices();
+    // const getData = {
+    //   id: 1,
+    // };
+    // getNoticeDetailListApi(getData).then((res) => {
+    //   console.log(res);
+    // });
   },
   methods: {
-    getNotices () {
-      this.pageNo = 1;
-      this.notices = [];
+    getNotices() {
       this.finished = false;
-      this.$http.post('/message/access/public/notice', {
-        pageNo: this.pageNo,
-        pageSize: this.pageSize
-      }).then((res) => {
-        let dv = document.createElement("div");
-        let list = res.content.map((item) => {
-          dv.innerHTML = item.content;
-          item.simpleContent = dv.firstChild && dv.firstChild.innerText || item.content;
-          return item;
-        });
-
-        this.notices = list;
+      const getData = {
+        page: this.pageNo,
+        count: this.pageSize,
+      };
+      getNoticeListApi(getData).then((res) => {
+        this.notices = res.data;
         this.refreshing = false;
         this.pageNo += 1;
         this.downRefresh();
-      })
+      });
+      //   this.$http
+      //     .post("/message/access/public/notice", {
+      //       pageNo: this.pageNo,
+      //       pageSize: this.pageSize,
+      //     })
+      //     .then((res) => {
+      //       let dv = document.createElement("div");
+      //       let list = res.data.content.map((item) => {
+      //         dv.innerHTML = item.content;
+      //         item.simpleContent =
+      //           (dv.firstChild && dv.firstChild.innerText) || item.content;
+      //         return item;
+      //       });
+      //       console.log(list);
+      //       // this.notices = list;
+      //       this.refreshing = false;
+      //       this.pageNo += 1;
+      //       this.downRefresh();
+      //     });
     },
-    downRefresh () {
-      this.loading = true;
-      this.$http.post('/message/access/public/notice', {
-        pageNo: this.pageNo,
-        pageSize: this.pageSize
-      }).then((res) => {
-        let dv = document.createElement("div");
-        let list = res.content.map((item) => {
-          dv.innerHTML = item.content;
-          item.simpleContent = dv.firstChild && dv.firstChild.innerText || item.content;
-          return item;
-        });
-
-        if (!res.content || res.content.length === 0) {
-          this.finished = true;
-          return;
-        }
-
-        this.notices = this.notices.concat(list);
-        this.pageNo += 1;
-        this.loading = false;
-      })
+    downRefresh() {
+      let self = this;
+      self.PageIndex += 1;
+      setTimeout(() => {
+        const getData = {
+          page: self.PageIndex,
+          count: this.pageSize,
+        };
+        getNoticeListApi()
+          .then((res) => {
+            this.notices = res.data;
+            self.loading = false; //成功关闭loading
+            this.finished = true;
+          })
+          .catch((res) => {
+            console.log(res);
+          });
+      }, 500);
     },
-    checkDetail (item) {
+    checkDetail(item) {
       this.$router.push({
-        path: `/helpDetail/${item.id}`,
+        path: `/helpDetail/`,
         query: {
-          item: item,
-          type: "3"
-        }
-      })
-    }
+          id: item.id,
+          item,
+        },
+      });
+    },
   },
-  filters: {
-    formatDate (val) {
-      if (!val) {
-        return "-- --";
-      }
-      return formatDate(val, "yyyy-MM-dd hh:mm:ss");
-    }
-  }
-}
+  // filters: {
+  //   formatDate(val) {
+  //     if (!val) {
+  //       return "-- --";
+  //     }
+  //     return formatDate(val, "yyyy-MM-dd hh:mm:ss");
+  //   },
+  // },
+};
 </script>
 
 <style lang="scss" scoped>
-.NoticeList{
+.NoticeList {
   font-size: 12px;
-  .listContainer{
+  .listContainer {
     padding-left: 16px;
     padding-right: 16px;
     //border-top: 12px solid #EEEAED;
     background-color: #fff;
   }
-  .list{
-    li{
+  .list {
+    li {
       padding: 20px 0;
       border-bottom: 1px solid #ddd;
     }
   }
-  .title{
+  .title {
     font-size: 14px;
     font-weight: bold;
-    color: #24375E;
+    color: #24375e;
   }
-  .content{
+  .content {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    color: #575C62;
+    color: #575c62;
     margin: 12px 0;
   }
-  .date{
+  .date {
     text-align: right;
-    color: #86929D;
+    color: #86929d;
   }
 }
 </style>

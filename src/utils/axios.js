@@ -5,7 +5,6 @@ axios.defaults.headers['Content-Type'] = 'application/json;charset=UTF-8';
 //axios.defaults.withCredentials = true;
 // =>设置请求拦截器
 axios.interceptors.request.use(config => {
-  console.log('config', config);
     // let userInfoStr = sessionStorage.getItem('userInfo');
     // let userInfo = userInfoStr ? JSON.parse(userInfoStr) : {};
     if (config.headers && config.headers.common) {
@@ -24,8 +23,7 @@ axios.interceptors.request.use(config => {
 );
 // =>设置响应拦截器
 axios.interceptors.response.use(response => {
-    console.log('拦截', response);
-    if (response.config.url == "/public/?s=Banner.List") {
+    if (response.config.url.includes('/public/')) {
       return Promise.resolve(response);
     }
     if (response.status === 200) {

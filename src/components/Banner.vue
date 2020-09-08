@@ -13,6 +13,7 @@
   import { Swiper, SwiperSlide } from 'vue-awesome-swiper'
   import { createWebview } from '@/utils/utilTools';
   import { pcOrigin, commonHash } from '@/config';
+  import { getGeneralBannerApi } from '../net/api/homeApi'
   let vm = null;
   export default {
     name: "Banner",
@@ -43,14 +44,19 @@
     },
     methods: {
       getBanner () {
-        this.$http.get('/general/access/banner').then((res) => {
-          this.bannerList = res.content;
+        getGeneralBannerApi().then(res => {
+          this.bannerList = res.data;
           this.$nextTick(() => {
             if (this.$refs.bannerSwiper) {
               this.$refs.bannerSwiper.swiperInstance.loopCreate();
             }
           })
         })
+        // this.$http.get('/general/access/banner').then((res) => {
+        //   console.log(res);
+        //   this.bannerList = res.content;
+
+        // })
       },
       handleClick (index) {
         let url = this.bannerList[index].content;
