@@ -1,6 +1,5 @@
 import {
   getRequest,
-  post
 } from '../request';
 
 //banner

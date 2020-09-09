@@ -43,22 +43,23 @@ const doPostFetch = (url, jsondata) => new Promise((resolve, reject) => {
     .catch(err => reject(err));
 });
 
-const doFormFetch = (url, form) => new Promise((resolve, reject) => {
-  axios(url, {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'multipart/form-data',
-      },
-      data: form,
-    })
-    .then(response => {
-      resolve(response)
-    })
-    // .then(res => resolve(res))
-    .catch(err => reject(err));
-});
+// const doFormFetch = (url, form) => new Promise((resolve, reject) => {
+//   axios(url, {
+//       method: 'POST',
+//       headers: {
+//         Accept: 'application/json',
+//         'Content-Type': 'multipart/form-data',
+//       },
+//       data: form,
+//     })
+//     .then(response => {
+//       resolve(response)
+//     })
+//     // .then(res => resolve(res))
+//     .catch(err => reject(err));
+// });
 
+// get请求
 export const getRequest = (api, params) => {
   let url = '/public/';
   params = {
@@ -77,21 +78,15 @@ export const getRequest = (api, params) => {
   }
   return doGetFetch(url);
 };
-
-// export const post = async (api, params) => {
-//   let url = '/public/';
-//   params = {
-//     s: api,
-//     ...
-//     params,
-//   }
-//   try {
-//     return await doPostFetch(url, params);
-//   } catch (e) {}
-//   return {
-//     response_msg: 'network abort'
-//   };
-// };
+// post请求
+export const postRequest = (api, data) => {
+  let url = '/public/';
+  data = {
+    s: api,
+    ...data,
+  }
+  return doPostFetch(url, data);
+};
 
 // export const form = async (url, params) => {
 //   const formdata = new FormData();

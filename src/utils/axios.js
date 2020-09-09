@@ -1,5 +1,7 @@
 import axios from 'axios';
-import {Toast} from "vant";
+import {
+  Toast
+} from "vant";
 import router from "../router";
 axios.defaults.headers['Content-Type'] = 'application/json;charset=UTF-8';
 //axios.defaults.withCredentials = true;
@@ -24,8 +26,15 @@ axios.interceptors.request.use(config => {
 // =>设置响应拦截器
 axios.interceptors.response.use(response => {
     if (response.config.url.includes('/public/')) {
+      if (response.data.ret !== 200) {
+        Toast(response.data.msg);
+        return Promise.reject(response);
+      }
       return Promise.resolve(response);
     }
+
+
+
     if (response.status === 200) {
       /*特殊处理blob数据*/
       if (response.config.responseType) {
@@ -33,11 +42,13 @@ axios.interceptors.response.use(response => {
       }
       if (response.data.responseCode === "00" || response.data.status === "success") {
         return Promise.resolve(response.data);
-      } else{
+      } else {
         Toast(response.data.responseMsg || '请求服务器失败');
-        if (response.data.responseCode === 'b000001') {
-          router.push({path: "/login"})
-        }
+        // if (response.data.responseCode === 'b000001') {
+        //   router.push({
+        //     path: "/login"
+        //   })
+        // }
         return Promise.reject(response.data);
       }
     } else {
@@ -47,7 +58,9 @@ axios.interceptors.response.use(response => {
   error => {
     let status = error && error.response && error.response.status || '';
     Toast(`请求服务器失败 ${status}`);
-    router.push({path: "/login"})
+    router.push({
+      path: "/login"
+    })
     return Promise.reject(error);
   }
 );
