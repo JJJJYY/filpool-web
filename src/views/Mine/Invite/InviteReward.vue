@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <head-nav></head-nav>
-    <div class="page-container" >
+    <div class="page-container">
       <div class="reward-intro">
         <div class="reward-intro-item">
           <div class="reward-intro-item-title">累计邀请人数</div>
@@ -61,131 +61,151 @@
 </template>
 
 <script>
-  import {Tab, Tabs, List} from 'vant'
-  import HeadNav from "@/components/HeadNav";
+import { Tab, Tabs, List } from "vant";
+import HeadNav from "@/components/HeadNav";
+import {
+  distributionDetailApi,
+  inviteRecordApi,
+  rewardRecordApi,
+} from "../../../net/api/userInfoApi";
 
-  export default {
-    name: "InviteReward",
-    components: {
-      HeadNav,
-      [Tab.name]: Tab,
-      [Tabs.name]: Tabs,
-      [List.name]: List
-    },
-    data() {
-      return {
-        item: {},
-        inviteList: [],
-        orderList: []
+export default {
+  name: "InviteReward",
+  components: {
+    HeadNav,
+    [Tab.name]: Tab,
+    [Tabs.name]: Tabs,
+    [List.name]: List,
+  },
+  data() {
+    return {
+      item: {},
+      inviteList: [],
+      orderList: [],
+    };
+  },
+  created() {
+    this.loadData();
+    this.loadInviteRecodeData();
+  },
+  methods: {
+    tabClick(index) {
+      if (index === 0) {
+        this.loadInviteRecodeData();
+      } else {
+        this.loadOrderRecodeData();
       }
     },
-    created() {
-      this.loadData()
-      this.loadInviteRecodeData()
-    },
-    methods: {
-      tabClick(index) {
-        if (index === 0) {
-          this.loadInviteRecodeData()
-        } else {
-          this.loadOrderRecodeData()
+    loadData() {
+      distributionDetailApi().then((res) => {
+        if (res.ret === 200) {
+          this.item = res.data;
         }
-      },
-      loadData() {
-        this.$http.get('/distribution/detail').then(response => {
-          this.item = response.content
-        })
-      },
-      loadInviteRecodeData() {
-        this.$http.get('/distribution/inviteRecord').then(response => {
-          this.inviteList = response.content.content
-        })
-      },
-      loadOrderRecodeData() {
-        this.$http.get('/distribution/orderRecord').then(response => {
-          this.orderList = response.content.content
-        })
-      }
-    }
-  }
+      });
+      // this.$http.get("/distribution/detail").then((response) => {
+      //   this.item = response.content;
+      // });
+    },
+    loadInviteRecodeData() {
+      inviteRecordApi().then((res) => {
+        if (res.ret === 200) {
+          this.inviteList = res.data;
+        }
+      });
+      // this.$http.get("/distribution/inviteRecord").then((response) => {
+      //   this.inviteList = response.content.content;
+      // });
+    },
+    loadOrderRecodeData() {
+      rewardRecordApi().then((res) => {
+        if (res.ret === 200) {
+          this.orderList = res.data;
+          console.log(res);
+        }
+      });
+      // this.$http.get("/distribution/orderRecord").then((response) => {
+      //   this.orderList = response.content.content;
+      // });
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
-  @import "../../../assets/scss/base";
+@import "../../../assets/scss/base";
 
-  .reward-intro {
-    display: flex;
-    flex-direction: column;
-    padding: 16px;
-    background: $content-backgroun-color;
-    margin-top: 6px;
+.reward-intro {
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  background: $content-backgroun-color;
+  margin-top: 6px;
 
-    &-item {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-
-      &:not(:last-child) {
-        margin-bottom: 16px;
-      }
-
-      &-title {
-        color: $h3-color;
-        font-size: 13px;
-      }
-
-      &-val {
-        color: $h2-color;
-        font-size: 14px;
-      }
-
-      .main {
-      }
-    }
-  }
-
-  .recode-cell {
-    background: $content-backgroun-color;
+  &-item {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    padding: 16px;
-    color: $h2-color;
-    font-size: 13px;
-    border-bottom: 1px $divider-color solid;
-  }
 
-  .order-recode-cell {
-    background: $content-backgroun-color;
-    display: grid;
-    grid-template-columns: repeat(3, 3fr);
-    font-size: 13px;
-    color: $h2-color;
-    padding: 0 12px;
-    border-bottom: 1px $divider-color solid;
-    margin-bottom: 8px;
+    &:not(:last-child) {
+      margin-bottom: 16px;
+    }
 
-    .item {
-      display: flex;
-      flex-direction: column;
-      /*justify-content: space-around;*/
-      margin: 12px 0;
+    &-title {
+      color: $h3-color;
+      font-size: 13px;
+    }
 
-      .title {
-        font-size: 12px;
-        color: $h3-color;
-      }
+    &-val {
+      color: $h2-color;
+      font-size: 14px;
+    }
 
-      .val {
-        font-size: 14px;
-        color: $h2-color;
-        margin-top: 10px;
-      }
+    .main {
     }
   }
+}
 
-  .section {
-    background: $background-color;
+.recode-cell {
+  background: $content-backgroun-color;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 16px;
+  color: $h2-color;
+  font-size: 13px;
+  border-bottom: 1px $divider-color solid;
+}
+
+.order-recode-cell {
+  background: $content-backgroun-color;
+  display: grid;
+  grid-template-columns: repeat(3, 3fr);
+  font-size: 13px;
+  color: $h2-color;
+  padding: 0 12px;
+  border-bottom: 1px $divider-color solid;
+  margin-bottom: 8px;
+
+  .item {
+    display: flex;
+    flex-direction: column;
+    /*justify-content: space-around;*/
+    margin: 12px 0;
+
+    .title {
+      font-size: 12px;
+      color: $h3-color;
+    }
+
+    .val {
+      font-size: 14px;
+      color: $h2-color;
+      margin-top: 10px;
+    }
   }
+}
 
+.section {
+  background: $background-color;
+}
 </style>

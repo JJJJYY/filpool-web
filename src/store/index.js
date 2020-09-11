@@ -34,7 +34,7 @@ export default new Vuex.Store({
     reloadUserData(store) {
       let $ajax = isH5 ? ajaxH5 : ajax;
       getUserInfoApi().then(res => {
-        // console.log('loginInfo', res);
+        console.log('userData', res);
         if (res.data) {
           sessionStorage.setItem("userData", JSON.stringify(res.data));
           store.commit("setUserData", res.data);

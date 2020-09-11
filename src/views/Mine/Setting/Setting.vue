@@ -62,11 +62,12 @@ export default {
         confirmButtonColor: "#e49c3a",
       }).then(() => {
         logoutApi().then((res) => {
-          console.log(res);
-          window.localStorage.clear();
-          window.sessionStorage.clear();
-          this.$store.commit("setUserData", {});
-          this.$router.replace({ path: "/login" });
+          if (res.ret === 200) {
+            window.localStorage.clear();
+            window.sessionStorage.clear();
+            this.$store.commit("setUserData", {});
+            this.$router.replace({ path: "/login" });
+          }
         });
         // this.$http.get("/auth/logout").then(() => {
         //   window.localStorage.clear();

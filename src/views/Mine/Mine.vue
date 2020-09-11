@@ -84,7 +84,7 @@ export default {
     FootBox,
   },
   created() {
-    // console.log("vuex", ...mapState(["userData"]));
+    console.log(this.userData);
     // this.$store.dispatch('reloadUserData');
     this.loadTotalWeight();
   },
@@ -118,8 +118,8 @@ export default {
       }
     },
     loadTotalWeight() {
+      // 获取总算力
       myWeightApi().then((res) => {
-        console.log(res);
         this.totalWeight = res.data.totalWeight;
       });
       // this.$http

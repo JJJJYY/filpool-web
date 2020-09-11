@@ -2,7 +2,7 @@
   <div style="background: white; min-height: 100%">
     <head-nav></head-nav>
     <div class="header">
-      <img src="../../assets/img/transaction_details_icon_successful.png" alt="" class="icon">
+      <img src="../../assets/img/transaction_details_icon_successful.png" alt class="icon" />
       <div class="state">{{$route.query.statusDesc}}</div>
       <div class="amount">{{item.amount}} {{item.asset}}</div>
     </div>
@@ -28,116 +28,131 @@
         <div class="title">交易时间</div>
         <div class="content">{{item.createTime}}</div>
       </div>
-      <div class="qr" ref="qrCodeUrl"/>
+      <div class="qr" ref="qrCodeUrl" />
     </div>
     <div class="url" @click="toBlockExplore">到区块浏览器查询详细信息</div>
   </div>
 </template>
 
 <script>
-  import QRCode from "qrcodejs2";
-  import HeadNav from '@/components/HeadNav';
+import QRCode from "qrcodejs2";
+import HeadNav from "@/components/HeadNav";
 
-  export default {
-    name: "TopupExtractRecodeDetail",
-    components: {
-      HeadNav
+export default {
+  name: "TopupExtractRecodeDetail",
+  components: {
+    HeadNav,
+  },
+  data() {
+    return {
+      isTopUp: this.$route.query.isTopUp,
+      item: {},
+    };
+  },
+  created() {
+    console.log(this.$route.query.item);
+    console.log(this.$route.query);
+    this.loadData();
+  },
+  methods: {
+    loadData() {
+      // this.$http
+      //   .post(
+      //     this.$route.query.isTopUp
+      //       ? "/asset/getrechargeDetail"
+      //       : "/asset/getwithdrawDetail",
+      //     {
+      //       pid: this.$route.query.item.pid,
+      //     }
+      //   )
+      //   .then((response) => {
+      //     this.item = response.data;
+      //     this.createQr();
+      //   });
     },
-    data() {
-      return {
-        item: {}
-      }
+    addOrWithdrawal(data) {
+      return this.isTopUp === "true"
+        ? rechargeRecordApi(data)
+        : withdrawalApi(data);
     },
-    created() {
-      this.loadData()
+    toBlockExplore() {
+      window.location.href = `https://www.blockchain.com/eth/tx/${this.item.hash}`;
     },
-    methods: {
-      loadData() {
-        this.$http.post(this.$route.query.isTopUp ? '/asset/getrechargeDetail' : '/asset/getwithdrawDetail', {
-          pid: this.$route.query.item.pid
-        }).then((response) => {
-          this.item = response.data
-          this.createQr()
-        })
-      },
-      toBlockExplore() {
-        window.location.href = `https://www.blockchain.com/eth/tx/${this.item.hash}`
-      },
-      createQr() {
-        let url = `https://www.blockchain.com/eth/tx/${this.item.hash}`
-        new QRCode(this.$refs.qrCodeUrl, {
-          text: url,
-          width: 100,
-          height: 100,
-        })
-      }
-    }
-  }
+    createQr() {
+      let url = `https://www.blockchain.com/eth/tx/${this.item.hash}`;
+      new QRCode(this.$refs.qrCodeUrl, {
+        text: url,
+        width: 100,
+        height: 100,
+      });
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
-  @import "../../assets/scss/base";
+@import "../../assets/scss/base";
 
-  .header {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
-    .icon {
-      @include size(67px);
-      margin-top: 32px;
-    }
+  .icon {
+    @include size(67px);
+    margin-top: 32px;
+  }
 
-    .state {
+  .state {
+    color: $h3-color;
+    font-size: 13px;
+    margin-top: 8px;
+  }
+
+  .amount {
+    color: $main-color;
+    font-size: 22px;
+    font-weight: bold;
+    margin-top: 14px;
+  }
+}
+
+.hr {
+  border-bottom: 1px $divider-color dashed;
+  margin: 22px 16px 0;
+}
+
+.detail {
+  padding: 0 18px;
+  position: relative;
+
+  .row {
+    margin-top: 18px;
+    max-width: 75%;
+
+    .title {
       color: $h3-color;
       font-size: 13px;
-      margin-top: 8px;
     }
 
-    .amount {
-      color: $main-color;
-      font-size: 22px;
-      font-weight: bold;
-      margin-top: 14px;
+    .content {
+      margin-top: 10px;
+      color: $h2-color;
+      font-size: 14px;
     }
   }
 
-  .hr {
-    border-bottom: 1px $divider-color dashed;
-    margin: 22px 16px 0;
+  .qr {
+    position: absolute;
+    right: 16px;
+    bottom: -56px;
   }
+}
 
-  .detail {
-    padding: 0 18px;
-    position: relative;
-
-    .row {
-      margin-top: 18px;
-      max-width: 75%;
-
-      .title {
-        color: $h3-color;
-        font-size: 13px;
-      }
-
-      .content {
-        margin-top: 10px;
-        color: $h2-color;
-        font-size: 14px;
-      }
-    }
-
-    .qr {
-      position: absolute;
-      right: 16px;
-      bottom: -56px;
-    }
-  }
-
-  .url {
-    color: $main-color;
-    font-size: 12px;
-    text-align: center;
-    margin-top: 80px;
-  }
+.url {
+  color: $main-color;
+  font-size: 12px;
+  text-align: center;
+  margin-top: 80px;
+}
 </style>

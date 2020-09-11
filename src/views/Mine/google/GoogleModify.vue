@@ -10,137 +10,142 @@
       </div>
       <div class="stepBox">
         <div class="stepItem" :class="{active: stepIndex === 1}">
-        <span class="icon" :class="{active: stepIndex >1}">
-          <span v-if="stepIndex <= 1">1</span>
-          <van-icon v-else name="success" size="13px" color="#E49C3A" />
-        </span>
+          <span class="icon" :class="{active: stepIndex >1}">
+            <span v-if="stepIndex <= 1">1</span>
+            <van-icon v-else name="success" size="13px" color="#E49C3A" />
+          </span>
           <span class="stepText">验证谷歌验证码</span>
         </div>
         <div class="stepItem" :class="{active: stepIndex === 2}">
-        <span class="icon" :class="{active: stepIndex >2}">
-          <span v-if="stepIndex <= 2">2</span>
-          <van-icon v-else name="success" size="13px" color="#E49C3A" />
-        </span>
+          <span class="icon" :class="{active: stepIndex >2}">
+            <span v-if="stepIndex <= 2">2</span>
+            <van-icon v-else name="success" size="13px" color="#E49C3A" />
+          </span>
           <span class="stepText">添加秘钥并备份</span>
         </div>
         <div class="stepItem" :class="{active: stepIndex === 3}">
-        <span class="icon" :class="{active: stepIndex >3}">
-          <span v-if="stepIndex <= 3">3</span>
-          <van-icon v-else name="success" size="13px"  color="#E49C3A" />
-        </span>
+          <span class="icon" :class="{active: stepIndex >3}">
+            <span v-if="stepIndex <= 3">3</span>
+            <van-icon v-else name="success" size="13px" color="#E49C3A" />
+          </span>
           <span class="stepText">绑定验证</span>
         </div>
       </div>
-      <component :is="middleComponent" @setStep="setStep" actionType="modify" :googleInfo="googleInfo"></component>
+      <component
+        :is="middleComponent"
+        @setStep="setStep"
+        actionType="modify"
+        :googleInfo="googleInfo"
+      ></component>
     </div>
   </div>
 </template>
 
 <script>
-  import { Icon } from 'vant';
-  import GoogleCheck from './GoogleCheck';
-  import Step2 from './Step2';
-  import Step3 from './Step3';
-  import HeadNav from "@/components/HeadNav";
-  export default {
-    name: "GoogleModify",
-    components: {
-      HeadNav,
-      'van-icon': Icon,
-      Step1: GoogleCheck,
-      Step2,
-      Step3
+import { Icon } from "vant";
+import GoogleCheck from "./GoogleCheck";
+import Step2 from "./Step2";
+import Step3 from "./Step3";
+import HeadNav from "@/components/HeadNav";
+export default {
+  name: "GoogleModify",
+  components: {
+    HeadNav,
+    "van-icon": Icon,
+    Step1: GoogleCheck,
+    Step2,
+    Step3,
+  },
+  data() {
+    return {
+      stepIndex: 1,
+      middleComponent: "Step1",
+      googleInfo: {},
+    };
+  },
+  mounted() {
+    this.$el.style.height = document.documentElement.clientHeight + "px";
+  },
+  methods: {
+    setStep(index, data) {
+      this.stepIndex = index;
+      this.middleComponent = `Step${index}`;
+      this.googleInfo = data;
     },
-    data() {
-      return {
-        stepIndex: 1,
-        middleComponent: "Step1",
-        googleInfo: {}
-      }
-    },
-    mounted() {
-      this.$el.style.height=document.documentElement.clientHeight + 'px'
-    },
-    methods: {
-      setStep (index, data) {
-        this.stepIndex = index;
-        this.middleComponent = `Step${index}`;
-        this.googleInfo = data;
-      }
-    }
-  }
+  },
+};
 </script>
 
 <style lang="scss" scoped>
-  @import "~@/assets/scss/base.scss";
-  @import "~@/assets/scss/form.scss";
-  .GoogleModify {
-    padding: 0 16px;
-    box-sizing: border-box;
-    background-color: #fff;
-    height: $pageHeight;
-    font-size: 12px;
-    line-height: 18px;
-    position: relative;
-  }
-  .title{
-    font-size: 16px;
-    color: #24375E;
-    text-align: center;
-    padding: 16px 0;
-  }
-  .explain{
-    padding: 7px 14px;
-    background-color: #DDDDDD;
-    border-radius:5px;
-    color: #86929D;
-    font-size: 12px;
-    line-height: 16px;
-  }
-  .stepBox{
-    margin: 25px 0;
+@import "~@/assets/scss/base.scss";
+@import "~@/assets/scss/form.scss";
+.GoogleModify {
+  padding: 0 16px;
+  box-sizing: border-box;
+  background-color: #fff;
+  height: $pageHeight;
+  font-size: 12px;
+  line-height: 18px;
+  position: relative;
+}
+.title {
+  font-size: 16px;
+  color: #24375e;
+  text-align: center;
+  padding: 16px 0;
+}
+.explain {
+  padding: 7px 14px;
+  background-color: #dddddd;
+  border-radius: 5px;
+  color: #86929d;
+  font-size: 12px;
+  line-height: 16px;
+}
+.stepBox {
+  margin: 25px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  .stepItem {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    .stepItem{
-      display: flex;
-      align-items: center;
-      .icon{
-        display: inline-block;
-        width: 12px;
-        height: 12px;
-        padding: 2px;
-        border: 1px solid #ddd;
-        border-radius: 50%;
-        text-align: center;
-        line-height: 12px;
-        margin-right: 8px;
-        font-size: 12px;
-        &.active{
-          border-color: #E49C3A;
-        }
+    .icon {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      padding: 2px;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      text-align: center;
+      line-height: 12px;
+      margin-right: 8px;
+      font-size: 12px;
+      &.active {
+        border-color: #e49c3a;
       }
-      .stepText{
-        font-size: 11px;
-        color: #86929D;
+    }
+    .stepText {
+      font-size: 11px;
+      color: #86929d;
+    }
+    &.active {
+      color: #fff;
+      .icon {
+        background-color: $main-color;
+        border: none;
       }
-      &.active{
-        color: #fff;
-        .icon{
-          background-color: $main-color;
-          border: none;
-        }
-        .stepText{
-          color: $main-color;
-        }
+      .stepText {
+        color: $main-color;
       }
     }
   }
-  .btnBox{
-    position: absolute;
-    bottom: 34px;
-    left: 0;
-    right: 0;
-    text-align: center;
-  }
+}
+.btnBox {
+  position: absolute;
+  bottom: 34px;
+  left: 0;
+  right: 0;
+  text-align: center;
+}
 </style>
