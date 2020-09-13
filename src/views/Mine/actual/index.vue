@@ -36,6 +36,7 @@
           }
         },
         created() {
+          console.log(this.userData);
           this.$store.dispatch("refreshUserData");
         },
       methods: {

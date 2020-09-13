@@ -78,3 +78,17 @@ export function bindGaApi(data) {
 export function checkOldGaApi(data) {
   return postRequest('App.AuthUser.CheckOldGa', data)
 }
+
+// 修改支付密码
+export function modifyPayPwdApi(data) {
+  return postRequest('App.AuthUser.ModifyPayPwd', data)
+}
+// 获取实名信息
+export function userIdInfoApi(data) {
+  return postRequest('App.UserIdInfo.Get', data)
+}
+
+// 提交实名
+export function submitUserIdInfoApi(data) {
+  return postRequest('App.UserIdInfo.Submit', data);
+}

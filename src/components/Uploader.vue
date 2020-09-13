@@ -57,6 +57,7 @@
         });
       },
       openAcsheel() {
+        // console.log('ssss')
         let actions = [{
           title: "拍照"
         }, {
@@ -124,7 +125,10 @@
       },
       uploadByPlus(path) {
         this.loading = true;
-        let task = window.plus.uploader.createUpload( `${serviceURL}/setting/upload`,{blocksize: 2000}, ( t, status ) => {
+        let task = window.plus.uploader.createUpload( 
+          `${serviceURL}/setting/upload`,
+          {blocksize: 2000}, 
+          ( t, status ) => {
             let resData = JSON.parse(t.responseText);
             this.loading = false;
             // 上传完成

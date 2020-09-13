@@ -13,7 +13,19 @@
         <div class="form-input">
           <input type="password" v-model="password2" placeholder="再次输入资金密码">
         </div>
-
+      </div>
+      <div class="form-item">
+        <div class="form-title">图像验证码</div>
+        <div class="form-input">
+          <input type="text" title placeholder="请输入图像验证码" v-model="imgCode" />
+          <div
+            @click="getImgCode"
+            class="suffix-btn"
+            style="background: transparent; align-self: center; padding: 0;"
+          >
+            <img :src="imgCodeUrl" alt style="max-width: 120px;" />
+          </div>
+        </div>
       </div>
       <div class="form-item">
         <div class="form-title">{{isPhone?'手机号码':'原邮箱'}}({{isPhone?userData.phone:userData.email}})</div>
@@ -39,6 +51,8 @@
   import {Toast} from "vant";
   import md5 from 'md5';
   import HeadNav from '@/components/HeadNav';
+  import { modifyPayPwdApi, authSendApi } from '@/net/api/userInfoApi'
+
   export default {
     name: "SecurityTransPwd",
     components: {
@@ -55,51 +69,93 @@
         interval1: 60,
         sendding2: false,
         interval2: 60,
+        imgCode: "", // 图片验证码
+        imgCodeUrl: "",
       }
     },
     computed: {
       ...mapState(["userData"]),
       isPhone () {
-        return this.userData.defaultAccount === 0
+        return this.userData.phone === 0
       }
     },
+    created() {
+      console.log(this.userData)
+      this.getImgCode();
+    },
     methods: {
+      getImgCode() {
+        let newTime = new Date().getTime();
+        this.imgCodeUrl = `/public/ImageCode.php?uuid=${newTime}`;
+      },
       /*旧手机或邮箱发送验证码*/
       sendCode1 () {
         this.sendding1 = true;
-        this.$http.post('/message/send', {
-          type: this.isPhone?"phone":"email",
-          option: '/setting/modify/pay_pwd',
-        }).then(() => {
-          Toast('验证码已发送请注意查收');
-          let timer = setInterval(() => {
-            if (this.interval1 > 0) {
-              this.interval1 = --this.interval1;
-            } else {
-              this.sendding1 = false;
-              clearInterval(timer);
-            }
-          }, 1000);
+        const postData = {
+          type: this.isPhone ? "phone":"email",
+          imageCaptcha: this.imgCode,
+        }
+        authSendApi(postData).then(res =>{
+          console.log(res);
+          if (res.ret === 200) {
+            Toast('验证码已发送请注意查收');
+            let timer = setInterval(() => {
+              if (this.interval1 > 0) {
+                this.interval1 = --this.interval1;
+              } else {
+                this.sendding1 = false;
+                clearInterval(timer);
+              }
+            }, 1000);
+          }
         }).catch(() => {
           this.sendding1 = false;
         });
+        // this.$http.post('/message/send', {
+        //   type: this.isPhone?"phone":"email",
+        //   option: '/setting/modify/pay_pwd',
+        // }).then(() => {
+        //   Toast('验证码已发送请注意查收');
+        //   let timer = setInterval(() => {
+        //     if (this.interval1 > 0) {
+        //       this.interval1 = --this.interval1;
+        //     } else {
+        //       this.sendding1 = false;
+        //       clearInterval(timer);
+        //     }
+        //   }, 1000);
+        // }).catch(() => {
+        //   this.sendding1 = false;
+        // });
       },
       submit () {
         if (this.password !== this.password2) {
           Toast("两次输入的密码不一致");
           return;
         }
-        this.$http.post('/setting/modify/pay_pwd', {
-          phoneCaptcha: this.phoneCaptcha,
+        const postData = { 
           payPwd: md5(this.password),
           gaCaptcha: this.gaCaptcha,
-          phone: this.userData.phone,
-          email: this.userData.email,
-          type: this.isPhone?'phone':'email'
-        }).then(() => {
-          Toast("修改成功");
-          this.$router.goBack();
+          code: this.phoneCaptcha,
+        }
+        modifyPayPwdApi(postData).then(res => {
+          console.log(res);
+          if(res.ret === 200) {
+            Toast("修改成功");
+            this.$router.goBack();
+          }
         })
+        // this.$http.post('/setting/modify/pay_pwd', {
+        //   phoneCaptcha: this.phoneCaptcha,
+        //   payPwd: md5(this.password),
+        //   gaCaptcha: this.gaCaptcha,
+        //   phone: this.userData.phone,
+        //   email: this.userData.email,
+        //   type: this.isPhone?'phone':'email'
+        // }).then(() => {
+        //   Toast("修改成功");
+        //   this.$router.goBack();
+        // })
       }
     }
   }

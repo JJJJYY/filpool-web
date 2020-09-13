@@ -39,6 +39,7 @@
     import { Toast, Icon, Button } from 'vant';
     import AreaSelect from "@/views/Login/AreaSelect";
     import Uploader from '@/components/Uploader';
+    import { submitUserIdInfoApi } from '../../../net/api/userInfoApi'
     export default {
       name: "Actual",
       components: {
@@ -102,6 +103,12 @@
             Toast("请填写完整信息");
             return;
           }
+          // const postData = {
+            
+          // }
+          // submitUserIdInfoApi().then(res => {
+          //   console.log(res)
+          // })
           this.$http.post('/setting/submitInfo', {
             country: this.areaCode,
             realName: this.realName,
