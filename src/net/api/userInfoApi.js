@@ -84,11 +84,28 @@ export function modifyPayPwdApi(data) {
   return postRequest('App.AuthUser.ModifyPayPwd', data)
 }
 // 获取实名信息
-export function userIdInfoApi(data) {
-  return postRequest('App.UserIdInfo.Get', data)
+export function userIdInfoApi() {
+  return postRequest('App.UserIdInfo.Get')
 }
 
 // 提交实名
 export function submitUserIdInfoApi(data) {
   return postRequest('App.UserIdInfo.Submit', data);
+}
+// 获取七牛服务token
+export function getTokenApi() {
+  return postRequest('App.Qiniu.Token');
+}
+// 调用上传图片
+export function filePictureApi(data, baseUrl) {
+  return postRequest('', data, baseUrl);
+}
+
+// 提现
+export function withdrawalCurrencyApi(data) {
+  return postRequest('App.Balance.Withdrawal', data)
+}
+// 内部转账
+export function internalTransferApi(data) {
+  return postRequest('App.Balance.InternalTransfer', data)
 }

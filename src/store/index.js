@@ -8,6 +8,9 @@ import {
 import {
   getUserInfoApi
 } from '../net/api/loginApi'
+import {
+  userIdInfoApi
+} from '../net/api/userInfoApi'
 
 Vue.use(Vuex);
 
@@ -54,12 +57,12 @@ export default new Vuex.Store({
     },
     refreshUserData(store) {
       let $ajax = isH5 ? ajaxH5 : ajax;
-      return $ajax.get("/auth/refreshLoginInfo").then(response => {
-        if (response.data && response.data.content) {
-          sessionStorage.setItem("userData", JSON.stringify(response.data.content));
-          store.commit("setUserData", response.data.content);
-        }
-      })
+      // return $ajax.get("/auth/refreshLoginInfo").then(response => {
+      //   if (response.data && response.data.content) {
+      //     sessionStorage.setItem("userData", JSON.stringify(response.data.content));
+      //     store.commit("setUserData", response.data.content);
+      //   }
+      // })
     }
   },
   modules: {}

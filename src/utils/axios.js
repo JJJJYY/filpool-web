@@ -27,12 +27,13 @@ axios.interceptors.request.use(config => {
 axios.interceptors.response.use(response => {
     if (response.config.url.includes('/public/')) {
       if (response.data.ret !== 200) {
-        Toast(response.data.msg);
         return Promise.reject(response);
       }
       return Promise.resolve(response);
     }
-
+    if (response.config.url.includes('up-z2')) {
+      return Promise.resolve(response);
+    }
 
 
     if (response.status === 200) {

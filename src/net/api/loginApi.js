@@ -26,3 +26,7 @@ export function sendApi(data) {
 export function ByChannelApi(data) {
   return postRequest('App.Channel.GetByChannel', data);
 }
+// 重置密码
+export function resetPasswordApi(data) {
+  return postRequest('App.AuthUser.ResetPassword', data);
+}
