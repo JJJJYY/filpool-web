@@ -5,7 +5,7 @@
       <div class="cell" v-for="(x, i) in list" :key="i" @click="detail(x)">
         <div class="item" style="align-items: flex-start;">
           <div class="key">数量</div>
-          <div class="val">{{x.amount}}</div>
+          <div class="val">{{x.amount | parseFloatFilter}}</div>
         </div>
         <div class="item" style="align-items: center;">
           <div class="key">状态</div>
@@ -110,6 +110,7 @@ export default {
       return dayjs(date).format("MM-DD HH:mm:ss");
     },
     detail(item) {
+      console.log(item);
       this.$router.push({
         path: "/topupExtractRecodeDetail",
         query: {

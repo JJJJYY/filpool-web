@@ -6,7 +6,7 @@
         <div class="list page-container" style="margin-top: 1px;">
           <div class="cell" v-for="(x, index) in list" :key="index" @click="detail(x)">
             <div class="type">{{typeDescription(x.type)}}</div>
-            <div class="total">{{x.quantity}} TB</div>
+            <div class="total">{{x.quantity | parseFloatFilter}} TB</div>
             <div class="detail">明细</div>
           </div>
         </div>

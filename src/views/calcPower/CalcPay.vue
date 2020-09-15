@@ -3,7 +3,7 @@
     <head-nav></head-nav>
     <div class="payinfo">
       <span class="pay-title">订单金额</span>
-      <p class="amount">$ {{$route.query.amount || 0}} USDT</p>
+      <p class="amount">$ {{$route.query.amount | parseFloatFilter }} USDT</p>
       <div class="time">
         倒计时
         <van-count-down style="display: inline-block;" :time="time" />
@@ -12,7 +12,7 @@
       <div class="hr"></div>
       <div class="pay-type-list">
         <img src="../../assets/img/pay_icon_usdt.png" alt class="icon" />
-        <p class="pay-type-name">USDT支付(余额 {{usdt.available}} USDT)</p>
+        <p class="pay-type-name">USDT支付(余额 {{usdt.available | parseFloatFilter}} USDT)</p>
         <img src="../../assets/img/pay_icon_ok.png" alt />
       </div>
     </div>

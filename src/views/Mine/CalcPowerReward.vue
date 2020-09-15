@@ -4,7 +4,7 @@
     <div class="page-container">
       <div class="cell" v-for="(x, index) in list" :key="index">
         <div class="name">{{x.relatedName | nameInfo}}</div>
-        <div class="amount">{{x.quantity}} {{x.unit}}</div>
+        <div class="amount">{{x.quantity | parseFloatFilter}} {{x.unit}}</div>
         <div class="time">{{x.createTimeByDate | formatDate}}</div>
         <div class="type">{{$route.query.typeDescription}}</div>
       </div>

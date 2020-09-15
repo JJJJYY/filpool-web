@@ -4,17 +4,17 @@
     <div class="header">
       <img src="../../assets/img/transaction_details_icon_successful.png" alt class="icon" />
       <div class="state">{{$route.query.statusDesc}}</div>
-      <div class="amount">{{item.amount}} {{item.asset}}</div>
+      <div class="amount">{{item.amount | parseFloatFilter}} {{item.asset}}</div>
     </div>
     <div class="hr"></div>
     <div class="detail">
       <div class="row">
         <div class="title">类型</div>
-        <div class="content">{{$route.query.isTopUp ? '充币' : '提币'}}</div>
+        <div class="content">{{$route.query.isTopUp === 'ture' ? '充币' : '提币'}}</div>
       </div>
       <div class="row">
         <div class="title">充币地址</div>
-        <div class="content">{{item.formAddress || '---'}}</div>
+        <div class="content">{{item.fromAddress || '---'}}</div>
       </div>
       <div class="row">
         <div class="title">提币地址</div>
@@ -53,7 +53,10 @@ export default {
     this.loadData();
   },
   methods: {
-    loadData() {},
+    loadData() {
+      this.item = this.$route.query.item;
+      console.log(this.$route.query.item);
+    },
     addOrWithdrawal(data) {
       return this.isTopUp === "true"
         ? rechargeRecordApi(data)

@@ -42,7 +42,7 @@
       <br />
       3、最小充值数量: {{currAssetInfo.minDeposit || 0}} {{currAsset.asset}} , 小于最小数量的充值将不会上账目无法退回。
       <br />
-      4、手续费：{{currAsset.minFee}} {{currAsset.asset}}。
+      4、手续费：{{currAsset.minFee | parseFloatFilter}} {{currAsset.asset}}。
       <br />5、请务必确认电脑及浏览器安全,防止信息被簒改或泄露。
     </div>
   </div>

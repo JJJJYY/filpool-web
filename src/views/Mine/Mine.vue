@@ -15,7 +15,7 @@
         </div>
         <div class="hr"></div>
         <div class="total">
-          <div class="total-val">总算力: {{totalWeight}}TB</div>
+          <div class="total-val">总算力: {{totalWeight | parseFloatFilter}}TB</div>
           <div style="flex: 1;"></div>
           <router-link :to="{path: '/rate'}" class="to-buy" style="margin-left: 4px;">
             <img

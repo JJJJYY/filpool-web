@@ -10,15 +10,15 @@
     <div class="amount">
       <div class="amount-total">
         <div class="amount-title">总资产</div>
-        <div class="amount-value">{{getTotal(item)}}</div>
+        <div class="amount-value">{{getTotal(item) | parseFloatFilter}}</div>
       </div>
       <div class="amount-total">
         <div class="amount-title">可用</div>
-        <div class="amount-value">{{item.available}}</div>
+        <div class="amount-value">{{item.available | parseFloatFilter}}</div>
       </div>
       <div class="amount-total">
         <div class="amount-title">冻结余额</div>
-        <div class="amount-value">{{item.frozen}}</div>
+        <div class="amount-value">{{item.frozen | parseFloatFilter}}</div>
       </div>
     </div>
     <div class="hr"></div>
