@@ -38,24 +38,24 @@ export default {
     getDetail() {
       console.log(this.$route.query.type);
       let type = this.$route.query.type;
-      let postData = {
+      let apiData = {
         id: this.id,
       };
       // 公告列表跳转
       if (type === "4") {
-        getNoticeDetailListApi(getData).then((res) => {
+        getNoticeDetailListApi(apiData).then((res) => {
           this.title = res.data.title;
           this.content = res.data.content;
         });
       } else if (type === "3") {
         //帮助中心列表跳转
-        helpInfoDetailApi(postData).then((res) => {
+        helpInfoDetailApi(apiData).then((res) => {
           this.title = res.data.title;
           this.content = res.data.content;
         });
       } else if (type === "1") {
         // 小课堂&项目动态
-        advertisementInfoDetail(postData).then((res) => {
+        advertisementInfoDetail(apiData).then((res) => {
           this.title = res.data.title;
           this.content = res.data.content;
         });
