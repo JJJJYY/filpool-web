@@ -34,13 +34,10 @@ Vue.directive("onlyNumber", onlyNumber);
 Vue.directive("scrollShow", scrollShow);
 
 VueRouter.prototype.goBack = function () {
-  // console.log('main', this);
   this.isBack = true;
   window.history.go(-1);
 };
 router.beforeEach((to, from, next) => {
-  console.log(to);
-  console.log(store.state.userData);
   // let isLogin = to.meta.path === '/login' && store.state.userData.id;
   if (to.meta.needLogin && !store.state.userData.id) {
     router.push({

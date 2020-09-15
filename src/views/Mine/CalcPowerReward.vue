@@ -36,19 +36,9 @@ export default {
   },
   methods: {
     loadData() {
-      console.log(this.$route.query);
       myWeightApi({ type: this.$route.query.type }).then((res) => {
-        console.log(res);
         this.list = res.data.details || [];
       });
-      // this.$http
-      //   .get("/distribution/myWeight", {
-      //     type: this.$route.query.type,
-      //   })
-      //   .then((response) => {
-      //     console.log(response);
-      //     this.list = response.content.details || [];
-      //   });
     },
   },
   filters: {
@@ -59,7 +49,6 @@ export default {
       return formatDate(val, "yyyy-MM-dd hh:mm:ss");
     },
     nameInfo: function (val) {
-      console.log(val);
       if (!val) {
         return "其他";
       } else {

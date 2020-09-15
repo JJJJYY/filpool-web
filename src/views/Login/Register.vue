@@ -140,9 +140,6 @@ export default {
     };
   },
   created() {
-    /// 设置Cookie
-    //this.$cookies.set('APP_COOKIE', `${v4()}`)
-    //setCookie("APP_COOKIE", Math.random().toString());
     this.uuid = "";
     this.getImgCode();
     if (isH5) {
@@ -150,9 +147,7 @@ export default {
     }
   },
   watch: {
-    imgCodeUrl: function () {
-      // this.$cookies.remove('APP_COOKIE')
-    },
+    imgCodeUrl: function () {},
   },
   methods: {
     checkChannel() {
@@ -162,28 +157,13 @@ export default {
       };
       ByChannelApi(postData).then((res) => {
         if (res.data) {
-          console.log(res);
           this.channelData = res.data;
           this.showChannelModal = true;
         }
       });
-      // this.$http
-      //   .post("/general/access/getByChannel", { channel: channel })
-      //   .then((res) => {
-      //     console.log(res);
-      //     if (res.data.data.length > 0) {
-      //       this.channelData = res.data.data[0];
-      //       this.showChannelModal = true;
-      //     }
-      //   });
     },
     closeChannelModal() {
       this.showChannelModal = false;
-      // let channel = this.$route.query.channel;
-      // this.$http.post("/general/access/download", {
-      //   channel: channel,
-      //   uuid: this.channelData.id,
-      // });
     },
     submit() {
       if (this.account.length === 0) {
@@ -256,32 +236,11 @@ export default {
       };
       sendApi(postData)
         .then((res) => {
-          console.log(res);
           if (res.ret === 200) {
             this.startTimer();
           }
         })
         .catch((err) => {});
-      // this.$http
-      //   .post(
-      //     `/message/access/send?uuid=${this.uuid}`,
-      //     {
-      //       areaCode: this.countryInfo.code,
-      //       phone: this.isMobileType ? this.account : null,
-      //       imageCaptcha: this.imgCode,
-      //       type: this.isMobileType ? "phone" : "email",
-      //       email: this.isMobileType ? null : this.account,
-      //     },
-      //     {
-      //       headers: {
-      //         APP_COOKIE: getCookie("APP_COOKIE"),
-      //       },
-      //     }
-      //   )
-      //   .then((data) => {
-      //     this.startTimer();
-      //     console.log(data);
-      //   });
     },
     /*设置国家*/
     setCountry(item) {

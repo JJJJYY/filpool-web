@@ -44,7 +44,6 @@ export default {
       };
       bindGaApi(postData).then((res) => {
         if (res.ret === 200) {
-          console.log(res);
           let text = this.actionType === "modify" ? "修改成功" : "绑定成功";
           Toast(text);
           this.$store.dispatch("reloadUserData");
@@ -53,22 +52,6 @@ export default {
           });
         }
       });
-      // let url =
-      //   this.actionType === "modify"
-      //     ? "/setting/ga/rebind"
-      //     : "/setting/bind_ga/check";
-      // this.$http
-      //   .post(url, {
-      //     captcha: this.gaCaptcha,
-      //   })
-      //   .then(() => {
-      //     let text = this.actionType === "modify" ? "修改成功" : "绑定成功";
-      //     Toast(text);
-      //     this.$store.dispatch("reloadUserData");
-      //     this.$router.push({
-      //       path: "/securityCenter",
-      //     });
-      //   });
     },
   },
 };

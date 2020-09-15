@@ -85,7 +85,6 @@ export default {
         quantity: item.amount,
       };
       orderApi(postData).then((res) => {
-        console.log(res);
         if (res.ret === 200) {
           this.$router.push({
             path: "/countPay",
@@ -96,21 +95,6 @@ export default {
           });
         }
       });
-      // this.$http
-      //   .post("/purchase/order", {
-      //     asset: "USDT",
-      //     id: item.id,
-      //     quantity: item.amount,
-      //   })
-      //   .then((response) => {
-      //     this.$router.push({
-      //       path: "/countPay",
-      //       query: {
-      //         amount: item.price * item.amount,
-      //         id: response.content.id,
-      //       },
-      //     });
-      //   });
     },
     onRefresh() {
       getGoodListApi()
@@ -118,12 +102,6 @@ export default {
           this.list = res.data;
         })
         .finally(() => (this.refreshing = false));
-      // this.$http
-      //   .get("/purchase/access/goodsList")
-      //   .then(response => {
-      //     this.list = response.data;
-      //   })
-      //   .finally(() => (this.refreshing = false));
     },
   },
   beforeDestroy() {

@@ -66,21 +66,6 @@ export default {
           }
         });
       });
-      // this.$http
-      //   .post("/message/access/public/notice", {
-      //     pageNo: 1,
-      //     pageSize: 10,
-      //   })
-      //   .then((res) => {
-      //     console.log("", res);
-      //     // console.log(res);
-      //     this.notices = res.data.content;
-      //     this.$nextTick(() => {
-      //       if (this.$refs.noticesSwiper) {
-      //         this.$refs.noticesSwiper.swiperInstance.loopCreate();
-      //       }
-      //     });
-      //   });
     },
     handleClick(index) {
       let item = this.notices[index];

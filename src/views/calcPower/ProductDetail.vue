@@ -54,14 +54,8 @@ export default {
         id: rateId,
       };
       goodGetApi(postData).then((res) => {
-        console.log(res);
         this.detailInfo = res.data;
       });
-      // this.$http
-      //   .get("/purchase/access/goodsDetails", { id: rateId })
-      //   .then((res) => {
-      //     this.detailInfo = res.data;
-      //   });
     },
     buySubmit(item) {
       /// 确认订单
@@ -73,7 +67,6 @@ export default {
         quantity: item.amount,
       };
       orderApi(postData).then((res) => {
-        console.log(res);
         if (res.ret === 200) {
           this.$router.push({
             path: "/countPay",
@@ -84,21 +77,6 @@ export default {
           });
         }
       });
-      // this.$http
-      //   .post("/purchase/order", {
-      //     asset: "USDT",
-      //     id: item.id,
-      //     quantity: item.amount,
-      //   })
-      //   .then((response) => {
-      //     this.$router.push({
-      //       path: "/countPay",
-      //       query: {
-      //         amount: item.price * item.amount,
-      //         id: response.content.id,
-      //       },
-      //     });
-      //   });
     },
     onSelect(item) {
       this.selectedItem = Object.assign({}, item);

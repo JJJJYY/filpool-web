@@ -71,14 +71,6 @@ export default {
         this.list = res.data;
         this.listData = res.data;
       });
-      // this.$http
-      //   .get("/purchase/myOrderList", {
-      //     status: this.items[this.selectedIndex].type,
-      //   })
-      //   .then((response) => {
-      //     console.log(response);
-      //     this.list = response.data;
-      //   });
     },
     stateStr(state) {
       switch (state) {

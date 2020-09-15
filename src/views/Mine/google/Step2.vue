@@ -61,11 +61,6 @@ export default {
             this.gaSecret = res.data;
             resolve();
           });
-          // this.$http.get("/setting/ga").then((res) => {
-          //   console.log(res);
-          //   this.gaSecret = res.content;
-          //   resolve();
-          // });
         }
       });
     },

@@ -9,24 +9,20 @@
           <div class="form-item">
             <div class="form-title">设置密码</div>
             <div class="form-input">
-              <input
-                :type="enablePwd ? 'text' : 'password'"
-                placeholder="请设置新密码"
-                v-model="pwd"
-              />
+              <input :type="enablePwd ? 'text' : 'password'" placeholder="请设置新密码" v-model="pwd" />
               <img
                 v-if="!enablePwd"
                 class="security"
                 src="../../assets/img/login/change_password_icon_open_eye.png"
                 style="width: 18px;"
-                alt=""
+                alt
                 @click="enablePwd = true"
               />
               <img
                 v-else
                 class="security"
                 src="../../assets/img/login/enter_open_eye.png"
-                alt=""
+                alt
                 @click="enablePwd = false"
               />
             </div>
@@ -34,24 +30,20 @@
           <div class="form-item">
             <div class="form-title">确认密码</div>
             <div class="form-input">
-              <input
-                :type="enablePwd2 ? 'text' : 'password'"
-                placeholder="请再次确认密码"
-                v-model="pwd2"
-              />
+              <input :type="enablePwd2 ? 'text' : 'password'" placeholder="请再次确认密码" v-model="pwd2" />
               <img
                 v-if="!enablePwd2"
                 class="security"
                 src="../../assets/img/login/change_password_icon_open_eye.png"
                 style="width: 18px;"
-                alt=""
+                alt
                 @click="enablePwd2 = true"
               />
               <img
                 v-else
                 class="security"
                 src="../../assets/img/login/enter_open_eye.png"
-                alt=""
+                alt
                 @click="enablePwd2 = false"
               />
             </div>
@@ -74,14 +66,14 @@ export default {
   name: "ResetPwd",
   components: {
     HeadNav,
-    LoginBackground
+    LoginBackground,
   },
   data() {
     return {
       pwd: "",
       enablePwd: false,
       pwd2: "",
-      enablePwd2: false
+      enablePwd2: false,
     };
   },
   methods: {
@@ -98,7 +90,7 @@ export default {
         reqObj = {
           areaCode: querys.areaCode,
           phone: querys.account,
-          phoneCaptcha: querys.code
+          phoneCaptcha: querys.code,
         };
       } else {
         reqObj = { email: querys.account, emailCaptcha: querys.code };
@@ -106,24 +98,14 @@ export default {
       const postData = {
         account: this.$route.query.account,
         password: md5(this.pwd),
-        code: this.$route.query.code
+        code: this.$route.query.code,
       };
-      resetPasswordApi(postData).then(res => {
-        console.log(res);
+      resetPasswordApi(postData).then((res) => {
         Toast("密码重置成功");
         this.$router.replace({ path: "/login" });
       });
-      // this.$http
-      //   .post("/auth/access/reset", {
-      //     ...reqObj,
-      //     password: md5(this.pwd)
-      //   })
-      //   .then(() => {
-      //     Toast("密码重置成功");
-      //     this.$router.replace({ path: "/login" });
-      //   });
-    }
-  }
+    },
+  },
 };
 </script>
 

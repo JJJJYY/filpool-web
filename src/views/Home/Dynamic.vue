@@ -55,30 +55,6 @@ export default {
         })
         .catch(() => (this.finished = true))
         .finally(() => (this.loading = false));
-      // this.$http
-      //   .post("/message/getInfoList", {
-      //     type: 2,
-      //     pageNo: this.page,
-      //     pageSize: 10,
-      //   })
-      //   .then((response) => {
-      //     let resArr = response.data || [];
-      //     let dv = document.createElement("div");
-      //     let newList = resArr.map((item) => {
-      //       dv.innerHTML = item.content;
-      //       item.simpleContent =
-      //         (dv.firstChild && dv.firstChild.innerText) || item.content;
-      //       return item;
-      //     });
-
-      //     this.list = this.page === 1 ? newList : this.list.concat(newList);
-      //     this.page += 1;
-      //     this.finished = newList.length === 0;
-      //   })
-      //   .catch(() => (this.finished = true))
-      //   .finally(() => {
-      //     this.loading = false;
-      //   });
     },
     detail(item) {
       this.$router.push({

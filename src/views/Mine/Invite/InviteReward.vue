@@ -102,9 +102,6 @@ export default {
           this.item = res.data;
         }
       });
-      // this.$http.get("/distribution/detail").then((response) => {
-      //   this.item = response.content;
-      // });
     },
     loadInviteRecodeData() {
       inviteRecordApi().then((res) => {
@@ -112,20 +109,13 @@ export default {
           this.inviteList = res.data;
         }
       });
-      // this.$http.get("/distribution/inviteRecord").then((response) => {
-      //   this.inviteList = response.content.content;
-      // });
     },
     loadOrderRecodeData() {
       rewardRecordApi().then((res) => {
         if (res.ret === 200) {
           this.orderList = res.data;
-          console.log(res);
         }
       });
-      // this.$http.get("/distribution/orderRecord").then((response) => {
-      //   this.orderList = response.content.content;
-      // });
     },
   },
 };

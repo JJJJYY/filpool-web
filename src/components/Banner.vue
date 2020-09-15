@@ -52,11 +52,6 @@ export default {
           }
         });
       });
-      // this.$http.get('/general/access/banner').then((res) => {
-      //   console.log(res);
-      //   this.bannerList = res.content;
-
-      // })
     },
     handleClick(index) {
       let url = this.bannerList[index].content;

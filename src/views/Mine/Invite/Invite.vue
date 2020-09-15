@@ -169,15 +169,8 @@ export default {
     },
     loadData() {
       distributionDetailApi().then((res) => {
-        console.log("新", res);
         this.item = res.data;
-        console.log(this.item);
       });
-      // this.$http.get("/distribution/detail").then((response) => {
-      //   console.log("旧", response.content);
-      //   this.item = response.content;
-      //   this.calcLevel();
-      // });
     },
     calcLevel() {
       //let currentReward = this.item.usdtReward;
@@ -197,7 +190,6 @@ export default {
         this.dotHighlight = [true, true, true];
       }
       this.currentLevelProgress = currentProgress;
-      console.log(`进度 => ${currentProgress}`);
     },
     //保存到相册
     saveToGallery() {

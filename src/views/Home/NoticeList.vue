@@ -41,12 +41,6 @@ export default {
   },
   created() {
     this.getNotices();
-    // const getData = {
-    //   id: 1,
-    // };
-    // getNoticeDetailListApi(getData).then((res) => {
-    //   console.log(res);
-    // });
   },
   methods: {
     getNotices() {
@@ -61,25 +55,6 @@ export default {
         this.pageNo += 1;
         this.downRefresh();
       });
-      //   this.$http
-      //     .post("/message/access/public/notice", {
-      //       pageNo: this.pageNo,
-      //       pageSize: this.pageSize,
-      //     })
-      //     .then((res) => {
-      //       let dv = document.createElement("div");
-      //       let list = res.data.content.map((item) => {
-      //         dv.innerHTML = item.content;
-      //         item.simpleContent =
-      //           (dv.firstChild && dv.firstChild.innerText) || item.content;
-      //         return item;
-      //       });
-      //       console.log(list);
-      //       // this.notices = list;
-      //       this.refreshing = false;
-      //       this.pageNo += 1;
-      //       this.downRefresh();
-      //     });
     },
     downRefresh() {
       let self = this;
@@ -111,14 +86,6 @@ export default {
       });
     },
   },
-  // filters: {
-  //   formatDate(val) {
-  //     if (!val) {
-  //       return "-- --";
-  //     }
-  //     return formatDate(val, "yyyy-MM-dd hh:mm:ss");
-  //   },
-  // },
 };
 </script>
 

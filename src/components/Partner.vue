@@ -32,10 +32,6 @@ export default {
       getPartnerListApi().then((res) => {
         this.partners = res.data;
       });
-      // this.$http.get("/general/access/partner").then((res) => {
-      //   console.log(res);
-      //   this.partners = res.content;
-      // });
     },
     openURL(item) {
       window.location.href = item.link;

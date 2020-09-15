@@ -130,7 +130,6 @@ export default {
             }
           });
           this.currAsset = asset;
-          console.log(`当前Asset => ${asset.asset}`);
           this.currAssetApi();
         }
       });

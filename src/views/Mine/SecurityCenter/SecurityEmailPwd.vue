@@ -80,7 +80,6 @@ export default {
     },
   },
   created() {
-    console.log(this.userData);
     this.getImgCode();
   },
   methods: {
@@ -114,28 +113,6 @@ export default {
           this.sendding1 = false;
           this.interval1 = 60;
         });
-      // this.$http
-      //   .post("/message/send", {
-      //     type: this.isPhone ? "phone" : "email",
-      //     option: "/setting/kyc2/modify_email",
-      //     purpose: 2,
-      //   })
-      //   .then(() => {
-      //     Toast("验证码已发送请注意查收");
-      //     let timer = setInterval(() => {
-      //       if (this.interval1 > 0) {
-      //         this.interval1 = --this.interval1;
-      //       } else {
-      //         this.sendding1 = false;
-      //         clearInterval(timer);
-      //         this.interval1 = 60;
-      //       }
-      //     }, 1000);
-      //   })
-      //   .catch(() => {
-      //     this.sendding1 = false;
-      //     this.interval1 = 60;
-      //   });
     },
     /*新邮箱接收验证码*/
     sendCode2() {
@@ -162,29 +139,6 @@ export default {
           this.sendding2 = false;
           this.interval2 = 60;
         });
-      // this.$http
-      //   .post("/message/access/send", {
-      //     type: "email",
-      //     email: this.email,
-      //     apiKey: this.userData.apiKey,
-      //     purpose: 1,
-      //   })
-      //   .then(() => {
-      //     Toast("验证码已发送请注意查收");
-      //     let timer = setInterval(() => {
-      //       if (this.interval2 > 0) {
-      //         this.interval2 = --this.interval2;
-      //       } else {
-      //         this.sendding2 = false;
-      //         clearInterval(timer);
-      //         this.interval2 = 60;
-      //       }
-      //     }, 1000);
-      //   })
-      //   .catch(() => {
-      //     this.sendding2 = false;
-      //     this.interval2 = 60;
-      //   });
     },
     submit() {
       const postData = {
@@ -200,18 +154,6 @@ export default {
           });
         }
       });
-      // this.$http
-      //   .post("/setting/kyc2/modify_email", {
-      //     email: this.email,
-      //     oldEmailCaptcha: this.oldEmailCaptcha,
-      //     newEmailCaptcha: this.newEmailCaptcha,
-      //   })
-      //   .then(() => {
-      //     this.$store.dispatch("reloadUserData").then(() => {
-      //       Toast("修改成功");
-      //       this.$router.back();
-      //     });
-      //   });
     },
   },
 };

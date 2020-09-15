@@ -117,20 +117,6 @@ export default {
           this.$router.replace({ path: "/login" });
         }
       });
-      // this.$http
-      //   .post("/setting/modify/password", {
-      //     phoneCaptcha: this.smsCode,
-      //     password: md5(this.newPwd),
-      //     oldPassword: md5(this.currPwd),
-      //     phone: this.userData.phone,
-      //     email: this.userData.email,
-      //     areaCode: this.userData.areaCode,
-      //     type: this.isPhone ? "phone" : "email",
-      //   })
-      //   .then(() => {
-      //     Toast("密码修改成功,请重新登录");
-      //     this.$router.back();
-      //   });
     },
     /*获取验证码*/
     getSmsCode() {
@@ -156,25 +142,6 @@ export default {
         .catch(() => {
           this.sendding = false;
         });
-      // this.$http
-      //   .post("/message/send", {
-      //     type: this.isPhone ? "phone" : "email",
-      //     option: "/setting/modify/password",
-      //   })
-      //   .then(() => {
-      //     Toast("验证码已发送请注意查收");
-      //     let timer = setInterval(() => {
-      //       if (this.interval > 0) {
-      //         this.interval = --this.interval;
-      //       } else {
-      //         this.sendding = false;
-      //         clearInterval(timer);
-      //       }
-      //     }, 1000);
-      //   })
-      //   .catch(() => {
-      //     this.sendding = false;
-      //   });
     },
   },
 };

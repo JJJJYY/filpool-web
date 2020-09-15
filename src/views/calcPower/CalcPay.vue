@@ -62,26 +62,12 @@ export default {
           });
         }
       });
-      // this.$http
-      //   .post("/purchase/confirmOrder", {
-      //     id: this.$route.query.id,
-      //     operation: 1,
-      //     payPwd: md5(str),
-      //   })
-      //   .then(() => {
-      //     this.$router.replace({
-      //       path: "/countPayCompletion",
-      //     });
-      //   });
     },
     /// 获取余额
     loadData() {
       myBalanceApi().then((res) => {
         this.usdt = res.data.filter((x) => x.asset === "USDT")[0];
       });
-      // this.$http.get("/asset/my").then((response) => {
-      //   this.usdt = response.content.filter((x) => x.asset === "USDT")[0];
-      // });
     },
   },
 };

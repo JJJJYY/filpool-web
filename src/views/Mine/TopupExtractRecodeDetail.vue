@@ -50,26 +50,10 @@ export default {
     };
   },
   created() {
-    console.log(this.$route.query.item);
-    console.log(this.$route.query);
     this.loadData();
   },
   methods: {
-    loadData() {
-      // this.$http
-      //   .post(
-      //     this.$route.query.isTopUp
-      //       ? "/asset/getrechargeDetail"
-      //       : "/asset/getwithdrawDetail",
-      //     {
-      //       pid: this.$route.query.item.pid,
-      //     }
-      //   )
-      //   .then((response) => {
-      //     this.item = response.data;
-      //     this.createQr();
-      //   });
-    },
+    loadData() {},
     addOrWithdrawal(data) {
       return this.isTopUp === "true"
         ? rechargeRecordApi(data)

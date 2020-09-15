@@ -30,13 +30,6 @@ export default {
           this.$emit("setStep", 2, res.data);
         }
       });
-      // this.$http
-      //   .get("/setting/ga/check_old_ga", {
-      //     captcha: this.gaCaptcha,
-      //   })
-      //   .then((res) => {
-      //     this.$emit("setStep", 2, res.content);
-      //   });
     },
   },
 };

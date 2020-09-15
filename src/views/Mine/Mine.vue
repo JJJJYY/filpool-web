@@ -84,7 +84,6 @@ export default {
     FootBox,
   },
   created() {
-    console.log(this.userData);
     // this.$store.dispatch('reloadUserData');
     this.loadTotalWeight();
   },
@@ -122,13 +121,6 @@ export default {
       myWeightApi().then((res) => {
         this.totalWeight = res.data.totalWeight;
       });
-      // this.$http
-      //   .get("/distribution/myWeight", {
-      //     type: 0,
-      //   })
-      //   .then((response) => {
-      //     this.totalWeight = response.content.totalWeight;
-      //   });
     },
   },
 };

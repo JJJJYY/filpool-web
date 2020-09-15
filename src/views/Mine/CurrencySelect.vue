@@ -1,12 +1,7 @@
 <template>
   <div class="list">
     <head-nav></head-nav>
-    <div
-      class="cell"
-      v-for="(x, index) in list"
-      :key="index"
-      @click="select(x)"
-    >
+    <div class="cell" v-for="(x, index) in list" :key="index" @click="select(x)">
       <img :src="x.icon" alt class="icon" />
       <div class="name">{{ x.asset }}</div>
     </div>
@@ -19,11 +14,11 @@ import { assetTypeApi } from "../../net/api/userInfoApi";
 export default {
   name: "CurrencySelect",
   components: {
-    HeadNav
+    HeadNav,
   },
   data() {
     return {
-      list: []
+      list: [],
     };
   },
   created() {
@@ -31,28 +26,22 @@ export default {
   },
   methods: {
     loadData() {
-      assetTypeApi().then(res => {
-        console.log(res);
-        this.list = res.data.filter(item => {
+      assetTypeApi().then((res) => {
+        this.list = res.data.filter((item) => {
           return item.withdraw === 1;
         });
       });
-      // this.$http.get("/asset/tokens").then((response) => {
-      //   this.list = response.content.filter((item) => {
-      //     return item.withdraw === 1;
-      //   });
-      // });
     },
     select(x) {
       let isTopUp = this.$route.query.isTopUp;
       this.$router.replace({
         path: isTopUp === "true" ? "/currencyTopup" : "/currencyExtract",
         query: {
-          asset: x.asset
-        }
+          asset: x.asset,
+        },
       });
-    }
-  }
+    },
+  },
 };
 </script>
 

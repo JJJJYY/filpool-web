@@ -69,11 +69,6 @@ export default {
             this.$router.replace({ path: "/login" });
           }
         });
-        // this.$http.get("/auth/logout").then(() => {
-        //   window.localStorage.clear();
-        //   this.$store.commit("setUserData", {});
-        //   this.$router.replace({ path: "/login" });
-        // });
       });
     },
     /*查看用户协议*/

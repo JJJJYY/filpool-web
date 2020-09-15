@@ -44,10 +44,8 @@ export default {
     };
   },
   created() {
-    console.log(this.isTopUp);
     // url传true&false是字符串！！！fuc*
     this.title = this.isTopUp === "true" ? "充币记录" : "提币记录";
-    console.log(this.title);
   },
   methods: {
     onLoad() {
@@ -72,25 +70,6 @@ export default {
         .finally(() => {
           this.loading = false;
         });
-      // let url = this.$route.query.isTopUp
-      //   ? "/asset/rechargeRecord"
-      //   : "/asset/withdrawRecord";
-      // this.$http
-      //   .post(url, {
-      //     asset: this.$route.query.asset,
-      //     pageNo: this.page,
-      //     pageSize: 20,
-      //   })
-      //   .then((response) => {
-      //     let newList = response.data || [];
-      //     this.list = this.page === 1 ? newList : this.list.concat(newList);
-      //     this.page += 1;
-      //     this.finished = newList.length === 0;
-      //   })
-      //   .catch(() => (this.finished = true))
-      //   .finally(() => {
-      //     this.loading = false;
-      //   });
     },
     addOrWithdrawal(data) {
       return this.isTopUp === "true"
@@ -131,7 +110,6 @@ export default {
       return dayjs(date).format("MM-DD HH:mm:ss");
     },
     detail(item) {
-      console.log(item);
       this.$router.push({
         path: "/topupExtractRecodeDetail",
         query: {

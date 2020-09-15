@@ -346,13 +346,6 @@ export default {
           this.goodList = res.data;
         })
         .finally(() => (this.refreshing = false));
-      // this.$http
-      //   .get("/purchase/access/goodsList")
-      //   .then((response) => {
-      //     this.goodList = response.data.slice(0, 2);
-      //     console.log(this.goodList);
-      //   })
-      //   .finally(() => (this.refreshing = false));
     },
     videoList() {
       return getVideoListApi().then((res) => {
@@ -360,14 +353,6 @@ export default {
           return item.type === 1;
         });
       });
-      // return this.$http
-      //   .get("/general/access/advertisement", { type: 1 })
-      //   .then((response) => {
-      //     this.videos = response.content.filter((item) => {
-      //       return item.type === 1;
-      //     });
-      //   })
-      //   .finally(() => (this.refreshing = false));
     },
     onSelect(item) {
       this.selectedItem = Object.assign({}, item);
@@ -384,7 +369,6 @@ export default {
         quantity: item.amount,
       };
       orderApi(postData).then((res) => {
-        console.log(res);
         if (res.ret === 200) {
           this.$router.push({
             path: "/countPay",

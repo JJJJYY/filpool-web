@@ -103,25 +103,6 @@ export default {
         .finally(() => {
           this.loading = false;
         });
-      // this.$http
-      //   .post("/auth/access/login", {
-      //     phone: this.account,
-      //     mobile: this.account,
-      //     password: md5(this.pwd),
-      //   })
-      //   .then(() => {
-      //     /*let token = this.$cookies.get('APP_COOKIE');
-      //     window.localStorage.setItem('token', token);*/
-      //     this.$store.dispatch("reloadUserData").then(() => {
-      //       this.$router.push({ path: "/" });
-      //     });
-      //   })
-      //   .catch((err) => {
-      //     console.log("login", err);
-      //   })
-      //   .finally(() => {
-      //     this.loading = false;
-      //   });
     },
     backToHome() {
       this.$router.push({ path: "/" });

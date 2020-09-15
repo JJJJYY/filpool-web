@@ -22,7 +22,6 @@ export default new Vuex.Store({
       state.navBarTitle = val
     },
     setUserData(state, data) {
-      console.log(data);
       state.userData = data;
     },
     setWebview(state, view) {
@@ -33,7 +32,6 @@ export default new Vuex.Store({
     reloadUserData(store) {
       let $ajax = isH5 ? ajaxH5 : ajax;
       getUserInfoApi().then(res => {
-        console.log('userData', res);
         if (res.data) {
           sessionStorage.setItem("userData", JSON.stringify(res.data));
           store.commit("setUserData", res.data);

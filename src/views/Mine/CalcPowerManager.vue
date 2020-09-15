@@ -50,12 +50,8 @@ export default {
   methods: {
     loadData() {
       myWeightGroupApi().then((res) => {
-        console.log(res);
         this.list = res.data;
       });
-      // this.$http.get("/distribution/myWeightApp").then((response) => {
-      //   this.list = response.data;
-      // });
     },
     typeDescription(x) {
       switch (x) {

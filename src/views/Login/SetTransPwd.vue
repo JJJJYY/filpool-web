@@ -84,16 +84,6 @@ export default {
           this.$router.replace({ path: isH5 ? "/download" : "/login" });
         })
         .catch((err) => {});
-      // this.$http.post('/auth/access/register', {
-      //   ...reqObj,
-      //   'password': md5(this.$route.query.pwd),
-      //   'payPwd': md5(this.payPwd),
-      //   'invitationCode': this.$route.query.inviteCode,
-      //   'phoneCaptcha': this.$route.query.accountCode
-      // }).then(() => {
-      //   Toast('注册成功');
-      //   this.$router.replace({path: isH5?'/download':'/login'});
-      // })
     },
   },
 };

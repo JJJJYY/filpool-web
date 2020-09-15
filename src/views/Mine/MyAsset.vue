@@ -58,38 +58,10 @@ export default {
         .finally(() => {
           this.isLoading = false;
         });
-      // Promise.all([
-      //   this.$http.get("/asset/tokens"),
-      //   this.$http.get("/asset/my"),
-      // ])
-      //   .then((res) => {
-      //     let res0 = res[0];
-      //     let res1 = res[1];
-      //     console.log("1111", res);
-      //     if (res0.responseCode && res1.responseCode) {
-      //       let coins = res1.content || [];
-      //       let assetList = coins.map((item) => {
-      //         res0.content.forEach((item1) => {
-      //           if (item.asset === item1.asset) {
-      //             item.withdraw = item1.withdraw;
-      //             item.deposit = item1.deposit;
-      //           }
-      //         });
-      //         return item;
-      //       });
-      //       this.list = assetList;
-      //       // console.log(this.list);
-      //     }
-      //   })
-      //   .finally(() => {
-      //     this.isLoading = false;
-      //   });
     },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-.assets {
-}
 </style>

@@ -10,15 +10,8 @@
         color="#f18a2d"
         :loading="loading"
         loading-text="正在上传"
-        >上传</van-button
-      >
-      <input
-        type="file"
-        accept="image/*"
-        class="uploadInput"
-        @change="onChange"
-        v-if="isH5"
-      />
+      >上传</van-button>
+      <input type="file" accept="image/*" class="uploadInput" @change="onChange" v-if="isH5" />
     </div>
   </div>
 </template>
@@ -34,26 +27,26 @@ export default {
   props: {
     text: {
       type: String,
-      default: ""
+      default: "",
     },
     value: {
       type: String,
-      default: ""
-    }
+      default: "",
+    },
   },
   components: {
-    [Button.name]: Button
+    [Button.name]: Button,
   },
   data() {
     return {
       loadImgUrl: "",
       loading: false,
       isH5: isH5,
-      token: ""
+      token: "",
     };
   },
   created() {
-    getTokenApi().then(res => {
+    getTokenApi().then((res) => {
       this.token = res.data;
     });
   },
@@ -68,7 +61,7 @@ export default {
       formData.append("file", file);
       formData.append("token", this.token);
       filePictureApi(formData, "https://up-z2.qiniup.com/")
-        .then(res => {
+        .then((res) => {
           this.loading = false;
           this.loadImgUrl = URL.createObjectURL(file);
           this.$emit("input", res.key);
@@ -76,7 +69,7 @@ export default {
         .catch(() => {
           this.loading = false;
         });
-    }
+    },
     // openAcsheel() {
     //   let actions = [
     //     {
@@ -176,7 +169,7 @@ export default {
     //   task.addFile(path, { key: "file" });
     //   task.start();
     // }
-  }
+  },
 };
 </script>
 

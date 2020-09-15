@@ -41,7 +41,6 @@ export default {
       };
       advertisementInfoList(postData)
         .then((res) => {
-          console.log(res);
           let newList = res.data;
           if (res.data.length) {
             this.list = this.page === 1 ? newList : this.list.concat(newList);
@@ -53,20 +52,6 @@ export default {
         })
         .catch(() => (this.finished = true))
         .finally(() => (this.loading = false));
-      // this.$http
-      //   .post("/message/getInfoList", {
-      //     type: 3,
-      //     pageNo: this.page,
-      //     pageSize: 10,
-      //   })
-      //   .then((response) => {
-      //     let newList = response.data || [];
-      //     this.list = this.page === 1 ? newList : this.list.concat(newList);
-      //     this.page += 1;
-      //     this.finished = newList.length === 0;
-      //   })
-      //   .catch(() => (this.finished = true))
-      //   .finally(() => (this.loading = false));
     },
     detail(item) {
       this.$router.push({

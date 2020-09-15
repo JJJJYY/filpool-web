@@ -29,14 +29,11 @@ export default {
     };
   },
   created() {
-    console.log(this.id);
-    console.log(this.$route.query);
     this.title = this.$route.query.item.title;
     this.getDetail();
   },
   methods: {
     getDetail() {
-      console.log(this.$route.query.type);
       let type = this.$route.query.type;
       let apiData = {
         id: this.id,
@@ -60,25 +57,6 @@ export default {
           this.content = res.data.content;
         });
       }
-      // let type = this.$route.query.type;
-      // if (type === "0" || type === "1") {
-      //   this.$http.get(`/message/detail/${this.id}`).then((res) => {
-      //     this.title = res.content.title;
-      //     this.content = res.content.content;
-      //   });
-      // } else if (type === "3") {
-      //   this.$http
-      //     .get(`/message/access/get_notice`, { id: this.id })
-      //     .then((res) => {
-      //       this.title = res.content.title;
-      //       this.content = res.content.content;
-      //     });
-      // } else {
-      //   this.$http.get(`/general/access/helpDetail/${this.id}`).then((res) => {
-      //     this.title = res.content.title;
-      //     this.content = res.content.content;
-      //   });
-      // }
     },
   },
 };

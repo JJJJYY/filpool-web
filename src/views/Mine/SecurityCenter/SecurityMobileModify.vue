@@ -131,28 +131,6 @@ export default {
           this.sendding1 = false;
           this.interval1 = 60;
         });
-      // this.$http
-      //   .post("/message/send", {
-      //     type: this.isPhone ? "phone" : "email",
-      //     option: "/setting/kyc1/modify_phone",
-      //     purpose: 2,
-      //   })
-      //   .then(() => {
-      //     Toast("验证码已发送请注意查收");
-      //     let timer = setInterval(() => {
-      //       if (this.interval1 > 0) {
-      //         this.interval1 = --this.interval1;
-      //       } else {
-      //         this.sendding1 = false;
-      //         clearInterval(timer);
-      //         this.interval1 = 60;
-      //       }
-      //     }, 1000);
-      //   })
-      //   .catch(() => {
-      //     this.sendding1 = false;
-      //     this.interval1 = 60;
-      //   });
     },
     /*新手机发送验证码*/
     sendCode2() {
@@ -165,7 +143,6 @@ export default {
       };
       sendApi(postData)
         .then((res) => {
-          console.log(res);
           Toast("验证码已发送请注意查收");
           let timer = setInterval(() => {
             if (this.interval2 > 0) {
@@ -181,30 +158,6 @@ export default {
           this.sendding2 = false;
           this.interval2 = 60;
         });
-      // this.$http
-      //   .post("/message/access/send", {
-      //     type: "phone",
-      //     phone: this.phone,
-      //     apiKey: this.userData.apiKey,
-      //     areaCode: "86",
-      //     purpose: 1,
-      //   })
-      //   .then(() => {
-      //     Toast("验证码已发送请注意查收");
-      //     let timer = setInterval(() => {
-      //       if (this.interval2 > 0) {
-      //         this.interval2 = --this.interval2;
-      //       } else {
-      //         this.sendding2 = false;
-      //         clearInterval(timer);
-      //         this.interval2 = 60;
-      //       }
-      //     }, 1000);
-      // })
-      // .catch(() => {
-      //   this.sendding2 = false;
-      //   this.interval2 = 60;
-      // });
     },
     submit() {
       const postData = {
@@ -221,20 +174,6 @@ export default {
           });
         }
       });
-      // this.$http
-      //   .post("/setting/kyc1/modify_phone", {
-      //     phone: this.phone,
-      //     oldPhoneCaptcha: this.oldPhoneCaptcha,
-      //     newPhoneCaptcha: this.newPhoneCaptcha,
-      //     areaCode: this.countryInfo.code,
-      //     type: this.isPhone ? "phone" : "email",
-      //   })
-      //   .then(() => {
-      //     this.$store.dispatch("reloadUserData").then(() => {
-      //       Toast("修改成功");
-      //       this.$router.back();
-      //     });
-      //   });
     },
   },
 };

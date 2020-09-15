@@ -16,71 +16,71 @@
 </template>
 
 <script>
-  import { bytesToSize } from '@/utils/utilTools';
-  export default {
-    name: "MinerRank",
-    data() {
-      return {
-        minerList: []
-      }
+import { bytesToSize } from "@/utils/utilTools";
+export default {
+  name: "MinerRank",
+  data() {
+    return {
+      minerList: [],
+    };
+  },
+  created() {
+    this.getMiners();
+  },
+  methods: {
+    // getMiners() {
+    //   this.$http.get(`/api/v1/miner/top`).then((res) => {
+    //     this.minerList = res.data.list.slice(0,10);
+    //   })
+    // }
+  },
+  filters: {
+    formatSize(size) {
+      return bytesToSize(size);
     },
-    created() {
-      this.getMiners();
-    },
-    methods: {
-      getMiners() {
-        this.$http.get(`/api/v1/miner/top`).then((res) => {
-          this.minerList = res.data.list.slice(0,10);
-        })
-      }
-    },
-    filters: {
-      formatSize(size) {
-        return bytesToSize(size)
-      }
-    }
-  }
+  },
+};
 </script>
 
 <style lang="scss" scoped>
-.MinerRank{
+.MinerRank {
   padding: 0 16px;
   background-color: #fff;
   min-height: 312px;
-  .rankTitle{
+  .rankTitle {
     font-size: 18px;
     font-weight: normal;
     text-align: center;
   }
-  .titleBox{
+  .titleBox {
     line-height: 40px;
     font-size: 16px;
     padding: 0 16px;
     /*margin-top: 28px;*/
-    background:rgba(242,135,20,0.1);
-    .span{
+    background: rgba(242, 135, 20, 0.1);
+    .span {
       color: #9aa4b1;
     }
   }
-  .rankList{
+  .rankList {
     line-height: 24px;
     /*height:450px;*/
     overflow: auto;
     padding: 0 16px;
     margin-top: 16px;
-    &::-webkit-scrollbar-thumb{
+    &::-webkit-scrollbar-thumb {
       border-radius: 4px;
-      background-color: #E9E9E9;
+      background-color: #e9e9e9;
     }
-    &::-webkit-scrollbar{
+    &::-webkit-scrollbar {
       width: 6px;
       height: 0;
     }
-    .li{
+    .li {
       border-bottom: 1px solid #d4e6f2;
     }
   }
-  .td{
+  .td {
     display: inline-block;
     width: 33.3%;
   }
