@@ -12,62 +12,71 @@
 </template>
 
 <script>
-  import {List} from "vant";
-  import HeadNav from '@/components/HeadNav';
-  export default {
-    name: "HelpCenter",
-    components: {
-      HeadNav,
-      [List.name]: List
-    },
-    data() {
-      return {
-        loading: false,
-        finished: false,
-        list: [],
-        page: 1
-      }
-    },
-    created() {
-
-    },
-    methods: {
-      onLoad() {
-        this.$http.post('/message/getHelpList', {
-          pageNo: this.page,
-          pageSize: 20
-        }).then(response => {
-          let newList = response.data || []
-          this.list = this.page === 1 ? newList : this.list.concat(newList)
-          this.page += 1
-          this.finished = (newList.length === 0 || true)
-        }).catch(() => this.finished = true).finally(() => this.loading = false)
-      },
-      detail(item) {
-        this.$router.push({
-          path: `/helpDetail/${item.id}`,
-          query: {
-            item: item
+import { List } from "vant";
+import HeadNav from "@/components/HeadNav";
+import { helpInfoListApi } from "../../net/api/userInfoApi";
+export default {
+  name: "HelpCenter",
+  components: {
+    HeadNav,
+    [List.name]: List,
+  },
+  data() {
+    return {
+      loading: false,
+      finished: false,
+      list: [],
+      page: 1,
+    };
+  },
+  created() {},
+  methods: {
+    onLoad() {
+      const postData = {
+        page: this.page,
+        count: 20,
+      };
+      helpInfoListApi(postData)
+        .then((res) => {
+          if (res.data.length) {
+            let newList = res.data;
+            this.list = this.page === 1 ? newList : this.list.concat(newList);
+            this.page += 1;
+            this.finished = false;
+          } else {
+            this.finished = true;
           }
         })
-      }
-    }
-  }
+        .catch(() => (this.finished = true))
+        .finally(() => (this.loading = false));
+    },
+    detail(item) {
+      this.$router.push({
+        path: `/helpDetail/`,
+        query: {
+          id: item.id,
+          item: item,
+          type: "3",
+        },
+      });
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
-  @import "../../assets/scss/base";
+@import "../../assets/scss/base";
 
-  .cell {
-    border-bottom: 1px $divider-color solid;
-    background: $content-backgroun-color;
-    padding: 14px;
+.cell {
+  border-bottom: 1px $divider-color solid;
+  background: $content-backgroun-color;
+  padding: 14px;
 
-    .title {
-      font-size: 14px;
-      font-weight: normal;
-      line-height: 1.1rem;
-      color: $h1-color;
-    }
+  .title {
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 2.1rem;
+    color: $h1-color;
   }
+}
 </style>

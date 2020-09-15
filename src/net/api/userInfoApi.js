@@ -109,3 +109,39 @@ export function withdrawalCurrencyApi(data) {
 export function internalTransferApi(data) {
   return postRequest('App.Balance.InternalTransfer', data)
 }
+// 商品某条数据
+export function goodGetApi(data) {
+  return postRequest('App.Goods.Get', data)
+}
+// 确认订单
+export function confirmOrderApi(data) {
+  return postRequest('App.Weight.ConfirmOrder', data)
+}
+// 订单详情
+export function orderDetailsApi(data) {
+  return postRequest('App.Weight.OrderDetails', data)
+}
+// 下单
+export function orderApi(data) {
+  return postRequest('App.Weight.Order', data);
+}
+// 平台信息
+export function getTextInfoApi(data) {
+  return postRequest('App.TextInfo.Get', data)
+}
+// 帮助中心获取列表
+export function helpInfoListApi(data) {
+  return postRequest('App.HelpInfo.List', data)
+}
+// 帮助中心详情
+export function helpInfoDetailApi(data) {
+  return postRequest('App.HelpInfo.Detail', data)
+}
+// 进阶小课堂&项目动态列表  0项目动态,1进阶小课堂
+export function advertisementInfoList(data) {
+  return postRequest('App.AdvertisementInfo.List', data)
+}
+// 详情
+export function advertisementInfoDetail(data) {
+  return postRequest('App.AdvertisementInfo.Detail', data)
+}

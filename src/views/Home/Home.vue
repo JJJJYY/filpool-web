@@ -246,6 +246,7 @@ import plusready from "@/utils/plusReady";
 import Browser from "./browser/Browser";
 import { isH5 } from "@/utils/utilTools";
 import { getGoodListApi, getVideoListApi } from "@/net/api/homeApi";
+import { orderApi } from "@/net/api/userInfoApi";
 
 export default {
   name: "Home",
@@ -377,21 +378,23 @@ export default {
       /// 确认订单
       this.show = false;
       /// 下单
-      this.$http
-        .post("/purchase/order", {
-          asset: "USDT",
-          id: item.id,
-          quantity: item.amount,
-        })
-        .then((response) => {
+      const postData = {
+        id: item.id,
+        asset: "USDT",
+        quantity: item.amount,
+      };
+      orderApi(postData).then((res) => {
+        console.log(res);
+        if (res.ret === 200) {
           this.$router.push({
             path: "/countPay",
             query: {
               amount: item.price * item.amount,
-              id: response.content.id,
+              id: res.data,
             },
           });
-        });
+        }
+      });
     },
   },
 };

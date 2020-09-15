@@ -11,12 +11,7 @@
         <div class="item" v-for="item in list" :key="item.id">
           <CalcPowerItem :good-data="item" @select="onSelect"></CalcPowerItem>
         </div>
-        <van-popup
-          v-model="show"
-          position="bottom"
-          closeable
-          :safe-area-inset-bottom="true"
-        >
+        <van-popup v-model="show" position="bottom" closeable :safe-area-inset-bottom="true">
           <CalcPowerBuyPopup
             v-on:dismiss="show = false"
             :number="number"
@@ -37,7 +32,8 @@ import { List, Popup, PullRefresh } from "vant";
 import CalcPowerItem from "./CalcPowerItem";
 import HeadNav from "@/components/HeadNav";
 import FootBox from "@/components/FootBox";
-import { getGoodListApi } from "../../net/api/homeApi";
+import { getGoodListApi } from "@/net/api/homeApi";
+import { orderApi } from "@/net/api/userInfoApi";
 
 export default {
   components: {
@@ -47,9 +43,9 @@ export default {
     CalcPowerBuyPopup,
     [Popup.name]: Popup,
     [List.name]: List,
-    [PullRefresh.name]: PullRefresh
+    [PullRefresh.name]: PullRefresh,
   },
-  created: function() {
+  created: function () {
     this.onRefresh();
   },
   data() {
@@ -60,7 +56,7 @@ export default {
       list: [],
       selectedItem: {},
       number: 1,
-      disablePull: false
+      disablePull: false,
     };
   },
   mounted() {
@@ -83,26 +79,42 @@ export default {
       /// 确认订单
       this.show = false;
       /// 下单
-      this.$http
-        .post("/purchase/order", {
-          asset: "USDT",
-          id: item.id,
-          quantity: item.amount
-        })
-        .then(response => {
+      const postData = {
+        id: item.id,
+        asset: "USDT",
+        quantity: item.amount,
+      };
+      orderApi(postData).then((res) => {
+        console.log(res);
+        if (res.ret === 200) {
           this.$router.push({
             path: "/countPay",
             query: {
               amount: item.price * item.amount,
-              id: response.content.id
-            }
+              id: res.data,
+            },
           });
-        });
+        }
+      });
+      // this.$http
+      //   .post("/purchase/order", {
+      //     asset: "USDT",
+      //     id: item.id,
+      //     quantity: item.amount,
+      //   })
+      //   .then((response) => {
+      //     this.$router.push({
+      //       path: "/countPay",
+      //       query: {
+      //         amount: item.price * item.amount,
+      //         id: response.content.id,
+      //       },
+      //     });
+      //   });
     },
     onRefresh() {
       getGoodListApi()
-        .then(res => {
-          console.log(res);
+        .then((res) => {
           this.list = res.data;
         })
         .finally(() => (this.refreshing = false));
@@ -112,11 +124,11 @@ export default {
       //     this.list = response.data;
       //   })
       //   .finally(() => (this.refreshing = false));
-    }
+    },
   },
   beforeDestroy() {
     window.removeEventListener("scroll", this.handleScroll);
-  }
+  },
 };
 </script>
 

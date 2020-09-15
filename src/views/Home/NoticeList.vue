@@ -106,6 +106,7 @@ export default {
         query: {
           id: item.id,
           item,
+          type: "4",
         },
       });
     },

@@ -9,7 +9,11 @@
 
 <script>
 import HeadNav from "@/components/HeadNav";
-import { getNoticeDetailListApi } from "../../net/api/homeApi";
+import { getNoticeDetailListApi } from "@/net/api/homeApi";
+import {
+  helpInfoDetailApi,
+  advertisementInfoDetail,
+} from "@/net/api/userInfoApi";
 
 export default {
   name: "HelpDetail",
@@ -32,13 +36,30 @@ export default {
   },
   methods: {
     getDetail() {
-      const getData = {
+      console.log(this.$route.query.type);
+      let type = this.$route.query.type;
+      let postData = {
         id: this.id,
       };
-      getNoticeDetailListApi(getData).then((res) => {
-        this.title = res.data.title;
-        this.content = res.data.content;
-      });
+      // 公告列表跳转
+      if (type === "4") {
+        getNoticeDetailListApi(getData).then((res) => {
+          this.title = res.data.title;
+          this.content = res.data.content;
+        });
+      } else if (type === "3") {
+        //帮助中心列表跳转
+        helpInfoDetailApi(postData).then((res) => {
+          this.title = res.data.title;
+          this.content = res.data.content;
+        });
+      } else if (type === "1") {
+        // 小课堂&项目动态
+        advertisementInfoDetail(postData).then((res) => {
+          this.title = res.data.title;
+          this.content = res.data.content;
+        });
+      }
       // let type = this.$route.query.type;
       // if (type === "0" || type === "1") {
       //   this.$http.get(`/message/detail/${this.id}`).then((res) => {

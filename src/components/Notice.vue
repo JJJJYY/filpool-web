@@ -85,10 +85,11 @@ export default {
     handleClick(index) {
       let item = this.notices[index];
       this.$router.push({
-        path: `/helpDetail/${item.id}`,
+        path: `/helpDetail/`,
         query: {
           item: this.notices[index],
-          type: "3",
+          id: item.id,
+          type: "4",
         },
       });
     },

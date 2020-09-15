@@ -45,7 +45,7 @@
 </template>
 
 <script>
-import AddSubtractBox from "../../components/AddSubtractBox";
+import AddSubtractBox from "@/components/AddSubtractBox";
 
 export default {
   props: {

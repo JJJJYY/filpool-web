@@ -8,10 +8,6 @@ import {
 import {
   getUserInfoApi
 } from '../net/api/loginApi'
-import {
-  userIdInfoApi
-} from '../net/api/userInfoApi'
-
 Vue.use(Vuex);
 
 export default new Vuex.Store({
