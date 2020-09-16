@@ -93,19 +93,19 @@
         <div class="reward-intro">
           <div class="reward-intro-item">
             <div class="reward-intro-item-title">累计邀请人数：</div>
-            <div class="reward-intro-item-val">{{item.inviteCount}} 人</div>
+            <div class="reward-intro-item-val">{{item.inviteCount | parseFloatFilter}} 人</div>
           </div>
           <div class="reward-intro-item">
             <div class="reward-intro-item-title">累计购买人数：</div>
-            <div class="reward-intro-item-val">{{item.purchaseCount}} 人</div>
+            <div class="reward-intro-item-val">{{item.purchaseCount | parseFloatFilter}} 人</div>
           </div>
           <div class="reward-intro-item">
             <div class="reward-intro-item-title">累计推广数量：</div>
-            <div class="reward-intro-item-val">{{item.filpReward}} TB</div>
+            <div class="reward-intro-item-val">{{item.filpReward | parseFloatFilter}} TB</div>
           </div>
           <div class="reward-intro-item">
             <div class="reward-intro-item-title">累计获取佣金：</div>
-            <div class="reward-intro-item-val">{{item.usdtReward}} USDT</div>
+            <div class="reward-intro-item-val">{{item.usdtReward | parseFloatFilter}} USDT</div>
           </div>
         </div>
       </div>
