@@ -20,7 +20,7 @@
     </div>
     <div class="currency" @click="selectCurrency">
       <img :src="currAsset.icon" alt class="icon" />
-      <div class="name">{{currAsset.asset}}</div>
+      <div class="name">{{currAssetInfo.asset}}</div>
       <div class="select">切换币种</div>
       <img src="../../assets/img/mine/tab_icon_more.png" alt class="more" />
     </div>
@@ -148,30 +148,30 @@ export default {
     copy() {
       Toast("复制成功???");
     },
-    // saveImg() {
-    //   /*let base64Str = this.$refs.qrCodeUrl.children[1].src;*/
-    //   this.createPicture().then((base64Str) => {
-    //     saveBase64Img(base64Str)
-    //       .then(() => {
-    //         Toast("已保存至相册");
-    //       })
-    //       .catch((err) => {
-    //         Toast(err);
-    //       });
-    //   });
-    // },
-    // createPicture() {
-    //   return new Promise((resolve) => {
-    //     html2canvas(this.$refs.qrCodeUrl, {
-    //       backgroundColor: null,
-    //       width: 130,
-    //       height: 130,
-    //     }).then((canvas) => {
-    //       let imgData = canvas.toDataURL("image/jpeg");
-    //       resolve(imgData);
-    //     });
-    //   });
-    // },
+    saveImg() {
+      //   /*let base64Str = this.$refs.qrCodeUrl.children[1].src;*/
+      //   this.createPicture().then((base64Str) => {
+      //     saveBase64Img(base64Str)
+      //       .then(() => {
+      //         Toast("已保存至相册");
+      //       })
+      //       .catch((err) => {
+      //         Toast(err);
+      //       });
+      //   });
+      // },
+      // createPicture() {
+      //   return new Promise((resolve) => {
+      //     html2canvas(this.$refs.qrCodeUrl, {
+      //       backgroundColor: null,
+      //       width: 130,
+      //       height: 130,
+      //     }).then((canvas) => {
+      //       let imgData = canvas.toDataURL("image/jpeg");
+      //       resolve(imgData);
+      //     });
+      //   });
+    },
     createQr() {
       new QRCode(this.$refs.qrCodeUrl, {
         text: this.currAssetInfo.address,

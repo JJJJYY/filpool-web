@@ -3,7 +3,7 @@
     <head-nav></head-nav>
     <div class="cell" v-for="(x, index) in list" :key="index" @click="select(x)">
       <img :src="x.icon" alt class="icon" />
-      <div class="name">{{ x.asset }}</div>
+      <div class="name">{{x.type ? `${x.asset}(${x.type})`: x.asset}}</div>
     </div>
   </div>
 </template>

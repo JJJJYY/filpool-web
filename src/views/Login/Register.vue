@@ -44,7 +44,11 @@
             <div class="form-title">{{isMobileType ? '短信验证码' : '邮箱验证码'}}</div>
             <div class="form-input">
               <input type="text" title placeholder="请输入验证码" v-model="accountCode" />
-              <button class="suffix-btn" @click="getSmsCode">{{isTimer ? duration + "S" : "获取验证码"}}</button>
+              <button
+                class="suffix-btn"
+                :disabled="isTimer"
+                @click="getSmsCode"
+              >{{isTimer ? duration + "S" : "获取验证码"}}</button>
             </div>
           </div>
           <div class="form-item">

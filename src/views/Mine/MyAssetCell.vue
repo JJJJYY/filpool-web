@@ -2,7 +2,7 @@
   <div class="cell">
     <div class="header">
       <img :src="item.icon" alt class="icon" />
-      <div class="name">{{item.asset}}</div>
+      <div class="name">{{item.type ? `${item.asset}(${item.type})`: item.asset}}</div>
       <div class="recode"></div>
       <!-- <img src="../../assets/img/mine/tab_icon_more.png" alt="" class="more">-->
     </div>

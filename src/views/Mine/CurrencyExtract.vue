@@ -23,13 +23,17 @@
       </div>
       <div class="currency" @click="selectCurrency" style="margin-top: 0">
         <img :src="currSymbol.icon" alt class="icon" />
-        <div class="name">{{ currSymbol.asset }}</div>
+        <div
+          class="name"
+        >{{ currSymbol.type? `${currSymbol.asset}(${currSymbol.type})`: currSymbol.asset }}</div>
         <div class="select">切换币种</div>
         <img src="../../assets/img/mine/tab_icon_more.png" alt class="more" />
       </div>
       <div class="amount">
         <div class="top">
-          <div class="symbol">{{ currSymbol.asset }}</div>
+          <div
+            class="symbol"
+          >{{ currSymbol.type? `${currSymbol.asset}(${currSymbol.type})`: currSymbol.asset }}</div>
           <div class="balance">余额: {{ asset.available | parseFloatFilter}}</div>
         </div>
         <div class="input">
@@ -38,7 +42,7 @@
             title
             v-model.number="number"
             :placeholder="
-              `${isWithdraw ? '最低提现数量' : '最小转账金额'}: ${parseFloat(currSymbol.minWithdraw) }${currSymbol.asset}`
+              `${isWithdraw ? '最低提现数量' : '最小转账金额'}: ${parseFloat(currSymbol.minWithdraw) }${currSymbol.type? `${currSymbol.asset}(${currSymbol.type})`: currSymbol.asset}`
             "
           />
           <div
@@ -60,7 +64,9 @@
           "
         />
         <div class="hr"></div>
-        <div class="fee">提币手续费: {{ currSymbol.minFee | parseFloatFilter}} {{ currSymbol.asset }}</div>
+        <div
+          class="fee"
+        >提币手续费: {{ currSymbol.minFee | parseFloatFilter}} {{ currSymbol.type? `${currSymbol.asset}(${currSymbol.type})`: currSymbol.asset }}</div>
       </div>
       <div class="pwd">
         <div class="pay-pwd">
@@ -118,7 +124,7 @@
         <br />1、您的提币操作一旦完成，对应的资产所有权将由您变更为目标地址所对应的账户所有人享有。
         <br />2、请您务必在提币操作前，仔细核对提币地址信息，确保提币属于自愿行为，并确认不涉及任何传销，非法集资，诈骗等违法情形，谨防上当受骗，避免造成不必要的财产损失。
         <br />
-        3、最小提币数量：{{ currSymbol.minWithdraw | parseFloatFilter}} {{ currSymbol.asset
+        3、最小提币数量：{{ currSymbol.minWithdraw | parseFloatFilter}} {{ currSymbol.type? `${currSymbol.asset}(${currSymbol.type})`: currSymbol.asset
         }}
         <br />4、修改绑定邮箱、绑定手机、登录密码、资金密码24小时之内不可提现
         <br />5、请务必确认电脑及浏览器安全，防止信息被篡改或泄露。
@@ -127,7 +133,7 @@
         温馨提示：
         <br />1、请在转账前仔细核对收账人的地址。
         <br />
-        2、最小转账金额：{{ currSymbol.minWithdraw | parseFloatFilter}} {{ currSymbol.asset
+        2、最小转账金额：{{ currSymbol.minWithdraw | parseFloatFilter}} {{ currSymbol.type? `${currSymbol.asset}(${currSymbol.type})`: currSymbol.asset
         }}
         <br />3、请务必确认电脑及浏览器安全，防止信息被篡改或泄露。
         <br />

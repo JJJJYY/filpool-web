@@ -27,10 +27,10 @@ const doPostFetch = (url, jsondata) => new Promise((resolve, reject) => {
     })
     .then(response => {
       resolve(response.data)
-      // fetchData(response, resolve, reject)
     })
-    // .then(res => resolve(res))
-    .catch(err => reject(err));
+    .catch((err) => {
+      reject(err)
+    });
 });
 
 // get请求

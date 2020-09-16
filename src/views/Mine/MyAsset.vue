@@ -25,6 +25,7 @@ export default {
     return {
       isLoading: false,
       list: [],
+      type: "",
     };
   },
   created() {
@@ -48,11 +49,13 @@ export default {
                 if (item.asset === item1.asset) {
                   item.withdraw = item1.withdraw;
                   item.deposit = item1.deposit;
+                  item.type = item1.type;
                 }
               });
               return item;
             });
             this.list = assetList;
+            console.log(this.list);
           }
         })
         .finally(() => {

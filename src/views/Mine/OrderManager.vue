@@ -3,7 +3,7 @@
     <head-nav></head-nav>
     <van-tabs sticky color="#E9901D" :scrollspy="false" @click="click">
       <van-tab v-for="(x, i) in items" :key="i" :title="x.title"></van-tab>
-      <div class="list page-container">
+      <div v-if="thisData" class="list page-container">
         <div class="cell" v-for="(x, index) in list" :key="index">
           <div class="top">
             <div class="order-id">订单编号：{{x.id}}</div>
@@ -20,6 +20,7 @@
           <div class="pay" v-if="x.status === 0" @click="toPay(x)">去支付</div>
         </div>
       </div>
+      <div v-else class="none-data">暂无数据</div>
     </van-tabs>
   </div>
 </template>
@@ -50,6 +51,7 @@ export default {
       ],
       list: [],
       listData: [],
+      thisData: false,
     };
   },
   created() {
@@ -57,19 +59,26 @@ export default {
   },
   methods: {
     click(index, title) {
-      this.selectedIndex = index;
-      if (index === 0) {
-        this.loadData();
-      } else {
-        this.list = this.listData.filter((e) => {
-          return e.status === this.items[this.selectedIndex].type;
-        });
+      if (this.listData.length) {
+        this.selectedIndex = index;
+        if (index === 0) {
+          this.loadData();
+        } else {
+          this.list = this.listData.filter((e) => {
+            return e.status === this.items[this.selectedIndex].type;
+          });
+        }
       }
     },
     loadData() {
       orderListApi().then((res) => {
         this.list = res.data;
         this.listData = res.data;
+        if (this.listData.length) {
+          this.thisData = true;
+        } else {
+          this.thisData = false;
+        }
       });
     },
     stateStr(state) {
@@ -126,7 +135,10 @@ export default {
     border-bottom: 2px solid $main-color;
   }
 }
-
+.none-data {
+  margin-top: 200px;
+  text-align: center;
+}
 .list {
   height: calc(100vh - 90px);
   .cell {
