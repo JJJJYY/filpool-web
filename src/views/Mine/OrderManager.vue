@@ -6,7 +6,7 @@
       <div v-if="thisData" class="list page-container">
         <div class="cell" v-for="(x, index) in list" :key="index">
           <div class="top">
-            <div class="order-id">订单编号：{{x.id}}</div>
+            <div class="order-id">订单编号：{{x.pid}}</div>
             <div class="state">{{stateStr(x.status)}}</div>
           </div>
           <div class="hr"></div>

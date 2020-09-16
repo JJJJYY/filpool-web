@@ -31,47 +31,40 @@ export default {
   },
   data() {
     return {
-      pageNo: 1,
-      pageSize: 5,
+      page: 1,
+      pageSize: 20,
       notices: [],
       refreshing: false,
       loading: false,
       finished: false,
     };
   },
-  created() {
-    this.getNotices();
-  },
+  created() {},
   methods: {
     getNotices() {
-      this.finished = false;
-      const getData = {
-        page: this.pageNo,
-        count: this.pageSize,
-      };
-      getNoticeListApi(getData).then((res) => {
-        this.notices = res.data;
-        this.refreshing = false;
-        this.pageNo += 1;
-        this.downRefresh();
-      });
+      this.page = 1;
+      this.downRefresh();
     },
     downRefresh() {
-      let self = this;
-      self.PageIndex += 1;
-      setTimeout(() => {
-        const getData = {
-          page: self.PageIndex,
-          count: this.pageSize,
-        };
-        getNoticeListApi()
-          .then((res) => {
-            this.notices = res.data;
-            self.loading = false; //成功关闭loading
+      const getData = {
+        page: this.page,
+        count: this.pageSize,
+      };
+      getNoticeListApi(getData)
+        .then((res) => {
+          let newList = res.data;
+          if (res.data.length) {
+            this.notices =
+              this.page === 1 ? newList : this.notices.concat(newList);
+            this.page += 1;
+            this.finished = false;
+          } else {
             this.finished = true;
-          })
-          .catch((res) => {});
-      }, 500);
+          }
+          this.refreshing = false;
+        })
+        .catch(() => (this.finished = true))
+        .finally(() => (this.loading = false));
     },
     checkDetail(item) {
       this.$router.push({
