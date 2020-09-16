@@ -34,11 +34,9 @@ axios.interceptors.response.use(response => {
         router.push({
           path: "/login"
         })
-        console.log(response.data.msg)
         return Promise.reject(response);
       } else {
         Toast(response.data.msg)
-        console.log(response.data.msg)
         return Promise.reject(response);
       }
     }

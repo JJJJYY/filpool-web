@@ -97,9 +97,7 @@ export default {
             this.$router.push({ path: "/" });
           });
         })
-        .catch((err) => {
-          console.log("login失败", err);
-        })
+        .catch((err) => {})
         .finally(() => {
           this.loading = false;
         });

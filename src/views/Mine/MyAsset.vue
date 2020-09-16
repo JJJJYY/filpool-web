@@ -55,7 +55,6 @@ export default {
               return item;
             });
             this.list = assetList;
-            console.log(this.list);
           }
         })
         .finally(() => {

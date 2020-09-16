@@ -70,9 +70,7 @@ export default {
             self.loading = false; //成功关闭loading
             this.finished = true;
           })
-          .catch((res) => {
-            console.log(res);
-          });
+          .catch((res) => {});
       }, 500);
     },
     checkDetail(item) {

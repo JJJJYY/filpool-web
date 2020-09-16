@@ -110,7 +110,6 @@ export default {
       return dayjs(date).format("MM-DD HH:mm:ss");
     },
     detail(item) {
-      console.log(item);
       this.$router.push({
         path: "/topupExtractRecodeDetail",
         query: {

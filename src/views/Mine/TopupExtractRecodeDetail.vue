@@ -55,7 +55,6 @@ export default {
   methods: {
     loadData() {
       this.item = this.$route.query.item;
-      console.log(this.$route.query.item);
     },
     addOrWithdrawal(data) {
       return this.isTopUp === "true"
