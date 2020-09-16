@@ -5,19 +5,19 @@
       <div class="reward-intro">
         <div class="reward-intro-item">
           <div class="reward-intro-item-title">累计邀请人数</div>
-          <div class="reward-intro-item-val">{{item.inviteCount}}</div>
+          <div class="reward-intro-item-val">{{item.inviteCount | parseFloatFilter}}</div>
         </div>
         <div class="reward-intro-item">
           <div class="reward-intro-item-title">累计购买人数</div>
-          <div class="reward-intro-item-val">{{item.purchaseCount}}</div>
+          <div class="reward-intro-item-val">{{item.purchaseCount | parseFloatFilter}}</div>
         </div>
         <div class="reward-intro-item">
           <div class="reward-intro-item-title">累计推广数量</div>
-          <div class="reward-intro-item-val">{{item.filpReward}} TB</div>
+          <div class="reward-intro-item-val">{{item.filpReward | parseFloatFilter}} TB</div>
         </div>
         <div class="reward-intro-item">
           <div class="reward-intro-item-title">累计获取佣金</div>
-          <div class="reward-intro-item-val">{{item.usdtReward}} USDT</div>
+          <div class="reward-intro-item-val">{{item.usdtReward | parseFloatFilter}} USDT</div>
         </div>
       </div>
       <van-tabs color="#E9901D" style="margin-top: 6px;" @click="tabClick">
@@ -43,11 +43,11 @@
             </div>
             <div class="item" style="align-items: flex-end;">
               <div class="title">下单数量</div>
-              <div class="val">{{x.orderQuantity}}TB</div>
+              <div class="val">{{x.orderQuantity | parseFloatFilter}}TB</div>
             </div>
             <div class="item">
               <div class="title">返佣金额</div>
-              <div class="val">{{x.rewardQuantity}}USDT</div>
+              <div class="val">{{x.rewardQuantity | parseFloatFilter}}USDT</div>
             </div>
             <div class="item">
               <div class="title">下单时间</div>

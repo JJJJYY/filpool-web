@@ -115,7 +115,7 @@
     </van-popup>
     <div class="inviteBox" v-if="showImg" @click="showImg = false">
       <img class="inviteImgData" :src="imageData" alt />
-      <span class="downloadBtn" @click="saveToGallery" v-if="$isH5">保存至相册</span>
+      <span class="downloadBtn" @click="saveToGallery" v-if="!$isH5">保存至相册</span>
     </div>
     <div class="inviteImg" id="qrCodeUrl" ref="qrCodeUrl" />
     <!-- <div class="image-size" id="downloadImgUrl" ref="downloadImgUrl">
@@ -234,17 +234,15 @@ export default {
       for (let i = 0; i < bytes.length; i++) {
         ia[i] = bytes.charCodeAt(i);
       }
-      return new Blob([ab], { type: "image/png" });
+      return new Blob([ab], { type: "image/jpeg" });
     },
     //保存到相册
     saveToGallery() {
-      // console.log(this.imageData);
       const link = document.createElement("a");
       link.href = URL.createObjectURL(
         this.convertBase64UrlToFile(this.imageData)
       );
-      console.log(link);
-      link.download = "image.png";
+      link.download = "image.jpeg";
       link.click();
       URL.revokeObjectURL(link.href);
     },
