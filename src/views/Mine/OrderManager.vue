@@ -14,7 +14,7 @@
             <div class="detail-item">{{x.name}}</div>
             <div class="detail-item">单价：{{x.price | parseFloatFilter}} {{x.asset}}/{{x.unit}}</div>
             <div class="detail-item">数量： {{x.quantity | parseFloatFilter}}</div>
-            <div class="detail-item">下单时间：{{timeStr(new Date(x.createTime))}}</div>
+            <div class="detail-item">下单时间：{{timeStr(x.createTime)}}</div>
             <div class="detail-item">支付金额： {{x.paymentQuantity | parseFloatFilter}} {{x.asset}}</div>
           </div>
           <div class="pay" v-if="x.status === 0" @click="toPay(x)">去支付</div>

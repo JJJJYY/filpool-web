@@ -111,22 +111,29 @@
       </div>
     </div>
     <van-popup v-model="showShare" :style="{'width': '100%'}" position="bottom" closeable>
-      <invite-share-popup @save="showInviteImg" @copy="copyInviteUrl" :inviteInfo="item" />
+      <InviteSharePopup @save="showInviteImg" @copy="copyInviteUrl" :inviteInfo="item" />
     </van-popup>
     <div class="inviteBox" v-if="showImg" @click="showImg = false">
-      <img class="inviteImg" :src="item.invitationImage" alt style="height: 80vh;" />
-      <span class="downloadBtn" @click="saveToGallery" v-if="!$isH5">保存至相册</span>
+      <img class="inviteImgData" :src="imageData" alt />
+      <span class="downloadBtn" @click="saveToGallery" v-if="$isH5">保存至相册</span>
     </div>
+    <div class="inviteImg" id="qrCodeUrl" ref="qrCodeUrl" />
+    <!-- <div class="image-size" id="downloadImgUrl" ref="downloadImgUrl">
+      <img class="inviteImg" :src="imageSrc" alt />
+      <div class="qr" id="qrCodeUrl" ref="qrCodeUrl"></div>
+    </div>-->
   </div>
 </template>
 
 <script>
 import InviteSharePopup from "./InviteSharePopup";
+import QRCode from "qrcodejs2";
 import { Popup, Toast } from "vant";
 import Clipboard from "clipboard";
 import HeadNav from "@/components/HeadNav";
-import { downloadImg } from "@/utils/utilTools";
-import { distributionDetailApi } from "../../../net/api/userInfoApi";
+import { downloadImg, saveBase64Img } from "@/utils/utilTools";
+import { distributionDetailApi } from "@/net/api/userInfoApi";
+import html2canvas from "html2canvas";
 
 export default {
   name: "Invite",
@@ -142,6 +149,8 @@ export default {
       currentLevelProgress: 0,
       dotHighlight: [false, false, false],
       showImg: false,
+      imageSrc: require("@/assets/img/back.png"),
+      imageData: null,
     };
   },
   created() {},
@@ -163,13 +172,16 @@ export default {
     showInviteImg() {
       this.showShare = false;
       this.showImg = true;
+      this.createQr();
     },
     reward() {
       this.$router.push("/inviteReward");
     },
     loadData() {
       distributionDetailApi().then((res) => {
-        this.item = res.data;
+        if (res.ret === 200) {
+          this.item = res.data;
+        }
       });
     },
     calcLevel() {
@@ -191,15 +203,50 @@ export default {
       }
       this.currentLevelProgress = currentProgress;
     },
+    createQr() {
+      new QRCode("qrCodeUrl", {
+        text: this.item.invitationCode,
+        width: 110,
+        height: 110,
+      });
+      // 绘图
+      var canvas = document.createElement("canvas");
+      var qrcode = document.querySelector("#qrCodeUrl img");
+      let self = this;
+      qrcode.onload = function () {
+        var img = document.createElement("img");
+        img.src = self.imageSrc;
+        img.onload = function () {
+          canvas.height = img.height;
+          canvas.width = img.width;
+          var cx = canvas.getContext("2d");
+          cx.drawImage(img, 0, 0);
+          cx.drawImage(qrcode, 60, 1194);
+          let imgData = canvas.toDataURL("image/png");
+          self.imageData = imgData;
+        };
+      };
+    },
+    convertBase64UrlToFile(base64) {
+      const bytes = window.atob(base64.split(",")[1]);
+      const ab = new ArrayBuffer(bytes.length);
+      const ia = new Uint8Array(ab);
+      for (let i = 0; i < bytes.length; i++) {
+        ia[i] = bytes.charCodeAt(i);
+      }
+      return new Blob([ab], { type: "image/png" });
+    },
     //保存到相册
     saveToGallery() {
-      downloadImg(this.item.invitationImage)
-        .then(() => {
-          Toast("已保存到相册");
-        })
-        .catch((err) => {
-          Toast(err);
-        });
+      // console.log(this.imageData);
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(
+        this.convertBase64UrlToFile(this.imageData)
+      );
+      console.log(link);
+      link.download = "image.png";
+      link.click();
+      URL.revokeObjectURL(link.href);
     },
   },
 };
@@ -423,11 +470,12 @@ export default {
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 999;
-  .inviteImg {
+  .inviteImgData {
     position: absolute;
+    top: 50%;
     left: 50%;
-    top: 40px;
-    transform: translateX(-50%);
+    transform: translate(-50%, -50%);
+    height: 80vh;
   }
   .downloadBtn {
     width: 120px;
@@ -435,11 +483,35 @@ export default {
     background-color: #f28714;
     position: absolute;
     left: 50%;
-    bottom: 20px;
+    top: 300px;
     transform: translateX(-50%);
     border-radius: 4px;
     text-align: center;
     color: #fff;
+    z-index: 9999;
+  }
+}
+.page-hidden {
+  overflow: hidden;
+}
+.inviteImg {
+  display: none;
+}
+.image-size {
+  width: 750px;
+  height: 1334px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  // transform: translate(-50%, -50%);
+  z-index: -1;
+
+  .qr {
+    width: 110px;
+    height: 110px;
+    position: absolute;
+    left: 60px;
+    top: 1194px;
   }
 }
 </style>

@@ -36,7 +36,7 @@ Vue.filter('parseFloatFilter', function (data) {
   if (data) {
     return parseFloat(data);
   }
-  return '数据出错'
+  return data
 })
 
 VueRouter.prototype.goBack = function () {

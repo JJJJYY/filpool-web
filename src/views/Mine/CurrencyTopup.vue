@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div style="padding-top: 16px;background-color: #fff;">
+    <div style="background-color: #fff;">
       <van-nav-bar :title="$route.meta.title" @click-right="recode" @click-left="$router.goBack()">
         <template #right>
           <div style="color: #86929D;">充币记录</div>

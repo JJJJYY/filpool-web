@@ -5,7 +5,7 @@
       <div class="cell" v-for="(x, index) in list" :key="index">
         <div class="name">{{x.relatedName | nameInfo}}</div>
         <div class="amount">{{x.quantity | parseFloatFilter}} {{x.unit}}</div>
-        <div class="time">{{x.createTimeByDate | formatDate}}</div>
+        <div class="time">{{x.createTime}}</div>
         <div class="type">{{$route.query.typeDescription}}</div>
       </div>
     </div>
@@ -15,7 +15,6 @@
 <script>
 import { List } from "vant";
 import HeadNav from "@/components/HeadNav";
-import { formatDate } from "@/utils/utilTools";
 import { myWeightApi } from "@/net/api/userInfoApi";
 export default {
   name: "CalcPowerReward",
@@ -42,12 +41,6 @@ export default {
     },
   },
   filters: {
-    formatDate(val) {
-      if (!val) {
-        return "";
-      }
-      return formatDate(val, "yyyy-MM-dd hh:mm:ss");
-    },
     nameInfo: function (val) {
       if (!val) {
         return "其他";

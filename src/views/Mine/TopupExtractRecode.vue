@@ -14,7 +14,7 @@
         </div>
         <div class="item" style="align-items: flex-end;">
           <div class="key">时间</div>
-          <div class="val">{{time(new Date(x.createTime))}}</div>
+          <div class="val">{{time(x.createTime)}}</div>
         </div>
       </div>
     </van-list>
