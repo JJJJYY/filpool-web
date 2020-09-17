@@ -14,7 +14,7 @@ export default new Vuex.Store({
   state: {
     runtime: process.env.VUE_AreloadUserDataPP_CURRENTMODE,
     navBarTitle: "?",
-    userData: JSON.parse(sessionStorage.getItem("userData") || "{}") || {},
+    userData: JSON.parse(localStorage.getItem("userData") || "{}") || {},
     currentWebview: null
   },
   mutations: {
@@ -33,7 +33,7 @@ export default new Vuex.Store({
       let $ajax = isH5 ? ajaxH5 : ajax;
       getUserInfoApi().then(res => {
         if (res.data) {
-          sessionStorage.setItem("userData", JSON.stringify(res.data));
+          localStorage.setItem("userData", JSON.stringify(res.data));
           store.commit("setUserData", res.data);
         }
       }).catch(err => {

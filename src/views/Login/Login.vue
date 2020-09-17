@@ -60,7 +60,7 @@ import { Toast, Loading } from "vant";
 import { delCookie } from "@/utils/utilTools";
 import HeadNav from "@/components/HeadNav";
 //import corsRequest from '@/utils/corsRequest';
-import { getLoginApi } from "../../net/api/loginApi";
+import { getLoginApi } from "@/net/api/loginApi";
 
 export default {
   name: "Login",

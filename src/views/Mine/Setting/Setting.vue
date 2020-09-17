@@ -64,7 +64,6 @@ export default {
         logoutApi().then((res) => {
           if (res.ret === 200) {
             window.localStorage.clear();
-            window.sessionStorage.clear();
             this.$store.commit("setUserData", {});
             this.$router.replace({ path: "/login" });
           }

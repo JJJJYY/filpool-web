@@ -112,7 +112,6 @@ export default {
         if (res.ret === 200) {
           Toast("密码修改成功,请重新登录");
           window.localStorage.clear();
-          window.sessionStorage.clear();
           this.$store.commit("setUserData", {});
           this.$router.replace({ path: "/login" });
         }
