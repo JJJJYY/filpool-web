@@ -2,7 +2,11 @@
   <div class="form">
     <div class="form-container actual-form" style="padding-bottom: 50px">
       <h3 class="title">实名认证</h3>
-      <p class="normalText">请上传清晰的证件照片，必须能看清证件号和姓名；仅支持PNG、JPG、JPEG格式，每张大小限制在2M以内</p>
+      <p
+        class="normalText"
+        v-if="userData.authStatus !== 1"
+      >请上传清晰的证件照片，必须能看清证件号和姓名；仅支持PNG、JPG、JPEG格式，每张大小限制在2M以内</p>
+      <p class="normalText" v-else>实名认证已通过</p>
       <div class="inputItem form-item">
         <div class="form-title">国家和地区</div>
         <div class="form-input">
