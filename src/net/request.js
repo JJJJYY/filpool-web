@@ -1,4 +1,7 @@
 import axios from 'axios';
+import {
+  serviceURL
+} from "@/config";
 
 const fetchData = (response, resolve, reject) => {
   let json = response.data;
@@ -35,7 +38,7 @@ const doPostFetch = (url, jsondata) => new Promise((resolve, reject) => {
 
 // get请求
 export const getRequest = (api, params) => {
-  let url = '/public/';
+  let url = `${serviceURL}/public/`;
   params = {
     s: api,
     ...params,
@@ -57,7 +60,7 @@ export const postRequest = (api, data, baseUrl = null) => {
   if (baseUrl) {
     return doPostFetch(baseUrl, data);
   } else {
-    let url = '/public/';
+    let url = `${serviceURL}/public/`;
     data = {
       s: api,
       ...data,

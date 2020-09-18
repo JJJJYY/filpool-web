@@ -64,7 +64,7 @@ import HeadNav from "@/components/HeadNav";
 import AreaSelect from "@/views/Login/AreaSelect";
 import { authSendApi, modifyPhoneApi } from "@/net/api/userInfoApi";
 import { sendApi } from "@/net/api/loginApi";
-
+import { serviceURL } from "@/config";
 export default {
   name: "SecurityMobileModify",
   components: {
@@ -99,7 +99,7 @@ export default {
   methods: {
     getImgCode() {
       let newTime = new Date().getTime();
-      this.imgCodeUrl = `/public/ImageCode.php?uuid=${newTime}`;
+      this.imgCodeUrl = `${serviceURL}/public/ImageCode.php?uuid=${newTime}`;
     },
     /*设置国家*/
     setCountry(item) {

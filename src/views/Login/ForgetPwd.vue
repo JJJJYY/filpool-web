@@ -94,7 +94,7 @@ export default {
     },
     getImgCode() {
       let newTime = new Date().getTime();
-      this.imgCodeUrl = `/public/ImageCode.php?uuid=${newTime}`;
+      this.imgCodeUrl = `${serviceURL}/public/ImageCode.php?uuid=${newTime}`;
     },
     getCode() {
       if (this.account.length === 0) {

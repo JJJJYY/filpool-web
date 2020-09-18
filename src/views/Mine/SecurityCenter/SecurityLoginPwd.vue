@@ -56,6 +56,7 @@ import md5 from "md5";
 import { Toast } from "vant";
 import HeadNav from "@/components/HeadNav";
 import { modifyPasswordApi, authSendApi } from "@/net/api/userInfoApi";
+import { serviceURL } from "@/config";
 export default {
   name: "SecurityLoginPwd",
   components: {
@@ -85,7 +86,7 @@ export default {
   methods: {
     getImgCode() {
       let newTime = new Date().getTime();
-      this.imgCodeUrl = `/public/ImageCode.php?uuid=${newTime}`;
+      this.imgCodeUrl = `${serviceURL}/public/ImageCode.php?uuid=${newTime}`;
     },
     async submit() {
       await this.update();

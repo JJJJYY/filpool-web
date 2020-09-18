@@ -2,7 +2,7 @@ import {
   isH5
 } from '@/utils/utilTools';
 //const serviceURL = 'http://192.168.1.22:9001';
-const serviceURL = isH5 ? '' : 'https://www.filpool.io';
+const serviceURL = isH5 ? '' : 'http://api.filpool.c28e9d7b637474c3a98b2ed559c29434c.cn-hongkong.alicontainer.com';
 //http://47.56.229.55:9001
 const ios = 'https://testflight.apple.com/join/4ooaLADg';
 const android = 'https://filpool.oss-cn-hongkong.aliyuncs.com/app/filpool.apk';

@@ -54,6 +54,7 @@ import { Toast } from "vant";
 import HeadNav from "@/components/HeadNav";
 import { authSendApi, modifyEmailApi } from "@/net/api/userInfoApi";
 import { sendApi } from "@/net/api/loginApi";
+import { serviceURL } from "@/config";
 export default {
   name: "SecurityEmailPwd",
   components: {
@@ -85,7 +86,7 @@ export default {
   methods: {
     getImgCode() {
       let newTime = new Date().getTime();
-      this.imgCodeUrl = `/public/ImageCode.php?uuid=${newTime}`;
+      this.imgCodeUrl = `${serviceURL}/public/ImageCode.php?uuid=${newTime}`;
     },
     /*旧手机或邮箱发送验证码*/
     sendCode1() {

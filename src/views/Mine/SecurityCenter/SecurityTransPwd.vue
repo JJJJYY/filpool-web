@@ -56,6 +56,7 @@ import { Toast } from "vant";
 import md5 from "md5";
 import HeadNav from "@/components/HeadNav";
 import { modifyPayPwdApi, authSendApi } from "@/net/api/userInfoApi";
+import { serviceURL } from "@/config";
 
 export default {
   name: "SecurityTransPwd",
@@ -89,7 +90,7 @@ export default {
   methods: {
     getImgCode() {
       let newTime = new Date().getTime();
-      this.imgCodeUrl = `/public/ImageCode.php?uuid=${newTime}`;
+      this.imgCodeUrl = `${serviceURL}/public/ImageCode.php?uuid=${newTime}`;
     },
     /*旧手机或邮箱发送验证码*/
     sendCode1() {

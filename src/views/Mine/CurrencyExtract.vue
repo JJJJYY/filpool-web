@@ -168,6 +168,7 @@ import {
   withdrawalCurrencyApi,
   internalTransferApi,
 } from "@/net/api/userInfoApi";
+import { serviceURL } from "@/config";
 
 export default {
   name: "CurrencyExtract",
@@ -213,7 +214,7 @@ export default {
   methods: {
     getImgCode() {
       let newTime = new Date().getTime();
-      this.imgCodeUrl = `/public/ImageCode.php?uuid=${newTime}`;
+      this.imgCodeUrl = `${serviceURL}/public/ImageCode.php?uuid=${newTime}`;
     },
     setShowTypes() {
       this.showTypes = true;
