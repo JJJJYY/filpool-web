@@ -10,7 +10,7 @@ import * as ajaxH5 from '@/utils/ajax';
 import * as ajax from './utils/corsAjax'
 import VueCookies from 'vue-cookies'
 import {
-  Toast
+  Toast,
 } from 'vant';
 import plusready from '@/utils/plusReady';
 import VueRouter from "vue-router";

@@ -3,7 +3,12 @@
     <head-nav></head-nav>
     <div class="container page-container">
       <div class="goodBox">
-        <CalcPowerItem :good-data="detailInfo" @select="onSelect" style="margin-top: 0;" />
+        <CalcPowerItem
+          v-if="detailInfo"
+          :good-data="detailInfo"
+          @select="onSelect"
+          style="margin-top: 0;"
+        />
       </div>
       <div class="detail">
         <p class="label">合约详情</p>

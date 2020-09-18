@@ -1,5 +1,5 @@
 <template>
-  <div class="item">
+  <div class="item" v-if="progress">
     <div @click="toDetail">
       <div class="name">
         <h3>{{goodData.name}}</h3>
@@ -33,6 +33,11 @@
         <AddSubtractBox v-model="amount" :limit="goodData.minLimit" />
         <div style="color: #575c62; font-size: 12px; margin-left: 12px;">{{goodData.unit}}</div>
       </div>
+      <van-progress
+        class="vanProgress"
+        color="linear-gradient(to right, #f18c2e, #fbae4e)"
+        :percentage="progress"
+      />
     </div>
     <div class="hr" />
     <a
@@ -46,7 +51,7 @@
 
 <script>
 import AddSubtractBox from "@/components/AddSubtractBox";
-
+import { Progress } from "vant";
 export default {
   props: {
     goodData: {
@@ -55,11 +60,29 @@ export default {
   },
   components: {
     AddSubtractBox,
+    [Progress.name]: Progress,
   },
   data() {
     return {
       amount: this.goodData.minLimit || 1,
+      progress: 0,
     };
+  },
+  watch: {
+    goodData: function () {
+      this.progress =
+        Math.floor(
+          (this.goodData.originalPrice / this.goodData.price) * 100 * 100
+        ) / 100;
+    },
+  },
+  created() {
+    if (this.goodData.id) {
+      this.progress =
+        Math.floor(
+          (this.goodData.originalPrice / this.goodData.price) * 100 * 100
+        ) / 100;
+    }
   },
   methods: {
     enterPay(x) {
@@ -204,5 +227,9 @@ export default {
 
 .disabled-btn {
   background: #ccc;
+}
+.vanProgress {
+  display: flex;
+  margin-top: 20px;
 }
 </style>

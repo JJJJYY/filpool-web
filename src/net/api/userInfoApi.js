@@ -145,3 +145,7 @@ export function advertisementInfoList(data) {
 export function advertisementInfoDetail(data) {
   return postRequest('App.AdvertisementInfo.Detail', data)
 }
+// 提示更新
+export function versionAip(data) {
+  return postRequest('App.AppVersion.CheckUpdate', data)
+}
