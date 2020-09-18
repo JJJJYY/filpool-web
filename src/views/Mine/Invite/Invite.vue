@@ -118,6 +118,7 @@
       <span class="downloadBtn" @click="saveToGallery" v-if="!$isH5">保存至相册</span>
     </div>
     <div class="inviteImg" id="qrCodeUrl" ref="qrCodeUrl" />
+    <img class="inviteImg" id="test1" />
     <!-- <div class="image-size" id="downloadImgUrl" ref="downloadImgUrl">
       <img class="inviteImg" :src="imageSrc" alt />
       <div class="qr" id="qrCodeUrl" ref="qrCodeUrl"></div>
@@ -181,6 +182,15 @@ export default {
       distributionDetailApi().then((res) => {
         if (res.ret === 200) {
           this.item = res.data;
+          new QRCode(
+            "qrCodeUrl",
+            {
+              text: this.item.invitationCode,
+              width: 110,
+              height: 110,
+            },
+            1000
+          );
         }
       });
     },
@@ -204,16 +214,11 @@ export default {
       this.currentLevelProgress = currentProgress;
     },
     createQr() {
-      new QRCode("qrCodeUrl", {
-        text: this.item.invitationCode,
-        width: 110,
-        height: 110,
-      });
       // 绘图
       var canvas = document.createElement("canvas");
-      var qrcode = document.querySelector("#qrCodeUrl img");
+      // var qrcode = document.querySelectorAll("#qrCodeUrl>img")[0];
       let self = this;
-      qrcode.onload = function () {
+      html2canvas(document.getElementById("qrCodeUrl")).then((canvas2) => {
         var img = document.createElement("img");
         img.src = self.imageSrc;
         img.onload = function () {
@@ -221,11 +226,25 @@ export default {
           canvas.width = img.width;
           var cx = canvas.getContext("2d");
           cx.drawImage(img, 0, 0);
-          cx.drawImage(qrcode, 60, 1194);
+
+          cx.drawImage(canvas2, 60, 1194, 110, 110);
           let imgData = canvas.toDataURL("image/png");
           self.imageData = imgData;
         };
-      };
+      });
+      // var img = document.createElement("img");
+      // img.src = self.imageSrc;
+      // img.onload = function () {
+      //   canvas.height = img.height;
+      //   canvas.width = img.width;
+      //   var cx = canvas.getContext("2d");
+      //   cx.drawImage(img, 0, 0);
+      //   qrcode.onload = function () {};
+
+      //   cx.drawImage(qrcode, 60, 1194);
+      //   let imgData = canvas.toDataURL("image/png");
+      //   self.imageData = imgData;
+      // };
     },
     convertBase64UrlToFile(base64) {
       const bytes = window.atob(base64.split(",")[1]);
@@ -493,7 +512,12 @@ export default {
   overflow: hidden;
 }
 .inviteImg {
-  display: none;
+  // display: none;
+  position: absolute;
+  top: -110px;
+  z-index: -1;
+  width: 110px;
+  height: 110px;
 }
 .image-size {
   width: 750px;
