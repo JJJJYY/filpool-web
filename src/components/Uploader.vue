@@ -10,6 +10,7 @@
         color="#f18a2d"
         :loading="loading"
         loading-text="正在上传"
+        @click="openAcsheel"
       >上传</van-button>
       <input type="file" accept="image/*" class="uploadInput" @change="onChange" v-if="isH5" />
     </div>
@@ -55,6 +56,7 @@ export default {
       if (event.target.files && event.target.files.length === 0) {
         return;
       }
+      console.log(event.target.files);
       let file = event.target.files[0];
       let formData = new FormData();
       this.loading = true;
@@ -62,6 +64,7 @@ export default {
       formData.append("token", this.token);
       filePictureApi(formData, "https://up-z2.qiniup.com/")
         .then((res) => {
+          console.log(res);
           this.loading = false;
           this.loadImgUrl = URL.createObjectURL(file);
           this.$emit("input", res.key);
@@ -70,105 +73,157 @@ export default {
           this.loading = false;
         });
     },
-    // openAcsheel() {
-    //   let actions = [
-    //     {
-    //       title: "拍照"
-    //     },
-    //     {
-    //       title: "从手机相册选择"
-    //     }
-    //   ];
-    //   window.plus.nativeUI.actionSheet(
-    //     {
-    //       title: "选择图片",
-    //       cancel: "取消",
-    //       buttons: actions
-    //     },
-    //     btn => {
-    //       /*actionSheet 按钮点击事件*/
-    //       switch (btn.index) {
-    //         case 0:
-    //           break;
-    //         case 1:
-    //           this.getImage(); /*拍照*/
-    //           break;
-    //         case 2:
-    //           this.galleryImg(); /*打开相册*/
-    //           break;
-    //         default:
-    //           break;
-    //       }
-    //     }
-    //   );
-    // },
-    // /*拍照*/
-    // getImage() {
-    //   let cmr = window.plus.camera.getCamera();
-    //   cmr.captureImage(path => {
-    //     this.checkImgSize(path, true);
-    //     //this.uploadByPlus(path);
-    //   });
-    // },
-    // /*从相册选择*/
-    // galleryImg() {
-    //   window.plus.gallery.pick(
-    //     path => {
-    //       this.checkImgSize(path);
-    //       //this.uploadByPlus(path);
-    //     },
-    //     function() {
-    //       console.log("取消选择图片");
-    //     },
-    //     { filter: "image" }
-    //   );
-    // },
-    // /*检查图片大小，超过2M压缩*/
-    // checkImgSize(path, overwrite) {
-    //   window.plus.io.getFileInfo({
-    //     filePath: path,
-    //     success: res => {
-    //       if (res.size / (1024 * 1024) > 2) {
-    //         let matchArr = path.match(/\/[^\/]+\.[a-zA-Z]+$/g);
-    //         let fileName = matchArr[0].slice(1);
-    //         let targetPath = `_doc/${fileName}${overwrite ? "" : "(1)"}`;
-    //         window.plus.zip.compressImage(
-    //           {
-    //             src: path,
-    //             dst: targetPath,
-    //             overwrite: !!overwrite
-    //           },
-    //           () => {
-    //             this.uploadByPlus(targetPath);
-    //           },
-    //           () => {}
-    //         );
-    //       } else {
-    //         this.uploadByPlus(path);
-    //       }
-    //     }
-    //   });
-    // },
-    // uploadByPlus(path) {
-    //   this.loading = true;
-    //   let task = window.plus.uploader.createUpload(
-    //     `${serviceURL}/setting/upload`,
-    //     { blocksize: 2000 },
-    //     (t, status) => {
-    //       let resData = JSON.parse(t.responseText);
-    //       this.loading = false;
-    //       // 上传完成
-    //       if (resData.responseCode === "00") {
-    //         this.loadImgUrl = resData.content;
-    //         this.$emit("input", resData.content);
-    //       } else {
-    //         Toast(resData.responseMsg);
-    //       }
-    //     }
-    //   );
-    //   task.addFile(path, { key: "file" });
-    //   task.start();
-    // }
+    openAcsheel() {
+      let actions = [
+        {
+          title: "拍照"
+        },
+        {
+          title: "从手机相册选择"
+        }
+      ];
+      window.plus.nativeUI.actionSheet(
+        {
+          title: "选择上传方式",
+          cancel: "取消",
+          buttons: actions
+        },
+        btn => {
+          /*actionSheet 按钮点击事件*/
+          switch (btn.index) {
+            case 0:
+              break;
+            case 1:
+              this.getImage(); /*拍照*/
+              break;
+            case 2:
+              this.galleryImg(); /*打开相册*/
+              break;
+            default:
+              break;
+          }
+        }
+      );
+    },
+    /*拍照*/
+    getImage() {
+      let cmr = window.plus.camera.getCamera();
+      cmr.captureImage(path => {
+        console.log('img',path);
+        // plus.io.resolveLocalFileSystemURL(path,(entry) => {
+        //     entry.file( (path) => {
+        //       console.log('11', path.fullPath);
+              this.checkImgSize(path);
+        //       this.loadImgUrl = path.fullPath;
+        //         let fileReader = new plus.io.FileReader();
+        //         fileReader.readAsDataURL(path); // 转base64
+        //         console.log('fileReader',fileReader)
+        //     });
+        // });
+        // this.uploadByPlus(path);
+      });
+    },
+    /*从相册选择*/
+    galleryImg() {
+      window.plus.gallery.pick(
+        path => {
+        console.log('img',path);
+          this.checkImgSize(path);
+          //this.uploadByPlus(path);
+        },
+        function() {
+          console.log("取消选择图片");
+        },
+        { filter: "image" }
+      );
+    },
+    /*检查图片大小，超过2M压缩*/
+    checkImgSize(path, overwrite) {
+      window.plus.io.getFileInfo({
+        filePath: path,
+        success: res => {
+          if (res.size / (1024 * 1024) > 2) {
+            let matchArr = path.match(/\/[^\/]+\.[a-zA-Z]+$/g);
+            let fileName = matchArr[0].slice(1);
+            let targetPath = `_doc/${fileName}${overwrite ? "" : "(1)"}`;
+            window.plus.zip.compressImage(
+              {
+                src: path,
+                dst: targetPath,
+                overwrite: !!overwrite
+              },
+              () => {
+                console.log('走targetPath')
+                plus.io.resolveLocalFileSystemURL(targetPath,(entry) => {
+                    entry.file( (targetPath) => {
+                      console.log('11', targetPath.fullPath);
+                      this.loadImgUrl = targetPath.fullPath;
+                      this.uploadByPlus(targetPath.fullPath);
+                        // let fileReader = new plus.io.FileReader();
+                        // fileReader.readAsDataURL(path); // 转base64
+                        // console.log('fileReader',fileReader)
+                    });
+                });
+              },
+              () => {}
+            );
+          } else {
+            console.log('走path')
+            this.uploadByPlus(path);
+          }
+        }
+      });
+    },
+
+    uploadByPlus(path) {
+      this.loading = true;
+      console.log('path',path)
+      let formData = new FormData();
+      this.loading = true;
+      formData.append("file", path);
+      formData.append("token", this.token);
+      let task = window.plus.uploader.createUpload(
+      'https://up-z2.qiniup.com/',{
+      },
+      (t,status) => {
+        let resData = JSON.parse(t.responseText);
+        console.log(resData)
+        if (status === 200) {
+          this.loading = false;
+          this.loadImgUrl = path;
+          console.log(this.loadImgUrl)
+          this.$emit("input", resData.key);
+        }else {
+          this.loading = false;
+          Toast('图片上传失败！');
+        }
+      }
+        // .then((res) => {
+        //   console.log(res);
+        //   this.loading = false;
+        //   this.loadImgUrl = URL.createObjectURL(path);
+        //   this.$emit("input", res.key);
+        // })
+        // `${serviceURL}/setting/upload`,
+        // { blocksize: 2000 },
+        // (t, status) => {
+        //   let resData = JSON.parse(t.responseText);
+        //   this.loading = false;
+        //   // 上传完成
+        //   if (resData.responseCode === "00") {
+        //     this.loadImgUrl = resData.content;
+        //     this.$emit("input", resData.content);
+        //   } else {
+        //     Toast(resData.responseMsg);
+        //   }
+        // }
+      );
+      console.log(task);
+      task.addData("file",path);
+      task.addData("token",this.token);
+      task.addFile(path,{"key":"file"});
+      task.start();
+    }
   },
 };
 </script>

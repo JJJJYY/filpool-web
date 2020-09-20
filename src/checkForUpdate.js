@@ -49,18 +49,13 @@ class CheckUpdate {
         build: versionCode
       })
       .then((response) => {
-        /*let newVer = response && response.data.flag;
-        wgtUrl = response && response.data.fileName;*/
         console.log('response', response);
-        let resData = response.data;
-        if (wgtVer === resData.version) {
-          this.handleCallBack("已经是最新版本");
-          return;
-        }
-        if (resData.updateType === 1) {
+        if(response.data) {
+          let resData = response.data;
           Dialog.confirm({
-            title: resData.updateTitle,
-            message: resData.updateDetails,
+            title: '新版本上线啦!~',
+            // message: resData.description,
+            message: '修改bug，bug,bug',
             confirmButtonText: "前往下载",
             showCancelButton: false,
             beforeClose: (action, done) => {
@@ -72,41 +67,66 @@ class CheckUpdate {
               }
             }
           })
-        } else if (this.hasUpdate(resData.version) && !localStorage.getItem("closeUpdate")) {
-          wgtUrl = isiOS() ? resData.appUrlIos : resData.appUrlAndroid;
-          if (!wgtUrl) {
-            return;
-          }
-          if (this.isAuto === false) {
-            this.downWgt();
-          } else {
-            Dialog.confirm({
-              title: "更新提示",
-              message: "系统检测到有新版本，是否马上更新？",
-              cancelButtonText: "不再提示"
-            }).then(() => {
-              this.downWgt();
-            }).catch(() => {
-              Toast("关闭后可在设置中手动检查更新");
-              localStorage.setItem("closeUpdate", "true");
-            })
-          }
+          // this.downWgt();
         } else {
-          this.handleCallBack("无版本更新");
+          this.handleCallBack("已经是最新版本");
         }
-      }).catch(() => {
-        this.handleCallBack("接口异常！");
+        /*let newVer = response && response.data.flag;
+        wgtUrl = response && response.data.fileName;*/
+        // if (wgtVer === resData.version) {
+        //   this.handleCallBack("已经是最新版本");
+        //   return;
+        // }
+        // if (resData.updateType === 1) {
+        //   Dialog.confirm({
+        //     title: resData.updateTitle,
+        //     message: resData.updateDetails,
+        //     confirmButtonText: "前往下载",
+        //     showCancelButton: false,
+        //     beforeClose: (action, done) => {
+        //       if (action === 'confirm') {
+        //         let downloadURL = resData.downloadURL || "https://www.filpool.io/#/download";
+        //         window.plus.runtime.openURL(downloadURL);
+        //       } else {
+        //         done(false);
+        //       }
+        //     }
+        //   })
+        // } else if (this.hasUpdate(resData.version) && !localStorage.getItem("closeUpdate")) {
+        //   wgtUrl = isiOS() ? resData.appUrlIos : resData.appUrlAndroid;
+        //   if (!wgtUrl) {
+        //     return;
+        //   }
+        //   if (this.isAuto === false) {
+        //     this.downWgt();
+        //   } else {
+        //     Dialog.confirm({
+        //       title: "更新提示",
+        //       message: "系统检测到有新版本，是否马上更新？",
+        //       cancelButtonText: "不再提示"
+        //     }).then(() => {
+        //       this.downWgt();
+        //     }).catch(() => {
+        //       Toast("关闭后可在设置中手动检查更新");
+        //       localStorage.setItem("closeUpdate", "true");
+        //     })
+        //   }
+        // } else {
+        //   this.handleCallBack("无版本更新");
+        // }
+      }).catch((err) => {
+        this.handleCallBack("已经是最新版本");
       })
   }
-  hasUpdate(version) {
-    let currentVersion = Number(wgtVer.replace(/\./g, ""));
-    let newVersion = Number(version.replace(/\./g, ""));
-    return newVersion > currentVersion;
-  }
+  // hasUpdate(version) {
+  //   let currentVersion = Number(wgtVer.replace(/\./g, ""));
+  //   let newVersion = Number(version.replace(/\./g, ""));
+  //   return newVersion > currentVersion;
+  // }
   downWgt() {
     let that = this;
     window.plus.nativeUI.showWaiting("正在下载安装包...");
-    window.plus.downloader.createDownload(wgtUrl, {
+    window.plus.downloader.createDownload('https://www.filpool.io/#/download', {
       filename: "_doc/update/"
     }, function (d, status) {
       window.plus.nativeUI.closeWaiting();
