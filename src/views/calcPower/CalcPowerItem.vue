@@ -1,37 +1,43 @@
 <template>
-  <div class="item" v-if="progress">
-    <div @click="toDetail">
+  <div class="item">
+    <div @click="toDetail" v-if="progress">
       <div class="name">
-        <h3>{{goodData.name}}</h3>
-        <span class="state">{{goodData.highlight}}</span>
+        <h3>{{ goodData.name }}</h3>
+        <span class="state">{{ goodData.highlight }}</span>
       </div>
-      <p class="subtitle">{{goodData.slogan}}</p>
+      <p class="subtitle">{{ goodData.slogan }}</p>
       <div class="intro">
         <div class="intro-item">
           <span class="intro-item-title">挖矿币种</span>
-          <span class="intro-item-value">{{goodData.weightAsset}}</span>
+          <span class="intro-item-value">{{ goodData.weightAsset }}</span>
         </div>
         <div class="intro-item">
           <span class="intro-item-title">结算周期</span>
-          <span class="intro-item-value">{{goodData.settlementPeriod}}</span>
+          <span class="intro-item-value">{{ goodData.settlementPeriod }}</span>
         </div>
         <div class="intro-item">
           <span class="intro-item-title">合约期限</span>
-          <span class="intro-item-value">{{goodData.contractDuration}}天</span>
+          <span class="intro-item-value"
+            >{{ goodData.contractDuration }}天</span
+          >
         </div>
         <div class="intro-item">
           <span class="intro-item-title">技术服务费</span>
-          <span class="intro-item-value">{{goodData.serviceChargeRate*100}}%</span>
+          <span class="intro-item-value"
+            >{{ goodData.serviceChargeRate * 100 }}%</span
+          >
         </div>
       </div>
       <div class="handler">
         <div class="handler-amount">
-          <span style="font-size: 24px;">{{goodData.price*amount}}</span>
+          <span style="font-size: 24px;">{{ goodData.price * amount }}</span>
           <span style="font-size: 18px;">USDT</span>
         </div>
         <div style="flex: 1;"></div>
         <AddSubtractBox v-model="amount" :limit="goodData.minLimit" />
-        <div style="color: #575c62; font-size: 12px; margin-left: 12px;">{{goodData.unit}}</div>
+        <div style="color: #575c62; font-size: 12px; margin-left: 12px;">
+          {{ goodData.unit }}
+        </div>
       </div>
       <van-progress
         class="vanProgress"
@@ -42,10 +48,11 @@
     <div class="hr" />
     <a
       class="btn-gradient"
-      :class="{gray: goodData.status !== 1}"
+      :class="{ gray: goodData.status !== 1 }"
       @click="enterPay(goodData)"
-    >{{this.statusBtnTitle(goodData.status)}}</a>
-    <span class="tag">{{goodData.tag}}</span>
+      >{{ this.statusBtnTitle(goodData.status) }}</a
+    >
+    <span class="tag">{{ goodData.tag }}</span>
   </div>
 </template>
 
@@ -55,32 +62,40 @@ import { Progress } from "vant";
 export default {
   props: {
     goodData: {
-      default: () => ({}),
-    },
+      default: () => ({})
+    }
   },
   components: {
     AddSubtractBox,
-    [Progress.name]: Progress,
+    [Progress.name]: Progress
   },
   data() {
     return {
       amount: this.goodData.minLimit || 1,
-      progress: 0,
+      progress: 0
     };
   },
   watch: {
-    goodData: function () {
+    goodData: function() {
+      console.log(this.goodData);
+      this.amount = this.goodData.minLimit;
       this.progress =
         Math.floor(
-          (this.goodData.originalPrice / this.goodData.price) * 100 * 100
+          ((this.goodData.quantity - this.goodData.remainingQuantity) /
+            this.goodData.quantity) *
+            100 *
+            100
         ) / 100;
-    },
+    }
   },
   created() {
     if (this.goodData.id) {
       this.progress =
         Math.floor(
-          (this.goodData.originalPrice / this.goodData.price) * 100 * 100
+          ((this.goodData.quantity - this.goodData.remainingQuantity) /
+            this.goodData.quantity) *
+            100 *
+            100
         ) / 100;
     }
   },
@@ -106,11 +121,11 @@ export default {
     toDetail() {
       if (this.goodData.status === 1) {
         this.$router.push({
-          path: `/rate_detail/${this.goodData.id}/${this.amount}`,
+          path: `/rate_detail/${this.goodData.id}/${this.amount}`
         });
       }
-    },
-  },
+    }
+  }
 };
 </script>
 

@@ -50,12 +50,12 @@ class CheckUpdate {
       })
       .then((response) => {
         console.log('response', response);
-        if(response.data) {
+        if (response.data) {
           let resData = response.data;
           Dialog.confirm({
             title: '新版本上线啦!~',
             // message: resData.description,
-            message: '修改bug，bug,bug',
+            message: resData.description,
             confirmButtonText: "前往下载",
             showCancelButton: false,
             beforeClose: (action, done) => {

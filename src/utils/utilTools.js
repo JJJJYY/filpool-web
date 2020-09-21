@@ -108,6 +108,10 @@ const downloadImg = (url) => {
 const saveToGallery = (path) => {
   return new Promise((resolve, reject) => {
     window.plus.gallery.save(path, function () {
+      var main = plus.android.runtimeMainActivity();
+      var intent = plus.android.importClass('android.content.Intent');
+      var Uri = plus.android.importClass('android.net.Uri');
+      main.sendBroadcast(new intent(intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse(path)));
       resolve();
     }, function () {
       reject("保存失败");

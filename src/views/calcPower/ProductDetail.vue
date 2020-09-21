@@ -14,9 +14,14 @@
         <p class="label">合约详情</p>
         <div class="content" v-html="detailInfo.contractDetails"></div>
       </div>
-      <van-popup v-model="show" position="bottom" closeable :safe-area-inset-bottom="true">
-        <calc-power-buy-popup
-          v-on:dismiss="show=false"
+      <van-popup
+        v-model="show"
+        position="bottom"
+        closeable
+        :safe-area-inset-bottom="true"
+      >
+        <CalcPowerBuyPopup
+          v-on:dismiss="show = false"
           :number="number"
           :item="detailInfo"
           v-on:enterOrder="buySubmit"
@@ -39,13 +44,13 @@ export default {
     HeadNav,
     CalcPowerItem,
     CalcPowerBuyPopup,
-    [Popup.name]: Popup,
+    [Popup.name]: Popup
   },
   data() {
     return {
       show: false,
       detailInfo: {},
-      number: this.$route.params.amount || 1,
+      number: this.$route.params.amount || 1
     };
   },
   created() {
@@ -56,9 +61,9 @@ export default {
     getDetailById() {
       let rateId = this.$route.params.id || this.$route.query.id;
       const postData = {
-        id: rateId,
+        id: rateId
       };
-      goodGetApi(postData).then((res) => {
+      goodGetApi(postData).then(res => {
         this.detailInfo = res.data;
       });
     },
@@ -69,16 +74,16 @@ export default {
       const postData = {
         id: item.id,
         asset: "USDT",
-        quantity: item.amount,
+        quantity: item.amount
       };
-      orderApi(postData).then((res) => {
+      orderApi(postData).then(res => {
         if (res.ret === 200) {
           this.$router.push({
             path: "/countPay",
             query: {
               amount: item.price * item.amount,
-              id: res.data,
-            },
+              id: res.data
+            }
           });
         }
       });
@@ -87,8 +92,8 @@ export default {
       this.selectedItem = Object.assign({}, item);
       this.number = this.selectedItem.amount;
       this.show = true;
-    },
-  },
+    }
+  }
 };
 </script>
 

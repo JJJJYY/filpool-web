@@ -217,7 +217,6 @@ export default {
       imageData: null
     };
   },
-  created() {},
   mounted() {
     this.loadData();
     /// 复制邀请码
@@ -242,13 +241,17 @@ export default {
       this.$router.push("/inviteReward");
     },
     loadData() {
+      let Host = "";
+      if (!this.$isH5) {
+        Host = "https://www.filpool.io";
+      }
       distributionDetailApi().then(res => {
         if (res.ret === 200) {
           this.item = res.data;
           new QRCode(
             "qrCodeUrl",
             {
-              text: this.item.invitationCode,
+              text: `${window.location.host}${Host}/#/register/${this.item.invitationCode}`,
               width: 110,
               height: 110
             },
@@ -309,24 +312,31 @@ export default {
       //   self.imageData = imgData;
       // };
     },
-    convertBase64UrlToFile(base64) {
-      const bytes = window.atob(base64.split(",")[1]);
-      const ab = new ArrayBuffer(bytes.length);
-      const ia = new Uint8Array(ab);
-      for (let i = 0; i < bytes.length; i++) {
-        ia[i] = bytes.charCodeAt(i);
-      }
-      return new Blob([ab], { type: "image/jpeg" });
-    },
+    // convertBase64UrlToFile(base64) {
+    //   const bytes = window.atob(base64.split(",")[1]);
+    //   const ab = new ArrayBuffer(bytes.length);
+    //   const ia = new Uint8Array(ab);
+    //   for (let i = 0; i < bytes.length; i++) {
+    //     ia[i] = bytes.charCodeAt(i);
+    //   }
+    //   return new Blob([ab], { type: "image/jpeg" });
+    // },
     //保存到相册
     saveToGallery() {
-      const link = document.createElement("a");
-      link.href = URL.createObjectURL(
-        this.convertBase64UrlToFile(this.imageData)
-      );
-      link.download = "FILPool.jpeg";
-      link.click();
-      URL.revokeObjectURL(link.href);
+      // const link = document.createElement("a");
+      // link.href = URL.createObjectURL(
+      //   this.convertBase64UrlToFile(this.imageData)
+      // );
+      // link.download = "FILPool.jpeg";
+      // link.click();
+      // URL.revokeObjectURL(link.href);
+      saveBase64Img(this.imageData)
+        .then(() => {
+          Toast("已保存到相册");
+        })
+        .catch(err => {
+          Toast(err);
+        });
     }
   }
 };

@@ -1,7 +1,11 @@
 <template>
   <div>
-    <div style="background-color: #fff;">
-      <van-nav-bar :title="$route.meta.title" @click-right="recode" @click-left="$router.goBack()">
+    <div style="padding-top: 16px;background-color: #fff;">
+      <van-nav-bar
+        :title="$route.meta.title"
+        @click-right="recode"
+        @click-left="$router.goBack()"
+      >
         <template #right>
           <div style="color: #86929D;">充币记录</div>
         </template>
@@ -20,29 +24,35 @@
     </div>
     <div class="currency" @click="selectCurrency">
       <img :src="currAsset.icon" alt class="icon" />
-      <div class="name">{{currAssetInfo.asset}}</div>
+      <div class="name">{{ currAssetInfo.asset }}</div>
       <div class="select">切换币种</div>
       <img src="../../assets/img/mine/tab_icon_more.png" alt class="more" />
     </div>
     <div class="main">
       <div class="qr-tip">扫描二维码获取充币地址</div>
       <div class="qr" ref="qrCodeUrl"></div>
-      <button class="save btn-gradient" @click="saveImg" v-if="!$isH5">保存二维码至相册</button>
+      <button class="save btn-gradient" @click="saveImg" v-if="!$isH5">
+        保存二维码至相册
+      </button>
     </div>
     <div class="address-container">
       <div class="title">充币地址</div>
-      <div class="address">{{currAssetInfo.address}}</div>
-      <div class="copy" :data-clipboard-text="currAssetInfo.address">复制地址</div>
+      <div class="address">{{ currAssetInfo.address }}</div>
+      <div class="copy" :data-clipboard-text="currAssetInfo.address">
+        复制地址
+      </div>
     </div>
     <div class="intro">
       温馨提示：
       <br />
-      1、请勿向上述地址充值任何非 {{currAsset.asset}} 资产,否则资产将不可找回;
+      1、请勿向上述地址充值任何非 {{ currAsset.asset }} 资产,否则资产将不可找回;
       <br />2、请选择“ERC20”的链进行充值
       <br />
-      3、最小充值数量: {{currAssetInfo.minDeposit || 0}} {{currAsset.asset}} , 小于最小数量的充值将不会上账目无法退回。
+      3、最小充值数量: {{ currAssetInfo.minDeposit || 0 }}
+      {{ currAsset.asset }} , 小于最小数量的充值将不会上账目无法退回。
       <br />
-      4、手续费：{{currAsset.minFee | parseFloatFilter}} {{currAsset.asset}}。
+      4、手续费：{{ currAsset.minFee | parseFloatFilter }}
+      {{ currAsset.asset }}。
       <br />5、请务必确认电脑及浏览器安全,防止信息被簒改或泄露。
     </div>
   </div>
@@ -63,12 +73,12 @@ export default {
   name: "CurrencyTopup",
   components: {
     [Popup.name]: Popup,
-    [NavBar.name]: NavBar,
+    [NavBar.name]: NavBar
   },
   data() {
     return {
       currAsset: {},
-      currAssetInfo: {},
+      currAssetInfo: {}
       // show: true
     };
   },
@@ -112,19 +122,19 @@ export default {
     currAssetApi() {
       const postData = {
         asset: this.currAsset.asset,
-        blockChain: this.currAsset.blockChain,
+        blockChain: this.currAsset.blockChain
       };
-      userAddressApi(postData).then((res) => {
+      userAddressApi(postData).then(res => {
         this.currAssetInfo = res.data;
         this.createQr();
       });
     },
     /// 获取全部的币种
     loadAllAsset() {
-      assetTypeApi().then((res) => {
+      assetTypeApi().then(res => {
         if (res.ret === 200) {
           let asset = null;
-          res.data.forEach((val) => {
+          res.data.forEach(val => {
             if (val.asset === this.$route.query.asset) {
               asset = val;
             }
@@ -149,42 +159,41 @@ export default {
       Toast("复制成功???");
     },
     saveImg() {
-      //   /*let base64Str = this.$refs.qrCodeUrl.children[1].src;*/
-      //   this.createPicture().then((base64Str) => {
-      //     saveBase64Img(base64Str)
-      //       .then(() => {
-      //         Toast("已保存至相册");
-      //       })
-      //       .catch((err) => {
-      //         Toast(err);
-      //       });
-      //   });
-      // },
-      // createPicture() {
-      //   return new Promise((resolve) => {
-      //     html2canvas(this.$refs.qrCodeUrl, {
-      //       backgroundColor: null,
-      //       width: 130,
-      //       height: 130,
-      //     }).then((canvas) => {
-      //       let imgData = canvas.toDataURL("image/jpeg");
-      //       resolve(imgData);
-      //     });
-      //   });
+      this.createPicture().then(base64Str => {
+        saveBase64Img(base64Str)
+          .then(() => {
+            Toast("已保存至相册");
+          })
+          .catch(err => {
+            Toast(err);
+          });
+      });
+    },
+    createPicture() {
+      return new Promise(resolve => {
+        html2canvas(this.$refs.qrCodeUrl, {
+          backgroundColor: null,
+          width: 130,
+          height: 130
+        }).then(canvas => {
+          let imgData = canvas.toDataURL("image/jpeg");
+          resolve(imgData);
+        });
+      });
     },
     createQr() {
       new QRCode(this.$refs.qrCodeUrl, {
         text: this.currAssetInfo.address,
         width: 130,
-        height: 130,
+        height: 130
       });
     },
     selectCurrency() {
       this.$router.replace({
         path: "/selectCurrency",
         query: {
-          isTopUp: true,
-        },
+          isTopUp: true
+        }
       });
     },
     recode() {
@@ -192,14 +201,14 @@ export default {
         path: "/topupExtractRecode",
         query: {
           isTopUp: true,
-          asset: this.$route.query.asset,
-        },
+          asset: this.$route.query.asset
+        }
       });
-    },
+    }
   },
   beforeDestroy() {
     this.clipboard.destroy();
-  },
+  }
 };
 </script>
 
