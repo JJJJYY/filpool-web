@@ -5,7 +5,7 @@
       <van-tab title="算力管理">
         <div class="list page-container" style="margin-top: 1px;">
           <div class="cell" v-for="(x, index) in list" :key="index" @click="detail(x)">
-            <div class="type">{{typeDescription(x.type)}}</div>
+            <div class="type">{{typeDescription(x.type, x.serviceChargeRate)}}</div>
             <div class="total">{{x.quantity | parseFloatFilter}} TB</div>
             <div class="detail">明细</div>
           </div>
@@ -56,21 +56,21 @@ export default {
     typeDescription(x) {
       switch (x) {
         case 1:
-          return "矿机租赁（B）";
-        /*case 2:
-            return '赠送'
-          case 3:
-            return '兑换'
-          case 5:
-            return '注册送0.01TB算力'*/
+          return "矿机租赁";
+        case 2:
+          return "赠送";
+        case 3:
+          return "兑换";
+        case 4:
+          return "推广奖励";
+        case 5:
+          return "注册赠送";
         case 6:
           return "活动奖励";
         case 7:
           return "矿机托管";
         case 8:
           return "推广奖励";
-        case 10:
-          return "矿机租赁（N）";
         default:
           return "其他";
       }
