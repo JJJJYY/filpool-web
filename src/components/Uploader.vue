@@ -11,8 +11,15 @@
         :loading="loading"
         loading-text="正在上传"
         @click="openAcsheel"
-      >上传</van-button>
-      <input type="file" accept="image/*" class="uploadInput" @change="onChange" v-if="isH5" />
+        >上传</van-button
+      >
+      <input
+        type="file"
+        accept="image/*"
+        class="uploadInput"
+        @change="onChange"
+        v-if="isH5"
+      />
     </div>
   </div>
 </template>
@@ -28,26 +35,26 @@ export default {
   props: {
     text: {
       type: String,
-      default: "",
+      default: ""
     },
     value: {
       type: String,
-      default: "",
-    },
+      default: ""
+    }
   },
   components: {
-    [Button.name]: Button,
+    [Button.name]: Button
   },
   data() {
     return {
       loadImgUrl: "",
       loading: false,
       isH5: isH5,
-      token: "",
+      token: ""
     };
   },
   created() {
-    getTokenApi().then((res) => {
+    getTokenApi().then(res => {
       this.token = res.data;
     });
   },
@@ -63,7 +70,7 @@ export default {
       formData.append("file", file);
       formData.append("token", this.token);
       filePictureApi(formData, "https://up-z2.qiniup.com/")
-        .then((res) => {
+        .then(res => {
           console.log(res);
           this.loading = false;
           this.loadImgUrl = URL.createObjectURL(file);
@@ -109,11 +116,11 @@ export default {
     getImage() {
       let cmr = window.plus.camera.getCamera();
       cmr.captureImage(path => {
-        console.log('img',path);
+        console.log("img", path);
         // plus.io.resolveLocalFileSystemURL(path,(entry) => {
         //     entry.file( (path) => {
         //       console.log('11', path.fullPath);
-              this.checkImgSize(path);
+        this.checkImgSize(path);
         //       this.loadImgUrl = path.fullPath;
         //         let fileReader = new plus.io.FileReader();
         //         fileReader.readAsDataURL(path); // 转base64
@@ -127,7 +134,7 @@ export default {
     galleryImg() {
       window.plus.gallery.pick(
         path => {
-        console.log('img',path);
+          console.log("img", path);
           this.checkImgSize(path);
           //this.uploadByPlus(path);
         },
@@ -143,32 +150,44 @@ export default {
         filePath: path,
         success: res => {
           if (res.size / (1024 * 1024) > 2) {
-            let matchArr = path.match(/\/[^\/]+\.[a-zA-Z]+$/g);
-            let fileName = matchArr[0].slice(1);
-            let targetPath = `_doc/${fileName}${overwrite ? "" : "(1)"}`;
-            window.plus.zip.compressImage(
-              {
-                src: path,
-                dst: targetPath,
-                overwrite: !!overwrite
-              },
-              () => {
-                console.log('走targetPath')
-                plus.io.resolveLocalFileSystemURL(targetPath,(entry) => {
-                    entry.file( (targetPath) => {
-                      console.log('11', targetPath.fullPath);
-                      this.loadImgUrl = targetPath.fullPath;
-                      this.uploadByPlus(targetPath.fullPath);
-                        // let fileReader = new plus.io.FileReader();
-                        // fileReader.readAsDataURL(path); // 转base64
-                        // console.log('fileReader',fileReader)
-                    });
-                });
-              },
-              () => {}
-            );
+            console.log("走targetPath");
+            plus.io.resolveLocalFileSystemURL(path, entry => {
+              entry.file(path => {
+                console.log("11", path);
+                this.loadImgUrl = path.fullPath;
+                this.uploadByPlus(path.fullPath);
+                // let fileReader = new plus.io.FileReader();
+                // fileReader.readAsDataURL(path); // 转base64
+                // console.log('fileReader',fileReader)
+              });
+            });
+
+            // let matchArr = path.match(/\/[^\/]+\.[a-zA-Z]+$/g);
+            // let fileName = matchArr[0].slice(1);
+            // let targetPath = `_doc/${fileName}${overwrite ? "" : "(1)"}`;
+            // window.plus.zip.compressImage(
+            //   {
+            //     src: path,
+            //     dst: targetPath,
+            //     overwrite: !!overwrite,
+            //   },
+            //   () => {
+            //     plus.io.resolveLocalFileSystemURL(targetPath, (entry) => {
+            //       entry.file((targetPath) => {
+            //         console.log("11", targetPath.fullPath);
+            //         this.loadImgUrl = targetPath.fullPath;
+            //         this.uploadByPlus(targetPath.fullPath);
+            //         // let fileReader = new plus.io.FileReader();
+            //         // fileReader.readAsDataURL(path); // 转base64
+            //         // console.log('fileReader',fileReader)
+            //       });
+            //     });
+            //   },
+            //   () => {}
+            // );
           } else {
-            console.log('走path')
+            console.log("走path");
+            this.loadImgUrl = path;
             this.uploadByPlus(path);
           }
         }
@@ -177,27 +196,26 @@ export default {
 
     uploadByPlus(path) {
       this.loading = true;
-      console.log('path',path)
+      console.log("path", path);
       let formData = new FormData();
       this.loading = true;
       formData.append("file", path);
       formData.append("token", this.token);
       let task = window.plus.uploader.createUpload(
-      'https://up-z2.qiniup.com/',{
-      },
-      (t,status) => {
-        let resData = JSON.parse(t.responseText);
-        console.log(resData)
-        if (status === 200) {
-          this.loading = false;
-          this.loadImgUrl = path;
-          console.log(this.loadImgUrl)
-          this.$emit("input", resData.key);
-        }else {
-          this.loading = false;
-          Toast('图片上传失败！');
+        "https://up-z2.qiniup.com/",
+        {},
+        (t, status) => {
+          let resData = JSON.parse(t.responseText);
+          console.log(resData);
+          if (status === 200) {
+            this.loading = false;
+            console.log(this.loadImgUrl);
+            this.$emit("input", resData.key);
+          } else {
+            this.loading = false;
+            Toast("图片上传失败！");
+          }
         }
-      }
         // .then((res) => {
         //   console.log(res);
         //   this.loading = false;
@@ -219,12 +237,12 @@ export default {
         // }
       );
       console.log(task);
-      task.addData("file",path);
-      task.addData("token",this.token);
-      task.addFile(path,{"key":"file"});
+      task.addData("file", path);
+      task.addData("token", this.token);
+      task.addFile(path, { key: "file" });
       task.start();
     }
-  },
+  }
 };
 </script>
 

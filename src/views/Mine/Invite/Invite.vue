@@ -1,5 +1,5 @@
 <template>
-  <div class="page" :style="{backgroundColor: 'rgba(0,0,0,0)'}">
+  <div class="page" :style="{ backgroundColor: 'rgba(0,0,0,0)' }">
     <head-nav bgcolor="rgba(0,0,0,0)"></head-nav>
     <div class="container page-container">
       <div class="main">
@@ -7,41 +7,64 @@
         <div class="h2">邀请好友下载APP,获取超高奖励</div>
         <div class="code-title">专属邀请码</div>
         <div class="code-container" id="copy-code" @click="copyCode">
-          <div class="code">{{item.invitationCode}}</div>
+          <div class="code">{{ item.invitationCode }}</div>
           <img
             style="height: 18px; margin-left: 8px;"
             src="../../../assets/img/invite/invitation_code_icon_copy.png"
             alt
           />
         </div>
-        <button class="btn-gradient invite-btn" @click="toInvite">立即邀请</button>
+        <button class="btn-gradient invite-btn" @click="toInvite">
+          立即邀请
+        </button>
         <div class="invite-desc">
           您已邀请人数
-          <span>{{item.inviteCount}}</span> ，购买算力人数
-          <span>{{item.purchaseCount}}</span>，累计获得
-          <span>{{item.usdtReward}}</span>佣金
+          <span>{{ item.inviteCount }}</span> ，购买算力人数
+          <span>{{ item.purchaseCount }}</span
+          >，累计获得 <span>{{ item.usdtReward }}</span
+          >佣金
         </div>
         <div class="hr"></div>
         <div class="flow-title">邀请流程</div>
         <div class="flow-container">
           <div class="flow-item">
-            <img class="flow-item-icon" src="../../../assets/img/invite/invitation_icon_1.png" alt />
+            <img
+              class="flow-item-icon"
+              src="../../../assets/img/invite/invitation_icon_1.png"
+              alt
+            />
             <div class="flow-item-desc">
               发送邀请
               <br />给好友
             </div>
           </div>
-          <img class="flow-item-arrow" src="../../../assets/img/invite/invitation_icon_4.png" alt />
+          <img
+            class="flow-item-arrow"
+            src="../../../assets/img/invite/invitation_icon_4.png"
+            alt
+          />
           <div class="flow-item">
-            <img class="flow-item-icon" src="../../../assets/img/invite/invitation_icon_2.png" alt />
+            <img
+              class="flow-item-icon"
+              src="../../../assets/img/invite/invitation_icon_2.png"
+              alt
+            />
             <div class="flow-item-desc">
               好友下载
               <br />APP
             </div>
           </div>
-          <img class="flow-item-arrow" src="../../../assets/img/invite/invitation_icon_4.png" alt />
+          <img
+            class="flow-item-arrow"
+            src="../../../assets/img/invite/invitation_icon_4.png"
+            alt
+          />
           <div class="flow-item">
-            <img class="flow-item-icon" src="../../../assets/img/invite/invitation_icon_3.png" alt />
+            <img
+              class="flow-item-icon"
+              src="../../../assets/img/invite/invitation_icon_3.png"
+              alt
+            />
             <div class="flow-item-desc">
               输入您的
               <br />邀请码
@@ -56,30 +79,51 @@
         </div>
         <div style="padding: 0 16px;">
           <div class="reward-icon-flow">
-            <img src="../../../assets/img/invite/invitation_icon_1(1).png" alt />
-            <img src="../../../assets/img/invite/invitation_icon_2(1).png" alt />
-            <img src="../../../assets/img/invite/invitation_icon_3(1).png" alt />
+            <img
+              src="../../../assets/img/invite/invitation_icon_1(1).png"
+              alt
+            />
+            <img
+              src="../../../assets/img/invite/invitation_icon_2(1).png"
+              alt
+            />
+            <img
+              src="../../../assets/img/invite/invitation_icon_3(1).png"
+              alt
+            />
           </div>
           <div class="reward-progress-container">
             <div class="reward-progress">
               <div
                 class="reward-progress-high gradient"
-                :style="{'width': currentLevelProgress +'%'}"
+                :style="{ width: currentLevelProgress + '%' }"
               ></div>
             </div>
             <img
               class="reward-progress-dot"
-              :src="dotHighlight[0] ? require('../../../assets/img/invite/user_center_icon_1.png') : require('../../../assets/img/invite/user_center_icon_2.png')"
+              :src="
+                dotHighlight[0]
+                  ? require('../../../assets/img/invite/user_center_icon_1.png')
+                  : require('../../../assets/img/invite/user_center_icon_2.png')
+              "
               alt
             />
             <img
               class="reward-progress-dot"
-              :src="dotHighlight[1] ? require('../../../assets/img/invite/user_center_icon_1.png') : require('../../../assets/img/invite/user_center_icon_2.png')"
+              :src="
+                dotHighlight[1]
+                  ? require('../../../assets/img/invite/user_center_icon_1.png')
+                  : require('../../../assets/img/invite/user_center_icon_2.png')
+              "
               alt
             />
             <img
               class="reward-progress-dot"
-              :src="dotHighlight[2] ? require('../../../assets/img/invite/user_center_icon_1.png') : require('../../../assets/img/invite/user_center_icon_2.png')"
+              :src="
+                dotHighlight[2]
+                  ? require('../../../assets/img/invite/user_center_icon_1.png')
+                  : require('../../../assets/img/invite/user_center_icon_2.png')
+              "
               alt
             />
           </div>
@@ -93,29 +137,48 @@
         <div class="reward-intro">
           <div class="reward-intro-item">
             <div class="reward-intro-item-title">累计邀请人数：</div>
-            <div class="reward-intro-item-val">{{item.inviteCount | parseFloatFilter}} 人</div>
+            <div class="reward-intro-item-val">
+              {{ item.inviteCount | parseFloatFilter }} 人
+            </div>
           </div>
           <div class="reward-intro-item">
             <div class="reward-intro-item-title">累计购买人数：</div>
-            <div class="reward-intro-item-val">{{item.purchaseCount | parseFloatFilter}} 人</div>
+            <div class="reward-intro-item-val">
+              {{ item.purchaseCount | parseFloatFilter }} 人
+            </div>
           </div>
           <div class="reward-intro-item">
             <div class="reward-intro-item-title">累计推广数量：</div>
-            <div class="reward-intro-item-val">{{item.filpReward | parseFloatFilter}} TB</div>
+            <div class="reward-intro-item-val">
+              {{ item.filpReward | parseFloatFilter }} TB
+            </div>
           </div>
           <div class="reward-intro-item">
             <div class="reward-intro-item-title">累计获取佣金：</div>
-            <div class="reward-intro-item-val">{{item.usdtReward | parseFloatFilter}} USDT</div>
+            <div class="reward-intro-item-val">
+              {{ item.usdtReward | parseFloatFilter }} USDT
+            </div>
           </div>
         </div>
       </div>
     </div>
-    <van-popup v-model="showShare" :style="{'width': '100%'}" position="bottom" closeable>
-      <InviteSharePopup @save="showInviteImg" @copy="copyInviteUrl" :inviteInfo="item" />
+    <van-popup
+      v-model="showShare"
+      :style="{ width: '100%' }"
+      position="bottom"
+      closeable
+    >
+      <InviteSharePopup
+        @save="showInviteImg"
+        @copy="copyInviteUrl"
+        :inviteInfo="item"
+      />
     </van-popup>
     <div class="inviteBox" v-if="showImg" @click="showImg = false">
       <img class="inviteImgData" :src="imageData" alt />
-      <span class="downloadBtn" @click="saveToGallery" v-if="!$isH5">保存至相册</span>
+      <span class="downloadBtn" @click="saveToGallery" v-if="!$isH5"
+        >保存至相册</span
+      >
     </div>
     <div class="inviteImg" id="qrCodeUrl" ref="qrCodeUrl" />
     <img class="inviteImg" id="test1" />
@@ -141,7 +204,7 @@ export default {
   components: {
     HeadNav,
     InviteSharePopup,
-    [Popup.name]: Popup,
+    [Popup.name]: Popup
   },
   data() {
     return {
@@ -151,7 +214,7 @@ export default {
       dotHighlight: [false, false, false],
       showImg: false,
       imageSrc: require("@/assets/img/back.png"),
-      imageData: null,
+      imageData: null
     };
   },
   created() {},
@@ -159,7 +222,7 @@ export default {
     this.loadData();
     /// 复制邀请码
     new Clipboard("#copy-code", {
-      text: () => this.item.invitationCode,
+      text: () => this.item.invitationCode
     }).on("success", () => Toast("复制成功"));
   },
   methods: {
@@ -179,7 +242,7 @@ export default {
       this.$router.push("/inviteReward");
     },
     loadData() {
-      distributionDetailApi().then((res) => {
+      distributionDetailApi().then(res => {
         if (res.ret === 200) {
           this.item = res.data;
           new QRCode(
@@ -187,7 +250,7 @@ export default {
             {
               text: this.item.invitationCode,
               width: 110,
-              height: 110,
+              height: 110
             },
             1000
           );
@@ -218,10 +281,10 @@ export default {
       var canvas = document.createElement("canvas");
       // var qrcode = document.querySelectorAll("#qrCodeUrl>img")[0];
       let self = this;
-      html2canvas(document.getElementById("qrCodeUrl")).then((canvas2) => {
+      html2canvas(document.getElementById("qrCodeUrl")).then(canvas2 => {
         var img = document.createElement("img");
         img.src = self.imageSrc;
-        img.onload = function () {
+        img.onload = function() {
           canvas.height = img.height;
           canvas.width = img.width;
           var cx = canvas.getContext("2d");
@@ -261,11 +324,11 @@ export default {
       link.href = URL.createObjectURL(
         this.convertBase64UrlToFile(this.imageData)
       );
-      link.download = "image.jpeg";
+      link.download = "FILPool.jpeg";
       link.click();
       URL.revokeObjectURL(link.href);
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -500,7 +563,7 @@ export default {
     background-color: #f28714;
     position: absolute;
     left: 50%;
-    top: 300px;
+    bottom: 20px;
     transform: translateX(-50%);
     border-radius: 4px;
     text-align: center;
