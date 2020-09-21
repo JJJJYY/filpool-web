@@ -104,7 +104,7 @@
           />
         </div>
         <!--      <div class="hr"></div>-->
-        <div class="pay-pwd-img pay-pwd">
+        <div class="pay-pwd pay-pwd-img">
           <div class="title">图片验证码</div>
           <input
             type
@@ -510,14 +510,15 @@ $place-fontSize: 14px;
   background: $content-backgroun-color;
   margin-top: 8px;
   display: flex;
-  align-items: center;
+  // align-items: center;
   flex-direction: column;
-  .title {
-    width: 100%;
-  }
   .pay-pwd-img {
-    padding: 0 !important;
-    padding-left: 16px !important;
+    .title {
+      font-size: 14px;
+      color: $h2-color;
+      width: 80px !important;
+    }
+    padding: 0 0 0 16px !important;
     .send-code {
       border-left: none !important;
     }
