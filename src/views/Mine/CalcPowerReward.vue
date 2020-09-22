@@ -6,7 +6,9 @@
         <div class="name">{{x.relatedName | nameInfo}}</div>
         <div class="amount">{{x.quantity | parseFloatFilter}} {{x.unit}}</div>
         <div class="time">{{x.createTime}}</div>
-        <div class="type">{{$route.query.typeDescription}}</div>
+        <div
+          class="type"
+        >{{$route.query.typeDescription}} {{(x.type == 1 || x.type == 7) ? x.serviceChargeRate == 0.2 ? "N" : "B" : ''}}</div>
       </div>
     </div>
   </div>
