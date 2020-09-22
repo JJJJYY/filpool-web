@@ -68,11 +68,12 @@ axios.interceptors.response.use(response => {
     // }
   },
   error => {
-    let status = error && error.status && error.status || '';
+    console.table(error)
+    let status = error.response.status || '    未知错误';
     Toast(`请求服务器失败 ${status}`);
-    router.push({
-      path: "/login"
-    })
+    // router.push({
+    //   path: "/login"
+    // })
     return Promise.reject(error);
   }
 );
