@@ -44,7 +44,6 @@ VueRouter.prototype.goBack = function () {
   window.history.go(-1);
 };
 router.beforeEach((to, from, next) => {
-  console.log(from);
   if (from.path === '/setTransPwd') {
     to.meta.isQuit = true;
   } else {

@@ -2,22 +2,23 @@ import axios from 'axios';
 import {
   serviceURL
 } from "@/config";
-
-const fetchData = (response, resolve, reject) => {
-  let json = response.data;
-  if (json.ret != 200) {
-    reject(error);
-  }
-  resolve(json);
-}
+import {
+  get,
+  post
+} from '../utils/corsAjax';
+import {
+  isH5
+} from '@/utils/utilTools';
+import {
+  Form
+} from 'vant';
 
 const doGetFetch = url => new Promise((resolve, reject) => {
   axios(url, {
       method: 'GET',
     })
     .then(response => {
-      // resolve(response.data)
-      fetchData(response, resolve, reject)
+      resolve(response.data)
     })
     // .then(res => resolve(res))
     .catch(err => reject(err));
@@ -53,18 +54,30 @@ export const getRequest = (api, params) => {
       url += `&${paramsArray.join('&')}`;
     }
   }
-  return doGetFetch(url);
+  if (isH5) {
+    return doGetFetch(url);
+  } else {
+    return get(url)
+  }
 };
 // post请求
 export const postRequest = (api, data, baseUrl = null) => {
   if (baseUrl) {
-    return doPostFetch(baseUrl, data);
+    if (isH5) {
+      return doPostFetch(url, data);
+    } else {
+      return post(url, data)
+    }
   } else {
     let url = `${serviceURL}/public/`;
     data = {
       s: api,
       ...data,
     }
-    return doPostFetch(url, data);
+    if (isH5) {
+      return doPostFetch(url, data);
+    } else {
+      return post(url, data)
+    }
   }
 };
