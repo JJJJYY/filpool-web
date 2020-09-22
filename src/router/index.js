@@ -253,7 +253,10 @@ const routes = [{
   }, {
     path: '/register/:inviteCode?',
     name: 'Register',
-    component: () => import( /* webpackChunkName: "login" */ '../views/Login/Register')
+    component: () => import( /* webpackChunkName: "login" */ '../views/Login/Register'),
+    meta: {
+      isQuit: false,
+    }
   }, {
     path: '/setTransPwd',
     name: 'SetTransPwd',

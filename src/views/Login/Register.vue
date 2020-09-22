@@ -150,6 +150,12 @@ export default {
       this.checkChannel();
     }
   },
+  activated() {
+    console.log("activated");
+  },
+  deactivated() {
+    console.log("deactivated");
+  },
   watch: {
     imgCodeUrl: function () {},
   },
