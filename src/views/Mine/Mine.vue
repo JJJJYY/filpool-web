@@ -1,73 +1,75 @@
 <template>
   <div class="mine">
-    <head-nav></head-nav>
-    <div class="mine-container page-container">
-      <div class="header">
-        <div class="user">
-          <img src="../../assets/img/logo.png" alt class="avatar" />
-          <div class="user-info">
-            <div class="user-name">
-              <div class="name">{{userData.nickname || ''}}</div>
-              <span class="state">{{levelString(userData.level)}}</span>
+    <vue-pull-refresh v-model="loading" :on-refresh="onRefresh">
+      <head-nav></head-nav>
+      <div class="mine-container page-container">
+        <div class="header">
+          <div class="user">
+            <img src="../../assets/img/logo.png" alt class="avatar" />
+            <div class="user-info">
+              <div class="user-name">
+                <div class="name">{{userData.nickname || ''}}</div>
+                <span class="state">{{levelString(userData.level)}}</span>
+              </div>
+              <span class="id">ID: {{userData.id}}</span>
             </div>
-            <span class="id">ID: {{userData.id}}</span>
+          </div>
+          <div class="hr"></div>
+          <div class="total">
+            <div class="total-val">总算力: {{totalWeight | parseFloatFilter}}TB</div>
+            <div style="flex: 1;"></div>
+            <router-link :to="{path: '/rate'}" class="to-buy" style="margin-left: 4px;">
+              <img
+                src="../../assets/img/mine/user_icon_buy.png"
+                style="max-height: 15px;vertical-align: bottom;margin-right: 5px;"
+                alt
+              />
+              <span>去购买算力</span>
+            </router-link>
           </div>
         </div>
-        <div class="hr"></div>
-        <div class="total">
-          <div class="total-val">总算力: {{totalWeight | parseFloatFilter}}TB</div>
-          <div style="flex: 1;"></div>
-          <router-link :to="{path: '/rate'}" class="to-buy" style="margin-left: 4px;">
-            <img
-              src="../../assets/img/mine/user_icon_buy.png"
-              style="max-height: 15px;vertical-align: bottom;margin-right: 5px;"
-              alt
-            />
-            <span>去购买算力</span>
-          </router-link>
+        <div class="group">
+          <div class="cell" @click="$router.push('/myasset')">
+            <img src="../../assets/img/mine/user_center_icon_my_asset.png" alt class="icon" />
+            <div class="title">资产管理</div>
+            <img class="more" src="../../assets/img/mine/tab_icon_more.png" alt />
+          </div>
+          <div class="cell" @click="$router.push('/invite')">
+            <img src="../../assets/img/mine/user_center_icon_invitation.png" alt class="icon" />
+            <div class="title">邀请好友</div>
+            <div class="desc">我的邀请码: {{userData.invitationCode}}</div>
+            <img class="more" src="../../assets/img/mine/tab_icon_more.png" alt />
+          </div>
+          <div class="cell" @click="$router.push('/orderManager')">
+            <img src="../../assets/img/mine/user_center_icon_odrer.png" alt class="icon" />
+            <div class="title">订单管理</div>
+            <img class="more" src="../../assets/img/mine/tab_icon_more.png" alt />
+          </div>
+          <div class="cell" @click="$router.push('/calcPowerManager')">
+            <img src="../../assets/img/mine/user_icon_count.png" alt class="icon" />
+            <div class="title">算力管理</div>
+            <img class="more" src="../../assets/img/mine/tab_icon_more.png" alt />
+          </div>
+        </div>
+        <div class="group">
+          <div class="cell" @click="$router.push('/securityCenter')">
+            <img src="../../assets/img/mine/user_center_icon_account.png" alt class="icon" />
+            <div class="title">账户管理</div>
+            <img class="more" src="../../assets/img/mine/tab_icon_more.png" alt />
+          </div>
+          <div class="cell" @click="$router.push('/actual')">
+            <img src="../../assets/img/mine/actual-icon.png" alt class="icon" />
+            <div class="title">实名认证</div>
+            <img class="more" src="../../assets/img/mine/tab_icon_more.png" alt />
+          </div>
+          <div class="cell" @click="$router.push('/setting')">
+            <img src="../../assets/img/mine/my_icon_setting.png" alt class="icon" />
+            <div class="title">设置</div>
+            <img class="more" src="../../assets/img/mine/tab_icon_more.png" alt />
+          </div>
         </div>
       </div>
-      <div class="group">
-        <div class="cell" @click="$router.push('/myasset')">
-          <img src="../../assets/img/mine/user_center_icon_my_asset.png" alt class="icon" />
-          <div class="title">资产管理</div>
-          <img class="more" src="../../assets/img/mine/tab_icon_more.png" alt />
-        </div>
-        <div class="cell" @click="$router.push('/invite')">
-          <img src="../../assets/img/mine/user_center_icon_invitation.png" alt class="icon" />
-          <div class="title">邀请好友</div>
-          <div class="desc">我的邀请码: {{userData.invitationCode}}</div>
-          <img class="more" src="../../assets/img/mine/tab_icon_more.png" alt />
-        </div>
-        <div class="cell" @click="$router.push('/orderManager')">
-          <img src="../../assets/img/mine/user_center_icon_odrer.png" alt class="icon" />
-          <div class="title">订单管理</div>
-          <img class="more" src="../../assets/img/mine/tab_icon_more.png" alt />
-        </div>
-        <div class="cell" @click="$router.push('/calcPowerManager')">
-          <img src="../../assets/img/mine/user_icon_count.png" alt class="icon" />
-          <div class="title">算力管理</div>
-          <img class="more" src="../../assets/img/mine/tab_icon_more.png" alt />
-        </div>
-      </div>
-      <div class="group">
-        <div class="cell" @click="$router.push('/securityCenter')">
-          <img src="../../assets/img/mine/user_center_icon_account.png" alt class="icon" />
-          <div class="title">账户管理</div>
-          <img class="more" src="../../assets/img/mine/tab_icon_more.png" alt />
-        </div>
-        <div class="cell" @click="$router.push('/actual')">
-          <img src="../../assets/img/mine/actual-icon.png" alt class="icon" />
-          <div class="title">实名认证</div>
-          <img class="more" src="../../assets/img/mine/tab_icon_more.png" alt />
-        </div>
-        <div class="cell" @click="$router.push('/setting')">
-          <img src="../../assets/img/mine/my_icon_setting.png" alt class="icon" />
-          <div class="title">设置</div>
-          <img class="more" src="../../assets/img/mine/tab_icon_more.png" alt />
-        </div>
-      </div>
-    </div>
+    </vue-pull-refresh>
     <foot-box></foot-box>
   </div>
 </template>
@@ -77,11 +79,13 @@ import { mapState } from "vuex";
 import HeadNav from "@/components/HeadNav";
 import FootBox from "@/components/FootBox";
 import { myWeightApi } from "../../net/api/userInfoApi";
+import VuePullRefresh from "vue-pull-refresh";
 export default {
   name: "Mine",
   components: {
     HeadNav,
     FootBox,
+    "vue-pull-refresh": VuePullRefresh,
   },
   created() {
     // this.$store.dispatch('reloadUserData');
@@ -90,6 +94,7 @@ export default {
   data() {
     return {
       totalWeight: "---",
+      loading: false,
     };
   },
   computed: {
@@ -121,6 +126,10 @@ export default {
       myWeightApi().then((res) => {
         this.totalWeight = res.data.totalWeight;
       });
+    },
+    onRefresh() {
+      this.$store.dispatch("reloadUserData");
+      this.loading = false;
     },
   },
 };
