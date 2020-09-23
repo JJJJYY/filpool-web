@@ -90,7 +90,7 @@ export default {
   computed: {
     ...mapState(["userData"]),
     isPhone() {
-      return this.userData.phone;
+      return this.userData.defaultAccount === 0;
     },
   },
   created() {

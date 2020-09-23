@@ -246,6 +246,9 @@ const routes = [{
     path: '/forgetPwd',
     name: 'ForgetPwd',
     component: () => import( /* webpackChunkName: "login" */ '../views/Login/ForgetPwd'),
+    meta: {
+      isQuit: true,
+    }
   }, {
     path: '/resetPwd',
     name: 'ResetPwd',
@@ -255,7 +258,7 @@ const routes = [{
     name: 'Register',
     component: () => import( /* webpackChunkName: "login" */ '../views/Login/Register'),
     meta: {
-      isQuit: false,
+      isQuit: true,
     }
   }, {
     path: '/setTransPwd',

@@ -150,11 +150,11 @@ export default {
       this.checkChannel();
     }
   },
-  activated() {
-    console.log("activated");
-  },
-  deactivated() {
-    console.log("deactivated");
+  beforeRouteLeave(to, from, next) {
+    if (to.name === "Login") {
+      this.$destroy();
+    }
+    next();
   },
   watch: {
     imgCodeUrl: function () {},

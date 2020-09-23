@@ -81,10 +81,11 @@ export default {
   computed: {
     ...mapState(["userData"]),
     isPhone() {
-      return this.userData.phone === 0;
+      return this.userData.defaultAccount === 0;
     },
   },
   created() {
+    console.log(this.userData);
     this.getImgCode();
   },
   methods: {

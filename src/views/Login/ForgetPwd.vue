@@ -74,6 +74,12 @@ export default {
     this.uuid = "";
     this.getImgCode();
   },
+  beforeRouteLeave(to, from, next) {
+    if (to.name === "Login") {
+      this.$destroy();
+    }
+    next();
+  },
   methods: {
     submit() {
       if (this.account.length === 0) {
