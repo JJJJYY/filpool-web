@@ -2,6 +2,7 @@ import plusReady from './plusReady';
 import {
   Toast
 } from 'vant';
+import router from '../router/index';
 // import router from "@/router";
 // import {
 //   serviceURL
@@ -20,52 +21,57 @@ import {
 
 export default (params, callback) => {
   return new Promise((resolve, reject) => {
-    plusReady(() => {
-      let xhr = new window.plus.net.XMLHttpRequest();
-      console.log('xhr', xhr)
-      // let xhr = new XMLHttpRequest();
-      // console.log(params)
-      let type = params.type && params.type.toUpperCase() || 'POST';
-      let url = params.url;
-      let reqParams = params.data || null;
-      // let targetUrl = serviceURL;
-      // let url = params.isRelative ? params.url : `${targetUrl}${params.url}`;
-      // if (type === "GET") {
-      //   url += `?${stringify(reqParams)}`;
-      // } else {
-      reqParams = JSON.stringify(reqParams);
-      // }
-      xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4) {
-          let res = JSON.parse(xhr.responseText);
-          if (xhr.status === 200 || xhr.status === 304) {
-            if (res.ret === 200) {
-              resolve(res);
-            } else {
-              Toast(res.msg || '请求服务器失败');
-              reject();
-            }
+    // plusReady(() => {
+    // let xhr = new window.plus.net.XMLHttpRequest();
+    let xhr = new XMLHttpRequest();
+    console.log('xhr', xhr)
+    // console.log(params)
+    let type = params.type && params.type.toUpperCase() || 'POST';
+    let url = params.url;
+    let reqParams = params.data || null;
+    // let targetUrl = serviceURL;
+    // let url = params.isRelative ? params.url : `${targetUrl}${params.url}`;
+    // if (type === "GET") {
+    //   url += `?${stringify(reqParams)}`;
+    // } else {
+    reqParams = JSON.stringify(reqParams);
+    // }
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === 4) {
+        let res = JSON.parse(xhr.responseText);
+        if (xhr.status === 200 || xhr.status === 304) {
+          if (res.ret === 200) {
+            resolve(res);
+          } else if (res.ret === 401) {
+            Toast(res.msg)
+            router.push({
+              path: '/login'
+            })
           } else {
-            Toast("请求服务器失败");
+            Toast(res.msg || '请求服务器失败');
+            reject();
           }
-          typeof callback === 'function' && callback(res)
+        } else {
+          Toast("请求服务器失败");
         }
-      };
-      xhr.open(type, url);
-      // if (type === 'POST') {
-      //   let contentType = params['Content-Type'] || 'application/json';
-      //   xhr.setRequestHeader('Content-Type', contentType);
-      // }
-      // if (params.config && params.config.headers) {
-      //   if (params.config.responseType) {
-      //     xhr.responseType = params.config.responseType;
-      //   }
-      //   for (let field in params.config.headers) {
-      //     xhr.setRequestHeader(field, params.config.headers[field]);
-      //   }
-      // }
+        typeof callback === 'function' && callback(res)
+      }
+    };
+    xhr.open(type, url);
+    // if (type === 'POST') {
+    //   let contentType = params['Content-Type'] || 'application/json';
+    //   xhr.setRequestHeader('Content-Type', contentType);
+    // }
+    // if (params.config && params.config.headers) {
+    //   if (params.config.responseType) {
+    //     xhr.responseType = params.config.responseType;
+    //   }
+    //   for (let field in params.config.headers) {
+    //     xhr.setRequestHeader(field, params.config.headers[field]);
+    //   }
+    // }
 
-      xhr.send(reqParams);
-    })
+    xhr.send(reqParams);
+    // })
   })
 }
