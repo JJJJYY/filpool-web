@@ -64,6 +64,10 @@ export default {
       window.addEventListener("scroll", this.handleScroll);
     }
   },
+  activated() {},
+  deactivated() {
+    this.onRefresh();
+  },
   methods: {
     handleScroll() {
       this.disablePull =

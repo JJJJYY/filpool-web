@@ -312,6 +312,7 @@ export default {
     this.setStatusStyle("light");
   },
   deactivated() {
+    this.getGoodList();
     this.setStatusStyle("dark");
   },
   methods: {

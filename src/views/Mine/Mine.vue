@@ -2,7 +2,7 @@
   <div class="mine">
     <vue-pull-refresh v-model="loading" @refresh="onRefresh">
       <head-nav></head-nav>
-      <div class="mine-container page-container">
+      <div class="mine-container page-container" v-if="show">
         <div class="header">
           <div class="user">
             <img src="../../assets/img/logo.png" alt class="avatar" />
@@ -78,7 +78,7 @@
 import { mapState } from "vuex";
 import HeadNav from "@/components/HeadNav";
 import FootBox from "@/components/FootBox";
-import { myWeightApi } from "../../net/api/userInfoApi";
+import { myWeightApi } from "@/net/api/userInfoApi";
 import { PullRefresh } from "vant";
 export default {
   name: "Mine",
@@ -95,11 +95,16 @@ export default {
     return {
       totalWeight: "---",
       loading: false,
+      show: false,
     };
   },
   computed: {
     ...mapState(["userData"]),
   },
+  activated() {
+    this.loadTotalWeight();
+  },
+  deactivated() {},
   methods: {
     levelString(x) {
       switch (x) {
@@ -126,6 +131,7 @@ export default {
       myWeightApi().then((res) => {
         this.totalWeight = res.data.totalWeight;
         this.loading = false;
+        this.show = true;
       });
     },
     onRefresh() {

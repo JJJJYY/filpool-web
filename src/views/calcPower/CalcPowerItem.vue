@@ -17,15 +17,11 @@
         </div>
         <div class="intro-item">
           <span class="intro-item-title">合约期限</span>
-          <span class="intro-item-value"
-            >{{ goodData.contractDuration }}天</span
-          >
+          <span class="intro-item-value">{{ goodData.contractDuration }}天</span>
         </div>
         <div class="intro-item">
           <span class="intro-item-title">技术服务费</span>
-          <span class="intro-item-value"
-            >{{ goodData.serviceChargeRate * 100 }}%</span
-          >
+          <span class="intro-item-value">{{ goodData.serviceChargeRate * 100 }}%</span>
         </div>
       </div>
       <div class="handler">
@@ -35,9 +31,7 @@
         </div>
         <div style="flex: 1;"></div>
         <AddSubtractBox v-model="amount" :limit="goodData.minLimit" />
-        <div style="color: #575c62; font-size: 12px; margin-left: 12px;">
-          {{ goodData.unit }}
-        </div>
+        <div style="color: #575c62; font-size: 12px; margin-left: 12px;">{{ goodData.unit }}</div>
       </div>
       <van-progress
         class="vanProgress"
@@ -50,8 +44,7 @@
       class="btn-gradient"
       :class="{ gray: goodData.status !== 1 }"
       @click="enterPay(goodData)"
-      >{{ this.statusBtnTitle(goodData.status) }}</a
-    >
+    >{{ this.statusBtnTitle(goodData.status) }}</a>
     <span class="tag">{{ goodData.tag }}</span>
   </div>
 </template>
@@ -62,22 +55,21 @@ import { Progress } from "vant";
 export default {
   props: {
     goodData: {
-      default: () => ({})
-    }
+      default: () => ({}),
+    },
   },
   components: {
     AddSubtractBox,
-    [Progress.name]: Progress
+    [Progress.name]: Progress,
   },
   data() {
     return {
       amount: this.goodData.minLimit || 1,
-      progress: 0
+      progress: 0,
     };
   },
   watch: {
-    goodData: function() {
-      console.log(this.goodData);
+    goodData: function () {
       this.amount = this.goodData.minLimit;
       this.progress =
         Math.floor(
@@ -86,7 +78,7 @@ export default {
             100 *
             100
         ) / 100;
-    }
+    },
   },
   created() {
     if (this.goodData.id) {
@@ -121,11 +113,11 @@ export default {
     toDetail() {
       if (this.goodData.status === 1) {
         this.$router.push({
-          path: `/rate_detail/${this.goodData.id}/${this.amount}`
+          path: `/rate_detail/${this.goodData.id}/${this.amount}`,
         });
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
