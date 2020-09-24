@@ -1,6 +1,6 @@
 <template>
   <div class="mine">
-    <vue-pull-refresh v-model="loading" :on-refresh="onRefresh">
+    <vue-pull-refresh v-model="loading" @refresh="onRefresh">
       <head-nav></head-nav>
       <div class="mine-container page-container">
         <div class="header">
@@ -79,13 +79,13 @@ import { mapState } from "vuex";
 import HeadNav from "@/components/HeadNav";
 import FootBox from "@/components/FootBox";
 import { myWeightApi } from "../../net/api/userInfoApi";
-import VuePullRefresh from "vue-pull-refresh";
+import { PullRefresh } from "vant";
 export default {
   name: "Mine",
   components: {
     HeadNav,
     FootBox,
-    "vue-pull-refresh": VuePullRefresh,
+    "vue-pull-refresh": PullRefresh,
   },
   created() {
     // this.$store.dispatch('reloadUserData');
@@ -125,12 +125,13 @@ export default {
       // 获取总算力
       myWeightApi().then((res) => {
         this.totalWeight = res.data.totalWeight;
+        this.loading = false;
       });
     },
     onRefresh() {
+      this.loading = true;
       this.loadTotalWeight();
       this.$store.dispatch("reloadUserData");
-      this.loading = false;
     },
   },
 };
