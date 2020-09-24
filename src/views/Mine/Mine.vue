@@ -128,6 +128,7 @@ export default {
       });
     },
     onRefresh() {
+      this.loadTotalWeight();
       this.$store.dispatch("reloadUserData");
       this.loading = false;
     },

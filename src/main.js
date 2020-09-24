@@ -33,7 +33,7 @@ Vue.directive("scrollToView", scrollToView);
 Vue.directive("onlyNumber", onlyNumber);
 Vue.directive("scrollShow", scrollShow);
 Vue.filter('parseFloatFilter', function (data) {
-  if (data) {
+  if (data !== '---') {
     return parseFloat(data);
   }
   return data
