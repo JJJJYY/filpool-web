@@ -3,21 +3,39 @@
     <head-nav bg-color="rgba(0,0,0,0)" :border="false"></head-nav>
     <div class="regist-box page-container">
       <div class="types">
-        <div @click="isMobileType = true" class="btn" :class="{ selected: isMobileType }">手机注册</div>
-        <div @click="isMobileType = false" class="btn" :class="{ selected: !isMobileType }">邮箱注册</div>
+        <div
+          @click="isMobileType = true"
+          class="btn"
+          :class="{ selected: isMobileType }"
+        >
+          手机注册
+        </div>
+        <div
+          @click="isMobileType = false"
+          class="btn"
+          :class="{ selected: !isMobileType }"
+        >
+          邮箱注册
+        </div>
       </div>
       <div class="form">
-        <div class="form-container" style="padding-top: 20px;">
+        <div class="form-container" style="padding-top: 20px">
           <div class="form-item">
-            <div class="form-title">{{isMobileType ? "手机注册" : "邮箱注册"}}</div>
+            <div class="form-title">
+              {{ isMobileType ? "手机注册" : "邮箱注册" }}
+            </div>
             <div class="form-input">
               <div
                 v-if="isMobileType"
                 @click="showAreaPicker = true"
-                style="align-self: center; padding: 0 12px; border-right: 1px solid #ddd;"
+                style="
+                  align-self: center;
+                  padding: 0 12px;
+                  border-right: 1px solid #ddd;
+                "
               >
-                +{{countryInfo.code}}
-                <i class="fa fa-sort-down" style="vertical-align: text-top;"></i>
+                +{{ countryInfo.code }}
+                <i class="fa fa-sort-down" style="vertical-align: text-top"></i>
               </div>
               <input
                 type="text"
@@ -30,25 +48,43 @@
           <div class="form-item">
             <div class="form-title">图像验证码</div>
             <div class="form-input">
-              <input type="text" title placeholder="请输入图像验证码" v-model="imgCode" />
+              <input
+                type="text"
+                title
+                placeholder="请输入图像验证码"
+                v-model="imgCode"
+              />
               <div
                 @click="getImgCode"
                 class="suffix-btn"
-                style="background: transparent; align-self: center; padding: 0;"
+                style="background: transparent; align-self: center; padding: 0"
               >
-                <img :src="imgCodeUrl" alt style="max-width: 120px;" />
+                <img
+                  :src="imgCodeUrl"
+                  alt="请重新加载"
+                  style="max-width: 120px; color: black"
+                />
               </div>
             </div>
           </div>
           <div class="form-item">
-            <div class="form-title">{{isMobileType ? '短信验证码' : '邮箱验证码'}}</div>
+            <div class="form-title">
+              {{ isMobileType ? "短信验证码" : "邮箱验证码" }}
+            </div>
             <div class="form-input">
-              <input type="text" title placeholder="请输入验证码" v-model="accountCode" />
+              <input
+                type="text"
+                title
+                placeholder="请输入验证码"
+                v-model="accountCode"
+              />
               <button
                 class="suffix-btn"
                 :disabled="isTimer"
                 @click="getSmsCode"
-              >{{isTimer ? duration + "S" : "获取验证码"}}</button>
+              >
+                {{ isTimer ? duration + "S" : "获取验证码" }}
+              </button>
             </div>
           </div>
           <div class="form-item">
@@ -56,7 +92,7 @@
             <div class="form-input">
               <!--            <input type="text" title="" placeholder="请输入登录密码" v-model="pwd">-->
               <input
-                :type="isSecurity ? 'password':'text'"
+                :type="isSecurity ? 'password' : 'text'"
                 title
                 placeholder="请设置登录密码"
                 maxlength="18"
@@ -81,15 +117,31 @@
           <div class="form-item">
             <div class="form-title">邀请码(选填)</div>
             <div class="form-input">
-              <input type="text" title placeholder="请输入邀请码" v-model="inviteCode" />
+              <input
+                type="text"
+                title
+                placeholder="请输入邀请码"
+                v-model="inviteCode"
+              />
             </div>
           </div>
           <div class="deal">
             <!--<div class="deal-icon" :class="{selected: read}" @click="read = !read"></div>
             <div class="intro">我已阅读并同意<a @click="showAircle">《用户协议》</a></div>-->
-            <van-checkbox v-model="read" checked-color="#e49c3a" icon-size="13px" shape="square">
-              <span style="font-size: 13px;color: #575c62;">我已阅读并同意</span>
-              <span style="color: #e49c3a;font-size: 13px;" @click.stop="showAircle">《用户协议》</span>
+            <van-checkbox
+              v-model="read"
+              checked-color="#e49c3a"
+              icon-size="13px"
+              shape="square"
+            >
+              <span style="font-size: 13px; color: #575c62"
+                >我已阅读并同意</span
+              >
+              <span
+                style="color: #e49c3a; font-size: 13px"
+                @click.stop="showAircle"
+                >《用户协议》</span
+              >
             </van-checkbox>
           </div>
           <button class="submit" @click="submit">下一步</button>
@@ -98,7 +150,12 @@
     </div>
     <area-select v-model="showAreaPicker" @select="setCountry" />
     <div class="channelModal" v-if="showChannelModal">
-      <img :src="channelData.image" alt class="channelImg" @click="closeChannelModal" />
+      <img
+        :src="channelData.image"
+        alt
+        class="channelImg"
+        @click="closeChannelModal"
+      />
     </div>
   </login-background>
 </template>

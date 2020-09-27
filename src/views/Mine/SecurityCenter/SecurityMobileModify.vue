@@ -5,35 +5,50 @@
       <div class="form-item">
         <div class="form-title">图像验证码</div>
         <div class="form-input">
-          <input type="text" title placeholder="请输入图像验证码" v-model="imgCode" />
+          <input
+            type="text"
+            title
+            placeholder="请输入图像验证码"
+            v-model="imgCode"
+          />
           <div
             @click="getImgCode"
             class="suffix-btn"
-            style="background: transparent; align-self: center; padding: 0;"
+            style="background: transparent; align-self: center; padding: 0"
           >
-            <img :src="imgCodeUrl" alt style="max-width: 120px;" />
+            <img
+              :src="imgCodeUrl"
+              alt="请重新加载"
+              style="max-width: 120px; color: black"
+            />
           </div>
         </div>
       </div>
       <div class="form-item">
-        <div class="form-title">{{isPhone?'原手机号码':'邮箱'}}({{isPhone?userData.phone:userData.email}})</div>
+        <div class="form-title">
+          {{ isPhone ? "原手机号码" : "邮箱" }}({{
+            isPhone ? userData.phone : userData.email
+          }})
+        </div>
         <div class="form-input">
-          <input type="text" v-model="oldPhoneCaptcha" placeholder="请输入验证码" />
-          <button
-            class="suffix-btn"
-            :disabled="sendding1"
-            @click="sendCode1"
-          >{{sendding1?`${interval1} S 重新获取`:'获取验证码'}}</button>
+          <input
+            type="text"
+            v-model="oldPhoneCaptcha"
+            placeholder="请输入验证码"
+          />
+          <button class="suffix-btn" :disabled="sendding1" @click="sendCode1">
+            {{ sendding1 ? `${interval1} S 重新获取` : "获取验证码" }}
+          </button>
         </div>
       </div>
       <div class="form-item">
         <div class="form-title">新手机号码</div>
         <div class="form-input">
           <button class="prefix-btn" @click="showAreaPicker = true">
-            +{{countryInfo.code}}
+            +{{ countryInfo.code }}
             <i
               class="fa fa-sort-down"
-              style="display: inline-block; margin-bottom: 2px;"
+              style="display: inline-block; margin-bottom: 2px"
             ></i>
           </button>
           <input type="text" v-model="phone" placeholder="请输入新手机号码" />
@@ -42,12 +57,14 @@
       <div class="form-item">
         <div class="form-title">验证码</div>
         <div class="form-input">
-          <input type="text" v-model="newPhoneCaptcha" placeholder="请输入短信验证码" />
-          <button
-            class="suffix-btn"
-            :disabled="sendding2"
-            @click="sendCode2"
-          >{{sendding2?`${interval2} S 重新获取`:'获取验证码'}}</button>
+          <input
+            type="text"
+            v-model="newPhoneCaptcha"
+            placeholder="请输入短信验证码"
+          />
+          <button class="suffix-btn" :disabled="sendding2" @click="sendCode2">
+            {{ sendding2 ? `${interval2} S 重新获取` : "获取验证码" }}
+          </button>
         </div>
       </div>
       <button class="submit" @click="submit">确认</button>

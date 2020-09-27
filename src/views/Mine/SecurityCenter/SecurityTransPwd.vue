@@ -5,43 +5,70 @@
       <div class="form-item">
         <div class="form-title">新资金密码</div>
         <div class="form-input">
-          <input type="password" v-model="password" placeholder="请输入资金密码" />
+          <input
+            type="password"
+            v-model="password"
+            placeholder="请输入资金密码"
+          />
         </div>
       </div>
       <div class="form-item">
         <div class="form-title">确认密码</div>
         <div class="form-input">
-          <input type="password" v-model="password2" placeholder="再次输入资金密码" />
+          <input
+            type="password"
+            v-model="password2"
+            placeholder="再次输入资金密码"
+          />
         </div>
       </div>
       <div class="form-item">
         <div class="form-title">图像验证码</div>
         <div class="form-input">
-          <input type="text" title placeholder="请输入图像验证码" v-model="imgCode" />
+          <input
+            type="text"
+            title
+            placeholder="请输入图像验证码"
+            v-model="imgCode"
+          />
           <div
             @click="getImgCode"
             class="suffix-btn"
-            style="background: transparent; align-self: center; padding: 0;"
+            style="background: transparent; align-self: center; padding: 0"
           >
-            <img :src="imgCodeUrl" alt style="max-width: 120px;" />
+            <img
+              :src="imgCodeUrl"
+              alt="请重新加载"
+              style="max-width: 120px; color: black"
+            />
           </div>
         </div>
       </div>
       <div class="form-item">
-        <div class="form-title">{{isPhone?'手机号码':'原邮箱'}}({{isPhone?userData.phone:userData.email}})</div>
+        <div class="form-title">
+          {{ isPhone ? "手机号码" : "原邮箱" }}({{
+            isPhone ? userData.phone : userData.email
+          }})
+        </div>
         <div class="form-input">
-          <input type="text" v-model="phoneCaptcha" placeholder="请输入验证码" />
-          <button
-            class="suffix-btn"
-            :disabled="sendding1"
-            @click="sendCode1"
-          >{{sendding1?`${interval1} S 重新获取`:'获取验证码'}}</button>
+          <input
+            type="text"
+            v-model="phoneCaptcha"
+            placeholder="请输入验证码"
+          />
+          <button class="suffix-btn" :disabled="sendding1" @click="sendCode1">
+            {{ sendding1 ? `${interval1} S 重新获取` : "获取验证码" }}
+          </button>
         </div>
       </div>
       <div class="form-item">
         <div class="form-title">谷歌验证码</div>
         <div class="form-input">
-          <input type="text" v-model="gaCaptcha" placeholder="请输入谷歌验证码" />
+          <input
+            type="text"
+            v-model="gaCaptcha"
+            placeholder="请输入谷歌验证码"
+          />
         </div>
       </div>
       <button class="submit" @click="submit">确认</button>

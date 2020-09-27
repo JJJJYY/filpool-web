@@ -5,23 +5,44 @@
       <div class="form-item">
         <div class="form-title">图像验证码</div>
         <div class="form-input">
-          <input type="text" title placeholder="请输入图像验证码" v-model="imgCode" />
+          <input
+            type="text"
+            title
+            placeholder="请输入图像验证码"
+            v-model="imgCode"
+          />
           <div
             @click="getImgCode"
             class="suffix-btn"
-            style="background: transparent; align-self: center; padding: 0;"
+            style="background: transparent; align-self: center; padding: 0"
           >
-            <img :src="imgCodeUrl" alt style="max-width: 120px;" />
+            <img
+              :src="imgCodeUrl"
+              alt="请重新加载"
+              style="max-width: 120px; color: black"
+            />
           </div>
         </div>
       </div>
       <div class="form-item">
-        <div class="form-title">{{isEmail?'原邮箱':'手机号码'}}({{isEmail?userData.email:userData.phone}})</div>
+        <div class="form-title">
+          {{ isEmail ? "原邮箱" : "手机号码" }}({{
+            isEmail ? userData.email : userData.phone
+          }})
+        </div>
         <div class="form-input">
-          <input type="text" v-model="oldEmailCaptcha" placeholder="请输入验证码" />
+          <input
+            type="text"
+            v-model="oldEmailCaptcha"
+            placeholder="请输入验证码"
+          />
           <button class="suffix-btn" :disabled="sendding1" @click="sendCode1">
-            {{sendding1?`${interval1} S
-            重新获取`:'获取验证码'}}
+            {{
+              sendding1
+                ? `${interval1} S
+            重新获取`
+                : "获取验证码"
+            }}
           </button>
         </div>
       </div>
@@ -34,12 +55,14 @@
       <div class="form-item">
         <div class="form-title">新邮箱验证码</div>
         <div class="form-input">
-          <input type="text" v-model="newEmailCaptcha" placeholder="请输入新邮箱验证码" />
-          <button
-            class="suffix-btn"
-            :disabled="sendding2"
-            @click="sendCode2"
-          >{{sendding2?`${interval2} S 重新获取`:'获取验证码'}}</button>
+          <input
+            type="text"
+            v-model="newEmailCaptcha"
+            placeholder="请输入新邮箱验证码"
+          />
+          <button class="suffix-btn" :disabled="sendding2" @click="sendCode2">
+            {{ sendding2 ? `${interval2} S 重新获取` : "获取验证码" }}
+          </button>
         </div>
       </div>
       <button class="submit" @click="submit">确认</button>

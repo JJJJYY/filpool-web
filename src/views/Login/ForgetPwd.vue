@@ -10,31 +10,48 @@
           <div class="form-item">
             <div class="form-title">输入手机号码或邮箱</div>
             <div class="form-input">
-              <input type="text" title placeholder="输入手机号码或邮箱" v-model="account" />
+              <input
+                type="text"
+                title
+                placeholder="输入手机号码或邮箱"
+                v-model="account"
+              />
             </div>
           </div>
           <div class="form-item">
             <div class="form-title">图像验证码</div>
             <div class="form-input">
-              <input type="text" title placeholder="请输入图像验证码" v-model="imgCode" />
+              <input
+                type="text"
+                title
+                placeholder="请输入图像验证码"
+                v-model="imgCode"
+              />
               <div
                 @click="getImgCode"
                 class="suffix-btn"
-                style="background: transparent; align-self: center; padding: 0;"
+                style="background: transparent; align-self: center; padding: 0"
               >
-                <img :src="imgCodeUrl" alt style="max-width: 120px;" />
+                <img
+                  :src="imgCodeUrl"
+                  alt="请重新加载"
+                  style="max-width: 120px; color: black"
+                />
               </div>
             </div>
           </div>
           <div class="form-item">
             <div class="form-title">验证码</div>
             <div class="form-input">
-              <input type="text" title placeholder="请输入验证码" v-model="code" />
-              <button
-                class="suffix-btn"
-                @click="getCode"
-                :disabled="isTimer"
-              >{{ isTimer ? duration + "S" : "获取验证码" }}</button>
+              <input
+                type="text"
+                title
+                placeholder="请输入验证码"
+                v-model="code"
+              />
+              <button class="suffix-btn" @click="getCode" :disabled="isTimer">
+                {{ isTimer ? duration + "S" : "获取验证码" }}
+              </button>
             </div>
           </div>
           <button @click="submit" class="submit">下一步</button>

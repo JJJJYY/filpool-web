@@ -1,18 +1,18 @@
 <template>
   <div>
-    <div style="padding-top: 16px;background-color: #fff;">
+    <div style="padding-top: 16px; background-color: #fff">
       <van-nav-bar
         :title="$route.meta.title"
         @click-right="recode"
         @click-left="$router.goBack()"
       >
         <template #right>
-          <div style="color: #86929D;">提币记录</div>
+          <div style="color: #86929d">提币记录</div>
         </template>
         <template #left>
           <img
             src="../../assets/img/tibi_icon_return.png"
-            style="max-height: 16px;"
+            style="max-height: 16px"
             alt
             v-if="!$route.meta.backBtnHidden"
           />
@@ -55,15 +55,13 @@
             type="number"
             title
             v-model.number="number"
-            :placeholder="
-              `${isWithdraw ? '最低提现数量' : '最小转账金额'}: ${parseFloat(
-                currSymbol.minWithdraw
-              )}${
-                currSymbol.type
-                  ? `${currSymbol.asset}(${currSymbol.type})`
-                  : currSymbol.asset
-              }`
-            "
+            :placeholder="`${
+              isWithdraw ? '最低提现数量' : '最小转账金额'
+            }: ${parseFloat(currSymbol.minWithdraw)}${
+              currSymbol.type
+                ? `${currSymbol.asset}(${currSymbol.type})`
+                : currSymbol.asset
+            }`"
           />
           <div class="all" @click="number = parseFloat(asset.available) || ''">
             {{ isWithdraw ? "全部提取" : "全部划转" }}
@@ -118,7 +116,11 @@
             :class="{ gray: sendding }"
             @click="getImgCode"
           >
-            <img :src="imgCodeUrl" alt style="max-width: 120px;" />
+            <img
+              :src="imgCodeUrl"
+              alt="请重新加载"
+              style="max-width: 120px; color: black"
+            />
           </div>
         </div>
         <div class="pay-pwd">
@@ -175,7 +177,7 @@
       <div class="switch" @click="isMobileValid = !isMobileValid">
         {{ isMobileValid ? "切换邮箱验证" : "切换手机验证" }}
       </div>
-      <div style="text-align: center;">
+      <div style="text-align: center">
         <button class="submit btn-gradient" @click="submit">
           {{ isWithdraw ? "提币" : "转账" }}
         </button>
@@ -201,7 +203,7 @@ import {
   myBalanceApi,
   authSendApi,
   withdrawalCurrencyApi,
-  internalTransferApi
+  internalTransferApi,
 } from "@/net/api/userInfoApi";
 import { serviceURL } from "@/config";
 
@@ -210,7 +212,7 @@ export default {
   components: {
     GoogleValidPopup,
     [NavBar.name]: NavBar,
-    [ActionSheet.name]: ActionSheet
+    [ActionSheet.name]: ActionSheet,
   },
   data() {
     return {
@@ -227,18 +229,18 @@ export default {
       showTypes: false,
       types: [
         { name: "提现", value: "withdraw" },
-        { name: "内部转账", value: "trans" }
+        { name: "内部转账", value: "trans" },
       ],
       typeInfo: { name: "提现", value: "withdraw" },
       imgCode: "", // 图片验证码
       imgCodeUrl: "",
-      gaCaptcha: ""
+      gaCaptcha: "",
     };
   },
   computed: {
     isWithdraw() {
       return this.typeInfo.value === "withdraw";
-    }
+    },
   },
   created() {},
   mounted() {
@@ -260,17 +262,17 @@ export default {
     },
     /// 过滤当前币种
     loadAssetData() {
-      assetTypeApi().then(res => {
+      assetTypeApi().then((res) => {
         this.currSymbol = res.data.filter(
-          x => x.asset === this.$route.query.asset
+          (x) => x.asset === this.$route.query.asset
         )[0];
       });
     },
     /// 获取余额
     loadAmount() {
-      myBalanceApi().then(res => {
+      myBalanceApi().then((res) => {
         this.asset = res.data.filter(
-          x => x.asset === this.$route.query.asset
+          (x) => x.asset === this.$route.query.asset
         )[0];
       });
     },
@@ -313,9 +315,9 @@ export default {
         account: this.address,
         assetId: this.currSymbol.id,
         amount: this.number,
-        payPwd: md5(this.pwd)
+        payPwd: md5(this.pwd),
       };
-      internalTransferApi(postData).then(res => {
+      internalTransferApi(postData).then((res) => {
         Toast("转账成功");
         this.$router.goBack();
       });
@@ -323,7 +325,7 @@ export default {
     selectCurrency() {
       this.$router.replace({
         path: "/selectCurrency",
-        query: { isTopUp: false }
+        query: { isTopUp: false },
       });
     },
     // 提现
@@ -336,9 +338,9 @@ export default {
         assetId: this.currSymbol.id,
         gaCaptcha: x,
         amount: this.number,
-        payPwd: md5(this.pwd)
+        payPwd: md5(this.pwd),
       };
-      withdrawalCurrencyApi(postData).then(res => {
+      withdrawalCurrencyApi(postData).then((res) => {
         this.$router.goBack();
       });
     },
@@ -347,8 +349,8 @@ export default {
         path: "/topupExtractRecode",
         query: {
           isTopUp: false,
-          asset: this.$route.query.asset
-        }
+          asset: this.$route.query.asset,
+        },
       });
     },
     send() {
@@ -358,10 +360,10 @@ export default {
       this.sendding = true;
       const postData = {
         type: this.isMobileValid ? "phone" : "email",
-        imageCaptcha: this.imgCode
+        imageCaptcha: this.imgCode,
       };
       authSendApi(postData)
-        .then(res => {
+        .then((res) => {
           if (res.ret === 200) {
             Toast("验证码已发送，请注意查收");
             let timer = setInterval(() => {
@@ -378,8 +380,8 @@ export default {
         .catch(() => {
           this.sendding = false;
         });
-    }
-  }
+    },
+  },
 };
 </script>
 
