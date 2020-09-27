@@ -1,21 +1,39 @@
 <template>
-  <login-background class="container" style="overflow: hidden;">
+  <login-background class="container" style="overflow: hidden">
     <!--<div class="back" @click="backToHome">
       <img src="../../assets/img/tibi_icon_return.png" alt="">
     </div>-->
-    <head-nav :overrideBack="true" :border="false" @back="backToHome" bgcolor="rgba(0,0,0,0)"></head-nav>
+    <head-nav
+      :overrideBack="true"
+      :border="false"
+      @back="backToHome"
+      bgcolor="rgba(0,0,0,0)"
+    ></head-nav>
     <div class="login-box page-container">
       <img src="../../assets/img/login/login_icon_logo.png" alt class="logo" />
       <div class="logo-title">FlLPool.io</div>
       <div class="form">
         <div class="form-item">
-          <img src="../../assets/img/login/login_icon_user.png" alt class="form-item-icon" />
-          <input type="text" title placeholder="请输入手机号或邮箱地址" v-model="account" />
-        </div>
-        <div class="form-item" style="margin-top: 50px;">
-          <img src="../../assets/img/login/login_icon_password.png" alt class="form-item-icon" />
+          <img
+            src="../../assets/img/login/login_icon_user.png"
+            alt
+            class="form-item-icon"
+          />
           <input
-            :type="isSecurity ? 'password':'text'"
+            type="text"
+            title
+            placeholder="请输入手机号或邮箱地址"
+            v-model="account"
+          />
+        </div>
+        <div class="form-item" style="margin-top: 50px">
+          <img
+            src="../../assets/img/login/login_icon_password.png"
+            alt
+            class="form-item-icon"
+          />
+          <input
+            :type="isSecurity ? 'password' : 'text'"
             title
             placeholder="请输入密码"
             v-model="pwd"
@@ -37,11 +55,13 @@
           />
         </div>
       </div>
-      <div class="forget-pwd" @click="$router.push('/forgetPwd')">忘记密码?</div>
+      <div class="forget-pwd" @click="$router.push('/forgetPwd')">
+        忘记密码?
+      </div>
       <button class="submit btn-gradient" @click="login" :disabled="loading">
         <span v-if="!loading">登录</span>
         <van-loading v-else size="24px" color="#fff" class="flex-box">
-          <span style="color: #fff;font-size: 15px;">登录中...</span>
+          <span style="color: #fff; font-size: 15px">登录中...</span>
         </van-loading>
       </button>
       <div class="tips" @click="$router.push('/register')">
@@ -128,6 +148,7 @@ export default {
     display: flex;
     flex-direction: column;
     padding: 0 32px;
+    height: 100% !important;
   }
   .logo {
     align-self: center;
