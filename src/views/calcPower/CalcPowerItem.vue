@@ -39,11 +39,7 @@
           {{ goodData.unit }}
         </div>
       </div>
-      <van-progress
-        class="vanProgress"
-        color="linear-gradient(to right, #f18c2e, #fbae4e)"
-        :percentage="progress"
-      />
+      <van-progress class="vanProgress" :percentage="progress" />
     </div>
     <div class="hr" />
     <a
@@ -62,21 +58,21 @@ import { Progress } from "vant";
 export default {
   props: {
     goodData: {
-      default: () => ({}),
-    },
+      default: () => ({})
+    }
   },
   components: {
     AddSubtractBox,
-    [Progress.name]: Progress,
+    [Progress.name]: Progress
   },
   data() {
     return {
       amount: this.goodData.minLimit || 1,
-      progress: 0,
+      progress: 0
     };
   },
   watch: {
-    goodData: function () {
+    goodData: function() {
       this.amount = this.goodData.minLimit;
       this.progress =
         Math.floor(
@@ -85,7 +81,7 @@ export default {
             100 *
             100
         ) / 100;
-    },
+    }
   },
   created() {
     if (this.goodData.id) {
@@ -120,16 +116,27 @@ export default {
     toDetail() {
       if (this.goodData.status === 1) {
         this.$router.push({
-          path: `/rate_detail/${this.goodData.id}/${this.amount}`,
+          path: `/rate_detail/${this.goodData.id}/${this.amount}`
         });
       }
-    },
-  },
+    }
+  }
 };
 </script>
 
 <style lang="scss" scoped>
 @import "../../assets/scss/base.scss";
+
+/deep/.van-progress {
+  height: 10px;
+  border-radius: 8px;
+  .van-progress__portion {
+    background-image: url("../../assets/img/progress.png");
+    .van-progress__pivot {
+      background: linear-gradient(to right, #f18c2e, #fbae4e);
+    }
+  }
+}
 
 .item {
   margin-bottom: 8px;
