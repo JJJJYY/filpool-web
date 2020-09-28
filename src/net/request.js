@@ -64,9 +64,9 @@ export const getRequest = (api, params) => {
 export const postRequest = (api, data, baseUrl = null) => {
   if (baseUrl) {
     if (isH5) {
-      return doPostFetch(url, data);
+      return doPostFetch(baseUrl, data);
     } else {
-      return post(url, data)
+      return post(baseUrl, data)
     }
   } else {
     let url = `${serviceURL}/public/`;
