@@ -17,21 +17,27 @@
         </div>
         <div class="intro-item">
           <span class="intro-item-title">合约期限</span>
-          <span class="intro-item-value">{{ goodData.contractDuration }}天</span>
+          <span class="intro-item-value"
+            >{{ goodData.contractDuration }}天</span
+          >
         </div>
         <div class="intro-item">
           <span class="intro-item-title">技术服务费</span>
-          <span class="intro-item-value">{{ goodData.serviceChargeRate * 100 }}%</span>
+          <span class="intro-item-value"
+            >{{ goodData.serviceChargeRate * 100 }}%</span
+          >
         </div>
       </div>
       <div class="handler">
         <div class="handler-amount">
-          <span style="font-size: 24px;">{{ goodData.price * amount }}</span>
-          <span style="font-size: 18px;">USDT</span>
+          <span style="font-size: 24px">{{ goodData.price * amount }}</span>
+          <span style="font-size: 18px">USDT</span>
         </div>
-        <div style="flex: 1;"></div>
+        <div style="flex: 1"></div>
         <AddSubtractBox v-model="amount" :limit="goodData.minLimit" />
-        <div style="color: #575c62; font-size: 12px; margin-left: 12px;">{{ goodData.unit }}</div>
+        <div style="color: #575c62; font-size: 12px; margin-left: 12px">
+          {{ goodData.unit }}
+        </div>
       </div>
       <van-progress
         class="vanProgress"
@@ -44,7 +50,8 @@
       class="btn-gradient"
       :class="{ gray: goodData.status !== 1 }"
       @click="enterPay(goodData)"
-    >{{ this.statusBtnTitle(goodData.status) }}</a>
+      >{{ this.statusBtnTitle(goodData.status) }}</a
+    >
     <span class="tag">{{ goodData.tag }}</span>
   </div>
 </template>
@@ -137,7 +144,7 @@ export default {
   .name {
     display: flex;
     align-items: center;
-
+    margin-top: 20px;
     h3 {
       color: $h1-color;
       font-size: 15px;
