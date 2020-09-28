@@ -5,20 +5,33 @@
       <div class="list">
         <div class="cell" @click="$router.push('/aboutUs')">
           <div class="name">关于我们</div>
-          <img class="more" src="../../../assets/img/mine/tab_icon_more.png" alt />
+          <img
+            class="more"
+            src="../../../assets/img/mine/tab_icon_more.png"
+            alt
+          />
         </div>
         <div class="cell" @click="showAircle">
           <div class="name">用户协议</div>
-          <img class="more" src="../../../assets/img/mine/tab_icon_more.png" alt />
+          <img
+            class="more"
+            src="../../../assets/img/mine/tab_icon_more.png"
+            alt
+          />
         </div>
         <div class="cell" @click="checkUpdate" v-if="!$isH5">
           <div class="name">检查更新</div>
           <div class="check-box flex-box" v-if="!checking">
-            <span style="margin-right: 8px;">{{version}}</span>
-            <img v-if="!checking" class="more" src="../../../assets/img/mine/tab_icon_more.png" alt />
+            <span style="margin-right: 8px">{{ version }}</span>
+            <img
+              v-if="!checking"
+              class="more"
+              src="../../../assets/img/mine/tab_icon_more.png"
+              alt
+            />
           </div>
           <van-loading v-else size="24px" class="flex-box">
-            <span style="font-size: 15px;">正在检查更新...</span>
+            <span style="font-size: 15px">正在检查更新...</span>
           </van-loading>
         </div>
       </div>
@@ -92,6 +105,9 @@ export default {
         }
         this.checking = false;
       }).getCurentVersion();
+      setTimeout(() => {
+        this.checking = false;
+      }, 1000);
     },
   },
 };

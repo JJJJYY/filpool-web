@@ -52,21 +52,39 @@ class CheckUpdate {
         console.log('response', response);
         if (response.data) {
           let resData = response.data;
-          Dialog.confirm({
-            title: '新版本上线啦!~',
-            // message: resData.description,
-            message: resData.description,
-            confirmButtonText: "前往下载",
-            showCancelButton: false,
-            beforeClose: (action, done) => {
-              if (action === 'confirm') {
-                let downloadURL = resData.downloadURL || "https://www.filpool.io/#/download";
-                window.plus.runtime.openURL(downloadURL);
-              } else {
-                done(false);
+          if (resData.force) {
+            Dialog.confirm({
+              title: '新版本上线啦!~',
+              // message: resData.description,
+              message: resData.description,
+              confirmButtonText: "前往下载",
+              showCancelButton: '稍候更新',
+              beforeClose: (action, done) => {
+                if (action === 'confirm') {
+                  let downloadURL = resData.downloadURL || "https://www.filpool.io/#/download";
+                  window.plus.runtime.openURL(downloadURL);
+                } else {
+                  done();
+                }
               }
-            }
-          })
+            })
+          } else {
+            Dialog.confirm({
+              title: '新版本上线啦!~',
+              // message: resData.description,
+              message: resData.description,
+              confirmButtonText: "前往下载",
+              showCancelButton: false,
+              beforeClose: (action, done) => {
+                if (action === 'confirm') {
+                  let downloadURL = resData.downloadURL || "https://www.filpool.io/#/download";
+                  window.plus.runtime.openURL(downloadURL);
+                } else {
+                  done(false);
+                }
+              }
+            })
+          }
           // this.downWgt();
         } else {
           this.handleCallBack("已经是最新版本");
