@@ -6,7 +6,7 @@
       <van-button
         icon="photo"
         type="primary"
-        style="width: 120px;"
+        style="width: 120px"
         color="#f18a2d"
         :loading="loading"
         loading-text="正在上传"
@@ -35,26 +35,26 @@ export default {
   props: {
     text: {
       type: String,
-      default: ""
+      default: "",
     },
     value: {
       type: String,
-      default: ""
-    }
+      default: "",
+    },
   },
   components: {
-    [Button.name]: Button
+    [Button.name]: Button,
   },
   data() {
     return {
       loadImgUrl: "",
       loading: false,
       isH5: isH5,
-      token: ""
+      token: "",
     };
   },
   created() {
-    getTokenApi().then(res => {
+    getTokenApi().then((res) => {
       this.token = res.data;
     });
   },
@@ -70,7 +70,7 @@ export default {
       formData.append("file", file);
       formData.append("token", this.token);
       filePictureApi(formData, "https://up-z2.qiniup.com/")
-        .then(res => {
+        .then((res) => {
           console.log(res);
           this.loading = false;
           this.loadImgUrl = URL.createObjectURL(file);
@@ -83,19 +83,19 @@ export default {
     openAcsheel() {
       let actions = [
         {
-          title: "拍照"
+          title: "拍照",
         },
         {
-          title: "从手机相册选择"
-        }
+          title: "从手机相册选择",
+        },
       ];
       window.plus.nativeUI.actionSheet(
         {
           title: "选择上传方式",
           cancel: "取消",
-          buttons: actions
+          buttons: actions,
         },
-        btn => {
+        (btn) => {
           /*actionSheet 按钮点击事件*/
           switch (btn.index) {
             case 0:
@@ -115,7 +115,7 @@ export default {
     /*拍照*/
     getImage() {
       let cmr = window.plus.camera.getCamera();
-      cmr.captureImage(path => {
+      cmr.captureImage((path) => {
         console.log("img", path);
         // plus.io.resolveLocalFileSystemURL(path,(entry) => {
         //     entry.file( (path) => {
@@ -133,12 +133,12 @@ export default {
     /*从相册选择*/
     galleryImg() {
       window.plus.gallery.pick(
-        path => {
+        (path) => {
           console.log("img", path);
           this.checkImgSize(path);
           //this.uploadByPlus(path);
         },
-        function() {
+        function () {
           console.log("取消选择图片");
         },
         { filter: "image" }
@@ -148,54 +148,58 @@ export default {
     checkImgSize(path, overwrite) {
       window.plus.io.getFileInfo({
         filePath: path,
-        success: res => {
-          if (res.size / (1024 * 1024) > 2) {
-            console.log("走targetPath");
-            plus.io.resolveLocalFileSystemURL(path, entry => {
-              entry.file(path => {
-                console.log("11", path);
-                this.loadImgUrl = path.fullPath;
-                this.uploadByPlus(path.fullPath);
-                // let fileReader = new plus.io.FileReader();
-                // fileReader.readAsDataURL(path); // 转base64
-                // console.log('fileReader',fileReader)
-              });
-            });
+        success: (res) => {
+          // if (res.size / (1024 * 1024) > 2) {
+          console.log("走targetPath");
+          plus.io.resolveLocalFileSystemURL(path, (entry) => {
+            let e = entry.toLocalURL() + "?version=" + new Date().getTime();
+            console.log("entry", e);
 
-            // let matchArr = path.match(/\/[^\/]+\.[a-zA-Z]+$/g);
-            // let fileName = matchArr[0].slice(1);
-            // let targetPath = `_doc/${fileName}${overwrite ? "" : "(1)"}`;
-            // window.plus.zip.compressImage(
-            //   {
-            //     src: path,
-            //     dst: targetPath,
-            //     overwrite: !!overwrite,
-            //   },
-            //   () => {
-            //     plus.io.resolveLocalFileSystemURL(targetPath, (entry) => {
-            //       entry.file((targetPath) => {
-            //         console.log("11", targetPath.fullPath);
-            //         this.loadImgUrl = targetPath.fullPath;
-            //         this.uploadByPlus(targetPath.fullPath);
-            //         // let fileReader = new plus.io.FileReader();
-            //         // fileReader.readAsDataURL(path); // 转base64
-            //         // console.log('fileReader',fileReader)
-            //       });
-            //     });
-            //   },
-            //   () => {}
-            // );
-          } else {
-            console.log("走path");
-            this.loadImgUrl = path;
-            this.uploadByPlus(path);
-          }
-        }
+            this.uploadByPlus(e);
+            // entry.file((path) => {
+            //   console.log("11", path);
+            //   this.loadImgUrl = path.fullPath;
+            //   // let fileReader = new plus.io.FileReader();
+            //   // fileReader.readAsDataURL(path); // 转base64
+            //   // console.log('fileReader',fileReader)
+            // });
+          });
+
+          // let matchArr = path.match(/\/[^\/]+\.[a-zA-Z]+$/g);
+          // let fileName = matchArr[0].slice(1);
+          // let targetPath = `_doc/${fileName}${overwrite ? "" : "(1)"}`;
+          // window.plus.zip.compressImage(
+          //   {
+          //     src: path,
+          //     dst: targetPath,
+          //     overwrite: !!overwrite,
+          //   },
+          //   () => {
+          //     plus.io.resolveLocalFileSystemURL(targetPath, (entry) => {
+          //       entry.file((targetPath) => {
+          //         console.log("11", targetPath.fullPath);
+          //         this.loadImgUrl = targetPath.fullPath;
+          //         this.uploadByPlus(targetPath.fullPath);
+          //         // let fileReader = new plus.io.FileReader();
+          //         // fileReader.readAsDataURL(path); // 转base64
+          //         // console.log('fileReader',fileReader)
+          //       });
+          //     });
+          //   },
+          //   () => {}
+          // );
+          // }
+          // else {
+          //   console.log("走path");
+          //   this.uploadByPlus(path);
+          // }
+        },
       });
     },
 
     uploadByPlus(path) {
       this.loading = true;
+      this.loadImgUrl = path;
       console.log("path", path);
       let formData = new FormData();
       this.loading = true;
@@ -241,8 +245,8 @@ export default {
       task.addData("token", this.token);
       task.addFile(path, { key: "file" });
       task.start();
-    }
-  }
+    },
+  },
 };
 </script>
 
