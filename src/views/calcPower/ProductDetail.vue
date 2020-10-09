@@ -110,8 +110,12 @@ export default {
     .label {
       margin-bottom: 16px;
     }
-    .content {
+    /deep/.content {
       line-height: 26px;
+      p {
+        white-space: pre-wrap;
+        min-height: 1em;
+      }
     }
   }
 }
