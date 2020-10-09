@@ -149,3 +149,7 @@ export function advertisementInfoDetail(data) {
 export function versionAip(data) {
   return postRequest('App.AppVersion.CheckUpdate', data)
 }
+// 算力收益
+export function userIncomeApi(data) {
+  return postRequest('App.Income.UserIncome', data)
+}

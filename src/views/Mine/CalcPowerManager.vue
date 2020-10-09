@@ -1,18 +1,43 @@
 <template>
-  <div style="height: 100%; display:flex; flex-direction: column;">
+  <div style="height: 100%; display: flex; flex-direction: column">
     <head-nav></head-nav>
     <van-tabs sticky color="#E9901D">
       <van-tab title="算力管理">
-        <div class="list page-container" style="margin-top: 1px;">
-          <div class="cell" v-for="(x, index) in list" :key="index" @click="detail(x)">
-            <div class="type">{{typeDescription(x.type, x.serviceChargeRate)}}</div>
-            <div class="total">{{x.quantity | parseFloatFilter}} TB</div>
+        <div class="list page-container" style="margin-top: 1px">
+          <div
+            class="cell"
+            v-for="(x, index) in list"
+            :key="index"
+            @click="detail(x)"
+          >
+            <div class="type">
+              {{ typeDescription(x.type, x.serviceChargeRate) }}
+            </div>
+            <div class="total">{{ x.quantity | parseFloatFilter }} TB</div>
             <div class="detail">明细</div>
           </div>
         </div>
       </van-tab>
       <van-tab title="算力收益">
-        <div
+        <van-list
+          v-model="loading"
+          :finished="finished"
+          finished-text=""
+          @load="onLoad"
+        >
+          <div class="list page-container" style="margin-top: 1px">
+            <div class="cell" v-for="(x, index) in profitList" :key="index">
+              <div class="type">
+                {{ profitType(x.type) }}
+              </div>
+              <div class="total">
+                {{ x.quantity | parseFloatFilter }} {{ x.asset }}
+              </div>
+              <div class="detail-time">{{ x.createTime }}</div>
+            </div>
+          </div>
+        </van-list>
+        <!-- <div
           style="color: #86929D; font-size: 13px; text-align: center; height: 100%; margin-top: 60%; line-height: 160%;"
         >
           <div style="display: inline-block;text-align: left;">
@@ -20,7 +45,7 @@
             <br />正式挖矿并发放收益之日开始计算。
             <br />敬请期待！
           </div>
-        </div>
+        </div> -->
       </van-tab>
     </van-tabs>
   </div>
@@ -29,12 +54,16 @@
 <script>
 import { Tab, Tabs, List } from "vant";
 import HeadNav from "@/components/HeadNav";
-import { myWeightGroupApi } from "../../net/api/userInfoApi";
+import { myWeightGroupApi, userIncomeApi } from "@/net/api/userInfoApi";
 export default {
   name: "CalcPowerManager",
   data() {
     return {
       list: [],
+      profitList: [],
+      loading: false,
+      finished: false,
+      page: 1,
     };
   },
   components: {
@@ -43,15 +72,43 @@ export default {
     [Tabs.name]: Tabs,
     [List.name]: List,
   },
-  created() {},
   mounted() {
     this.loadData();
   },
   methods: {
+    onLoad() {
+      const postData = {
+        page: this.page,
+        count: 10,
+      };
+      userIncomeApi(postData)
+        .then((res) => {
+          if (res.ret === 200) {
+            let newList = res.data;
+            if (res.data.length) {
+              this.profitList =
+                this.page === 1 ? newList : this.profitList.concat(newList);
+              this.page += 1;
+            } else {
+              this.finished = true;
+            }
+          }
+        })
+        .catch(() => (this.finished = true))
+        .finally(() => (this.loading = false));
+    },
     loadData() {
       myWeightGroupApi().then((res) => {
         this.list = res.data;
       });
+    },
+    profitType(type) {
+      switch (type) {
+        case 1:
+          return "奖励";
+        case 2:
+          return "挖矿收益";
+      }
     },
     typeDescription(x) {
       switch (x) {
@@ -120,6 +177,7 @@ export default {
   height: calc(100vh - 90px);
   .cell {
     display: grid;
+    align-items: center;
     padding: 18px 16px;
     color: $h2-color;
     font-size: 13px;
@@ -134,6 +192,11 @@ export default {
     .detail {
       color: $main-color;
       text-align: right;
+    }
+    .detail-time {
+      font-size: 12px;
+      text-align: right;
+      color: #86929d;
     }
   }
 }
