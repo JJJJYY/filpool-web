@@ -33,7 +33,7 @@
               <div class="total">
                 {{ x.quantity | parseFloatFilter }} {{ x.asset }}
               </div>
-              <div class="detail-time">{{ x.createTime }}</div>
+              <div class="detail-time">{{ timeStr(x.createTime) }}</div>
             </div>
           </div>
         </van-list>
@@ -54,6 +54,7 @@
 <script>
 import { Tab, Tabs, List } from "vant";
 import HeadNav from "@/components/HeadNav";
+import dayjs from "dayjs";
 import { myWeightGroupApi, userIncomeApi } from "@/net/api/userInfoApi";
 export default {
   name: "CalcPowerManager",
@@ -63,14 +64,14 @@ export default {
       profitList: [],
       loading: false,
       finished: false,
-      page: 1,
+      page: 1
     };
   },
   components: {
     HeadNav,
     [Tab.name]: Tab,
     [Tabs.name]: Tabs,
-    [List.name]: List,
+    [List.name]: List
   },
   mounted() {
     this.loadData();
@@ -79,10 +80,10 @@ export default {
     onLoad() {
       const postData = {
         page: this.page,
-        count: 10,
+        count: 10
       };
       userIncomeApi(postData)
-        .then((res) => {
+        .then(res => {
           if (res.ret === 200) {
             let newList = res.data;
             if (res.data.length) {
@@ -98,14 +99,14 @@ export default {
         .finally(() => (this.loading = false));
     },
     loadData() {
-      myWeightGroupApi().then((res) => {
+      myWeightGroupApi().then(res => {
         this.list = res.data;
       });
     },
     profitType(type) {
       switch (type) {
         case 1:
-          return "奖励";
+          return "SR1奖励";
         case 2:
           return "挖矿收益";
       }
@@ -132,17 +133,20 @@ export default {
           return "其他";
       }
     },
+    timeStr(date) {
+      return dayjs(date).format("YYYY-MM-DD");
+    },
     detail(x) {
       this.$router.push({
         path: "/calcPowerReward",
         query: {
           title: this.typeDescription(x.type),
           type: x.type,
-          typeDescription: this.typeDescription(x.type),
-        },
+          typeDescription: this.typeDescription(x.type)
+        }
       });
-    },
-  },
+    }
+  }
 };
 </script>
 
