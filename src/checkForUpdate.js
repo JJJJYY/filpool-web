@@ -52,7 +52,7 @@ class CheckUpdate {
         console.log('response', response);
         if (response.data) {
           let resData = response.data;
-          if (resData.force) {
+          if (!resData.force) {
             Dialog.confirm({
               title: '新版本上线啦!~',
               // message: resData.description,
