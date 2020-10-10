@@ -100,7 +100,7 @@ export default {
   computed: {
     ...mapState(["userData"]),
     isEmail() {
-      return this.userData.email;
+      return this.userData.defaultAccount === 1; // 0是手机，1 是邮箱
     },
   },
   created() {
@@ -142,7 +142,7 @@ export default {
     sendCode2() {
       this.sendding2 = true;
       const postData = {
-        type: this.isEmail ? "phone" : "email",
+        type: "email",
         to: this.email,
         imageCaptcha: this.imgCode,
       };

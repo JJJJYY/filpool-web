@@ -111,6 +111,7 @@ export default {
     },
   },
   created() {
+    console.log(this.userData)
     this.getImgCode();
   },
   methods: {
@@ -154,7 +155,7 @@ export default {
       this.sendding2 = true;
       const postData = {
         areaCode: this.countryInfo.code,
-        type: this.isPhone ? "phone" : "email",
+        type: "phone",
         to: this.phone,
         imageCaptcha: this.imgCode,
       };
