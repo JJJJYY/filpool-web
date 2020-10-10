@@ -161,6 +161,7 @@ export default {
       font-size: 15px;
       font-weight: bold;
       margin: 0;
+      width: 70%;
     }
 
     span {
