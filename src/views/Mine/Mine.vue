@@ -16,8 +16,10 @@
           </div>
           <div class="hr"></div>
           <div class="total">
-            <div class="total-val">总算力: {{totalWeight | parseFloatFilter}}TB</div>
-            <div style="flex: 1;"></div>
+            <div class="total-val" style="flex: 1;">
+              <div>总算力: {{totalWeight | parseFloatFilter}}TB</div>
+              <div class="total-validWeight">有效算力: {{validWeight | parseFloatFilter}}TB</div>
+            </div>
             <router-link :to="{path: '/rate'}" class="to-buy" style="margin-left: 4px;">
               <img
                 src="../../assets/img/mine/user_icon_buy.png"
@@ -94,6 +96,7 @@ export default {
   data() {
     return {
       totalWeight: "---",
+      validWeight: '---',
       loading: false,
       show: false,
     };
@@ -130,6 +133,7 @@ export default {
       // 获取总算力
       myWeightApi().then((res) => {
         this.totalWeight = res.data.totalWeight;
+        this.validWeight = res.data.validWeight;
         this.loading = false;
         this.show = true;
       });
@@ -212,9 +216,14 @@ export default {
 
   .total {
     display: flex;
+    align-items: center;
     padding: 16px 0;
     font-size: 14px;
-
+  .total-validWeight{
+    margin-top: 5px;
+    font-size: 14px;
+    color: $h1-color;
+  }
     &-val {
       color: $h1-color;
     }
