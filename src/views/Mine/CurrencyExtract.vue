@@ -160,6 +160,7 @@
         }}
         <br />4、修改绑定邮箱、绑定手机、登录密码、资金密码24小时之内不可提现
         <br />5、请务必确认电脑及浏览器安全，防止信息被篡改或泄露。
+        <br />6、待填写。
       </div>
       <div class="group tips" v-else>
         温馨提示：
@@ -196,7 +197,7 @@
 
 <script>
 import GoogleValidPopup from "./GoogleValidPopup";
-import { NavBar, Toast, ActionSheet } from "vant";
+import { NavBar, Toast, ActionSheet ,Dialog } from "vant";
 import md5 from "md5";
 import {
   assetTypeApi,
@@ -213,6 +214,7 @@ export default {
     GoogleValidPopup,
     [NavBar.name]: NavBar,
     [ActionSheet.name]: ActionSheet,
+    [Dialog.Component.name]: Dialog.Component,
   },
   data() {
     return {
@@ -242,7 +244,13 @@ export default {
       return this.typeInfo.value === "withdraw";
     },
   },
-  created() {},
+  created() {
+    Dialog.alert({
+      message: '待填写',
+    }).then(() => {
+      // on close
+    });
+  },
   mounted() {
     this.loadAssetData();
     this.loadAmount();
@@ -304,8 +312,22 @@ export default {
       if (this.typeInfo.value === "trans") {
         this.trans();
       } else {
-        this.isShowGoogleValid = true;
-      }
+        console.log(this.number)
+        console.log(this.currSymbol.maxWithdraw)
+        if(this.number >= this.currSymbol.maxWithdraw){
+          Dialog.confirm({
+            message: '为确保资金安全，请联系客服核查！',
+          })
+            .then(() => {
+              this.isShowGoogleValid = true;
+            })
+            .catch(() => {
+              // on cancel
+            });
+          }else {
+            this.isShowGoogleValid = true;
+          }
+        }
     },
     // 内部转账
     trans() {
@@ -318,7 +340,7 @@ export default {
         payPwd: md5(this.pwd),
       };
       internalTransferApi(postData).then((res) => {
-        Toast("转账成功");
+        Toast("提交成功");
         this.$router.goBack();
       });
     },
@@ -341,6 +363,7 @@ export default {
         payPwd: md5(this.pwd),
       };
       withdrawalCurrencyApi(postData).then((res) => {
+        Toast("提交成功");
         this.$router.goBack();
       });
     },
