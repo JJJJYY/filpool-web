@@ -46,7 +46,7 @@
       温馨提示：
       <br />
       1、请勿向上述地址充值任何非 {{ currAsset.asset }} 资产,否则资产将不可找回;
-      <br />2、请选择“ERC20”的链进行充值
+      <br />2、请选择“{{currAssetInfo.asset}}”的链进行充值
       <br />
       3、最小充值数量: {{ currAssetInfo.minDeposit || 0 }}
       {{ currAsset.asset }} , 小于最小数量的充值将不会上账目无法退回。
