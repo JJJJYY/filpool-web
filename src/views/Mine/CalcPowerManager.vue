@@ -109,6 +109,8 @@ export default {
           return "SR1奖励";
         case 2:
           return "挖矿收益";
+        case 3:
+          return "赠送收益";
       }
     },
     typeDescription(x) {
