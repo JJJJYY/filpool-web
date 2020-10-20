@@ -81,15 +81,15 @@ export default {
         case 0:
           return "待审核";
         case 1:
-          return "完成";
+          return "已完成";
         case 2:
-          return "取消";
+          return "拒绝";
         case 3:
-          return "取消";
+          return "拒绝";
         case 4:
-          return "正在处理";
+          return "等待钱包处理";
         case 5:
-          return "正在处理";
+          return "转账中";
         default:
           return "系统错误";
       }

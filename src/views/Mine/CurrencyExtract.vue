@@ -160,7 +160,7 @@
         }}
         <br />4、修改绑定邮箱、绑定手机、登录密码、资金密码24小时之内不可提现
         <br />5、请务必确认电脑及浏览器安全，防止信息被篡改或泄露。
-        <br />6、待填写。
+        <!-- <br />6、待填写。 -->
       </div>
       <div class="group tips" v-else>
         温馨提示：
@@ -245,11 +245,11 @@ export default {
     },
   },
   created() {
-    Dialog.alert({
-      message: '待填写',
-    }).then(() => {
-      // on close
-    });
+    // Dialog.alert({
+    //   message: '待填写',
+    // }).then(() => {
+    //   // on close
+    // });
   },
   mounted() {
     this.loadAssetData();
