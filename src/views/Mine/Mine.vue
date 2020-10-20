@@ -18,7 +18,8 @@
           <div class="total">
             <div class="total-val" style="flex: 1;">
               <div>总算力: {{totalWeight | parseFloatFilter}}TB</div>
-              <div class="total-validWeight">有效算力: {{validWeight | parseFloatFilter}}TB</div>
+              <!-- 暂时不开放 -->
+              <!-- <div class="total-validWeight">有效算力: {{validWeight | parseFloatFilter}}TB</div> -->
             </div>
             <router-link :to="{path: '/rate'}" class="to-buy" style="margin-left: 4px;">
               <img
