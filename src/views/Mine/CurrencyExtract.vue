@@ -63,7 +63,8 @@
                 : currSymbol.asset
             }`"
           />
-          <div class="all" @click="number = parseFloat(asset.available) || ''">
+          <div class="all" @click="number = theNumber(asset.available) || ''">
+          <!-- <div class="all" @click="theNumber"> -->
             {{ isWithdraw ? "全部提取" : "全部划转" }}
           </div>
         </div>
@@ -257,6 +258,13 @@ export default {
     this.getImgCode();
   },
   methods: {
+    theNumber(data) {
+      return this.done(parseFloat(data), 6);
+    },
+    done(num, count) {
+      var newNum = parseInt(num * Math.pow(10, count)) / Math.pow(10, count);
+      return newNum;
+    },
     getImgCode() {
       let newTime = new Date().getTime();
       this.imgCodeUrl = `${serviceURL}/public/ImageCode.php?uuid=${newTime}`;
