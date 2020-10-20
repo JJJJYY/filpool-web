@@ -32,9 +32,14 @@ Vue.use(Toast);
 Vue.directive("scrollToView", scrollToView);
 Vue.directive("onlyNumber", onlyNumber);
 Vue.directive("scrollShow", scrollShow);
+
+function done(num, count) {
+  var newNum = parseInt(num * Math.pow(10, count)) / Math.pow(10, count);
+  return newNum;
+}
 Vue.filter('parseFloatFilter', function (data) {
   if (data !== '---') {
-    return parseFloat(data);
+    return done(parseFloat(data), 6);
   }
   return data
 })
