@@ -31,7 +31,8 @@
                 {{ profitType(x.type) }}
               </div>
               <div class="total">
-                {{ x.quantity | parseFloatFilter }} {{ x.asset }}
+                <div>{{ x.quantity | parseFloatFilter }} {{ x.asset }}</div>
+                <div style="color:#e17055;font-size: 12px;">(已扣除服务费)</div>
               </div>
               <div class="detail-time">{{ timeStr(x.createTime) }}</div>
             </div>
@@ -84,6 +85,7 @@ export default {
       };
       userIncomeApi(postData)
         .then(res => {
+          console.log(res)
           if (res.ret === 200) {
             let newList = res.data;
             if (res.data.length) {
