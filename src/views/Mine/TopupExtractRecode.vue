@@ -115,7 +115,7 @@ export default {
         query: {
           item,
           isTopUp: this.$route.query.isTopUp,
-          statusDesc: this.statusDesc(item.status),
+          statusDesc: this.isTopUp === "true"? this.statusDesc(item.status): this.statusWithdrawal(item.status),
         },
       });
     },
