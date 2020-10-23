@@ -27,6 +27,8 @@
             <span>{{item.title}}</span>
           </div>
         </div>
+        <!-- 存储空间 -->
+        <Storage></Storage>
         <!-- 购买 -->
         <div class="buy" style="min-height: 66vw;">
           <CalcPowerItem
@@ -234,6 +236,7 @@ import "swiper/css/swiper.css";
 import CalcPowerItem from "@/views/calcPower/CalcPowerItem";
 import Banner from "@/components/Banner";
 import Notice from "@/components/Notice";
+import Storage from  './components/storage'
 import Banner5 from "@/components/Banner5";
 import Banner6 from "@/components/Banner6";
 import Partner from "@/components/Partner";
@@ -298,6 +301,7 @@ export default {
     [Popup.name]: Popup,
     "vue-pull-refresh": VuePullRefresh,
     Browser,
+    Storage,
     /*[PullRefresh.name]: PullRefresh*/
   },
   created() {
