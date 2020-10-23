@@ -4,23 +4,23 @@
     <div class="storage-content">
       <div class="content-text">
         <p class="content-text-size">矿池填充进度</p>
-        <p class="content-text-size-small">最新区块高度：555,444</p>
+        <p class="content-text-size-small">最新区块高度：{{poolData.height}}</p>
       </div>
-      <van-progress class="progress-storage" :percentage="percentage" />
+      <van-progress v-if="loading"  class="progress-storage" :percentage="percentage" />
       <div class="storage-data">
         <div class="data-text">
           <p>总储存空间</p>
-          <p class="text-color">152,555T</p>
+          <p class="text-color">{{poolData.poolPower}}T</p>
         </div>
         <div class="wire"></div>
         <div class="data-text">
           <p>总有效算力</p>
-          <p class="text-color">152,555T</p>
+          <p class="text-color">{{poolData.poolAdjPower}}P</p>
         </div>
         <div class="wire"></div>
         <div class="data-text">
           <p>全网有效算力</p>
-          <p class="text-color">152,555T</p>
+          <p class="text-color">{{poolData.netAdjPower}}P</p>
         </div>
       </div>
       <div class="title-flex">矿池数据信息</div>
@@ -30,14 +30,14 @@
             <img class="earnings-image" src="../../../assets/img/webPageIcon/矿池总收益.png" alt="">
             <div class="earnings-center">
               <p>矿池总收益</p>
-              <p  class="earnings-center-size">155,588 FIL</p>
+              <p  class="earnings-center-size">{{poolData.totalReward}} FIL</p>
             </div>
           </div>
           <div class="earnings-width">
             <img class="earnings-image" src="../../../assets/img/webPageIcon/昨日收益.png" alt="">
             <div class="earnings-center">
               <p>昨日收益</p>
-              <p  class="earnings-center-size">155,588 FIL</p>
+              <p  class="earnings-center-size">{{poolData.yesterdayReward}} FIL</p>
             </div>
           </div>
         </div>
@@ -46,14 +46,14 @@
             <img class="earnings-image" src="../../../assets/img/webPageIcon/累计单t收益.png" alt="">
             <div class="earnings-center">
               <p>累计单T收益</p>
-              <p class="earnings-center-size">155,588 FIL</p>
+              <p class="earnings-center-size">{{poolData.efficiency}} FIL/T</p>
             </div>
           </div>
           <div class="earnings-width">
             <img class="earnings-image" src="../../../assets/img/webPageIcon/昨日单t收益.png" alt="">
             <div class="earnings-center">
               <p>昨日单T收益</p>
-              <p class="earnings-center-size">155,588 FIL</p>
+              <p class="earnings-center-size">{{poolData.yesterdayEfficiency}} FIL/T</p>
             </div>
           </div>
         </div>
@@ -63,7 +63,8 @@
 </template>
 
 <script>
-import { Progress } from 'vant';
+import { Loading, Progress } from 'vant';
+import {getPoolInfoApi} from '@/net/api/homeApi'
 export default {
   name: 'storage',
   components: {
@@ -71,18 +72,35 @@ export default {
   },
   data () {
     return {
-      percentage: 99.99
+      percentage: 0,
+      poolData: {}, 
+      loading: false 
     }
   },
+  created () {
+    getPoolInfoApi().then(res=> {
+      if (res.ret === 200){
+        this.loading = true;
+        this.percentage = this.done(res.data.poolAdjPower /res.data.poolMaxAdjPower * 100 , 1);
+        this.poolData = res.data || {};
+        setTimeout(() => {
+          this.createDom();
+        }, 0);
+      }
+    })
+  },
   mounted () {
-    this.createDom();
+    // this.createDom();
   },
   methods: {
+    done(num, count) {
+      var newNum = parseInt(num * Math.pow(10, count)) / Math.pow(10, count);
+      return newNum;
+    },
     createDom() {
       const creatClass = document.querySelector('.progress-storage .van-progress__portion .van-progress__pivot');
       creatClass.remove();
       const myComp = document.querySelector('.progress-storage .van-progress__portion');
-      console.log(myComp)
       const span = document.createElement("span");
       span.innerHTML = `${this.percentage}%`;
       // 判断数字左还是右

@@ -31,3 +31,7 @@ export function getVideoListApi() {
 export function getPartnerListApi() {
   return getRequest('App.PartnerInfo.List');
 }
+// 存储空间
+export function getPoolInfoApi() {
+  return getRequest('App.PoolInfo.Info');
+}
