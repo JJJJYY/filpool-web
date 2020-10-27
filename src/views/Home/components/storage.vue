@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="storage">存储空间</div>
+    <div class="storage">FILPool矿池收益数据</div>
     <div class="storage-content">
       <div class="content-text">
         <p class="content-text-size">矿池填充进度</p>

@@ -17,7 +17,7 @@
           <div class="hr"></div>
           <div class="total">
             <div class="total-val" style="flex: 1">
-              <div>总算力: {{ totalWeight | parseFloatFilter }}TB</div>
+              <div>存储空间: {{ totalWeight | parseFloatFilter }}TB</div>
               <div class="total-validWeight">
                 有效算力: {{ validWeight | parseFloatFilter }}TB
               </div>
