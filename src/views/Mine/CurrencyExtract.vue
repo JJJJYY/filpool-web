@@ -253,13 +253,7 @@ export default {
       return this.typeInfo.value === "withdraw";
     },
   },
-  created() {
-    // Dialog.alert({
-    //   message: '待填写',
-    // }).then(() => {
-    //   // on close
-    // });
-  },
+  created() {},
   mounted() {
     this.loadAssetData();
     this.loadAmount();

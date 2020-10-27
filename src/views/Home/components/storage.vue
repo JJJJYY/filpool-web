@@ -192,6 +192,7 @@ export default {
         position: absolute;
         right: 6px;
         top: 1px;
+        font-size: 13px;
       }
     }
   }

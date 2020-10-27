@@ -1,14 +1,20 @@
 <template>
   <div class="assets">
     <head-nav></head-nav>
-    <van-pull-refresh class="page-container" v-model="isLoading" @refresh="onRefresh">
+    <van-pull-refresh
+      class="page-container"
+      v-model="isLoading"
+      @refresh="onRefresh"
+    >
       <MyAssetCell
-        @topup="$router.push({path: '/currencyTopup', query: { asset: x.asset }})"
-        @extract="$router.push({path: '/currencyExtract', query: { asset: x.asset }})"
+        @topup="
+          $router.push({ path: '/currencyTopup', query: { asset: x.asset } })
+        "
+        @extract="showHint(x.asset)"
         v-for="x in list"
         :key="x.asset"
         :item="x"
-        style="margin-top: 0;margin-bottom: 8px;"
+        style="margin-top: 0; margin-bottom: 8px"
       />
     </van-pull-refresh>
   </div>
@@ -16,7 +22,7 @@
 
 <script>
 import MyAssetCell from "@/views/Mine/MyAssetCell";
-import { PullRefresh } from "vant";
+import { PullRefresh, Dialog } from "vant";
 import HeadNav from "@/components/HeadNav";
 import { assetTypeApi, myBalanceApi } from "../../net/api/userInfoApi";
 export default {
@@ -37,6 +43,26 @@ export default {
     [PullRefresh.name]: PullRefresh,
   },
   methods: {
+    showHint(asset) {
+      if (asset == "FIL") {
+        Dialog.alert({
+          title: "提示",
+          message:
+            "FILPool矿池每天12：00发放上一日挖矿收益，如用户选择不提币，则可用资产自动转入质押资产用于第二天算力增长所需的质押币。由于目前需要质押币才能保持算力稳定增长，如用户提币导致账户质押币不足以质押将影响您的算力增长以及次日挖矿收益。",
+          showCancelButton: true,
+        }).then(() => {
+          this.$router.push({
+            path: "/currencyExtract",
+            query: { asset: asset },
+          });
+        });
+      } else {
+        this.$router.push({
+          path: "/currencyExtract",
+          query: { asset: asset },
+        });
+      }
+    },
     onRefresh() {
       Promise.all([assetTypeApi(), myBalanceApi()])
         .then((res) => {

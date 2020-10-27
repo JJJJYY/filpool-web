@@ -3,7 +3,7 @@
     <div
       class="home-container page-container"
       id="page-container"
-      :style="$isH5?{height: 'initial'}:{}"
+      :style="$isH5 ? { height: 'initial' } : {}"
     >
       <vue-pull-refresh
         v-model="refreshing"
@@ -24,20 +24,20 @@
             @click="$router.push(item.router)"
           >
             <img :src="item.icon" alt />
-            <span>{{item.title}}</span>
+            <span>{{ item.title }}</span>
           </div>
         </div>
         <!-- 存储空间 -->
         <Storage></Storage>
         <!-- 购买 -->
-        <div class="buy" style="min-height: 66vw;">
+        <!-- <div class="buy" style="min-height: 66vw;">
           <CalcPowerItem
             v-for="item in goodList"
             :key="item.id"
             :good-data="item"
             @select="onSelect"
           />
-        </div>
+        </div> -->
         <!--介绍-->
         <div class="section intro">
           <h3 class="intro-title">IPFS社区介绍</h3>
@@ -107,7 +107,7 @@
         <!--买币不如挖矿-->
         <div class="section intro3">
           <h3>
-            <span style="margin-right: 16px;">炒币不如屯币</span>
+            <span style="margin-right: 16px">炒币不如屯币</span>
             <span>屯币不如挖矿</span>
           </h3>
           <div class="intro3-wrap">
@@ -184,28 +184,44 @@
           </div>
           <div class="grid">
             <div class="grid-item">
-              <img class="grid-item-img" src="../../assets/img/home/home_icon_17.png" alt />
+              <img
+                class="grid-item-img"
+                src="../../assets/img/home/home_icon_17.png"
+                alt
+              />
               <div class="grid-item-text">
                 定制化
                 <br />Linux 挖矿系统
               </div>
             </div>
             <div class="grid-item">
-              <img class="grid-item-img" src="../../assets/img/home/home_icon_18.png" alt />
+              <img
+                class="grid-item-img"
+                src="../../assets/img/home/home_icon_18.png"
+                alt
+              />
               <div class="grid-item-text">
                 Filecoin 挖矿
                 <br />专用定制主板
               </div>
             </div>
             <div class="grid-item">
-              <img class="grid-item-img" src="../../assets/img/home/home_icon_19.png" alt />
+              <img
+                class="grid-item-img"
+                src="../../assets/img/home/home_icon_19.png"
+                alt
+              />
               <div class="grid-item-text">
                 超强多核 CPU
                 <br />测试网全网效率最高
               </div>
             </div>
             <div class="grid-item">
-              <img class="grid-item-img" src="../../assets/img/home/home_icon_20.png" alt />
+              <img
+                class="grid-item-img"
+                src="../../assets/img/home/home_icon_20.png"
+                alt
+              />
               <div class="grid-item-text">
                 24盘位支持热插拔
                 <br />可随时动查调整硬盘空间
@@ -217,9 +233,14 @@
         <!--合作伙伴-->
         <Partner></Partner>
       </vue-pull-refresh>
-      <van-popup v-model="show" position="bottom" closeable :safe-area-inset-bottom="true">
+      <van-popup
+        v-model="show"
+        position="bottom"
+        closeable
+        :safe-area-inset-bottom="true"
+      >
         <CalcPowerBuyPopup
-          v-on:dismiss="show=false"
+          v-on:dismiss="show = false"
           :number="number"
           :item="selectedItem"
           v-on:enterOrder="buySubmit"
@@ -236,7 +257,7 @@ import "swiper/css/swiper.css";
 import CalcPowerItem from "@/views/calcPower/CalcPowerItem";
 import Banner from "@/components/Banner";
 import Notice from "@/components/Notice";
-import Storage from  './components/storage'
+import Storage from "./components/storage";
 import Banner5 from "@/components/Banner5";
 import Banner6 from "@/components/Banner6";
 import Partner from "@/components/Partner";
