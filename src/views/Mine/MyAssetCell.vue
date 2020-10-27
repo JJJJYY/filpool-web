@@ -124,11 +124,11 @@ export default {
   }
   .amount {
     display: grid;
-    grid-template-columns: repeat(4, 25%);
+    grid-template-columns: repeat(2, 50%);
     .amount-total {
       display: flex;
       flex-direction: column;
-      padding: 0 8px;
+      padding: 4px 8px;
       .amount-title {
         color: $h3-color;
         font-size: 13px;
@@ -136,7 +136,7 @@ export default {
       .amount-value {
         color: $h1-color;
         font-size: 14px;
-        margin-top: 12px;
+        margin-top: 6px;
         font-weight: bold;
         white-space: nowrap;
         overflow: hidden;
