@@ -2,7 +2,9 @@
   <div class="cell">
     <div class="header">
       <img :src="item.icon" alt class="icon" />
-      <div class="name">{{item.type ? `${item.asset}(${item.type})`: item.asset}}</div>
+      <div class="name">
+        {{ item.type ? `${item.asset}(${item.type})` : item.asset }}
+      </div>
       <div class="recode"></div>
       <!-- <img src="../../assets/img/mine/tab_icon_more.png" alt="" class="more">-->
     </div>
@@ -10,26 +12,46 @@
     <div class="amount">
       <div class="amount-total">
         <div class="amount-title">总资产</div>
-        <div class="amount-value">{{getTotal(item) | parseFloatFilter}}</div>
+        <div class="amount-value">{{ getTotal(item) | parseFloatFilter }}</div>
       </div>
       <div class="amount-total">
         <div class="amount-title">可用</div>
-        <div class="amount-value">{{item.available | parseFloatFilter}}</div>
+        <div class="amount-value">{{ item.available | parseFloatFilter }}</div>
       </div>
       <div class="amount-total">
-        <div class="amount-title">冻结余额</div>
-        <div class="amount-value">{{item.frozen | parseFloatFilter}}</div>
+        <div class="amount-title">冻结</div>
+        <div class="amount-value">{{ item.frozen | parseFloatFilter }}</div>
+      </div>
+      <div class="amount-total">
+        <div class="amount-title">质押</div>
+        <div class="amount-value">{{ item.pledged | parseFloatFilter }}</div>
       </div>
     </div>
     <div class="hr"></div>
     <div class="btns">
-      <div class="icon-btn" :class="{gray: item.deposit !== 1}" @click="topup()">
-        <img src="../../assets/img/mine/user_center_icon_chongbi.png" alt class="icon" />
+      <div
+        class="icon-btn"
+        :class="{ gray: item.deposit !== 1 }"
+        @click="topup()"
+      >
+        <img
+          src="../../assets/img/mine/user_center_icon_chongbi.png"
+          alt
+          class="icon"
+        />
         <span class="title">充币</span>
       </div>
       <div class="btns-hr"></div>
-      <div class="icon-btn" :class="{gray: item.withdraw !== 1}" @click="extract()">
-        <img src="../../assets/img/mine/user_center_icon_tibi.png" alt class="icon" />
+      <div
+        class="icon-btn"
+        :class="{ gray: item.withdraw !== 1 }"
+        @click="extract()"
+      >
+        <img
+          src="../../assets/img/mine/user_center_icon_tibi.png"
+          alt
+          class="icon"
+        />
         <span class="title">提币</span>
       </div>
     </div>
@@ -55,7 +77,10 @@ export default {
       }
     },
     getTotal(item) {
-      return Decimal.add(item.available, item.frozen);
+      return Decimal.add(
+        item.available,
+        Decimal.add(item.frozen, item.pledged)
+      );
     },
   },
 };
@@ -99,7 +124,7 @@ export default {
   }
   .amount {
     display: grid;
-    grid-template-columns: repeat(3, 33.33%);
+    grid-template-columns: repeat(4, 25%);
     .amount-total {
       display: flex;
       flex-direction: column;

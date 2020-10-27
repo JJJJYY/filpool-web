@@ -64,7 +64,7 @@
             }`"
           />
           <div class="all" @click="number = theNumber(asset.available) || ''">
-          <!-- <div class="all" @click="theNumber"> -->
+            <!-- <div class="all" @click="theNumber"> -->
             {{ isWithdraw ? "全部提取" : "全部划转" }}
           </div>
         </div>
@@ -150,6 +150,14 @@
       </div>
       <div class="group tips" v-if="isWithdraw">
         温馨提示：
+        <div>
+          {{
+            currSymbol.asset == "FIL"
+              ? "FILPool矿池每天12：00发放上一日挖矿收益，如用户选择不提币，则可用资产自动转入质押资产用于第二天算力增长所需的质押币。\
+          由于目前需要质押币才能保持算力稳定增长，如用户提币导致账户质押币不足以质押将影响您的算力增长以及次日挖矿收益。"
+              : ""
+          }}
+        </div>
         <br />1、您的提币操作一旦完成，对应的资产所有权将由您变更为目标地址所对应的账户所有人享有。
         <br />2、请您务必在提币操作前，仔细核对提币地址信息，确保提币属于自愿行为，并确认不涉及任何传销，非法集资，诈骗等违法情形，谨防上当受骗，避免造成不必要的财产损失。
         <br />
@@ -198,7 +206,7 @@
 
 <script>
 import GoogleValidPopup from "./GoogleValidPopup";
-import { NavBar, Toast, ActionSheet ,Dialog } from "vant";
+import { NavBar, Toast, ActionSheet, Dialog } from "vant";
 import md5 from "md5";
 import {
   assetTypeApi,
@@ -320,11 +328,11 @@ export default {
       if (this.typeInfo.value === "trans") {
         this.trans();
       } else {
-        console.log(this.number)
-        console.log(this.currSymbol.maxWithdraw)
-        if(this.number >= this.currSymbol.maxWithdraw){
+        console.log(this.number);
+        console.log(this.currSymbol.maxWithdraw);
+        if (this.number >= this.currSymbol.maxWithdraw) {
           Dialog.confirm({
-            message: '为确保资金安全，请联系客服核查！',
+            message: "为确保资金安全，请联系客服核查！",
           })
             .then(() => {
               this.isShowGoogleValid = true;
@@ -332,10 +340,10 @@ export default {
             .catch(() => {
               // on cancel
             });
-          }else {
-            this.isShowGoogleValid = true;
-          }
+        } else {
+          this.isShowGoogleValid = true;
         }
+      }
     },
     // 内部转账
     trans() {
