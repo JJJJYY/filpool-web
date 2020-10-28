@@ -89,7 +89,6 @@ export default {
     },
     onSelect(item) {
       this.show = false;
-      console.log(item.type);
       this.buttonType = this.typeText(item.type);
       this.type = item.type
       // 把之前请求的数据清空

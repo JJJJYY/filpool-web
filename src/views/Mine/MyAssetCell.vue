@@ -20,7 +20,14 @@
       <div class="asset-usable" v-for="(i , index) in item.myAsset" :key='index'>
         <p class="asset-usable-text">可用资产</p>
         <p class="asset-usable-num">{{ i.num | parseFloatFilter }}</p>
+        <p class="asset-usable-query" @click="handleIcon(i.icon)" v-if="i.icon"><span>?</span></p>
       </div>
+      <!-- 提示 -->
+      <van-overlay :show="overlayShow" @click="overlayShow = false"  @click.stop>
+        <div class="wrapper">
+          <p class="block">{{thisText}}</p>
+        </div>
+      </van-overlay>
     </div>
     <div class="jump-b">
       <div  :style="{color: this.bColor}" class="get-b"  :class="{ gray: item.deposit !== 1 }"
@@ -34,18 +41,34 @@
 
 <script>
 import { Decimal } from "decimal.js";
+import { Icon, Overlay } from "vant";
 export default {
   name: "MyAssetCell",
+  components: {
+    "van-icon": Icon,
+    'van-overlay': Overlay
+  },
   props: {
     item: Object,
     myAsset: Array,
     bgc: String,
     bColor: String
   },
+  data () {
+    return {
+      overlayShow: false,
+      thisText: '' // 提示
+    }
+  },
   created() {
     // console.log(this.item);
   },
   methods: {
+    handleIcon(val) {
+      console.log(val)
+      this.thisText = val
+      this.overlayShow = true
+    },
     handleJump() {
       this.$router.push({
         path: "/assetDetails",
@@ -78,6 +101,20 @@ export default {
 .gray{
   color: #a7a7a7 !important;
 }
+  .wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+  }
+
+  .block {
+    width: 90%;
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+    background-color: #fff;
+  }
 .cell {
   background: $content-backgroun-color;
   margin: 0 10px;
@@ -127,8 +164,21 @@ export default {
     display: flex;
     justify-content: space-around;
     margin-top: 14px;
+    position: relative;
     .asset-usable{
       text-align: center;
+      position: relative;
+      .asset-usable-query{
+        border: 1px solid #999999;
+        border-radius: 50%;
+        width: 10px;
+        position: absolute;
+        top: -6px;
+        right: -18px;
+        span{
+          color: #999999;
+        }
+      }
       .asset-usable-text{
         color: #666666;
       }
