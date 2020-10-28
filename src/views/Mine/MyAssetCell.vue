@@ -1,59 +1,33 @@
 <template>
   <div class="cell">
-    <div class="header">
-      <img :src="item.icon" alt class="icon" />
-      <div class="name">
-        {{ item.type ? `${item.asset}(${item.type})` : item.asset }}
+    <div class="cellMy" :style="{ background:this.bgc }">
+      <div class="title">
+        <div class="flex">
+          <p><img :src="item.icon" class="icon" alt="" /></p>
+          <p class="margin">{{ item.type ? `${item.asset}(${item.type})` : item.asset }}</p>
+        </div>
+        <div class="jump">
+          <p>资产明细</p>
+          <p class="margin">>></p>
+        </div>
       </div>
-      <div class="recode"></div>
-      <!-- <img src="../../assets/img/mine/tab_icon_more.png" alt="" class="more">-->
-    </div>
-    <div class="hr"></div>
-    <div class="amount">
-      <div class="amount-total">
-        <div class="amount-title">总资产</div>
-        <div class="amount-value">{{ getTotal(item) | parseFloatFilter }}</div>
-      </div>
-      <div class="amount-total">
-        <div class="amount-title">可用</div>
-        <div class="amount-value">{{ item.available | parseFloatFilter }}</div>
-      </div>
-      <div class="amount-total">
-        <div class="amount-title">冻结</div>
-        <div class="amount-value">{{ item.frozen | parseFloatFilter }}</div>
-      </div>
-      <div class="amount-total">
-        <div class="amount-title">质押</div>
-        <div class="amount-value">{{ item.pledged | parseFloatFilter }}</div>
+      <div class="sum">
+        <p>总资产：</p>
+        <p class="sum-num">{{ getTotal(item.myAsset) | parseFloatFilter }}</p>
       </div>
     </div>
-    <div class="hr"></div>
-    <div class="btns">
-      <div
-        class="icon-btn"
-        :class="{ gray: item.deposit !== 1 }"
-        @click="topup()"
-      >
-        <img
-          src="../../assets/img/mine/user_center_icon_chongbi.png"
-          alt
-          class="icon"
-        />
-        <span class="title">充币</span>
+    <div class="asset">
+      <div class="asset-usable" v-for="(i , index) in item.myAsset" :key='index'>
+        <p class="asset-usable-text">可用资产</p>
+        <p class="asset-usable-num">{{ i.num | parseFloatFilter }}</p>
       </div>
-      <div class="btns-hr"></div>
-      <div
-        class="icon-btn"
-        :class="{ gray: item.withdraw !== 1 }"
-        @click="extract()"
-      >
-        <img
-          src="../../assets/img/mine/user_center_icon_tibi.png"
-          alt
-          class="icon"
-        />
-        <span class="title">提币</span>
-      </div>
+    </div>
+    <div class="jump-b">
+      <div  :style="{color: this.bColor}" class="get-b"  :class="{ gray: item.deposit !== 1 }"
+       @click="topup()">充币</div>
+      <div class="xian"></div>
+      <div  :style="{color: this.bColor}" class="get-b" :class="{ gray: item.withdraw !== 1 }" 
+        @click="extract()">提币</div>
     </div>
   </div>
 </template>
@@ -64,6 +38,12 @@ export default {
   name: "MyAssetCell",
   props: {
     item: Object,
+    myAsset: Array,
+    bgc: String,
+    bColor: String
+  },
+  created() {
+    // console.log(this.item);
   },
   methods: {
     topup() {
@@ -77,100 +57,96 @@ export default {
       }
     },
     getTotal(item) {
-      return Decimal.add(
-        item.available,
-        Decimal.add(item.frozen, item.pledged)
-      );
+      const myMoney = []
+      for (let i = 0; i < item.length; i++) {
+        const val = item[i].num;
+        myMoney.push(new Decimal(val))
+      }
+      return eval(myMoney.join("+")) 
     },
-  },
+  }
 };
 </script>
 
 <style lang="scss" scoped>
 @import "../../assets/scss/base";
-
+.gray{
+  color: #a7a7a7 !important;
+}
 .cell {
   background: $content-backgroun-color;
-  margin-top: 8px;
-  padding: 16px;
-  .header {
-    display: flex;
-    align-items: center;
-    .icon {
-      @include size(22px);
-      /*background: red;*/
-    }
-    .name {
-      margin-left: 8px;
-      color: $h1-color;
-      font-size: 16px;
-      font-weight: bold;
-    }
-    .recode {
-      font-size: 14px;
-      color: $h3-color;
-      margin: 0 12px;
-      text-align: right;
-      flex: 1;
-    }
-    .more {
-      height: 10px;
-    }
-  }
-  .hr {
-    background: $divider-color;
-    margin: 16px 0;
-    height: 1px;
-  }
-  .amount {
-    display: grid;
-    grid-template-columns: repeat(2, 50%);
-    .amount-total {
+  margin: 0 10px;
+  border-radius: 8px;
+  .cellMy {
+    padding: 12px;
+    border-radius: 8px 8px 0 0;
+    .title {
       display: flex;
-      flex-direction: column;
-      padding: 4px 8px;
-      .amount-title {
-        color: $h3-color;
-        font-size: 13px;
-      }
-      .amount-value {
-        color: $h1-color;
+      align-items: center;
+      justify-content: space-between;
+      color: #fff;
+      .flex{
+        margin-left: 10px;
+        display: flex;
+        align-items: center;
+        font-weight: 600;
         font-size: 14px;
-        margin-top: 6px;
-        font-weight: bold;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
+        .margin{
+          margin-left: 8px;
+        }
+        .icon {
+          width: 27px;
+          height: 27px;
+        }
+      }
+      .jump{
+        display: flex;
+        align-items: center;
+         .margin{
+          margin-left: 8px;
+        }
+      }
+    }
+    .sum{
+      display: flex;
+      align-items: baseline ;
+      margin: 10px 0 10px 10px;
+      color: #fff;
+      .sum-num{
+        font-weight: 700;
+        font-size: 18px;
       }
     }
   }
-  .btns {
+  .asset{
     display: flex;
-    margin-top: 22px;
-    align-items: center;
-    .btns-hr {
-      height: 24px;
-      width: 1px;
-      background: $divider-color;
+    justify-content: space-around;
+    margin-top: 14px;
+    .asset-usable{
+      text-align: center;
+      .asset-usable-text{
+        color: #666666;
+      }
+      .asset-usable-num{
+        margin-top: 5px;
+        font-weight: 600;
+      }
     }
-    .icon-btn {
-      flex: 1;
-      display: flex;
-      flex-direction: row;
-      justify-content: center;
-      &.gray {
-        filter: grayscale(1);
-      }
-      .icon {
-        @include size(16px);
-        /*background: red;*/
-      }
-      .title {
-        margin-left: 12px;
-        font-weight: bold;
-        font-size: 15px;
-        color: $main-color;
-      }
+    
+  }
+  .jump-b{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 16px;
+    padding: 0 36px 18px 36px;
+    .get-b{
+      font-size: 14px;
+    }
+    .xian{
+      width: 1px;
+      height: 14px;
+      background-color: #EDEDED;
     }
   }
 }

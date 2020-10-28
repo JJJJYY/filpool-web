@@ -14,6 +14,8 @@
         v-for="x in list"
         :key="x.asset"
         :item="x"
+        :bgc='x.asset === "FIL"? "linear-gradient(85deg, #43B5BD 0%, #3ACCD5 100%)": "linear-gradient(85deg, #f0ad29 0%, #f1ba4d 100%)"'
+        :bColor='x.asset === "FIL"?"#38B6BE":"#FF8807"'
         style="margin-top: 0; margin-bottom: 8px"
       />
     </van-pull-refresh>
@@ -48,7 +50,7 @@ export default {
         Dialog.alert({
           title: "提示",
           message:
-            "FILPool矿池每天12：00发放上一日挖矿收益，如用户选择不提币，则可用资产自动转入质押资产用于第二天算力增长所需的质押币。由于目前需要质押币才能保持算力稳定增长，如用户提币导致账户质押币不足以质押将影响您的算力增长以及次日挖矿收益。",
+            "FILPool矿池每天12：00发放上一日挖矿收益，如用户选择不提币，则可用资产将用于FILPool矿池第二天算力增长所需的质押币。 由于目前需要质押币才能保持算力稳定增长，如用户提币导致账户质押币不足将影响您的算力增长以及次日挖矿收益。",
           showCancelButton: true,
         }).then(() => {
           this.$router.push({
@@ -61,6 +63,28 @@ export default {
           path: "/currencyExtract",
           query: { asset: asset },
         });
+      }
+    },
+    isMyAsset(x) {
+      if (x.asset ===  'FIL') {
+        return {
+          ...x,
+          // 展示资产
+          myAsset: [
+            {isAsset: '可用资产', num : x.available},
+            {isAsset: '冻结资产', num : x.frozen},
+            {isAsset: '质押', num : x.deposit}
+          ]
+        }
+      }else {
+        return {
+          ...x,
+          // 展示资产
+          myAsset: [
+            {isAsset: '可用资产', num : x.available},
+            {isAsset: '冻结资产', num : x.frozen},
+          ]
+        }
       }
     },
     onRefresh() {
@@ -78,7 +102,8 @@ export default {
                   item.type = item1.type;
                 }
               });
-              return item;
+              let newItem = this.isMyAsset(item)
+              return newItem;
             });
             this.list = assetList;
           }
