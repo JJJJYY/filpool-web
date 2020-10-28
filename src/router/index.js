@@ -318,6 +318,15 @@ const routes = [{
     path: '/openIframe',
     name: 'openIframe',
     component: OpenIframe
+  },
+  {
+    path: '/assetDetails',
+    name: 'assetDetails',
+    component: () => import( /* webpackChunkName: "mine" */ '../views/Mine/assetDetails/assetDetails.vue'),
+    meta: {
+      title: "资产明细",
+      needLogin: true
+    }
   }
 ];
 

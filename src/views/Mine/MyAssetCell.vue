@@ -6,7 +6,7 @@
           <p><img :src="item.icon" class="icon" alt="" /></p>
           <p class="margin">{{ item.type ? `${item.asset}(${item.type})` : item.asset }}</p>
         </div>
-        <div class="jump">
+        <div class="jump" @click="handleJump" v-if="this.item.asset === 'FIL'">
           <p>资产明细</p>
           <p class="margin">>></p>
         </div>
@@ -46,6 +46,11 @@ export default {
     // console.log(this.item);
   },
   methods: {
+    handleJump() {
+      this.$router.push({
+        path: "/assetDetails",
+      });
+    },
     topup() {
       if (this.item.deposit === 1) {
         this.$emit("topup");

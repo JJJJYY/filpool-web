@@ -153,3 +153,7 @@ export function versionAip(data) {
 export function userIncomeApi(data) {
   return postRequest('App.Income.UserIncome', data)
 }
+// 算力收益
+export function recordListApi(data) {
+  return postRequest('BalanceModify.RecordList', data)
+}
