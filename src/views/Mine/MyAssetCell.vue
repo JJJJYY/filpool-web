@@ -60,12 +60,8 @@ export default {
       thisText: '' // 提示
     }
   },
-  created() {
-    // console.log(this.item);
-  },
   methods: {
     handleIcon(val) {
-      console.log(val)
       this.thisText = val
       this.overlayShow = true
     },
