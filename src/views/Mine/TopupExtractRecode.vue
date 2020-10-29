@@ -1,23 +1,25 @@
 <template>
   <div>
     <head-nav :title="this.title"></head-nav>
-    <van-list v-model="loading" :finished="finished" @load="onLoad" finished-text="没有更多数据">
-      <div class="cell" v-for="(x, i) in list" :key="i" @click="detail(x)">
-        <div class="item" style="align-items: flex-start;">
-          <div class="key">数量</div>
-          <div class="val">{{x.amount | parseFloatFilter}}</div>
+    <div class="list page-container">
+      <van-list v-model="loading" :finished="finished" @load="onLoad" finished-text="没有更多数据">
+        <div class="cell" v-for="(x, i) in list" :key="i" @click="detail(x)">
+          <div class="item" style="align-items: flex-start;">
+            <div class="key">数量</div>
+            <div class="val">{{x.amount | parseFloatFilter}}</div>
+          </div>
+          <div class="item" style="align-items: center;">
+            <div class="key">状态</div>
+            <div class="val" v-if="isTopUp === 'true'">{{statusDesc(x.status)}}</div>
+            <div class="val" v-else>{{statusWithdrawal(x.status)}}</div>
+          </div>
+          <div class="item" style="align-items: flex-end;">
+            <div class="key">时间</div>
+            <div class="val">{{time(x.createTime)}}</div>
+          </div>
         </div>
-        <div class="item" style="align-items: center;">
-          <div class="key">状态</div>
-          <div class="val" v-if="isTopUp === 'true'">{{statusDesc(x.status)}}</div>
-          <div class="val" v-else>{{statusWithdrawal(x.status)}}</div>
-        </div>
-        <div class="item" style="align-items: flex-end;">
-          <div class="key">时间</div>
-          <div class="val">{{time(x.createTime)}}</div>
-        </div>
-      </div>
-    </van-list>
+      </van-list>
+    </div>
   </div>
 </template>
 

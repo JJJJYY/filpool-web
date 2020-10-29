@@ -5,6 +5,7 @@
       <div class="type">
         <div class="type-right" >类型</div>
         <van-button type="default" size="mini" class="round" @click="show = true">{{buttonType}}</van-button>
+        <van-action-sheet v-model="show" :actions="actions" @select="onSelect" />
       </div>
       <van-list
         v-model="loading"
@@ -13,20 +14,21 @@
         @load="onLoad"
       >
         <!-- <van-cell v-for="item in list" :key="item" :title="item" /> -->
-        <div class="call" v-for="(item,index) in list" :key="index">
-          <div class="call-top">
-            <p>{{typeText(item.type)}}</p>
-            <p class="call-color">{{item.quantity | parseFloatFilter}}FIL</p>
-          </div>
-          <div class="call-buttom">
-            <p class="call-time">{{item.createTime}}</p>
-            <p class="call-color">
-              <!-- <span>总余额 1000.25</span> -->
-            </p>
+        <div class="list page-container">
+          <div class="call" v-for="(item,index) in list" :key="index">
+            <div class="call-top">
+              <p>{{typeText(item.type)}}</p>
+              <p class="call-color">{{item.quantity | parseFloatFilter}}FIL</p>
+            </div>
+            <div class="call-buttom">
+              <p class="call-time">{{item.createTime}}</p>
+              <p class="call-color">
+                <!-- <span>总余额 1000.25</span> -->
+              </p>
+            </div>
           </div>
         </div>
       </van-list>
-      <van-action-sheet v-model="show" :actions="actions" @select="onSelect" />
     </div>
   </div>
 </template>
