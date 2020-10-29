@@ -1,10 +1,12 @@
 <template>
   <div class="cell">
-    <div class="cellMy" :style="{ background:this.bgc }">
+    <div class="cellMy" :style="{ background: this.bgc }">
       <div class="title">
         <div class="flex">
           <p><img :src="item.icon" class="icon" alt="" /></p>
-          <p class="margin">{{ item.type ? `${item.asset}(${item.type})` : item.asset }}</p>
+          <p class="margin">
+            {{ item.type ? `${item.asset}(${item.type})` : item.asset }}
+          </p>
         </div>
         <div class="jump" @click="handleJump" v-if="this.item.asset === 'FIL'">
           <p>资产明细</p>
@@ -17,55 +19,75 @@
       </div>
     </div>
     <div class="asset">
-      <div class="asset-usable" v-for="(i , index) in item.myAsset" :key='index'>
-        <p class="asset-usable-text">{{i.isAsset}}</p>
+      <div class="asset-usable" v-for="(i, index) in item.myAsset" :key="index">
+        <div class="asset-usable-div">
+          <p class="asset-usable-text">{{ i.isAsset }}</p>
+          <p
+            class="asset-usable-query"
+            @click="handleIcon(i.icon)"
+            v-if="i.icon"
+          >
+            <span>?</span>
+          </p>
+        </div>
         <p class="asset-usable-num">{{ i.num | parseFloatFilter }}</p>
-        <p class="asset-usable-query" @click="handleIcon(i.icon)" v-if="i.icon"><span>?</span></p>
       </div>
       <!-- 提示 -->
-      <van-overlay :show="overlayShow" @click="overlayShow = false"  @click.stop>
+      <van-overlay :show="overlayShow" @click="overlayShow = false" @click.stop>
         <div class="wrapper">
-          <p class="block">{{thisText}}</p>
+          <p class="block">{{ thisText }}</p>
         </div>
       </van-overlay>
     </div>
     <div class="jump-b">
-      <div  :style="{color: this.bColor}" class="get-b"  :class="{ gray: item.deposit !== 1 }"
-       @click="topup()">充币</div>
+      <div
+        :style="{ color: this.bColor }"
+        class="get-b"
+        :class="{ gray: item.deposit !== 1 }"
+        @click="topup()"
+      >
+        充币
+      </div>
       <div class="xian"></div>
-      <div  :style="{color: this.bColor}" class="get-b" :class="{ gray: item.withdraw !== 1 }" 
-        @click="extract()">提币</div>
+      <div
+        :style="{ color: this.bColor }"
+        class="get-b"
+        :class="{ gray: item.withdraw !== 1 }"
+        @click="extract()"
+      >
+        提币
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import { Decimal } from "decimal.js";
-import {  Overlay } from "vant";
+import { Overlay } from "vant";
 export default {
   name: "MyAssetCell",
   components: {
-    'van-overlay': Overlay
+    "van-overlay": Overlay,
   },
   props: {
     item: Object,
     myAsset: Array,
     bgc: String,
-    bColor: String
+    bColor: String,
   },
-  created () {
-    console.log(this.item)
+  created() {
+    console.log(this.item);
   },
-  data () {
+  data() {
     return {
       overlayShow: false,
-      thisText: '' // 提示
-    }
+      thisText: "", // 提示
+    };
   },
   methods: {
     handleIcon(val) {
-      this.thisText = val
-      this.overlayShow = true
+      this.thisText = val;
+      this.overlayShow = true;
     },
     handleJump() {
       this.$router.push({
@@ -83,37 +105,37 @@ export default {
       }
     },
     getTotal(item) {
-      const myMoney = []
+      const myMoney = [];
       for (let i = 0; i < item.length; i++) {
         const val = item[i].num;
-        myMoney.push(new Decimal(val))
+        myMoney.push(new Decimal(val));
       }
-      return eval(myMoney.join("+")) 
+      return eval(myMoney.join("+"));
     },
-  }
+  },
 };
 </script>
 
 <style lang="scss" scoped>
 @import "../../assets/scss/base";
-.gray{
+.gray {
   color: #a7a7a7 !important;
 }
-  .wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-  }
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
 
-  .block {
-    width: 90%;
-    height: 30px;
-    border-radius: 8px;
-    text-align: center;
-    line-height: 30px;
-    background-color: #fff;
-  }
+.block {
+  width: 90%;
+  height: 30px;
+  border-radius: 8px;
+  text-align: center;
+  line-height: 30px;
+  background-color: #fff;
+}
 .cell {
   background: $content-backgroun-color;
   margin: 0 10px;
@@ -126,13 +148,13 @@ export default {
       align-items: center;
       justify-content: space-between;
       color: #fff;
-      .flex{
+      .flex {
         margin-left: 10px;
         display: flex;
         align-items: center;
         font-weight: 600;
         font-size: 14px;
-        .margin{
+        .margin {
           margin-left: 8px;
         }
         .icon {
@@ -140,68 +162,74 @@ export default {
           height: 27px;
         }
       }
-      .jump{
+      .jump {
         display: flex;
         align-items: center;
-         .margin{
+        .margin {
           margin-left: 8px;
         }
       }
     }
-    .sum{
+    .sum {
       display: flex;
-      align-items: baseline ;
+      align-items: baseline;
       margin: 10px 0 10px 10px;
       color: #fff;
-      .sum-num{
+      .sum-num {
         font-weight: 700;
         font-size: 18px;
       }
     }
   }
-  .asset{
+  .asset {
     display: flex;
     justify-content: space-around;
     margin-top: 14px;
     position: relative;
-    .asset-usable{
+    .asset-usable {
       text-align: center;
       position: relative;
-      .asset-usable-query{
-        transform:scale(0.7);
-        border: 1px solid #999999;
-        border-radius: 50%;
-        width: 12px;
-        position: absolute;
-        top: -6px;
-        right: -15px;
-        span{
-          color: #999999;
+      .asset-usable-div {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        .asset-usable-query {
+          transform: scale(0.7);
+          border: 1px solid #999999;
+          border-radius: 50%;
+          width: 12px;
+          height: 12px;
+          font-size: 12px;
+          // margin-left: 3px;
+          span {
+            color: #999999;
+          }
+        }
+        .asset-usable-text {
+          color: #666666;
         }
       }
-      .asset-usable-text{
-        color: #666666;
-      }
-      .asset-usable-num{
+
+      .asset-usable-num {
         margin-top: 5px;
         font-weight: 600;
       }
     }
-    
   }
-  .jump-b{
+  .jump-b {
     display: flex;
     justify-content: space-around;
     align-items: center;
     margin-top: 16px;
     padding: 0 36px 18px 36px;
-    .get-b{
+    .get-b {
       font-size: 14px;
     }
-    .xian{
+    .xian {
       width: 1px;
       height: 14px;
-      background-color: #EDEDED;
+      background-color: #ededed;
     }
   }
 }
