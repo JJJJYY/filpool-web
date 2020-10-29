@@ -18,7 +18,7 @@
     </div>
     <div class="asset">
       <div class="asset-usable" v-for="(i , index) in item.myAsset" :key='index'>
-        <p class="asset-usable-text">可用资产</p>
+        <p class="asset-usable-text">{{i.isAsset}}</p>
         <p class="asset-usable-num">{{ i.num | parseFloatFilter }}</p>
         <p class="asset-usable-query" @click="handleIcon(i.icon)" v-if="i.icon"><span>?</span></p>
       </div>
@@ -41,11 +41,10 @@
 
 <script>
 import { Decimal } from "decimal.js";
-import { Icon, Overlay } from "vant";
+import {  Overlay } from "vant";
 export default {
   name: "MyAssetCell",
   components: {
-    "van-icon": Icon,
     'van-overlay': Overlay
   },
   props: {
@@ -107,6 +106,7 @@ export default {
   .block {
     width: 90%;
     height: 30px;
+    border-radius: 8px;
     text-align: center;
     line-height: 30px;
     background-color: #fff;
@@ -167,7 +167,7 @@ export default {
       .asset-usable-query{
         border: 1px solid #999999;
         border-radius: 50%;
-        width: 10px;
+        width: 12px;
         position: absolute;
         top: -6px;
         right: -18px;
