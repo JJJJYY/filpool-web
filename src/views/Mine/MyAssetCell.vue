@@ -53,6 +53,9 @@ export default {
     bgc: String,
     bColor: String
   },
+  created () {
+    console.log(this.item)
+  },
   data () {
     return {
       overlayShow: false,
@@ -165,12 +168,13 @@ export default {
       text-align: center;
       position: relative;
       .asset-usable-query{
+        transform:scale(0.7);
         border: 1px solid #999999;
         border-radius: 50%;
         width: 12px;
         position: absolute;
         top: -6px;
-        right: -18px;
+        right: -15px;
         span{
           color: #999999;
         }
