@@ -16,7 +16,7 @@
         <div class="call" v-for="(item,index) in list" :key="index">
           <div class="call-top">
             <p>{{typeText(item.type)}}</p>
-            <p class="call-color">+{{item.quantity | parseFloatFilter}}FIL</p>
+            <p class="call-color">{{item.quantity | parseFloatFilter}}FIL</p>
           </div>
           <div class="call-buttom">
             <p class="call-time">{{item.createTime}}</p>
