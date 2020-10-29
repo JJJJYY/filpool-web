@@ -3,7 +3,7 @@
     <div class="cellMy" :style="{ background: this.bgc }">
       <div class="title">
         <div class="flex">
-          <p><img :src="item.icon" class="icon" alt="" /></p>
+          <p><img :src="item.appIcon" class="icon" alt="" /></p>
           <p class="margin">
             {{ item.type ? `${item.asset}(${item.type})` : item.asset }}
           </p>
