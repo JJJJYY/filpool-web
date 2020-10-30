@@ -137,6 +137,7 @@ export default {
             { type: 23, name: '可用金额返还' },
             { type: 24, name: '挖矿收益' },
             { type: 25, name: 'SR质押币发放' },
+            { type: 26, name: '扣除质押币' },
         ]
     }
   }
