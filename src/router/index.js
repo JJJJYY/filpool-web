@@ -327,7 +327,17 @@ const routes = [{
       title: "资产明细",
       needLogin: true
     }
-  }
+  },
+  {
+    path: '/market',
+    name: 'market',
+    component: () => import( /* webpackChunkName: "mine" */ '../views/market/market.vue'),
+    meta: {
+      title: "行情",
+      needLogin: true,
+      backBtnHidden: true,
+    }
+  },
 ];
 
 const router = new VueRouter({
