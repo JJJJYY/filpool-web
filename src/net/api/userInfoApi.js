@@ -153,7 +153,11 @@ export function versionAip(data) {
 export function userIncomeApi(data) {
   return postRequest('App.Income.UserIncome', data)
 }
-// 算力收益
+// 资产详情
 export function recordListApi(data) {
   return postRequest('BalanceModify.RecordList', data)
+}
+// 行情
+export function quotationApi(data) {
+  return postRequest('Quotation.getPriceList', data)
 }
