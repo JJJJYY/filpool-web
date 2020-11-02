@@ -22,11 +22,7 @@ class CheckUpdate {
   getCurentVersion() {
     let self = this;
     plusReady(() => {
-      console.log(window.plus)
-      console.log(window.plus.runtime)
-      // console.log(window.plus.runtime.version)
       window.plus.runtime.getProperty(window.plus.runtime.appid, function (inf) {
-        console.log(inf)
         wgtVer = inf.version;
         versionCode = inf.versionCode;
         self.getServiceVersion(wgtVer, inf, versionCode)
@@ -35,9 +31,6 @@ class CheckUpdate {
   } ///asset/appVersion
   getServiceVersion() {
     let platform = isiOS() ? 'iOS' : 'android';
-    console.log('wgtVer', wgtVer);
-    console.log('platform', platform);
-    console.log('versionCode', versionCode);
     // ajax.get('/asset/appVersion', {
     //   version: wgtVer,
     //   platform: platform,
@@ -49,7 +42,6 @@ class CheckUpdate {
         build: versionCode
       })
       .then((response) => {
-        console.log('response', response);
         if (response.data) {
           let resData = response.data;
           if (!resData.force) {

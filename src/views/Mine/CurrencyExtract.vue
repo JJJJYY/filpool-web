@@ -55,13 +55,15 @@
             type="number"
             title
             v-model.number="number"
-            :placeholder="`${
-              isWithdraw ? '最低提现数量' : '最小转账金额'
-            }: ${parseFloat(currSymbol.minWithdraw)}${
-              currSymbol.type
-                ? `${currSymbol.asset}(${currSymbol.type})`
-                : currSymbol.asset
-            }`"
+            :placeholder="
+              `${isWithdraw ? '最低提现数量' : '最小转账金额'}: ${parseFloat(
+                currSymbol.minWithdraw
+              )}${
+                currSymbol.type
+                  ? `${currSymbol.asset}(${currSymbol.type})`
+                  : currSymbol.asset
+              }`
+            "
           />
           <div class="all" @click="number = theNumber(asset.available) || ''">
             <!-- <div class="all" @click="theNumber"> -->
@@ -212,7 +214,7 @@ import {
   myBalanceApi,
   authSendApi,
   withdrawalCurrencyApi,
-  internalTransferApi,
+  internalTransferApi
 } from "@/net/api/userInfoApi";
 import { serviceURL } from "@/config";
 
@@ -222,7 +224,7 @@ export default {
     GoogleValidPopup,
     [NavBar.name]: NavBar,
     [ActionSheet.name]: ActionSheet,
-    [Dialog.Component.name]: Dialog.Component,
+    [Dialog.Component.name]: Dialog.Component
   },
   data() {
     return {
@@ -239,18 +241,18 @@ export default {
       showTypes: false,
       types: [
         { name: "提现", value: "withdraw" },
-        { name: "内部转账", value: "trans" },
+        { name: "内部转账", value: "trans" }
       ],
       typeInfo: { name: "提现", value: "withdraw" },
       imgCode: "", // 图片验证码
       imgCodeUrl: "",
-      gaCaptcha: "",
+      gaCaptcha: ""
     };
   },
   computed: {
     isWithdraw() {
       return this.typeInfo.value === "withdraw";
-    },
+    }
   },
   created() {},
   mounted() {
@@ -279,17 +281,17 @@ export default {
     },
     /// 过滤当前币种
     loadAssetData() {
-      assetTypeApi().then((res) => {
+      assetTypeApi().then(res => {
         this.currSymbol = res.data.filter(
-          (x) => x.asset === this.$route.query.asset
+          x => x.asset === this.$route.query.asset
         )[0];
       });
     },
     /// 获取余额
     loadAmount() {
-      myBalanceApi().then((res) => {
+      myBalanceApi().then(res => {
         this.asset = res.data.filter(
-          (x) => x.asset === this.$route.query.asset
+          x => x.asset === this.$route.query.asset
         )[0];
       });
     },
@@ -321,11 +323,9 @@ export default {
       if (this.typeInfo.value === "trans") {
         this.trans();
       } else {
-        console.log(this.number);
-        console.log(this.currSymbol.maxWithdraw);
         if (this.number >= this.currSymbol.maxWithdraw) {
           Dialog.confirm({
-            message: "为确保资金安全，请联系客服核查！",
+            message: "为确保资金安全，请联系客服核查！"
           })
             .then(() => {
               this.isShowGoogleValid = true;
@@ -346,9 +346,9 @@ export default {
         account: this.address,
         assetId: this.currSymbol.id,
         amount: this.number,
-        payPwd: md5(this.pwd),
+        payPwd: md5(this.pwd)
       };
-      internalTransferApi(postData).then((res) => {
+      internalTransferApi(postData).then(res => {
         Toast("提交成功");
         this.$router.goBack();
       });
@@ -356,7 +356,7 @@ export default {
     selectCurrency() {
       this.$router.replace({
         path: "/selectCurrency",
-        query: { isTopUp: false },
+        query: { isTopUp: false }
       });
     },
     // 提现
@@ -369,9 +369,9 @@ export default {
         assetId: this.currSymbol.id,
         gaCaptcha: x,
         amount: this.number,
-        payPwd: md5(this.pwd),
+        payPwd: md5(this.pwd)
       };
-      withdrawalCurrencyApi(postData).then((res) => {
+      withdrawalCurrencyApi(postData).then(res => {
         Toast("提交成功");
         this.$router.goBack();
       });
@@ -381,8 +381,8 @@ export default {
         path: "/topupExtractRecode",
         query: {
           isTopUp: false,
-          asset: this.$route.query.asset,
-        },
+          asset: this.$route.query.asset
+        }
       });
     },
     send() {
@@ -392,10 +392,10 @@ export default {
       this.sendding = true;
       const postData = {
         type: this.isMobileValid ? "phone" : "email",
-        imageCaptcha: this.imgCode,
+        imageCaptcha: this.imgCode
       };
       authSendApi(postData)
-        .then((res) => {
+        .then(res => {
           if (res.ret === 200) {
             Toast("验证码已发送，请注意查收");
             let timer = setInterval(() => {
@@ -412,8 +412,8 @@ export default {
         .catch(() => {
           this.sendding = false;
         });
-    },
-  },
+    }
+  }
 };
 </script>
 

@@ -86,7 +86,7 @@ export default {
   name: "SecurityMobileModify",
   components: {
     HeadNav,
-    AreaSelect,
+    AreaSelect
   },
   data() {
     return {
@@ -101,17 +101,16 @@ export default {
       showAreaPicker: false,
       countryInfo: {},
       imgCode: "", // 图片验证码
-      imgCodeUrl: "",
+      imgCodeUrl: ""
     };
   },
   computed: {
     ...mapState(["userData"]),
     isPhone() {
       return this.userData.defaultAccount === 0;
-    },
+    }
   },
   created() {
-    console.log(this.userData)
     this.getImgCode();
   },
   methods: {
@@ -128,10 +127,10 @@ export default {
       this.sendding1 = true;
       const postData = {
         type: this.isPhone ? "phone" : "email",
-        imageCaptcha: this.imgCode,
+        imageCaptcha: this.imgCode
       };
       authSendApi(postData)
-        .then((res) => {
+        .then(res => {
           if (res.ret === 200) {
             Toast("验证码已发送请注意查收");
             let timer = setInterval(() => {
@@ -157,10 +156,10 @@ export default {
         areaCode: this.countryInfo.code,
         type: "phone",
         to: this.phone,
-        imageCaptcha: this.imgCode,
+        imageCaptcha: this.imgCode
       };
       sendApi(postData)
-        .then((res) => {
+        .then(res => {
           Toast("验证码已发送请注意查收");
           let timer = setInterval(() => {
             if (this.interval2 > 0) {
@@ -182,9 +181,9 @@ export default {
         oldPhoneCaptcha: this.oldPhoneCaptcha,
         areaCode: this.countryInfo.code,
         phone: this.phone,
-        newPhoneCaptcha: this.newPhoneCaptcha,
+        newPhoneCaptcha: this.newPhoneCaptcha
       };
-      modifyPhoneApi(postData).then((res) => {
+      modifyPhoneApi(postData).then(res => {
         if (res.ret === 200) {
           this.$store.dispatch("reloadUserData").then(() => {
             Toast("修改成功");
@@ -192,8 +191,8 @@ export default {
           });
         }
       });
-    },
-  },
+    }
+  }
 };
 </script>
 

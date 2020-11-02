@@ -35,26 +35,26 @@ export default {
   props: {
     text: {
       type: String,
-      default: "",
+      default: ""
     },
     value: {
       type: String,
-      default: "",
-    },
+      default: ""
+    }
   },
   components: {
-    [Button.name]: Button,
+    [Button.name]: Button
   },
   data() {
     return {
       loadImgUrl: "",
       loading: false,
       isH5: isH5,
-      token: "",
+      token: ""
     };
   },
   created() {
-    getTokenApi().then((res) => {
+    getTokenApi().then(res => {
       this.token = res.data;
     });
   },
@@ -63,15 +63,13 @@ export default {
       if (event.target.files && event.target.files.length === 0) {
         return;
       }
-      console.log(event.target.files);
       let file = event.target.files[0];
       let formData = new FormData();
       this.loading = true;
       formData.append("file", file);
       formData.append("token", this.token);
       filePictureApi(formData, "https://up-z2.qiniup.com/")
-        .then((res) => {
-          console.log(res);
+        .then(res => {
           this.loading = false;
           this.loadImgUrl = URL.createObjectURL(file);
           this.$emit("input", res.key);
@@ -83,19 +81,19 @@ export default {
     openAcsheel() {
       let actions = [
         {
-          title: "拍照",
+          title: "拍照"
         },
         {
-          title: "从手机相册选择",
-        },
+          title: "从手机相册选择"
+        }
       ];
       window.plus.nativeUI.actionSheet(
         {
           title: "选择上传方式",
           cancel: "取消",
-          buttons: actions,
+          buttons: actions
         },
-        (btn) => {
+        btn => {
           /*actionSheet 按钮点击事件*/
           switch (btn.index) {
             case 0:
@@ -115,8 +113,7 @@ export default {
     /*拍照*/
     getImage() {
       let cmr = window.plus.camera.getCamera();
-      cmr.captureImage((path) => {
-        console.log("img", path);
+      cmr.captureImage(path => {
         // plus.io.resolveLocalFileSystemURL(path,(entry) => {
         //     entry.file( (path) => {
         //       console.log('11', path.fullPath);
@@ -133,12 +130,11 @@ export default {
     /*从相册选择*/
     galleryImg() {
       window.plus.gallery.pick(
-        (path) => {
-          console.log("img", path);
+        path => {
           this.checkImgSize(path);
           //this.uploadByPlus(path);
         },
-        function () {
+        function() {
           console.log("取消选择图片");
         },
         { filter: "image" }
@@ -148,10 +144,10 @@ export default {
     checkImgSize(path, overwrite) {
       window.plus.io.getFileInfo({
         filePath: path,
-        success: (res) => {
+        success: res => {
           // if (res.size / (1024 * 1024) > 2) {
           console.log("走targetPath");
-          plus.io.resolveLocalFileSystemURL(path, (entry) => {
+          plus.io.resolveLocalFileSystemURL(path, entry => {
             let e = entry.toLocalURL() + "?version=" + new Date().getTime();
             console.log("entry", e);
 
@@ -193,14 +189,13 @@ export default {
           //   console.log("走path");
           //   this.uploadByPlus(path);
           // }
-        },
+        }
       });
     },
 
     uploadByPlus(path) {
       this.loading = true;
       this.loadImgUrl = path;
-      console.log("path", path);
       let formData = new FormData();
       this.loading = true;
       formData.append("file", path);
@@ -240,13 +235,12 @@ export default {
         //   }
         // }
       );
-      console.log(task);
       task.addData("file", path);
       task.addData("token", this.token);
       task.addFile(path, { key: "file" });
       task.start();
-    },
-  },
+    }
+  }
 };
 </script>
 

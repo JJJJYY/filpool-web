@@ -100,7 +100,6 @@ const downloadImg = (url) => {
         reject("下载图片失败");
       }
     });
-    console.log(dtask)
     dtask.start();
   })
 };

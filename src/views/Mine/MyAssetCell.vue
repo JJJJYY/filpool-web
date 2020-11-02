@@ -67,21 +67,18 @@ import { Overlay } from "vant";
 export default {
   name: "MyAssetCell",
   components: {
-    "van-overlay": Overlay,
+    "van-overlay": Overlay
   },
   props: {
     item: Object,
     myAsset: Array,
     bgc: String,
-    bColor: String,
-  },
-  created() {
-    console.log(this.item);
+    bColor: String
   },
   data() {
     return {
       overlayShow: false,
-      thisText: "", // 提示
+      thisText: "" // 提示
     };
   },
   methods: {
@@ -91,7 +88,7 @@ export default {
     },
     handleJump() {
       this.$router.push({
-        path: "/assetDetails",
+        path: "/assetDetails"
       });
     },
     topup() {
@@ -111,8 +108,8 @@ export default {
         myMoney.push(new Decimal(val));
       }
       return eval(myMoney.join("+"));
-    },
-  },
+    }
+  }
 };
 </script>
 

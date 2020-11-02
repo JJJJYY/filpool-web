@@ -85,7 +85,6 @@ export default {
       };
       userIncomeApi(postData)
         .then(res => {
-          console.log(res)
           if (res.ret === 200) {
             let newList = res.data;
             if (res.data.length) {

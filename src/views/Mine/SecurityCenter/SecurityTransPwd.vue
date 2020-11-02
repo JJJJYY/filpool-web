@@ -88,7 +88,7 @@ import { serviceURL } from "@/config";
 export default {
   name: "SecurityTransPwd",
   components: {
-    HeadNav,
+    HeadNav
   },
   data() {
     return {
@@ -102,17 +102,16 @@ export default {
       sendding2: false,
       interval2: 60,
       imgCode: "", // 图片验证码
-      imgCodeUrl: "",
+      imgCodeUrl: ""
     };
   },
   computed: {
     ...mapState(["userData"]),
     isPhone() {
       return this.userData.defaultAccount === 0;
-    },
+    }
   },
   created() {
-    console.log(this.userData);
     this.getImgCode();
   },
   methods: {
@@ -125,10 +124,10 @@ export default {
       this.sendding1 = true;
       const postData = {
         type: this.isPhone ? "phone" : "email",
-        imageCaptcha: this.imgCode,
+        imageCaptcha: this.imgCode
       };
       authSendApi(postData)
-        .then((res) => {
+        .then(res => {
           if (res.ret === 200) {
             Toast("验证码已发送请注意查收");
             let timer = setInterval(() => {
@@ -153,16 +152,16 @@ export default {
       const postData = {
         payPwd: md5(this.password),
         gaCaptcha: this.gaCaptcha,
-        code: this.phoneCaptcha,
+        code: this.phoneCaptcha
       };
-      modifyPayPwdApi(postData).then((res) => {
+      modifyPayPwdApi(postData).then(res => {
         if (res.ret === 200) {
           Toast("修改成功");
           this.$router.goBack();
         }
       });
-    },
-  },
+    }
+  }
 };
 </script>
 

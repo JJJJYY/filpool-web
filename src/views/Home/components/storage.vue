@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="storage">FILPool矿池收益数据</div>
+    <div class="storage">FILPool矿池运营数据</div>
     <div class="storage-content">
       <div class="content-text">
         <p class="content-text-size">矿池填充进度</p>
@@ -96,17 +96,17 @@ import { getPoolInfoApi } from "@/net/api/homeApi";
 export default {
   name: "storage",
   components: {
-    [Progress.name]: Progress,
+    [Progress.name]: Progress
   },
   data() {
     return {
       percentage: 0,
       poolData: {},
-      loading: false,
+      loading: false
     };
   },
   created() {
-    getPoolInfoApi().then((res) => {
+    getPoolInfoApi().then(res => {
       if (res.ret === 200) {
         this.loading = true;
         this.percentage = this.done(
@@ -145,8 +145,8 @@ export default {
         span.className = "van-progress__pivot-right";
       }
       myComp.appendChild(span);
-    },
-  },
+    }
+  }
 };
 </script>
 
