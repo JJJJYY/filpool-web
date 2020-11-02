@@ -22,9 +22,8 @@
         <div class="centent-detail">
           <div class="centent-detail-text">24H涨跌幅</div>
           <div
-            class="centent-detail-num"
+            class="centent-detail-num colorAGreen"
             v-if="fileCoin.changePercent > 0"
-            :style="{ color: '#1B9F24FF' }"
           >
             +{{ fileCoin.changePercent }}%
           </div>
@@ -32,9 +31,8 @@
             {{ fileCoin.changePercent }}%
           </div>
           <div
-            class="centent-detail-num"
+            class="centent-detail-num colorARed"
             v-if="fileCoin.changePercent < 0"
-            :style="{ color: '#C53939FF' }"
           >
             {{ fileCoin.changePercent }}%
           </div>
@@ -237,5 +235,11 @@ export default {
   height: 22px;
   line-height: 22px;
   border-radius: 4px;
+}
+.colorAGreen {
+  color: #1b9f24ff;
+}
+.colorARed {
+  color: #c53939ff;
 }
 </style>
