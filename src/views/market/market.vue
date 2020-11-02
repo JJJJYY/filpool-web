@@ -48,6 +48,7 @@
             v-for="(i, index) in quotationList"
             :key="index"
           >
+            <meta name="referrer" content="never" />
             <img :src="i.logo" alt="" />
             <p>{{ i.sign }}</p>
           </div>
