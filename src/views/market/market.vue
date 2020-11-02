@@ -104,6 +104,7 @@ export default {
     };
   },
   created() {
+    this.getImage();
     quotationApi().then(res => {
       this.fileCoin = res.data.fileCoin;
       this.quotationList = res.data.quotationList;
@@ -111,6 +112,12 @@ export default {
     });
   },
   methods: {
+    getImage() {
+      let meta = document.createElement("meta");
+      meta.name = "referrer";
+      meta.content = "never";
+      document.querySelector("head").appendChild(meta);
+    },
     // 转换单位方法
     numUnit(num) {
       let f = parseFloat(num);
