@@ -40,7 +40,7 @@
           </div>
         </div>
       </div>
-      <div class="market-list">
+      <div class="market-list  page-container">
         <div class="list">
           <div class="td">币种</div>
           <div

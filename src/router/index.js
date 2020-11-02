@@ -333,8 +333,8 @@ const routes = [{
     name: 'market',
     component: () => import( /* webpackChunkName: "mine" */ '../views/market/market.vue'),
     meta: {
+      showTabBar: true,
       title: "行情",
-      needLogin: true,
       backBtnHidden: true,
     }
   },
