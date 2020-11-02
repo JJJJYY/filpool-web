@@ -1,7 +1,7 @@
 <template>
   <div class="market">
     <HeadNav></HeadNav>
-    <div class="market-centent">
+    <div class="market-centent" v-if="loading">
       <div class="centent">
         <div class="centent-detail">
           <div class="centent-detail-text">
@@ -62,34 +62,26 @@
         </div>
         <div class="list">
           <div class="td">最新价（￥）</div>
-          <div class="tl" v-for="(i, index) in quotationList" :key="index">
+          <div
+            class="tl center"
+            v-for="(i, index) in quotationList"
+            :key="index"
+          >
             {{ i.currentPrice }}
           </div>
         </div>
         <div class="list">
           <div class="td">24H涨跌幅</div>
           <div class="tl" v-for="(i, index) in quotationList" :key="index">
-            <van-button
-              :style="{ width: '100%', background: '#1B9F24FF', color: '#fff' }"
-              size="mini"
-              v-if="i.changePercent > 0"
-            >
+            <div class="classGreen" v-if="i.changePercent > 0">
               +{{ i.changePercent }}%
-            </van-button>
-            <van-button
-              :style="{ width: '100%', background: '#9D9A9AFF', color: '#fff' }"
-              size="mini"
-              v-if="i.changePercent === 0"
-            >
+            </div>
+            <div class="classGray" v-if="i.changePercent === 0">
               {{ i.changePercent }}%
-            </van-button>
-            <van-button
-              :style="{ width: '100%', background: '#C53939FF', color: '#fff' }"
-              size="mini"
-              v-if="i.changePercent < 0"
-            >
+            </div>
+            <div class="classRed" v-if="i.changePercent < 0">
               {{ i.changePercent }}%
-            </van-button>
+            </div>
           </div>
         </div>
       </div>
@@ -100,24 +92,24 @@
 <script>
 import FootBox from "@/components/FootBox";
 import HeadNav from "@/components/HeadNav";
-import { Button } from "vant";
 import { quotationApi } from "@/net/api/userInfoApi";
 export default {
   components: {
     FootBox,
-    HeadNav,
-    [Button.name]: Button
+    HeadNav
   },
   data() {
     return {
       fileCoin: {},
-      quotationList: []
+      quotationList: [],
+      loading: false
     };
   },
   created() {
     quotationApi().then(res => {
       this.fileCoin = res.data.fileCoin;
       this.quotationList = res.data.quotationList;
+      this.loading = true;
     });
   },
   methods: {
@@ -212,5 +204,38 @@ export default {
       }
     }
   }
+}
+.center {
+  justify-content: center;
+}
+.classGreen {
+  width: 100%;
+  background-color: #1b9f24ff;
+  color: #fff;
+  font-size: 12px;
+  text-align: center;
+  height: 22px;
+  line-height: 22px;
+  border-radius: 4px;
+}
+.classGray {
+  width: 100%;
+  background-color: #9d9a9aff;
+  color: #fff;
+  font-size: 12px;
+  text-align: center;
+  height: 22px;
+  line-height: 22px;
+  border-radius: 4px;
+}
+.classRed {
+  width: 100%;
+  background-color: #c53939ff;
+  color: #fff;
+  font-size: 12px;
+  text-align: center;
+  height: 22px;
+  line-height: 22px;
+  border-radius: 4px;
 }
 </style>

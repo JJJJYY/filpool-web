@@ -336,6 +336,7 @@ const routes = [{
       showTabBar: true,
       title: "行情",
       backBtnHidden: true,
+      isQuit: true
     }
   },
 ];

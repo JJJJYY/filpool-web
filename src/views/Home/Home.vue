@@ -248,7 +248,7 @@
         />
       </van-popup>
     </div>
-    <foot-box></foot-box>
+    <FootBox></FootBox>
   </div>
 </template>
 
@@ -280,23 +280,23 @@ export default {
         {
           icon: require("../../assets/img/home_icon_class.png"),
           title: "进阶小课堂",
-          router: "/classroom",
+          router: "/classroom"
         },
         {
           icon: require("../../assets/img/home_icon_invitation.png"),
           title: "邀请好友",
-          router: "/invite",
+          router: "/invite"
         },
         {
           icon: require("../../assets/img/home_icon_produce.png"),
           title: "项目动态",
-          router: "/dynamic",
+          router: "/dynamic"
         },
         {
           icon: require("../../assets/img/home_icon_help.png"),
           title: "帮助中心",
-          router: "/helpCenter",
-        },
+          router: "/helpCenter"
+        }
       ],
       videos: [],
       previewImg: require("@/assets/img/preview.png"),
@@ -307,7 +307,7 @@ export default {
       refreshing: false,
       showContainer: false,
       showBrowser: false,
-      isH5: isH5,
+      isH5: isH5
     };
   },
   components: {
@@ -322,7 +322,7 @@ export default {
     [Popup.name]: Popup,
     "vue-pull-refresh": VuePullRefresh,
     Browser,
-    Storage,
+    Storage
     /*[PullRefresh.name]: PullRefresh*/
   },
   created() {
@@ -368,14 +368,14 @@ export default {
     },
     getGoodList() {
       return getGoodListApi()
-        .then((res) => {
+        .then(res => {
           this.goodList = res.data;
         })
         .finally(() => (this.refreshing = false));
     },
     videoList() {
-      return getVideoListApi().then((res) => {
-        this.videos = res.data.filter((item) => {
+      return getVideoListApi().then(res => {
+        this.videos = res.data.filter(item => {
           return item.type === 1;
         });
       });
@@ -392,21 +392,21 @@ export default {
       const postData = {
         id: item.id,
         asset: "USDT",
-        quantity: item.amount,
+        quantity: item.amount
       };
-      orderApi(postData).then((res) => {
+      orderApi(postData).then(res => {
         if (res.ret === 200) {
           this.$router.push({
             path: "/countPay",
             query: {
               amount: item.price * item.amount,
-              id: res.data,
-            },
+              id: res.data
+            }
           });
         }
       });
-    },
-  },
+    }
+  }
 };
 </script>
 
