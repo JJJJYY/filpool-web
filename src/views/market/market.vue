@@ -1,7 +1,7 @@
 <template>
   <div class="market">
     <HeadNav></HeadNav>
-    <div class="market-centent" v-if="loading">
+    <div class="market-centent  page-container-list" v-if="loading">
       <div class="centent">
         <div class="centent-detail">
           <div class="centent-detail-text">
@@ -38,7 +38,7 @@
           </div>
         </div>
       </div>
-      <div class="market-list  page-container">
+      <div class="market-list">
         <div class="list">
           <div class="td">币种</div>
           <div
@@ -156,8 +156,15 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+@import "../../assets/scss/base";
+.page-container-list {
+  height: 96vh;
+  // padding-bottom: 50px;
+  box-sizing: border-box;
+  overflow: auto;
+}
 .market-centent {
-  padding: 0 15px;
+  padding: 0 15px 50px;
   .centent {
     padding: 14px;
     background: #fff;
@@ -191,6 +198,7 @@ export default {
     justify-content: space-between;
     color: #666666;
     margin-top: 20px;
+    padding-bottom: 70px;
     .list {
       .tl {
         display: flex;
