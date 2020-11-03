@@ -22,7 +22,7 @@
                 有效算力: {{ validWeight | parseFloatFilter }}TB
               </div>
             </div>
-            <router-link
+            <!-- <router-link
               :to="{ path: '/rate' }"
               class="to-buy"
               style="margin-left: 4px"
@@ -37,7 +37,7 @@
                 alt
               />
               <span>去购买算力</span>
-            </router-link>
+            </router-link> -->
           </div>
         </div>
         <div class="group">
@@ -149,7 +149,7 @@ export default {
   components: {
     HeadNav,
     FootBox,
-    "vue-pull-refresh": PullRefresh,
+    "vue-pull-refresh": PullRefresh
   },
   created() {
     // this.$store.dispatch('reloadUserData');
@@ -160,11 +160,11 @@ export default {
       totalWeight: "---",
       validWeight: "---",
       loading: false,
-      show: false,
+      show: false
     };
   },
   computed: {
-    ...mapState(["userData"]),
+    ...mapState(["userData"])
   },
   activated() {
     this.loadTotalWeight();
@@ -193,7 +193,7 @@ export default {
     },
     loadTotalWeight() {
       // 获取总算力
-      myWeightApi().then((res) => {
+      myWeightApi().then(res => {
         this.totalWeight = res.data.totalWeight;
         this.validWeight = res.data.validWeight;
         this.loading = false;
@@ -204,8 +204,8 @@ export default {
       this.loading = true;
       this.loadTotalWeight();
       this.$store.dispatch("reloadUserData");
-    },
-  },
+    }
+  }
 };
 </script>
 
