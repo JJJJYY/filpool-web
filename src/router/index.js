@@ -328,17 +328,17 @@ const routes = [{
       needLogin: true
     }
   },
-  {
-    path: '/market',
-    name: 'market',
-    component: () => import( /* webpackChunkName: "mine" */ '../views/market/market.vue'),
-    meta: {
-      showTabBar: true,
-      title: "行情",
-      backBtnHidden: true,
-      isQuit: true
-    }
-  },
+  // {
+  //   path: '/market',
+  //   name: 'market',
+  //   component: () => import( /* webpackChunkName: "mine" */ '../views/market/market.vue'),
+  //   meta: {
+  //     showTabBar: true,
+  //     title: "行情",
+  //     backBtnHidden: true,
+  //     isQuit: true
+  //   }
+  // },
 ];
 
 const router = new VueRouter({

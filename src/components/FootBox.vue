@@ -45,12 +45,12 @@ export default {
         //   title: "云算力",
         //   router: "/rate"
         // },
-        {
-          image: require("@/assets/img/icon-market-select.png"),
-          selectImage: require("@/assets/img/icon-market.png"),
-          title: "行情",
-          router: "/market"
-        },
+        // {
+        //   image: require("@/assets/img/icon-market-select.png"),
+        //   selectImage: require("@/assets/img/icon-market.png"),
+        //   title: "行情",
+        //   router: "/market"
+        // },
         {
           image: require("@/assets/img/tab_icon_my_normal.png"),
           selectImage: require("@/assets/img/tab_icon_my_selected.png"),
