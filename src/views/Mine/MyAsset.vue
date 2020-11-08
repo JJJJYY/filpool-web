@@ -14,8 +14,12 @@
         v-for="x in list"
         :key="x.asset"
         :item="x"
-        :bgc='x.asset === "FIL"? "linear-gradient(85deg, #43B5BD 0%, #3ACCD5 100%)": "linear-gradient(85deg, #f0ad29 0%, #f1ba4d 100%)"'
-        :bColor='x.asset === "FIL"?"#38B6BE":"#FF8807"'
+        :bgc="
+          x.asset === 'FIL'
+            ? 'linear-gradient(85deg, #43B5BD 0%, #3ACCD5 100%)'
+            : 'linear-gradient(85deg, #f0ad29 0%, #f1ba4d 100%)'
+        "
+        :bColor="x.asset === 'FIL' ? '#38B6BE' : '#FF8807'"
         style="margin-top: 0; margin-bottom: 8px"
       />
     </van-pull-refresh>
@@ -66,25 +70,33 @@ export default {
       }
     },
     isMyAsset(x) {
-      if (x.asset ===  'FIL') {
+      if (x.asset === "FIL") {
         return {
           ...x,
           // 展示资产
           myAsset: [
-            {isAsset: '可用资产', num : x.available , icon: false},
-            {isAsset: '冻结资产', num : x.frozen, icon: '每天线性释放，释放周期180天'},
-            {isAsset: '质押', num : x.pledged, icon: '质押金额用于有效算力增长'}
-          ]
-        }
-      }else {
+            { isAsset: "可用资产>>", num: x.available, icon: false },
+            {
+              isAsset: "冻结资产",
+              num: x.frozen,
+              icon: "每天线性释放，释放周期180天",
+            },
+            {
+              isAsset: "质押",
+              num: x.pledged,
+              icon: "质押金额用于有效算力增长",
+            },
+          ],
+        };
+      } else {
         return {
           ...x,
           // 展示资产
           myAsset: [
-            {isAsset: '可用资产', num : x.available, icon: false},
-            {isAsset: '冻结资产', num : x.frozen, icon: false},
-          ]
-        }
+            { isAsset: "可用资产", num: x.available, icon: false },
+            { isAsset: "冻结资产", num: x.frozen, icon: false },
+          ],
+        };
       }
     },
     onRefresh() {
@@ -102,7 +114,7 @@ export default {
                   item.type = item1.type;
                 }
               });
-              let newItem = this.isMyAsset(item)
+              let newItem = this.isMyAsset(item);
               return newItem;
             });
             this.list = assetList;

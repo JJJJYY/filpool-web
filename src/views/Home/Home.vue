@@ -27,17 +27,12 @@
             <span>{{ item.title }}</span>
           </div>
         </div>
+        <!-- 购买 -->
+        <div class="buy" style="min-height: 66vw; margin: 10px">
+          <CalcPowerItem :good-data="goodList" @select="onSelect" />
+        </div>
         <!-- 存储空间 -->
         <Storage></Storage>
-        <!-- 购买 -->
-        <!-- <div class="buy" style="min-height: 66vw;">
-          <CalcPowerItem
-            v-for="item in goodList"
-            :key="item.id"
-            :good-data="item"
-            @select="onSelect"
-          />
-        </div> -->
         <!--介绍-->
         <div class="section intro">
           <h3 class="intro-title">IPFS社区介绍</h3>
@@ -239,13 +234,13 @@
         closeable
         :safe-area-inset-bottom="true"
       >
-        <CalcPowerBuyPopup
+        <!-- <CalcPowerBuyPopup
           v-on:dismiss="show = false"
           :number="number"
           :item="selectedItem"
           v-on:enterOrder="buySubmit"
           @changeNumber="onSelect"
-        />
+        /> -->
       </van-popup>
     </div>
     <FootBox></FootBox>
@@ -269,7 +264,8 @@ import FootBox from "@/components/FootBox";
 import plusready from "@/utils/plusReady";
 import Browser from "./browser/Browser";
 import { isH5 } from "@/utils/utilTools";
-import { getGoodListApi, getVideoListApi } from "@/net/api/homeApi";
+import { getVideoListApi } from "@/net/api/homeApi";
+import { getHomePageSaleLatestInfo } from "@/net/api/userInfoApi";
 import { orderApi } from "@/net/api/userInfoApi";
 
 export default {
@@ -280,23 +276,23 @@ export default {
         {
           icon: require("../../assets/img/home_icon_class.png"),
           title: "进阶小课堂",
-          router: "/classroom"
+          router: "/classroom",
         },
         {
           icon: require("../../assets/img/home_icon_invitation.png"),
           title: "邀请好友",
-          router: "/invite"
+          router: "/invite",
         },
         {
           icon: require("../../assets/img/home_icon_produce.png"),
           title: "项目动态",
-          router: "/dynamic"
+          router: "/dynamic",
         },
         {
           icon: require("../../assets/img/home_icon_help.png"),
           title: "帮助中心",
-          router: "/helpCenter"
-        }
+          router: "/helpCenter",
+        },
       ],
       videos: [],
       previewImg: require("@/assets/img/preview.png"),
@@ -307,7 +303,7 @@ export default {
       refreshing: false,
       showContainer: false,
       showBrowser: false,
-      isH5: isH5
+      isH5: isH5,
     };
   },
   components: {
@@ -322,7 +318,7 @@ export default {
     [Popup.name]: Popup,
     "vue-pull-refresh": VuePullRefresh,
     Browser,
-    Storage
+    Storage,
     /*[PullRefresh.name]: PullRefresh*/
   },
   created() {
@@ -367,21 +363,23 @@ export default {
       return Promise.all([this.getGoodList(), this.videoList()]);
     },
     getGoodList() {
-      return getGoodListApi()
-        .then(res => {
+      return getHomePageSaleLatestInfo()
+        .then((res) => {
+          console.log(res);
           this.goodList = res.data;
+          console.log(this.goodList);
         })
         .finally(() => (this.refreshing = false));
     },
     videoList() {
-      return getVideoListApi().then(res => {
-        this.videos = res.data.filter(item => {
+      return getVideoListApi().then((res) => {
+        this.videos = res.data.filter((item) => {
           return item.type === 1;
         });
       });
     },
     onSelect(item) {
-      this.selectedItem = Object.assign({}, item);
+      // this.selectedItem = Object.assign({}, item);
       this.number = this.selectedItem.amount;
       this.show = true;
     },
@@ -392,21 +390,21 @@ export default {
       const postData = {
         id: item.id,
         asset: "USDT",
-        quantity: item.amount
+        quantity: item.amount,
       };
-      orderApi(postData).then(res => {
+      orderApi(postData).then((res) => {
         if (res.ret === 200) {
           this.$router.push({
             path: "/countPay",
             query: {
               amount: item.price * item.amount,
-              id: res.data
-            }
+              id: res.data,
+            },
           });
         }
       });
-    }
-  }
+    },
+  },
 };
 </script>
 

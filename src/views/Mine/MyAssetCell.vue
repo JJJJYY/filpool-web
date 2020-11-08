@@ -21,7 +21,9 @@
     <div class="asset">
       <div class="asset-usable" v-for="(i, index) in item.myAsset" :key="index">
         <div class="asset-usable-div">
-          <p class="asset-usable-text">{{ i.isAsset }}</p>
+          <p class="asset-usable-text" @click="availableAssets">
+            {{ i.isAsset }}
+          </p>
           <p
             class="asset-usable-query"
             @click="handleIcon(i.icon)"
@@ -67,28 +69,36 @@ import { Overlay } from "vant";
 export default {
   name: "MyAssetCell",
   components: {
-    "van-overlay": Overlay
+    "van-overlay": Overlay,
   },
   props: {
     item: Object,
     myAsset: Array,
     bgc: String,
-    bColor: String
+    bColor: String,
   },
   data() {
     return {
       overlayShow: false,
-      thisText: "" // 提示
+      thisText: "", // 提示
     };
   },
   methods: {
+    availableAssets() {
+      console.log(this.item);
+      if (this.item.asset === "FIL") {
+        this.$router.push({
+          path: "/availableAssets",
+        });
+      }
+    },
     handleIcon(val) {
       this.thisText = val;
       this.overlayShow = true;
     },
     handleJump() {
       this.$router.push({
-        path: "/assetDetails"
+        path: "/assetDetails",
       });
     },
     topup() {
@@ -108,8 +118,8 @@ export default {
         myMoney.push(new Decimal(val));
       }
       return eval(myMoney.join("+"));
-    }
-  }
+    },
+  },
 };
 </script>
 

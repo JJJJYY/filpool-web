@@ -161,3 +161,31 @@ export function recordListApi(data) {
 export function quotationApi(data) {
   return postRequest('Quotation.getPriceList', data)
 }
+// 抢购
+export function getPurchaseInfo(data) {
+  return postRequest('App.FlashSale.ShowPurchaseInfo', data)
+}
+// 首页抢购列表页
+export function getHomePageSaleLatestInfo(data) {
+  return postRequest('App.FlashSale.showHomePageSaleLatestInfo', data)
+}
+// 开始抢购
+export function getPurchase(data) {
+  return postRequest('App.FlashSale.Purchase', data)
+}
+// 刷新状态
+export function getCheckOrderStatus(data) {
+  return postRequest('App.FlashSale.CheckOrderStatus', data)
+}
+// 划转
+export function getTransfer(data) {
+  return postRequest('App.Balance.Transfer', data)
+}
+// 抢购列表
+export function getFlashSaleOrderList(data) {
+  return postRequest('App.FlashSale.GetFlashSaleOrderList', data)
+}
+// 算力记录
+export function getUserAdjPowerList(data) {
+  return postRequest('App.UserAdjPower.List', data)
+}

@@ -16,31 +16,62 @@
           </div>
           <div class="hr"></div>
           <div class="total">
-            <div class="total-val" style="flex: 1">
-              <div>存储空间: {{ totalWeight | parseFloatFilter }}TB</div>
-              <div class="total-validWeight">
-                有效算力: {{ validWeight | parseFloatFilter }}TB
+            <div class="growth">算力增长明细>></div>
+            <div class="total-val">
+              <div>
+                <p style="color: #666666">总存储空间</p>
+                <p class="total-val-text">
+                  {{ totalWeight | parseFloatFilter }}T
+                </p>
               </div>
+              <div style="width: 2px; height: 22px; background: #dcdcdc"></div>
+              <div>
+                <p style="color: #666666">上限有效算力</p>
+                <p class="total-val-text">{{ maxAdj | parseFloatFilter }}T</p>
+              </div>
+              <!-- <div>总存储空间:</div>
+              <div class="total-validWeight">:</div> -->
             </div>
-            <!-- <router-link
-              :to="{ path: '/rate' }"
-              class="to-buy"
-              style="margin-left: 4px"
-            >
-              <img
-                src="../../assets/img/mine/user_icon_buy.png"
-                style="
-                  max-height: 15px;
-                  vertical-align: bottom;
-                  margin-right: 5px;
-                "
-                alt
-              />
-              <span>去购买算力</span>
-            </router-link> -->
+            <div class="styleFlex">
+              <p>目前有效算力：{{ validWeight | parseFloatFilter }}T</p>
+              <router-link
+                :to="{ path: '/rate' }"
+                class="to-buy"
+                style="margin-left: 4px"
+              >
+                <img
+                  src="../../assets/img/mine/user_icon_buy.png"
+                  style="
+                    max-height: 15px;
+                    vertical-align: bottom;
+                    margin-right: 5px;
+                  "
+                  alt
+                />
+                <span>去购买算力</span>
+              </router-link>
+            </div>
+            <van-progress
+              style="margin-top: 15px"
+              :percentage="done((validWeight / maxAdj) * 100, 4)"
+              color="#F7A90D"
+            />
           </div>
         </div>
         <div class="group">
+          <div class="cell" @click="$router.push('/calcPowerManager')">
+            <img
+              src="../../assets/img/mine/user_icon_count.png"
+              alt
+              class="icon"
+            />
+            <div class="title">算力管理</div>
+            <img
+              class="more"
+              src="../../assets/img/mine/tab_icon_more.png"
+              alt
+            />
+          </div>
           <div class="cell" @click="$router.push('/myasset')">
             <img
               src="../../assets/img/mine/user_center_icon_my_asset.png"
@@ -48,20 +79,6 @@
               class="icon"
             />
             <div class="title">资产管理</div>
-            <img
-              class="more"
-              src="../../assets/img/mine/tab_icon_more.png"
-              alt
-            />
-          </div>
-          <div class="cell" @click="$router.push('/invite')">
-            <img
-              src="../../assets/img/mine/user_center_icon_invitation.png"
-              alt
-              class="icon"
-            />
-            <div class="title">邀请好友</div>
-            <div class="desc">我的邀请码: {{ userData.invitationCode }}</div>
             <img
               class="more"
               src="../../assets/img/mine/tab_icon_more.png"
@@ -81,21 +98,23 @@
               alt
             />
           </div>
-          <div class="cell" @click="$router.push('/calcPowerManager')">
+        </div>
+
+        <div class="group">
+          <div class="cell" @click="$router.push('/invite')">
             <img
-              src="../../assets/img/mine/user_icon_count.png"
+              src="../../assets/img/mine/user_center_icon_invitation.png"
               alt
               class="icon"
             />
-            <div class="title">算力管理</div>
+            <div class="title">邀请好友</div>
+            <div class="desc">我的邀请码: {{ userData.invitationCode }}</div>
             <img
               class="more"
               src="../../assets/img/mine/tab_icon_more.png"
               alt
             />
           </div>
-        </div>
-        <div class="group">
           <div class="cell" @click="$router.push('/securityCenter')">
             <img
               src="../../assets/img/mine/user_center_icon_account.png"
@@ -143,13 +162,14 @@ import { mapState } from "vuex";
 import HeadNav from "@/components/HeadNav";
 import FootBox from "@/components/FootBox";
 import { myWeightApi } from "@/net/api/userInfoApi";
-import { PullRefresh } from "vant";
+import { PullRefresh, Progress } from "vant";
 export default {
   name: "Mine",
   components: {
     HeadNav,
     FootBox,
-    "vue-pull-refresh": PullRefresh
+    "vue-pull-refresh": PullRefresh,
+    "van-progress": Progress,
   },
   created() {
     // this.$store.dispatch('reloadUserData');
@@ -159,18 +179,23 @@ export default {
     return {
       totalWeight: "---",
       validWeight: "---",
+      maxAdj: "---",
       loading: false,
-      show: false
+      show: false,
     };
   },
   computed: {
-    ...mapState(["userData"])
+    ...mapState(["userData"]),
   },
   activated() {
     this.loadTotalWeight();
   },
   deactivated() {},
   methods: {
+    done(num, count) {
+      let newNum = parseInt(num * Math.pow(10, count)) / Math.pow(10, count);
+      return newNum;
+    },
     levelString(x) {
       switch (x) {
         case -1:
@@ -193,9 +218,11 @@ export default {
     },
     loadTotalWeight() {
       // 获取总算力
-      myWeightApi().then(res => {
+      myWeightApi().then((res) => {
+        console.log(res);
         this.totalWeight = res.data.totalWeight;
         this.validWeight = res.data.validWeight;
+        this.maxAdj = res.data.maxAdj;
         this.loading = false;
         this.show = true;
       });
@@ -204,8 +231,8 @@ export default {
       this.loading = true;
       this.loadTotalWeight();
       this.$store.dispatch("reloadUserData");
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -277,19 +304,35 @@ export default {
   }
 
   .total {
-    display: flex;
-    align-items: center;
     padding: 16px 0;
     font-size: 14px;
-    .total-validWeight {
-      margin-top: 5px;
+    .growth {
+      text-align: right;
+      font-size: 14px;
+    }
+    .total-val {
+      margin-top: 10px;
       font-size: 14px;
       color: $h1-color;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      text-align: center;
+      .total-val-text {
+        margin-top: 10px;
+        font-size: 24px;
+        color: #f0ac25;
+        font-weight: 500;
+      }
     }
     &-val {
       color: $h1-color;
     }
-
+    .styleFlex {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+    }
     .to-buy {
       color: $main-color;
       font-size: 13px;

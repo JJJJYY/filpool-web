@@ -5,20 +5,25 @@
       <van-pull-refresh
         v-model="refreshing"
         @refresh="onRefresh"
-        style="min-height: 100vh;"
+        style="min-height: 100vh"
         :disabled="disablePull"
       >
-        <div class="item" v-for="item in list" :key="item.id">
-          <CalcPowerItem :good-data="item" @select="onSelect"></CalcPowerItem>
+        <div class="item">
+          <CalcPowerItem :good-data="list" @select="onSelect"></CalcPowerItem>
         </div>
-        <van-popup v-model="show" position="bottom" closeable :safe-area-inset-bottom="true">
-          <CalcPowerBuyPopup
+        <van-popup
+          v-model="show"
+          position="bottom"
+          closeable
+          :safe-area-inset-bottom="true"
+        >
+          <!-- <CalcPowerBuyPopup
             v-on:dismiss="show = false"
             :number="number"
             :item="selectedItem"
             v-on:enterOrder="buySubmit"
             @changeNumber="onSelect"
-          />
+          /> -->
         </van-popup>
       </van-pull-refresh>
     </div>
@@ -32,7 +37,7 @@ import { List, Popup, PullRefresh } from "vant";
 import CalcPowerItem from "./CalcPowerItem";
 import HeadNav from "@/components/HeadNav";
 import FootBox from "@/components/FootBox";
-import { getGoodListApi } from "@/net/api/homeApi";
+import { getHomePageSaleLatestInfo } from "@/net/api/userInfoApi";
 import { orderApi } from "@/net/api/userInfoApi";
 
 export default {
@@ -101,7 +106,7 @@ export default {
       });
     },
     onRefresh() {
-      getGoodListApi()
+      getHomePageSaleLatestInfo()
         .then((res) => {
           this.list = res.data;
         })

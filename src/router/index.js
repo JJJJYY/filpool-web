@@ -328,6 +328,15 @@ const routes = [{
       needLogin: true
     }
   },
+  {
+    path: '/availableAssets',
+    name: 'availableAssets',
+    component: () => import( /* webpackChunkName: "mine" */ '../views/Mine/availableAssets/availableAssets.vue'),
+    meta: {
+      title: "可用资产",
+      needLogin: true
+    }
+  },
   // {
   //   path: '/market',
   //   name: 'market',
