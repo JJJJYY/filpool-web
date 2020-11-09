@@ -16,7 +16,7 @@
           </div>
           <div class="hr"></div>
           <div class="total">
-            <div class="growth">算力增长明细>></div>
+            <!-- <div class="growth">算力增长明细>></div> -->
             <div class="total-val">
               <div>
                 <p style="color: #666666">总存储空间</p>
@@ -48,7 +48,7 @@
                   "
                   alt
                 />
-                <span>去购买算力</span>
+                <span>去加速算力</span>
               </router-link>
             </div>
             <van-progress
@@ -169,7 +169,7 @@ export default {
     HeadNav,
     FootBox,
     "vue-pull-refresh": PullRefresh,
-    "van-progress": Progress,
+    "van-progress": Progress
   },
   created() {
     // this.$store.dispatch('reloadUserData');
@@ -181,11 +181,11 @@ export default {
       validWeight: "---",
       maxAdj: "---",
       loading: false,
-      show: false,
+      show: false
     };
   },
   computed: {
-    ...mapState(["userData"]),
+    ...mapState(["userData"])
   },
   activated() {
     this.loadTotalWeight();
@@ -218,7 +218,7 @@ export default {
     },
     loadTotalWeight() {
       // 获取总算力
-      myWeightApi().then((res) => {
+      myWeightApi().then(res => {
         console.log(res);
         this.totalWeight = res.data.totalWeight;
         this.validWeight = res.data.validWeight;
@@ -231,8 +231,8 @@ export default {
       this.loading = true;
       this.loadTotalWeight();
       this.$store.dispatch("reloadUserData");
-    },
-  },
+    }
+  }
 };
 </script>
 

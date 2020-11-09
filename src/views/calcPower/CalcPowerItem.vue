@@ -21,11 +21,13 @@
           <div class="intro">
             <div class="intro-item">
               <p class="intro-item-title">总抢购算力</p>
-              <p style="margin-top: 8px">1000T</p>
+              <p style="margin-top: 8px">{{ goodData.total_power }}TiB</p>
             </div>
             <div class="intro-item">
               <p class="intro-item-title">有效算力质押量</p>
-              <p style="margin-top: 8px">6.4FIL/T</p>
+              <p style="margin-top: 8px">
+                {{ goodData.price | parseFloatFilter }}FIL/TiB
+              </p>
             </div>
           </div>
           <div class="handler">
@@ -42,11 +44,11 @@
               :limit="parseInt(goodData.minimum_unit)"
             />
             <div style="color: #575c62; font-size: 12px; margin-left: 12px">
-              TB
+              TiB
             </div>
           </div>
           <div v-if="show" class="maxBuy">
-            可申请的最大值 {{ goodData.avl_buy_power }}TB 全部
+            可申请的最大值 {{ goodData.avl_buy_power }}TiB 全部
           </div>
           <van-progress class="vanProgress" :percentage="progress" />
         </div>
@@ -83,8 +85,8 @@
             <p>金额：</p>
           </div>
           <div class="buy-centent-right">
-            <p>{{ amount }} TB</p>
-            <p>{{ goodData.price | parseFloatFilter }} FIL/T</p>
+            <p>{{ amount }} TiB</p>
+            <p>{{ goodData.price | parseFloatFilter }} FIL/TiB</p>
             <p>{{ (goodData.price * amount) | parseFloatFilter }} FIL</p>
           </div>
         </div>
@@ -145,7 +147,7 @@ import { getPurchaseInfo, getPurchase } from "../../net/api/userInfoApi";
 export default {
   props: {
     goodData: {},
-    show: Boolean,
+    show: Boolean
   },
   components: {
     AddSubtractBox,
@@ -154,7 +156,7 @@ export default {
     [Field.name]: Field,
     [Button.name]: Button,
     [Toast.name]: Toast,
-    [Loading.name]: Loading,
+    [Loading.name]: Loading
   },
   data() {
     return {
@@ -163,11 +165,11 @@ export default {
       thisShow: false,
       password: "",
       pid: "",
-      lineUpVisible: false,
+      lineUpVisible: false
     };
   },
   watch: {
-    goodData: function () {
+    goodData: function() {
       console.log(this.goodData);
       this.amount = parseInt(this.goodData.minimum_unit);
       this.progress = this.done(
@@ -176,7 +178,7 @@ export default {
           100,
         2
       );
-    },
+    }
   },
   created() {
     if (this.goodData.id) {
@@ -193,9 +195,9 @@ export default {
       getPurchase({
         buy_power: this.amount,
         capital_pwd: md5(this.password),
-        product_id: this.goodData.id,
+        product_id: this.goodData.id
       })
-        .then((res) => {
+        .then(res => {
           if (res.ret === 200) {
             this.pid = res.data;
             this.purchaseStatus(this.pid);
@@ -212,9 +214,9 @@ export default {
       let timer = null;
       net
         .getCheckOrderStatus({
-          pid,
+          pid
         })
-        .then((res) => {
+        .then(res => {
           if (res.ret === 200) {
             if (res.data) {
               this.lineUpVisible = false;
@@ -275,17 +277,17 @@ export default {
         if (this.$store.state.userData.id) {
           if (this.goodData.status === 1) {
             this.$router.push({
-              path: `/rate_detail/${this.goodData.id}/${this.amount}`,
+              path: `/rate_detail/${this.goodData.id}/${this.amount}`
             });
           }
         } else {
           this.$router.push({
-            path: `/login`,
+            path: `/login`
           });
         }
       }
-    },
-  },
+    }
+  }
 };
 </script>
 

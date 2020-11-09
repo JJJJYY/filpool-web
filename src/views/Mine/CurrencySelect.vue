@@ -1,9 +1,14 @@
 <template>
   <div class="list">
     <head-nav></head-nav>
-    <div class="cell" v-for="(x, index) in list" :key="index" @click="select(x)">
+    <div
+      class="cell"
+      v-for="(x, index) in list"
+      :key="index"
+      @click="select(x)"
+    >
       <img :src="x.icon" alt class="icon" />
-      <div class="name">{{x.type ? `${x.asset}(${x.type})`: x.asset}}</div>
+      <div class="name">{{ x.type ? `${x.asset}(${x.type})` : x.asset }}</div>
     </div>
   </div>
 </template>
@@ -14,11 +19,11 @@ import { assetTypeApi } from "../../net/api/userInfoApi";
 export default {
   name: "CurrencySelect",
   components: {
-    HeadNav,
+    HeadNav
   },
   data() {
     return {
-      list: [],
+      list: []
     };
   },
   created() {
@@ -26,9 +31,14 @@ export default {
   },
   methods: {
     loadData() {
-      assetTypeApi().then((res) => {
-        this.list = res.data.filter((item) => {
-          return item.withdraw === 1;
+      assetTypeApi().then(res => {
+        console.log(res);
+        this.list = res.data.filter(item => {
+          if (this.$route.query.isTopUp === "true") {
+            return item.deposit === 1;
+          } else {
+            return item.withdraw === 1;
+          }
         });
       });
     },
@@ -37,11 +47,11 @@ export default {
       this.$router.replace({
         path: isTopUp === "true" ? "/currencyTopup" : "/currencyExtract",
         query: {
-          asset: x.asset,
-        },
+          asset: x.asset
+        }
       });
-    },
-  },
+    }
+  }
 };
 </script>
 

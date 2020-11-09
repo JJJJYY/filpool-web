@@ -113,7 +113,7 @@
                 <div>金额</div>
                 <div>
                   <p
-                    style="height : 40px;font-size: 14px;color: #666666ff;  margin-top: 15px;"
+                    style="height : 40px;font-size: 14px;color: #666666ff;  margin-top: 15px; border-bottom: 1px solid #EAEAEAFF;"
                     v-for="(item, index) in list"
                     :key="index"
                   >
@@ -125,7 +125,7 @@
                 <div>类型</div>
                 <div>
                   <p
-                    style="height : 40px;font-size: 14px;color: #666666ff;  margin-top: 15px;"
+                    style="height : 40px;font-size: 14px;color: #666666ff;  margin-top: 15px;  border-bottom: 1px solid #EAEAEAFF;"
                     v-for="(item, index) in list"
                     :key="index"
                   >
@@ -137,7 +137,7 @@
                 <div>时间</div>
                 <div>
                   <p
-                    style="height : 40px;font-size: 14px;color: #666666ff;  margin-top: 15px;"
+                    style="height : 40px;font-size: 14px;color: #666666ff;  margin-top: 15px; border-bottom: 1px solid #EAEAEAFF;"
                     v-for="(item, index) in list"
                     :key="index"
                   >
@@ -322,7 +322,10 @@ export default {
         asset_id: this.myTokensData.id,
         amount: this.number
       }).then(res => {
-        console.log(res);
+        if (res.ret == 200) {
+          Toast("划转成功");
+          this.myAsset();
+        }
       });
     },
     transfer() {
@@ -508,11 +511,11 @@ export default {
 }
 
 .assetDetails {
-  padding: 10px 20px;
+  padding: 10px 10px;
   .available-padding {
     background: #fff;
     border-radius: 8px;
-    padding: 15px;
+    padding: 10px;
     .available {
       display: flex;
       color: #333333ff;
@@ -524,14 +527,14 @@ export default {
       .available-assets-num {
         font-size: 16px;
         font-weight: 500;
-        margin-left: 20px;
+        margin-left: 15px;
         span {
           font-size: 12px;
         }
       }
       .available-assets-button {
-        margin-left: 30px;
-        padding: 0 20px;
+        margin-left: 20px;
+        padding: 0 15px;
         background: #f7a90dff;
         color: #fff;
         border-radius: 8px;
@@ -557,16 +560,6 @@ export default {
       .tab-centent {
         text-align: center;
         color: #333333ff;
-
-        &:nth-child(1) {
-          width: 20%;
-        }
-        &:nth-child(2) {
-          width: 60%;
-        }
-        &:nth-child(3) {
-          width: 21%;
-        }
         div {
           &:nth-child(1) {
             font-size: 14px;
