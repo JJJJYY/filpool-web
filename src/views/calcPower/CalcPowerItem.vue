@@ -170,7 +170,6 @@ export default {
   },
   watch: {
     goodData: function() {
-      console.log(this.goodData);
       this.amount = parseInt(this.goodData.minimum_unit);
       this.progress = this.done(
         ((this.goodData.total_power - this.goodData.remain_power) /
@@ -220,7 +219,6 @@ export default {
           if (res.ret === 200) {
             if (res.data) {
               this.lineUpVisible = false;
-              console.log(res.data);
               // 提示
               if (res.data.payment_status) {
                 Toast.success(res.data.description);
@@ -257,9 +255,7 @@ export default {
     },
     // 商品详情
     toDetail() {
-      console.log(this.show);
       if (this.show) {
-        console.log(this.goodData.avl_buy_power);
         if (this.goodData.avl_buy_power == 0) {
           Toast("没有符合购买要求");
           return;

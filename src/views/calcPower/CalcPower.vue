@@ -75,7 +75,9 @@ export default {
       window.addEventListener("scroll", this.handleScroll);
     }
   },
-  activated() {},
+  activated() {
+    this.onRefresh();
+  },
   deactivated() {
     this.onRefresh();
   },

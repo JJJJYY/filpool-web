@@ -53,7 +53,14 @@
             </div>
             <van-progress
               style="margin-top: 15px"
-              :percentage="done((validWeight / maxAdj) * 100, 4)"
+              :percentage="
+                parseFloat(this.maxAdj) === 0
+                  ? 0
+                  : done(
+                      (parseFloat(validWeight) / parseFloat(maxAdj)) * 100,
+                      4
+                    )
+              "
               color="#F7A90D"
             />
           </div>
@@ -179,7 +186,7 @@ export default {
     return {
       totalWeight: "---",
       validWeight: "---",
-      maxAdj: "---",
+      maxAdj: 0,
       loading: false,
       show: false
     };
@@ -219,7 +226,6 @@ export default {
     loadTotalWeight() {
       // 获取总算力
       myWeightApi().then(res => {
-        console.log(res);
         this.totalWeight = res.data.totalWeight;
         this.validWeight = res.data.validWeight;
         this.maxAdj = res.data.maxAdj;
@@ -245,7 +251,9 @@ export default {
   background-color: #eeeaed;
   /*margin-top: 8px;*/
 }
-
+.mine-container {
+  margin-bottom: 20px;
+}
 .header {
   padding: 0 16px;
   background: $content-backgroun-color;

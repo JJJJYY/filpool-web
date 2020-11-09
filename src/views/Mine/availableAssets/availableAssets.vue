@@ -219,14 +219,10 @@
               </p>
             </div>
             <div class="popup-button">
-              <van-button
-                style="border-radius: 16px; background: #D0D0D0; color:#fff"
-                @click="handleClear"
+              <van-button class="popup-van-quxiao" @click="handleClear"
                 >取消</van-button
               >
-              <van-button
-                style="border-radius: 16px; background: #F9A03EFF;color:#fff"
-                @click="handleOk"
+              <van-button class="popup-van-huazhuan" @click="handleOk"
                 >划转</van-button
               >
             </div>
@@ -358,7 +354,6 @@ export default {
             this.myAssetM = item;
           }
         });
-        console.log(this.myAssetM);
         this.viwe = true;
       });
       assetTypeApi().then(res => {
@@ -516,6 +511,16 @@ export default {
     align-items: center;
     .van-button {
       width: 150px;
+    }
+    .popup-van-quxiao {
+      border-radius: 16px;
+      background: #d0d0d0;
+      color: #fff;
+    }
+    .popup-van-huazhuan {
+      border-radius: 16px;
+      background: #f9a03eff;
+      color: #fff;
     }
   }
 }

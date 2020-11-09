@@ -83,9 +83,6 @@ export default {
       thisText: "" // 提示
     };
   },
-  created() {
-    console.log(this.item);
-  },
   methods: {
     availableAssets() {
       if (this.item.asset === "FIL") {

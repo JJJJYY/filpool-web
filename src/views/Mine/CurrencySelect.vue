@@ -32,7 +32,6 @@ export default {
   methods: {
     loadData() {
       assetTypeApi().then(res => {
-        console.log(res);
         this.list = res.data.filter(item => {
           if (this.$route.query.isTopUp === "true") {
             return item.deposit === 1;
