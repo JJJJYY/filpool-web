@@ -1,7 +1,7 @@
 <template>
   <div>
     <HeadNav></HeadNav>
-    <div class="assetDetails">
+    <div class="assetDetails  list page-container">
       <div class="available-padding" v-if="viwe">
         <div class="available">
           <p class="available-assets">可用资产:</p>
@@ -317,16 +317,26 @@ export default {
     },
     // 划转
     handleOk() {
-      getTransfer({
-        type: this.transferType,
-        asset_id: this.myTokensData.id,
-        amount: this.number
-      }).then(res => {
-        if (res.ret == 200) {
-          Toast("划转成功");
-          this.myAsset();
-        }
-      });
+      if (this.number) {
+        getTransfer({
+          type: this.transferType,
+          asset_id: this.myTokensData.id,
+          amount: this.number
+        })
+          .then(res => {
+            if (res.ret == 200) {
+              Toast("划转成功");
+              this.myAsset();
+              this.show = false;
+            }
+          })
+          .catch(() => {
+            this.show = false;
+          });
+      } else {
+        Toast("输入有误");
+        this.show = false;
+      }
     },
     transfer() {
       this.show = true;
