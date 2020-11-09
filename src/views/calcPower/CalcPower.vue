@@ -9,7 +9,11 @@
         :disabled="disablePull"
       >
         <div class="item">
-          <CalcPowerItem :good-data="list" @select="onSelect"></CalcPowerItem>
+          <CalcPowerItem
+            :good-data="list"
+            @select="onSelect"
+            v-if="rateShow"
+          ></CalcPowerItem>
         </div>
         <van-popup
           v-model="show"
@@ -33,7 +37,7 @@
 
 <script>
 import CalcPowerBuyPopup from "./CalcPowerBuyPopup";
-import { List, Popup, PullRefresh } from "vant";
+import { List, Popup, PullRefresh, Toast } from "vant";
 import CalcPowerItem from "./CalcPowerItem";
 import HeadNav from "@/components/HeadNav";
 import FootBox from "@/components/FootBox";
@@ -49,8 +53,9 @@ export default {
     [Popup.name]: Popup,
     [List.name]: List,
     [PullRefresh.name]: PullRefresh,
+    [Toast.name]: Toast
   },
-  created: function () {
+  created: function() {
     this.onRefresh();
   },
   data() {
@@ -62,6 +67,7 @@ export default {
       selectedItem: {},
       number: 1,
       disablePull: false,
+      rateShow: false
     };
   },
   mounted() {
@@ -91,31 +97,39 @@ export default {
       const postData = {
         id: item.id,
         asset: "USDT",
-        quantity: item.amount,
+        quantity: item.amount
       };
-      orderApi(postData).then((res) => {
+      orderApi(postData).then(res => {
         if (res.ret === 200) {
           this.$router.push({
             path: "/countPay",
             query: {
               amount: item.price * item.amount,
-              id: res.data,
-            },
+              id: res.data
+            }
           });
         }
       });
     },
     onRefresh() {
       getHomePageSaleLatestInfo()
-        .then((res) => {
-          this.list = res.data;
+        .then(res => {
+          if (res.data) {
+            this.list = res.data;
+            this.rateShow = true;
+          } else {
+            this.$router.push({
+              path: "/"
+            });
+            Toast("活动暂未开放");
+          }
         })
         .finally(() => (this.refreshing = false));
-    },
+    }
   },
   beforeDestroy() {
     window.removeEventListener("scroll", this.handleScroll);
-  },
+  }
 };
 </script>
 

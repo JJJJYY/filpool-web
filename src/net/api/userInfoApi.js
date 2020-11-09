@@ -1,5 +1,6 @@
 import {
-  postRequest
+  postRequest,
+  getRequest
 } from '../request';
 
 // 获取总算力
@@ -155,7 +156,7 @@ export function userIncomeApi(data) {
 }
 // 资产详情
 export function recordListApi(data) {
-  return postRequest('BalanceModify.RecordList', data)
+  return getRequest('BalanceModify.RecordList', data)
 }
 // 行情
 export function quotationApi(data) {

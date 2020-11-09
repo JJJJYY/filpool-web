@@ -47,7 +47,7 @@
             }}
           </div>
           <div class="balance">
-            余额: {{ asset.available | parseFloatFilter }}
+            余额: {{ asset.recharge | parseFloatFilter }}
           </div>
         </div>
         <div class="input">
@@ -65,7 +65,7 @@
               }`
             "
           />
-          <div class="all" @click="number = theNumber(asset.available) || ''">
+          <div class="all" @click="number = theNumber(asset.recharge) || ''">
             <!-- <div class="all" @click="theNumber"> -->
             {{ isWithdraw ? "全部提取" : "全部划转" }}
           </div>

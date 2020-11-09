@@ -37,7 +37,7 @@ export default {
     return {
       isLoading: false,
       list: [],
-      type: "",
+      type: ""
     };
   },
   created() {
@@ -46,7 +46,7 @@ export default {
   components: {
     HeadNav,
     MyAssetCell,
-    [PullRefresh.name]: PullRefresh,
+    [PullRefresh.name]: PullRefresh
   },
   methods: {
     showHint(asset) {
@@ -55,17 +55,17 @@ export default {
           title: "提示",
           message:
             "FILPool矿池每天12：00发放上一日挖矿收益，如用户选择不提币，则可用资产将用于FILPool矿池第二天算力增长所需的质押币。 由于目前需要质押币才能保持算力稳定增长，如用户提币导致账户质押币不足将影响您的算力增长以及次日挖矿收益。",
-          showCancelButton: true,
+          showCancelButton: true
         }).then(() => {
           this.$router.push({
             path: "/currencyExtract",
-            query: { asset: asset },
+            query: { asset: asset }
           });
         });
       } else {
         this.$router.push({
           path: "/currencyExtract",
-          query: { asset: asset },
+          query: { asset: asset }
         });
       }
     },
@@ -75,18 +75,22 @@ export default {
           ...x,
           // 展示资产
           myAsset: [
-            { isAsset: "可用资产>>", num: x.available, icon: false },
+            {
+              isAsset: "可用资产>>",
+              num: parseFloat(x.available) + parseFloat(x.recharge),
+              icon: false
+            },
             {
               isAsset: "冻结资产",
               num: x.frozen,
-              icon: "每天线性释放，释放周期180天",
+              icon: "每天线性释放，释放周期180天"
             },
             {
               isAsset: "质押",
               num: x.pledged,
-              icon: "质押金额用于有效算力增长",
-            },
-          ],
+              icon: "质押金额用于有效算力增长"
+            }
+          ]
         };
       } else {
         return {
@@ -94,20 +98,20 @@ export default {
           // 展示资产
           myAsset: [
             { isAsset: "可用资产", num: x.available, icon: false },
-            { isAsset: "冻结资产", num: x.frozen, icon: false },
-          ],
+            { isAsset: "冻结资产", num: x.frozen, icon: false }
+          ]
         };
       }
     },
     onRefresh() {
       Promise.all([assetTypeApi(), myBalanceApi()])
-        .then((res) => {
+        .then(res => {
           let res0 = res[0];
           let res1 = res[1];
           if (res0.ret && res1.ret) {
             let coins = res1.data || [];
-            let assetList = coins.map((item) => {
-              res0.data.forEach((item1) => {
+            let assetList = coins.map(item => {
+              res0.data.forEach(item1 => {
                 if (item.asset === item1.asset) {
                   item.withdraw = item1.withdraw;
                   item.deposit = item1.deposit;
@@ -123,10 +127,9 @@ export default {
         .finally(() => {
           this.isLoading = false;
         });
-    },
-  },
+    }
+  }
 };
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

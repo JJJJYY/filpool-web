@@ -28,7 +28,7 @@
           </div>
         </div>
         <!-- 购买 -->
-        <div class="buy" style="min-height: 66vw; margin: 10px">
+        <div v-if="rateShow" class="buy" style="min-height: 66vw; margin: 10px">
           <CalcPowerItem :good-data="goodList" @select="onSelect" />
         </div>
         <!-- 存储空间 -->
@@ -276,23 +276,23 @@ export default {
         {
           icon: require("../../assets/img/home_icon_class.png"),
           title: "进阶小课堂",
-          router: "/classroom",
+          router: "/classroom"
         },
         {
           icon: require("../../assets/img/home_icon_invitation.png"),
           title: "邀请好友",
-          router: "/invite",
+          router: "/invite"
         },
         {
           icon: require("../../assets/img/home_icon_produce.png"),
           title: "项目动态",
-          router: "/dynamic",
+          router: "/dynamic"
         },
         {
           icon: require("../../assets/img/home_icon_help.png"),
           title: "帮助中心",
-          router: "/helpCenter",
-        },
+          router: "/helpCenter"
+        }
       ],
       videos: [],
       previewImg: require("@/assets/img/preview.png"),
@@ -304,6 +304,7 @@ export default {
       showContainer: false,
       showBrowser: false,
       isH5: isH5,
+      rateShow: false
     };
   },
   components: {
@@ -318,7 +319,7 @@ export default {
     [Popup.name]: Popup,
     "vue-pull-refresh": VuePullRefresh,
     Browser,
-    Storage,
+    Storage
     /*[PullRefresh.name]: PullRefresh*/
   },
   created() {
@@ -364,16 +365,17 @@ export default {
     },
     getGoodList() {
       return getHomePageSaleLatestInfo()
-        .then((res) => {
-          console.log(res);
-          this.goodList = res.data;
-          console.log(this.goodList);
+        .then(res => {
+          if (res.data) {
+            this.goodList = res.data;
+            this.rateShow = true;
+          }
         })
         .finally(() => (this.refreshing = false));
     },
     videoList() {
-      return getVideoListApi().then((res) => {
-        this.videos = res.data.filter((item) => {
+      return getVideoListApi().then(res => {
+        this.videos = res.data.filter(item => {
           return item.type === 1;
         });
       });
@@ -390,21 +392,21 @@ export default {
       const postData = {
         id: item.id,
         asset: "USDT",
-        quantity: item.amount,
+        quantity: item.amount
       };
-      orderApi(postData).then((res) => {
+      orderApi(postData).then(res => {
         if (res.ret === 200) {
           this.$router.push({
             path: "/countPay",
             query: {
               amount: item.price * item.amount,
-              id: res.data,
-            },
+              id: res.data
+            }
           });
         }
       });
-    },
-  },
+    }
+  }
 };
 </script>
 
