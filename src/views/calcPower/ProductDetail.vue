@@ -11,7 +11,7 @@
           :show="true"
         />
       </div>
-      <div class="detail">
+      <!-- <div class="detail">
         <p class="label">具体细则</p>
         <div class="content">
           <p>
@@ -52,7 +52,7 @@
             池可回购用户账户的有效算力，提前给用户兑付释放质押币。
           </p>
         </div>
-      </div>
+      </div> -->
       <van-popup
         v-model="show"
         position="bottom"

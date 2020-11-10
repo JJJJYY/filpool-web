@@ -23,7 +23,7 @@
         <div class="balance">
           <div class="assets-balance">
             <p style="font-size: 12px;color:#666666FF">
-              充值余额<van-icon
+              充提账户<van-icon
                 name="question-o"
                 @click="toast(1)"
                 style="margin-left : 8px"
@@ -38,7 +38,7 @@
           <div class="xian"></div>
           <div class="assets-balance" style="margin-left: 20px">
             <p style="font-size: 12px;color:#666666FF">
-              收益余额<van-icon
+              收益账户<van-icon
                 name="question-o"
                 style="margin-left : 8px"
                 @click="toast(2)"
@@ -68,7 +68,7 @@
           @change="beforeChange"
           v-if="list"
         >
-          <van-tab title="充值明细">
+          <van-tab title="充提明细">
             <AvailableAssersList :list="list"></AvailableAssersList>
           </van-tab>
           <van-tab title="收益明细">
@@ -94,7 +94,7 @@
                   class="round"
                   style="flex: 1;"
                 >
-                  {{ transferType == 1 ? "收益余额" : "充值余额" }}
+                  {{ transferType == 1 ? "收益账户" : "充提账户" }}
                 </van-button>
                 <div style="display: flex;align-items: center ;margin: 0 5px">
                   <img
@@ -111,7 +111,7 @@
                   class="round"
                   style="flex: 1;"
                 >
-                  {{ transferType == 1 ? "充值余额" : "收益余额" }}
+                  {{ transferType == 1 ? "充提账户" : "收益账户" }}
                 </van-button>
               </div>
             </div>
@@ -128,7 +128,7 @@
             <div class="popup-q">
               <p style="width: 50px; height: 1px;"></p>
               <p style="flex: 1">
-                {{ transferType == 1 ? `收益余额` : `充值余额` }}
+                {{ transferType == 1 ? `收益账户` : `充提账户` }}
                 {{
                   transferType == 1
                     ? myAssetM.available
@@ -318,10 +318,10 @@ export default {
     },
     toast(type) {
       if (type === 1) {
-        Toast("充值余额才能进行抢购算力加速、提币等操作");
+        Toast("仅充值账户可用于提币，参与算力加速计划等操作");
       } else if (type === 2) {
         Toast(
-          "每日12点发放上一日挖矿收益，当日18点前不划转至充值余额，余额将自动划转至质押金额"
+          "每日12点发放上一日挖矿收益，当日18点前未划转至充提账户，余额将自动划转至质押账户"
         );
       }
     },
