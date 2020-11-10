@@ -70,10 +70,9 @@ export default {
         current: 1, // 当前页
         pageSize: 10 // 页大小
       },
-      asset: "FIL"
+      asset: this.$route.query.asset
     };
   },
-  created() {},
   methods: {
     // 数据请求
     getRecordListApi() {

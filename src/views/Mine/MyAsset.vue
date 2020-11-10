@@ -97,8 +97,21 @@ export default {
           ...x,
           // 展示资产
           myAsset: [
-            { isAsset: "可用资产", num: x.available, icon: false },
-            { isAsset: "冻结资产", num: x.frozen, icon: false }
+            {
+              isAsset: "可用资产",
+              num: parseFloat(x.available) + parseFloat(x.recharge),
+              icon: false
+            },
+            {
+              isAsset: "冻结资产",
+              num: x.frozen,
+              icon: "每天线性释放，释放周期180天"
+            },
+            {
+              isAsset: "质押",
+              num: x.pledged,
+              icon: "质押金额用于有效算力增长"
+            }
           ]
         };
       }

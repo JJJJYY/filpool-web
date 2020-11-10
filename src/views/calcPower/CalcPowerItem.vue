@@ -20,11 +20,11 @@
           <p class="subtitle">结束时间{{ goodData.finish_time }}</p>
           <div class="intro">
             <div class="intro-item">
-              <p class="intro-item-title">总抢购算力</p>
+              <p class="intro-item-title">当日可申请总算力包</p>
               <p style="margin-top: 8px">{{ goodData.total_power }}TiB</p>
             </div>
             <div class="intro-item">
-              <p class="intro-item-title">有效算力质押量</p>
+              <p class="intro-item-title">当前有效算力质押</p>
               <p style="margin-top: 8px">
                 {{ goodData.price | parseFloatFilter }}FIL/TiB
               </p>
@@ -32,9 +32,10 @@
           </div>
           <div class="handler">
             <div class="handler-amount">
-              <span style="font-size: 20px">{{
-                (goodData.price * amount) | parseFloatFilter
-              }}</span>
+              <span style="font-size: 20px">
+                <span style="font-size: 12px; color: #24375e">需要质押：</span
+                >{{ (goodData.price * amount) | parseFloatFilter }}
+              </span>
               <span style="font-size: 18px">FIL</span>
             </div>
             <div style="flex: 1"></div>

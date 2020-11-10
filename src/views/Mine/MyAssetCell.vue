@@ -8,7 +8,7 @@
             {{ item.type ? `${item.asset}(${item.type})` : item.asset }}
           </p>
         </div>
-        <div class="jump" @click="handleJump" v-if="this.item.asset === 'FIL'">
+        <div class="jump" @click="handleJump">
           <p>资产明细</p>
           <p class="margin">>></p>
         </div>
@@ -83,11 +83,17 @@ export default {
       thisText: "" // 提示
     };
   },
+  // created() {
+  //   console.log(this.item);
+  // },
   methods: {
     availableAssets() {
       if (this.item.asset === "FIL") {
         this.$router.push({
-          path: "/availableAssets"
+          path: "/availableAssets",
+          query: {
+            asset: this.item.asset
+          }
         });
       }
     },
@@ -97,7 +103,10 @@ export default {
     },
     handleJump() {
       this.$router.push({
-        path: "/assetDetails"
+        path: "/assetDetails",
+        query: {
+          asset: this.item.asset
+        }
       });
     },
     topup() {

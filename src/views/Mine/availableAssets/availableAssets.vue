@@ -283,7 +283,7 @@ export default {
         current: 1, // 当前页
         pageSize: 10 // 页大小
       },
-      asset: "FIL",
+      asset: this.$route.query.asset,
       active: 0,
       myAssetM: {},
       number: "",
@@ -338,12 +338,14 @@ export default {
       this.show = true;
     },
     // 精度
-    getTotal(item) {
-      const myMoney = [];
-      for (let i = 0; i < item.length; i++) {
-        myMoney.push(new Decimal(item[i]));
+    getTotal(item = 0) {
+      if (item.indexOf() == -1) {
+        const myMoney = [];
+        for (let i = 0; i < item.length; i++) {
+          myMoney.push(new Decimal(item[i]));
+        }
+        return eval(myMoney.join("+"));
       }
-      return eval(myMoney.join("+"));
     },
 
     // 获取钱包
@@ -359,7 +361,7 @@ export default {
       assetTypeApi().then(res => {
         if (res.ret == 200) {
           res.data.forEach(item => {
-            if (item.asset === "FIL") {
+            if (item.asset === this.asset) {
               this.myTokensData = item;
             }
           });
