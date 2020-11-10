@@ -40,8 +40,9 @@
             </div>
             <div style="flex: 1"></div>
             <AddSubtractBox
+              v-if="show"
               v-model="amount"
-              :maxlimit="goodData.avl_buy_power"
+              :maxlimit="parseFloat(goodData.avl_buy_power)"
               :limit="parseInt(goodData.minimum_unit)"
             />
             <div style="color: #575c62; font-size: 12px; margin-left: 12px">
@@ -49,7 +50,15 @@
             </div>
           </div>
           <div v-if="show" class="maxBuy">
-            可申请的最大值 {{ goodData.avl_buy_power }}TiB 全部
+            可申请的最大值
+            {{ Math.min(goodData.avl_buy_power, goodData.remain_power) }}TiB
+            <span
+              class="all"
+              @click="
+                amount = Math.min(goodData.avl_buy_power, goodData.remain_power)
+              "
+              >全部</span
+            >
           </div>
           <van-progress class="vanProgress" :percentage="progress" />
         </div>
@@ -100,7 +109,9 @@
             placeholder="请输入资金密码"
           />
           <p style="font-size: 12px; color: #666666; margin-top: 10px">
-            仅充值余额可进行算力加速购买，当前充值余额为0FIL
+            仅充值余额可进行算力加速购买，当前充值余额为{{
+              goodData.avl_fil | parseFloatFilter
+            }}FIL
           </p>
         </div>
         <div class="buy-centent-flex" style="margin-top: 20px">
@@ -444,5 +455,9 @@ export default {
 .vanProgress {
   display: flex;
   margin-top: 20px;
+}
+.all {
+  color: #f3a50aff;
+  cursor: pointer;
 }
 </style>
