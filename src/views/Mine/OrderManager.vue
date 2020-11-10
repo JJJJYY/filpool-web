@@ -1,26 +1,71 @@
 <template>
   <div>
     <head-nav></head-nav>
-    <van-tabs sticky color="#E9901D" :scrollspy="false" @click="click">
-      <van-tab v-for="(x, i) in items" :key="i" :title="x.title"></van-tab>
-      <div v-if="thisData" class="list page-container">
-        <div class="cell" v-for="(x, index) in list" :key="index">
-          <div class="top">
-            <div class="order-id">订单编号：{{x.pid}}</div>
-            <div class="state">{{stateStr(x.status)}}</div>
+    <van-tabs v-model="active" @change="speedUpType" color="#F7A90DFF">
+      <van-tab title="算力订单">
+        <van-tabs sticky color="#E9901D" :scrollspy="false" @click="click">
+          <van-tab v-for="(x, i) in items" :key="i" :title="x.title"></van-tab>
+          <div v-if="thisData" class="list page-container">
+            <div class="cell" v-for="(x, index) in list" :key="index">
+              <div class="top">
+                <div class="order-id">订单编号：{{ x.pid }}</div>
+                <div class="state">{{ stateStr(x.status) }}</div>
+              </div>
+              <div class="hr"></div>
+              <div class="detail">
+                <div class="detail-item">{{ x.name }}</div>
+                <div class="detail-item">
+                  单价：{{ x.price | parseFloatFilter }} {{ x.asset }}/{{
+                    x.unit
+                  }}
+                </div>
+                <div class="detail-item">
+                  数量： {{ x.quantity | parseFloatFilter }}
+                </div>
+                <div class="detail-item">
+                  下单时间：{{ timeStr(x.createTime) }}
+                </div>
+                <div class="detail-item">
+                  支付金额： {{ x.paymentQuantity | parseFloatFilter }}
+                  {{ x.asset }}
+                </div>
+              </div>
+              <div class="pay" v-if="x.status === 0" @click="toPay(x)">
+                去支付
+              </div>
+            </div>
           </div>
-          <div class="hr"></div>
-          <div class="detail">
-            <div class="detail-item">{{x.name}}</div>
-            <div class="detail-item">单价：{{x.price | parseFloatFilter}} {{x.asset}}/{{x.unit}}</div>
-            <div class="detail-item">数量： {{x.quantity | parseFloatFilter}}</div>
-            <div class="detail-item">下单时间：{{timeStr(x.createTime)}}</div>
-            <div class="detail-item">支付金额： {{x.paymentQuantity | parseFloatFilter}} {{x.asset}}</div>
+          <div v-else class="none-data">暂无数据</div>
+        </van-tabs>
+      </van-tab>
+      <van-tab title="算力加速订单">
+        <div
+          class="speedUp-centent"
+          v-for="(item, index) in speedUpData"
+          :key="index"
+        >
+          <div class="speedUp-d ">订单编号：{{ item.pid }}</div>
+          <div class="speedUp-s">
+            <div class="speedUp-c">{{ item.tittle }}</div>
+            <div>
+              <span class="speedUp-c"
+                >{{ item.price | parseFloatFilter }}FIL/TiB</span
+              >
+              X {{ item.power | parseFloatFilter }}
+            </div>
           </div>
-          <div class="pay" v-if="x.status === 0" @click="toPay(x)">去支付</div>
+          <div class="speedUp-t">
+            <div>{{ item.purchase_time }}</div>
+            <div class="speedUp-c">{{ item.description }}</div>
+          </div>
+          <div class="speedUp-m">
+            支付金额：<span class="speedUp-c"
+              >{{ item.pay_coin_amount | parseFloatFilter
+              }}{{ item.pay_coin }}</span
+            >
+          </div>
         </div>
-      </div>
-      <div v-else class="none-data">暂无数据</div>
+      </van-tab>
     </van-tabs>
   </div>
 </template>
@@ -29,7 +74,7 @@
 import { Tab, Tabs, List } from "vant";
 import dayjs from "dayjs";
 import HeadNav from "@/components/HeadNav";
-import { orderListApi } from "../../net/api/userInfoApi";
+import { orderListApi, getFlashSaleOrderList } from "../../net/api/userInfoApi";
 
 export default {
   name: "OrderManager",
@@ -37,7 +82,7 @@ export default {
     HeadNav,
     [Tab.name]: Tab,
     [Tabs.name]: Tabs,
-    [List.name]: List,
+    [List.name]: List
   },
   data() {
     return {
@@ -46,32 +91,44 @@ export default {
         { title: "全部", type: "" },
         { title: "待付款", type: 0 },
         { title: "已完成", type: 1 },
-        { title: "已取消", type: 2 },
+        { title: "已取消", type: 2 }
         // { title: "已超时", type: 3 },
       ],
       list: [],
       listData: [],
       thisData: false,
+      active: 0,
+      speedUpData: []
     };
   },
   created() {
     this.loadData();
   },
   methods: {
+    speedUpType() {
+      console.log(this.active);
+      getFlashSaleOrderList({
+        page: 1,
+        count: 1000
+      }).then(res => {
+        console.log(res);
+        this.speedUpData = res.data.list;
+      });
+    },
     click(index, title) {
       if (this.listData.length) {
         this.selectedIndex = index;
         if (index === 0) {
           this.loadData();
         } else {
-          this.list = this.listData.filter((e) => {
+          this.list = this.listData.filter(e => {
             return e.status === this.items[this.selectedIndex].type;
           });
         }
       }
     },
     loadData() {
-      orderListApi().then((res) => {
+      orderListApi().then(res => {
         this.list = res.data;
         this.listData = res.data;
         if (this.listData.length) {
@@ -101,16 +158,44 @@ export default {
         path: "/countPay",
         query: {
           amount: item.paymentQuantity,
-          id: item.id,
-        },
+          id: item.id
+        }
       });
-    },
-  },
+    }
+  }
 };
 </script>
 
 <style lang="scss" scoped>
 @import "../../assets/scss/base";
+
+.speedUp-centent {
+  background: #fff;
+  padding: 12px;
+  border-radius: 10px;
+  margin: 8px 10px;
+  color: #999999ff;
+  .speedUp-c {
+    color: #333333ff;
+  }
+  .speedUp-d {
+    display: flex;
+  }
+  .speedUp-s {
+    display: flex;
+    margin-top: 16px;
+    justify-content: space-between;
+  }
+  .speedUp-t {
+    display: flex;
+    margin-top: 5px;
+    justify-content: space-between;
+  }
+  .speedUp-m {
+    margin-top: 20px;
+    text-align: right;
+  }
+}
 
 .header {
   display: flex;

@@ -257,16 +257,12 @@ export default {
     // 商品详情
     toDetail() {
       if (this.show) {
-        if (this.goodData.avl_buy_power == 0) {
-          Toast("没有符合购买要求");
+        if (this.goodData.avl_buy_power == 0 || this.amount == 0) {
+          Toast("无可申请数量");
           return;
         }
-        if (this.goodData.price * this.amount < this.goodData.avl_fil) {
+        if (this.goodData.price * this.amount > this.goodData.avl_fil) {
           Toast("余额不足");
-          return;
-        }
-        if (this.amount < this.goodData.avl_buy_power) {
-          Toast("超过最大购买算力");
           return;
         }
         this.thisShow = true;

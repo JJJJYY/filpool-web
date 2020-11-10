@@ -66,88 +66,16 @@
           v-model="active"
           animated
           @change="beforeChange"
+          v-if="list"
         >
           <van-tab title="充值明细">
-            <div class="tab-asset">
-              <div class="tab-centent">
-                <div>金额</div>
-                <div>
-                  <p
-                    style="height : 40px;font-size: 14px;color: #666666ff;  margin-top: 15px;"
-                    v-for="(item, index) in list"
-                    :key="index"
-                  >
-                    {{ item.quantity | parseFloatFilter }}{{ item.asset }}
-                  </p>
-                </div>
-              </div>
-              <div class="tab-centent">
-                <div>类型</div>
-                <div>
-                  <p
-                    style="height : 40px;font-size: 14px;color: #666666ff;  margin-top: 15px;"
-                    v-for="(item, index) in list"
-                    :key="index"
-                  >
-                    {{ typeText(item.type) }}
-                  </p>
-                </div>
-              </div>
-              <div class="tab-centent">
-                <div>时间</div>
-                <div>
-                  <p
-                    style="height : 40px;font-size: 14px;color: #666666ff;  margin-top: 15px;"
-                    v-for="(item, index) in list"
-                    :key="index"
-                  >
-                    {{ item.createTime }}
-                  </p>
-                </div>
-              </div>
-            </div>
+            <AvailableAssersList :list="list"></AvailableAssersList>
           </van-tab>
           <van-tab title="收益明细">
-            <div class="tab-asset  tab-asset-text">
-              <div class="tab-centent">
-                <div>金额</div>
-                <div>
-                  <p
-                    style="height : 40px;font-size: 14px;color: #666666ff;  margin-top: 15px; border-bottom: 1px solid #EAEAEAFF;"
-                    v-for="(item, index) in list"
-                    :key="index"
-                  >
-                    {{ item.quantity | parseFloatFilter }}{{ item.asset }}
-                  </p>
-                </div>
-              </div>
-              <div class="tab-centent">
-                <div>类型</div>
-                <div>
-                  <p
-                    style="height : 40px;font-size: 14px;color: #666666ff;  margin-top: 15px;  border-bottom: 1px solid #EAEAEAFF;"
-                    v-for="(item, index) in list"
-                    :key="index"
-                  >
-                    {{ typeText(item.type) }}
-                  </p>
-                </div>
-              </div>
-              <div class="tab-centent">
-                <div>时间</div>
-                <div>
-                  <p
-                    style="height : 40px;font-size: 14px;color: #666666ff;  margin-top: 15px; border-bottom: 1px solid #EAEAEAFF;"
-                    v-for="(item, index) in list"
-                    :key="index"
-                  >
-                    {{ item.createTime }}
-                  </p>
-                </div>
-              </div>
-            </div>
+            <AvailableAssersList :list="list"></AvailableAssersList>
           </van-tab>
         </van-tabs>
+        <div v-else style="text-align: center;">暂无数据</div>
         <van-popup v-model="show" position="bottom">
           <div class="popup-padding">
             <div class="popup-black">划转</div>
@@ -253,11 +181,13 @@ import {
   myBalanceApi,
   getTransfer
 } from "@/net/api/userInfoApi";
+import AvailableAssersList from "./availableAssersList";
 
 import { Decimal } from "decimal.js";
 export default {
-  name: "assetDetails",
+  name: "availableAssets",
   components: {
+    AvailableAssersList,
     HeadNav,
     "van-button": Button,
     "van-list": List,
@@ -293,7 +223,6 @@ export default {
     };
   },
   created() {
-    // this.getRecordListApi(this.type);
     this.myAsset();
   },
   methods: {
@@ -567,28 +496,6 @@ export default {
         width: 1px;
         height: 30px;
         background: #f2f2f2ff;
-      }
-    }
-  }
-  .tab-available {
-    .tab-asset {
-      display: flex;
-      justify-content: space-between;
-      .tab-centent {
-        text-align: center;
-        color: #333333ff;
-        div {
-          &:nth-child(1) {
-            font-size: 14px;
-            color: #666666ff;
-            margin-top: 15px;
-          }
-          &:nth-child(2) {
-            font-size: 14px;
-            color: #666666ff;
-            margin-top: 15px;
-          }
-        }
       }
     }
   }
