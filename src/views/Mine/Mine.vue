@@ -1,161 +1,144 @@
 <template>
   <div class="mine">
     <vue-pull-refresh v-model="loading" @refresh="onRefresh">
-      <head-nav></head-nav>
-      <div class="mine-container page-container" v-if="show">
-        <div class="header">
-          <div class="user">
-            <img src="../../assets/img/logo.png" alt class="avatar" />
-            <div class="user-info">
-              <div class="user-name">
-                <div class="name">{{ userData.nickname || "" }}</div>
-                <span class="state">{{ levelString(userData.level) }}</span>
+      <!-- <head-nav></head-nav> -->
+      <div class="page-container-mine">
+        <div class="head-nav">
+          <div class="personalCenter">个人中心</div>
+          <div class="header-user">
+            <div class="user">
+              <img src="../../assets/img/personalfil.png" alt class="avatar" />
+              <div class="user-info">
+                <div class="user-name">
+                  <div class="name">{{ userData.nickname || "" }}</div>
+                  <span class="state"
+                    >( {{ levelString(userData.level) }} )</span
+                  >
+                </div>
+                <span class="id">ID: {{ userData.id }}</span>
               </div>
-              <span class="id">ID: {{ userData.id }}</span>
             </div>
           </div>
-          <div class="hr"></div>
-          <div class="total">
-            <!-- <div class="growth">算力增长明细>></div> -->
-            <div class="total-val">
-              <div>
-                <p style="color: #666666">总存储空间</p>
-                <p class="total-val-text">
-                  {{ totalWeight | parseFloatFilter }}T
-                </p>
-              </div>
-              <div style="width: 2px; height: 22px; background: #dcdcdc"></div>
-              <div>
-                <p style="color: #666666">上限有效算力</p>
-                <p class="total-val-text">{{ maxAdj | parseFloatFilter }}T</p>
-              </div>
-              <!-- <div>总存储空间:</div>
+        </div>
+        <div class="mine-container" v-if="show">
+          <div class="header">
+            <div class="total">
+              <!-- <div class="growth">算力增长明细>></div> -->
+              <div class="total-val">
+                <div>
+                  <p style="color: #666666">总存储空间</p>
+                  <p class="total-val-text">
+                    {{ totalWeight | parseFloatFilter }}T
+                  </p>
+                </div>
+                <div
+                  style="width: 2px; height: 22px; background: #dcdcdc"
+                ></div>
+                <div>
+                  <p style="color: #666666">上限有效算力</p>
+                  <p class="total-val-text">{{ maxAdj | parseFloatFilter }}T</p>
+                </div>
+                <!-- <div>总存储空间:</div>
               <div class="total-validWeight">:</div> -->
-            </div>
-            <div class="styleFlex">
-              <p>目前有效算力：{{ validWeight | parseFloatFilter }}T</p>
-              <router-link
-                :to="{ path: '/rate' }"
-                class="to-buy"
-                style="margin-left: 4px"
-              >
-                <img
-                  src="../../assets/img/mine/user_icon_buy.png"
-                  style="
+              </div>
+              <div class="styleFlex">
+                <p>目前有效算力：{{ validWeight | parseFloatFilter }}T</p>
+                <router-link
+                  :to="{ path: '/rate' }"
+                  class="to-buy"
+                  style="margin-left: 4px"
+                >
+                  <img
+                    src="../../assets/img/mine/user_icon_buy.png"
+                    style="
                     max-height: 15px;
                     vertical-align: bottom;
                     margin-right: 5px;
                   "
-                  alt
-                />
-                <span>去加速算力</span>
-              </router-link>
+                    alt
+                  />
+                  <span>去加速算力</span>
+                </router-link>
+              </div>
+              <van-progress
+                style="margin-top: 15px"
+                :percentage="
+                  parseFloat(this.maxAdj) === 0
+                    ? 0
+                    : done(
+                        (parseFloat(validWeight) / parseFloat(maxAdj)) * 100,
+                        4
+                      )
+                "
+                color="#F7A90D"
+              />
             </div>
-            <van-progress
-              style="margin-top: 15px"
-              :percentage="
-                parseFloat(this.maxAdj) === 0
-                  ? 0
-                  : done(
-                      (parseFloat(validWeight) / parseFloat(maxAdj)) * 100,
-                      4
-                    )
-              "
-              color="#F7A90D"
-            />
           </div>
-        </div>
-        <div class="group">
-          <div class="cell" @click="$router.push('/calcPowerManager')">
-            <img
-              src="../../assets/img/mine/user_icon_count.png"
-              alt
-              class="icon"
-            />
-            <div class="title">算力管理</div>
-            <img
-              class="more"
-              src="../../assets/img/mine/tab_icon_more.png"
-              alt
-            />
+          <div class="group group-capital">
+            <div class="capital-t" @click="$router.push('/calcPowerManager')">
+              <img
+                src="../../assets/img/mine/group-capital-1.png"
+                alt
+                class="icon"
+              />
+              <div class="title">算力管理</div>
+            </div>
+            <div class="capital-t" @click="$router.push('/myasset')">
+              <img
+                src="../../assets/img/mine/group-capital-2.png"
+                alt
+                class="icon"
+              />
+              <div class="title">资产管理</div>
+            </div>
+            <div class="capital-t" @click="$router.push('/orderManager')">
+              <img
+                src="../../assets/img/mine/group-capital-3.png"
+                alt
+                class="icon"
+              />
+              <div class="title">订单管理</div>
+            </div>
           </div>
-          <div class="cell" @click="$router.push('/myasset')">
-            <img
-              src="../../assets/img/mine/user_center_icon_my_asset.png"
-              alt
-              class="icon"
-            />
-            <div class="title">资产管理</div>
-            <img
-              class="more"
-              src="../../assets/img/mine/tab_icon_more.png"
-              alt
-            />
-          </div>
-          <div class="cell" @click="$router.push('/orderManager')">
-            <img
-              src="../../assets/img/mine/user_center_icon_odrer.png"
-              alt
-              class="icon"
-            />
-            <div class="title">订单管理</div>
-            <img
-              class="more"
-              src="../../assets/img/mine/tab_icon_more.png"
-              alt
-            />
-          </div>
-        </div>
 
-        <div class="group">
-          <div class="cell" @click="$router.push('/invite')">
-            <img
-              src="../../assets/img/mine/user_center_icon_invitation.png"
-              alt
-              class="icon"
-            />
-            <div class="title">邀请好友</div>
-            <div class="desc">我的邀请码: {{ userData.invitationCode }}</div>
-            <img
-              class="more"
-              src="../../assets/img/mine/tab_icon_more.png"
-              alt
-            />
-          </div>
-          <div class="cell" @click="$router.push('/securityCenter')">
-            <img
-              src="../../assets/img/mine/user_center_icon_account.png"
-              alt
-              class="icon"
-            />
-            <div class="title">账户管理</div>
-            <img
-              class="more"
-              src="../../assets/img/mine/tab_icon_more.png"
-              alt
-            />
-          </div>
-          <div class="cell" @click="$router.push('/actual')">
-            <img src="../../assets/img/mine/actual-icon.png" alt class="icon" />
-            <div class="title">实名认证</div>
-            <img
-              class="more"
-              src="../../assets/img/mine/tab_icon_more.png"
-              alt
-            />
-          </div>
-          <div class="cell" @click="$router.push('/setting')">
-            <img
-              src="../../assets/img/mine/my_icon_setting.png"
-              alt
-              class="icon"
-            />
-            <div class="title">设置</div>
-            <img
-              class="more"
-              src="../../assets/img/mine/tab_icon_more.png"
-              alt
-            />
+          <div class="group">
+            <div class="cell" @click="$router.push('/invite')">
+              <img src="../../assets/img/mine/user-1.png" alt class="icon" />
+              <div class="title">邀请好友</div>
+              <div class="desc">我的邀请码: {{ userData.invitationCode }}</div>
+              <img
+                class="more"
+                src="../../assets/img/mine/tab_icon_more.png"
+                alt
+              />
+            </div>
+            <div class="cell" @click="$router.push('/securityCenter')">
+              <img src="../../assets/img/mine/user-2.png" alt class="icon" />
+              <div class="title">账户管理</div>
+              <img
+                class="more"
+                src="../../assets/img/mine/tab_icon_more.png"
+                alt
+              />
+            </div>
+            <div class="cell" @click="$router.push('/actual')">
+              <img src="../../assets/img/mine/user-3.png" alt class="icon" />
+              <div class="title">实名认证</div>
+              <img
+                class="more"
+                src="../../assets/img/mine/tab_icon_more.png"
+                alt
+              />
+            </div>
+            <div class="cell" @click="$router.push('/setting')">
+              <img src="../../assets/img/mine/user-4.png" alt class="icon" />
+              <div class="title">设置</div>
+              <img
+                class="more"
+                src="../../assets/img/mine/tab_icon_more.png"
+                alt
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -245,6 +228,21 @@ export default {
 <style lang="scss" scoped>
 @import "../../assets/scss/base";
 
+.head-nav {
+  height: 200px;
+  background: linear-gradient(-65deg, #f0ac25 0%, #f9a808 100%);
+  border-radius: 0 0 20% 20%;
+  overflow: auto;
+  position: relative;
+  z-index: 1;
+}
+.page-container-mine {
+  // height: calc(100vh - 62px);
+  height: initial !important;
+  padding-bottom: 50px;
+  box-sizing: border-box;
+  overflow: auto;
+}
 .mine {
   display: flex;
   flex-direction: column;
@@ -252,21 +250,29 @@ export default {
   /*margin-top: 8px;*/
 }
 .mine-container {
-  margin-bottom: 20px;
+  margin-top: -55px;
+  padding-left: 10px;
+  padding-right: 10px;
+  position: relative;
+  z-index: 2;
 }
-.header {
+.personalCenter {
+  text-align: center;
+  margin-top: 30px;
+  color: #fff;
+  font-size: 18px;
+  font-weight: bold;
+}
+.header-user {
   padding: 0 16px;
-  background: $content-backgroun-color;
-
   .user {
     display: flex;
     padding-top: 32px;
-
     .avatar {
       width: 45px;
       height: 45px;
       border-radius: 50%;
-      background: #eee;
+      background: #fff;
     }
 
     .user-info {
@@ -282,12 +288,11 @@ export default {
         .name {
           font-size: 18px;
           font-weight: bold;
-          color: $h1-color;
+          color: #fff;
         }
 
         .state {
           margin-left: 4px;
-          background: #8088e1;
           color: white;
           height: 16px;
           line-height: 16px;
@@ -298,19 +303,17 @@ export default {
       }
 
       .id {
-        color: $h3-color;
+        color: #fff;
         font-size: 12px;
         margin-top: 4px;
       }
     }
   }
-
-  .hr {
-    height: 1px;
-    margin-top: 24px;
-    background: $divider-color;
-  }
-
+}
+.header {
+  padding: 0 16px;
+  border-radius: 8px;
+  background: $content-backgroun-color;
   .total {
     padding: 16px 0;
     font-size: 14px;
@@ -351,7 +354,7 @@ export default {
 .group {
   margin-top: 8px;
   background: $content-backgroun-color;
-
+  border-radius: 8px;
   .cell {
     display: flex;
     align-items: center;
@@ -383,6 +386,21 @@ export default {
     .more {
       max-height: 10px;
     }
+  }
+}
+.group-capital {
+  display: flex;
+  justify-content: space-around;
+  padding: 10px;
+  img {
+    height: 31px;
+    width: 31px;
+  }
+  .capital-t {
+    text-align: center;
+  }
+  .title {
+    margin-top: 8px;
   }
 }
 </style>

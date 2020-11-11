@@ -45,7 +45,10 @@
               :maxlimit="parseFloat(goodData.avl_buy_power)"
               :limit="parseInt(goodData.minimum_unit)"
             />
-            <div style="color: #575c62; font-size: 12px; margin-left: 12px">
+            <div
+              v-if="show"
+              style="color: #575c62; font-size: 12px; margin-left: 12px"
+            >
               TiB
             </div>
           </div>
@@ -104,7 +107,7 @@
           <p style="font-size: 12px; color: #666666">资金密码：</p>
           <van-field
             style="width: 100%; background: #e6e6e6; border-radius: 8px"
-            :v-model="password"
+            v-model="password"
             type="password"
             placeholder="请输入资金密码"
           />
@@ -155,7 +158,11 @@ import { Popup, Field, Button, Toast, Loading } from "vant";
 import AddSubtractBox from "@/components/AddSubtractBox";
 import { Progress } from "vant";
 import md5 from "md5";
-import { getPurchaseInfo, getPurchase } from "../../net/api/userInfoApi";
+import {
+  getPurchaseInfo,
+  getPurchase,
+  getCheckOrderStatus
+} from "../../net/api/userInfoApi";
 export default {
   props: {
     goodData: {},
@@ -211,8 +218,9 @@ export default {
         .then(res => {
           if (res.ret === 200) {
             this.pid = res.data;
-            this.purchaseStatus(this.pid);
+            this.thisShow = false;
             this.lineUpVisible = true;
+            this.purchaseStatus(this.pid);
           } else {
             this.thisShow = false;
           }
@@ -223,32 +231,31 @@ export default {
     // 定时刷新抢购状态
     purchaseStatus(pid) {
       let timer = null;
-      net
-        .getCheckOrderStatus({
-          pid
-        })
-        .then(res => {
-          if (res.ret === 200) {
-            if (res.data) {
-              this.lineUpVisible = false;
-              // 提示
-              if (res.data.payment_status) {
-                Toast.success(res.data.description);
-              } else {
-                Toast.fail(res.data.description);
-              }
-              clearTimeout(timer);
+      getCheckOrderStatus({
+        pid
+      }).then(res => {
+        console;
+        if (res.ret === 200) {
+          if (res.data) {
+            this.lineUpVisible = false;
+            // 提示
+            if (res.data.payment_status) {
+              Toast.success(res.data.description);
             } else {
-              clearTimeout(timer);
-              timer = setTimeout(() => {
-                this.purchaseStatus(pid);
-              }, 1000);
+              Toast.fail(res.data.description);
             }
+            clearTimeout(timer);
           } else {
             clearTimeout(timer);
-            this.lineUpVisible = false;
+            timer = setTimeout(() => {
+              this.purchaseStatus(pid);
+            }, 1000);
           }
-        });
+        } else {
+          clearTimeout(timer);
+          this.lineUpVisible = false;
+        }
+      });
     },
 
     done(num, count) {

@@ -27,7 +27,7 @@ export default {
   components: {
     [Tabbar.name]: Tabbar,
     [TabbarItem.name]: TabbarItem,
-    [NavBar.name]: NavBar,
+    [NavBar.name]: NavBar
   },
   data() {
     return {
@@ -37,13 +37,13 @@ export default {
           image: require("@/assets/img/tab_icon_home_normal.png"),
           selectImage: require("@/assets/img/tab_icon_home_selected.png"),
           title: "首页",
-          router: "/",
+          router: "/"
         },
         {
           image: require("@/assets/img/tab_icon_count_normal.png"),
           selectImage: require("@/assets/img/tab_icon_count_selected.png"),
           title: "算力加速",
-          router: "/rate",
+          router: "/rate"
         },
         // {
         //   image: require("@/assets/img/icon-market-select.png"),
@@ -55,14 +55,14 @@ export default {
           image: require("@/assets/img/tab_icon_my_normal.png"),
           selectImage: require("@/assets/img/tab_icon_my_selected.png"),
           title: "我的",
-          router: "/mine",
-        },
-      ],
+          router: "/mine"
+        }
+      ]
     };
   },
   watch: {
     $route: {
-      handler: function (val) {
+      handler: function(val) {
         /*底部栏状态*/
         this.items.forEach((item, index) => {
           if (val.path === item.router) {
@@ -70,13 +70,15 @@ export default {
           }
         });
       },
-      immediate: true,
-    },
-  },
+      immediate: true
+    }
+  }
 };
 </script>
 
 <style lang="scss" scoped>
 .FootBox {
+  position: relative;
+  z-index: 999;
 }
 </style>
