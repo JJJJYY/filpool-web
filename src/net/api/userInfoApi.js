@@ -190,3 +190,7 @@ export function getFlashSaleOrderList(data) {
 export function getUserAdjPowerList(data) {
   return postRequest('App.UserAdjPower.List', data)
 }
+// 排队
+export function getListTopFlashUsers(data) {
+  return getRequest('App.FlashSale.ListTopFlashUsers', data)
+}

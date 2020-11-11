@@ -17,26 +17,28 @@
         </div>
         <div class="padding">
           <p class="subtitle">开始时间{{ goodData.start_time }}</p>
-          <p class="subtitle">结束时间{{ goodData.finish_time }}</p>
+          <!-- <p class="subtitle">结束时间{{ goodData.finish_time }}</p> -->
           <div class="intro">
-            <div class="intro-item">
-              <p class="intro-item-title">当日可申请总算力包</p>
-              <p style="margin-top: 8px">{{ goodData.total_power }}TiB</p>
-            </div>
             <div class="intro-item">
               <p class="intro-item-title">当前有效算力质押</p>
               <p style="margin-top: 8px">
                 {{ goodData.price | parseFloatFilter }}FIL/TiB
               </p>
             </div>
+            <div class="intro-item">
+              <p class="intro-item-title">排队中</p>
+              <p style="margin-top: 8px">{{ this.people }}/人</p>
+            </div>
           </div>
-          <div class="handler">
+          <div v-if="show" class="handler">
             <div class="handler-amount">
-              <span style="font-size: 20px">
-                <span style="font-size: 12px; color: #24375e">需要质押：</span
-                >{{ (goodData.price * amount) | parseFloatFilter }}
-              </span>
-              <span style="font-size: 18px">FIL</span>
+              <div style="font-size: 20px">
+                <p style="font-size: 12px; color: #24375e">需要质押：</p>
+                <p>
+                  <span>{{ (goodData.price * amount) | parseFloatFilter }}</span
+                  ><span style="font-s  ize: 18px">FIL</span>
+                </p>
+              </div>
             </div>
             <div style="flex: 1"></div>
             <AddSubtractBox
@@ -45,10 +47,7 @@
               :maxlimit="parseFloat(goodData.avl_buy_power)"
               :limit="parseInt(goodData.minimum_unit)"
             />
-            <div
-              v-if="show"
-              style="color: #575c62; font-size: 12px; margin-left: 12px"
-            >
+            <div style="color: #575c62; font-size: 12px; margin-left: 12px">
               TiB
             </div>
           </div>
@@ -63,7 +62,7 @@
               >全部</span
             >
           </div>
-          <van-progress class="vanProgress" :percentage="progress" />
+          <!-- <van-progress class="vanProgress" :percentage="progress" /> -->
         </div>
         <div class="hr" />
       </div>
@@ -89,7 +88,7 @@
       <div class="buy-centent">
         <div class="buy-centent-flex">
           <p>订单信息</p>
-          <p class="recharge">去充值</p>
+          <p class="recharge" @click="topUp">去充值</p>
         </div>
         <div class="buy-centent-flex" style="margin-top: 20px">
           <div class="buy-centent-left">
@@ -133,7 +132,7 @@
         </div>
       </div>
     </van-popup>
-    <van-popup
+    <!-- <van-popup
       style="width: 80%; border-radius: 8px; text-align: center"
       v-model="lineUpVisible"
       :close-on-click-overlay="false"
@@ -149,7 +148,7 @@
         排队中，正在努力中<van-loading type="spinner" />
       </p>
       <p style="line-height: 40px">当前参与人数过多请耐心等待...</p>
-    </van-popup>
+    </van-popup> -->
   </div>
 </template>
 
@@ -161,7 +160,8 @@ import md5 from "md5";
 import {
   getPurchaseInfo,
   getPurchase,
-  getCheckOrderStatus
+  getCheckOrderStatus,
+  getListTopFlashUsers
 } from "../../net/api/userInfoApi";
 export default {
   props: {
@@ -184,7 +184,8 @@ export default {
       thisShow: false,
       password: "",
       pid: "",
-      lineUpVisible: false
+      people: 0
+      // lineUpVisible: false
     };
   },
   watch: {
@@ -207,8 +208,17 @@ export default {
         2
       );
     }
+
+    getListTopFlashUsers().then(res => {
+      this.people = res.data.total;
+    });
   },
   methods: {
+    topUp() {
+      this.$router.push({
+        path: "/currencyTopup?asset=FIL"
+      });
+    },
     buyOk() {
       getPurchase({
         buy_power: this.amount,
@@ -219,44 +229,46 @@ export default {
           if (res.ret === 200) {
             this.pid = res.data;
             this.thisShow = false;
-            this.lineUpVisible = true;
-            this.purchaseStatus(this.pid);
+            Toast.success("购买成功");
+            // this.lineUpVisible = true;
+            // this.purchaseStatus(this.pid);
           } else {
             this.thisShow = false;
+            Toast.fail(res.msg);
           }
         })
         .catch(() => (this.thisShow = false));
     },
 
     // 定时刷新抢购状态
-    purchaseStatus(pid) {
-      let timer = null;
-      getCheckOrderStatus({
-        pid
-      }).then(res => {
-        console;
-        if (res.ret === 200) {
-          if (res.data) {
-            this.lineUpVisible = false;
-            // 提示
-            if (res.data.payment_status) {
-              Toast.success(res.data.description);
-            } else {
-              Toast.fail(res.data.description);
-            }
-            clearTimeout(timer);
-          } else {
-            clearTimeout(timer);
-            timer = setTimeout(() => {
-              this.purchaseStatus(pid);
-            }, 1000);
-          }
-        } else {
-          clearTimeout(timer);
-          this.lineUpVisible = false;
-        }
-      });
-    },
+    // purchaseStatus(pid) {
+    //   let timer = null;
+    //   getCheckOrderStatus({
+    //     pid
+    //   }).then(res => {
+    //     console;
+    //     if (res.ret === 200) {
+    //       if (res.data) {
+    //         this.lineUpVisible = false;
+    //         // 提示
+    //         if (res.data.payment_status) {
+    //           Toast.success(res.data.description);
+    //         } else {
+    //           Toast.fail(res.data.description);
+    //         }
+    //         clearTimeout(timer);
+    //       } else {
+    //         clearTimeout(timer);
+    //         timer = setTimeout(() => {
+    //           this.purchaseStatus(pid);
+    //         }, 1000);
+    //       }
+    //     } else {
+    //       clearTimeout(timer);
+    //       this.lineUpVisible = false;
+    //     }
+    //   });
+    // },
 
     done(num, count) {
       let newNum = parseInt(num * Math.pow(10, count)) / Math.pow(10, count);
@@ -421,8 +433,8 @@ export default {
   }
 
   .hr {
-    margin: 18px 0;
-    background: $divider-color;
+    margin: 8px 0;
+    // background: $divider-color;
     height: 0.5px;
   }
 

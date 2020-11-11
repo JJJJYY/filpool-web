@@ -237,8 +237,7 @@ export default {
   z-index: 1;
 }
 .page-container-mine {
-  // height: calc(100vh - 62px);
-  height: initial !important;
+  height: 100vh;
   padding-bottom: 50px;
   box-sizing: border-box;
   overflow: auto;
