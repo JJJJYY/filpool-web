@@ -2,10 +2,19 @@
   <div class="list">
     <head-nav></head-nav>
     <div class="page-container">
-      <div class="cell" v-for="item in items" :key="item.title" @click="jump(item)">
-        <div class="name">{{item.title}}</div>
-        <div class="desc">{{item.desc}}</div>
-        <img style="height: 10px;" src="../../../assets/img/mine/tab_icon_more.png" alt />
+      <div
+        class="cell"
+        v-for="item in items"
+        :key="item.title"
+        @click="jump(item)"
+      >
+        <div class="name">{{ item.title }}</div>
+        <div class="desc">{{ item.desc }}</div>
+        <img
+          style="height: 10px;"
+          src="../../../assets/img/mine/tab_icon_more.png"
+          alt
+        />
       </div>
     </div>
   </div>
@@ -18,7 +27,7 @@ import { Toast } from "vant";
 export default {
   name: "SecurityCenter",
   components: {
-    HeadNav,
+    HeadNav
   },
   data() {
     return {};
@@ -30,31 +39,31 @@ export default {
         {
           title: "登录密码",
           desc: "修改",
-          push: "/securityLoginPwd",
+          push: "/securityLoginPwd"
         },
         {
           title: `${this.userData.phone ? "修改" : "绑定"}手机号`,
           desc: this.userData.phone,
-          push: "/securityMobileModify",
+          push: "/securityMobileModify"
         },
         {
-          title: "绑定邮箱",
+          title: `${this.userData.email ? "修改" : "绑定"}邮箱`,
           desc: `${this.userData.email ? "已绑定" : "未绑定"}`,
-          push: "/securityEmailPwd",
+          push: "/securityEmailPwd"
         },
         {
           title: "资金密码",
           desc: `${this.userData.payPwd === 1 ? "修改" : "设置"}`,
           push: "/securityTransPwd",
-          requireGa: true,
+          requireGa: true
         },
         {
           title: "Google验证",
           desc: `${this.userData.ga === 1 ? "已绑定" : "未绑定"}`,
-          push: `${this.userData.ga === 1 ? "/googleModify" : "/googleBind"}`,
-        },
+          push: `${this.userData.ga === 1 ? "/googleModify" : "/googleBind"}`
+        }
       ];
-    },
+    }
   },
   methods: {
     jump(item) {
@@ -63,8 +72,8 @@ export default {
       } else {
         this.$router.push(item.push);
       }
-    },
-  },
+    }
+  }
 };
 </script>
 
