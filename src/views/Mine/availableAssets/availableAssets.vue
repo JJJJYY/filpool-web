@@ -9,7 +9,7 @@
             {{
               getTotal([myAssetM.recharge, myAssetM.available])
                 | parseFloatFilter
-            }}<span>FIL</span>
+            }}<span>{{ asset }}</span>
           </p>
           <van-button
             size="mini"
@@ -32,7 +32,7 @@
             <p
               style="font-size: 14px;  font-weight: 500;ccolor:#333333FF;line-height: 30px;"
             >
-              {{ myAssetM.recharge | parseFloatFilter }} FIL
+              {{ myAssetM.recharge | parseFloatFilter }} {{ asset }}
             </p>
           </div>
           <div class="xian"></div>
@@ -47,7 +47,7 @@
             <p
               style="font-size: 14px; font-weight: 500;color:#333333FF ;line-height: 30px;"
             >
-              {{ myAssetM.available | parseFloatFilter }} FIL
+              {{ myAssetM.available | parseFloatFilter }} {{ asset }}
             </p>
           </div>
         </div>
@@ -81,9 +81,9 @@
             <div class="popup-black">划转</div>
             <div class="popup-type">
               <p class="popup-width">币种</p>
-              <van-button type="default" size="mini" class="round popup-flex"
-                >FIL</van-button
-              >
+              <van-button type="default" size="mini" class="round popup-flex">{{
+                asset
+              }}</van-button>
             </div>
             <div class="popup-B">
               <p class="popup-width">从</p>
@@ -123,7 +123,7 @@
                 type="number"
                 placeholder="请输入划转数量"
               />
-              <p>FIL</p>
+              <p>{{ asset }}</p>
             </div>
             <div class="popup-q">
               <p style="width: 50px; height: 1px;"></p>
@@ -133,7 +133,7 @@
                   transferType == 1
                     ? myAssetM.available
                     : myAssetM.recharge | parseFloatFilter
-                }}FIL
+                }}{{ asset }}
                 <span
                   style="font-size: 14px"
                   @click="
