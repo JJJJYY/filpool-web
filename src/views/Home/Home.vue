@@ -28,7 +28,7 @@
           </div>
         </div>
         <!-- 购买 -->
-        <div v-if="rateShow" class="buy" style="min-height: 66vw; margin: 10px">
+        <div v-if="rateShow" class="buy" style="margin: 10px">
           <CalcPowerItem :good-data="goodList" @select="onSelect" />
         </div>
         <!-- 存储空间 -->

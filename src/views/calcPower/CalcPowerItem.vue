@@ -132,23 +132,6 @@
         </div>
       </div>
     </van-popup>
-    <!-- <van-popup
-      style="width: 80%; border-radius: 8px; text-align: center"
-      v-model="lineUpVisible"
-      :close-on-click-overlay="false"
-    >
-      <p
-        style="
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          line-height: 40px;
-        "
-      >
-        排队中，正在努力中<van-loading type="spinner" />
-      </p>
-      <p style="line-height: 40px">当前参与人数过多请耐心等待...</p>
-    </van-popup> -->
   </div>
 </template>
 
@@ -185,7 +168,6 @@ export default {
       password: "",
       pid: "",
       people: 0
-      // lineUpVisible: false
     };
   },
   watch: {
@@ -230,8 +212,6 @@ export default {
             this.pid = res.data;
             this.thisShow = false;
             Toast.success("购买成功");
-            // this.lineUpVisible = true;
-            // this.purchaseStatus(this.pid);
           } else {
             this.thisShow = false;
             Toast.fail(res.msg);
@@ -239,36 +219,6 @@ export default {
         })
         .catch(() => (this.thisShow = false));
     },
-
-    // 定时刷新抢购状态
-    // purchaseStatus(pid) {
-    //   let timer = null;
-    //   getCheckOrderStatus({
-    //     pid
-    //   }).then(res => {
-    //     console;
-    //     if (res.ret === 200) {
-    //       if (res.data) {
-    //         this.lineUpVisible = false;
-    //         // 提示
-    //         if (res.data.payment_status) {
-    //           Toast.success(res.data.description);
-    //         } else {
-    //           Toast.fail(res.data.description);
-    //         }
-    //         clearTimeout(timer);
-    //       } else {
-    //         clearTimeout(timer);
-    //         timer = setTimeout(() => {
-    //           this.purchaseStatus(pid);
-    //         }, 1000);
-    //       }
-    //     } else {
-    //       clearTimeout(timer);
-    //       this.lineUpVisible = false;
-    //     }
-    //   });
-    // },
 
     done(num, count) {
       let newNum = parseInt(num * Math.pow(10, count)) / Math.pow(10, count);

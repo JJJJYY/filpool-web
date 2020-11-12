@@ -88,14 +88,12 @@ export default {
   // },
   methods: {
     availableAssets() {
-      if (this.item.asset === "FIL") {
-        this.$router.push({
-          path: "/availableAssets",
-          query: {
-            asset: this.item.asset
-          }
-        });
-      }
+      this.$router.push({
+        path: "/availableAssets",
+        query: {
+          asset: this.item.asset
+        }
+      });
     },
     handleIcon(val) {
       this.thisText = val;

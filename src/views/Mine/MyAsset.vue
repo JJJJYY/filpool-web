@@ -98,7 +98,7 @@ export default {
           // 展示资产
           myAsset: [
             {
-              isAsset: "可用资产",
+              isAsset: "可用资产>>",
               num: parseFloat(x.available) + parseFloat(x.recharge),
               icon: false
             },
