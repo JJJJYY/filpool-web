@@ -46,7 +46,7 @@
         >
           <div class="speedUp-d ">订单编号：{{ item.pid }}</div>
           <div class="speedUp-s">
-            <div class="speedUp-c">{{ item.tittle }}</div>
+            <div class="speedUp-c">等待人数:{{ item.wait_num }}</div>
             <div>
               <span class="speedUp-c"
                 >{{ item.price | parseFloatFilter }}FIL/TiB</span
@@ -56,7 +56,12 @@
           </div>
           <div class="speedUp-t">
             <div>{{ item.purchase_time }}</div>
-            <div class="speedUp-c">{{ item.description }}</div>
+            <div class="speedUp-c">{{ statusData(item.status) }}</div>
+          </div>
+          <div class="speedUp-t">
+            <div class="color">
+              已经填充算力 {{ item.fill_power | parseFloatFilter }} TiB
+            </div>
           </div>
           <div class="speedUp-m">
             支付金额：<span class="speedUp-c"
@@ -94,6 +99,11 @@ export default {
         { title: "已取消", type: 2 }
         // { title: "已超时", type: 3 },
       ],
+      statustext: [
+        { status: 0, name: "排队中" },
+        { status: 1, name: "加速中" },
+        { status: 2, name: "已加速" }
+      ],
       list: [],
       listData: [],
       thisData: false,
@@ -105,6 +115,15 @@ export default {
     this.loadData();
   },
   methods: {
+    statusData(v) {
+      let thisName = null;
+      this.statustext.map(val => {
+        if (val.status === v) {
+          thisName = val.name;
+        }
+      });
+      return thisName;
+    },
     speedUpType() {
       console.log(this.active);
       getFlashSaleOrderList({
@@ -190,6 +209,9 @@ export default {
     display: flex;
     margin-top: 5px;
     justify-content: space-between;
+    .color {
+      color: #333333;
+    }
   }
   .speedUp-m {
     margin-top: 20px;
