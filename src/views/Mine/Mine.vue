@@ -23,7 +23,7 @@
         <div class="mine-container" v-if="show">
           <div class="header">
             <div class="total">
-              <!-- <div class="growth">算力增长明细>></div> -->
+              <div class="growth" @click='growth'>算力增长明细>></div>
               <div class="total-val">
                 <div>
                   <p style="color: #666666">总存储空间</p>
@@ -182,6 +182,10 @@ export default {
   },
   deactivated() {},
   methods: {
+    growth() {
+      console.log('asdsd')
+      this.$router.push('/powerDetails')
+    },
     done(num, count) {
       let newNum = parseInt(num * Math.pow(10, count)) / Math.pow(10, count);
       return newNum;

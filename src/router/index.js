@@ -337,6 +337,15 @@ const routes = [{
       needLogin: true
     }
   },
+  {
+    path: '/powerDetails',
+    name: 'powerDetails',
+    component: () => import( /* webpackChunkName: "mine" */ '../views/Mine/powerDetails/powerDetails.vue'),
+    meta: {
+      title: "算力增长明细",
+      needLogin: true
+    }
+  },
   // {
   //   path: '/market',
   //   name: 'market',
