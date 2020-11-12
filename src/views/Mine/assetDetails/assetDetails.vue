@@ -35,7 +35,7 @@
             <div class="call-buttom">
               <p class="call-time">{{ item.createTime }}</p>
               <p class="call-color">
-                <!-- <span>总余额 1000.25</span> -->
+                <span>{{ statusText(item.status) }}</span>
               </p>
             </div>
           </div>
@@ -129,6 +129,20 @@ export default {
         }
       });
       return thisName;
+    },
+    statusText(x){
+      const statusData = [
+        {type: 0, name: "提现中"},
+        {type: 1, name: "成功"},
+        {type: 2, name: "拒绝"},
+      ]
+      let thisName = null
+      statusData.forEach((val) => {
+        if (val.type === x) {
+          thisName =  val.name;
+        }
+      });
+      return thisName
     },
     dataType() {
       return [
