@@ -407,7 +407,7 @@ export default {
       }
     },
     handleClear() {
-      this.show = false;
+      this.popupShow = false;
     },
     growth() {
       this.$router.push("/powerDetails");

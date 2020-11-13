@@ -1,9 +1,9 @@
 <template>
   <div class="ProductDetail">
-    <div class="imageSize">
-      <head-nav class="headNavStyle"></head-nav>
-    </div>
-    <div class="container list page-container">
+    <head-nav class="headNavStyle"></head-nav>
+
+    <div class="container  list page-container">
+      <div class="imageSize"></div>
       <!-- <img src="../../assets/img/smallBanner.png" class="imageSize" alt="" /> -->
       <div class="goodBox">
         <CalcPowerItem
