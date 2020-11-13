@@ -130,25 +130,25 @@ export default {
       });
       return thisName;
     },
-    statusText(x){
+    statusText(x) {
       const statusData = [
-        {type: 0, name: "提现中"},
-        {type: 1, name: "成功"},
-        {type: 2, name: "拒绝"},
-      ]
-      let thisName = null
+        { type: 0, name: "提现中" },
+        { type: 1, name: "成功" },
+        { type: 2, name: "拒绝" },
+      ];
+      let thisName = null;
       statusData.forEach((val) => {
         if (val.type === x) {
-          thisName =  val.name;
+          thisName = val.name;
         }
       });
-      return thisName
+      return thisName;
     },
     dataType() {
       return [
         { type: 0, name: "全部" },
         { type: 1, name: "购买算力" },
-        { type: 2, name: "购买加速算力" },
+        { type: 2, name: "申请加速算力" },
         { type: 3, name: "充值" },
         { type: 4, name: "提现" },
         { type: 5, name: "提现中" },
@@ -164,11 +164,12 @@ export default {
         { type: 18, name: "系统扣除" },
         { type: 20, name: "冻结金额扣除" },
         { type: 21, name: "25%收益直接释放" },
-        { type: 22, name: "收益金额划转至抵押" },
-        { type: 23, name: "抵押金额返还至收益" },
+        { type: 22, name: "收益金额划转至质押" },
+        { type: 23, name: "质押金额返还至收益" },
         { type: 24, name: "挖矿收益" },
         { type: 25, name: "SR质押币发放" },
         { type: 26, name: "扣除质押币" },
+        { type: 27, name: "充值划转质押" },
       ];
     },
   },
