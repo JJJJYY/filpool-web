@@ -163,7 +163,7 @@
           <Browser v-if="showBrowser"></Browser>
         </div>-->
         <!--  Banner介绍  -->
-        <Banner5></Banner5>
+        <!-- <Banner5></Banner5> -->
         <!--  云算力优势  -->
         <div class="section intro6">
           <div class="title">FILPool矿池优势</div>

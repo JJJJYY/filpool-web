@@ -259,7 +259,6 @@ export default {
 }
 .vanTab-r {
   // padding: 0 10px;
-  margin-top: 8px;
   border-bottom: 1px solid #e8e8e8ff;
   .vanTab-padding {
     border-radius: 8px;

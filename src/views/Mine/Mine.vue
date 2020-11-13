@@ -20,10 +20,26 @@
             </div>
           </div>
         </div>
-        <div class="mine-container" v-if="show">
-          <div class="header">
+        <div class="mine-container">
+          <div class="total-header">
+            <div
+              @click="isDate = 1"
+              :class="{ 'header-data-color': isDate === 1 }"
+            >
+              一期
+            </div>
+            <div
+              @click="isDate = 2"
+              :class="{ 'header-data-color': isDate === 2 }"
+            >
+              二期
+            </div>
+          </div>
+          <div class="header" v-if="show">
             <div class="total">
-              <div class="growth" @click='growth'>算力增长明细>></div>
+              <div class="growth" v-if="isDate === 1" @click="growth">
+                算力增长明细>>
+              </div>
               <div class="total-val">
                 <div>
                   <p style="color: #666666">总存储空间</p>
@@ -41,12 +57,24 @@
                 <!-- <div>总存储空间:</div>
               <div class="total-validWeight">:</div> -->
               </div>
+              <van-divider />
+              <div v-if="isDate === 2" class="pledge-num">
+                <div>
+                  <div>所需质押量</div>
+                  <div class="num-margin">{{ done(maxPledged, 6) }}</div>
+                </div>
+                <div>
+                  <div>当前质押量</div>
+                  <div class="num-margin">{{ done(currentPledged, 6) }}</div>
+                </div>
+              </div>
               <div class="styleFlex">
                 <p>目前有效算力：{{ validWeight | parseFloatFilter }}T</p>
                 <router-link
                   :to="{ path: '/rate' }"
                   class="to-buy"
                   style="margin-left: 4px"
+                  v-if="isDate === 1"
                 >
                   <img
                     src="../../assets/img/mine/user_icon_buy.png"
@@ -57,8 +85,15 @@
                   "
                     alt
                   />
-                  <span>去加速算力</span>
+                  <span>去购买算力</span>
                 </router-link>
+                <div
+                  class="to-buy"
+                  v-if="isDate === 2"
+                  @click="popupShow = true"
+                >
+                  去质押
+                </div>
               </div>
               <van-progress
                 style="margin-top: 15px"
@@ -142,6 +177,85 @@
           </div>
         </div>
       </div>
+      <van-popup v-model="popupShow" position="bottom">
+        <div class="popup-padding">
+          <div class="popup-black">划转</div>
+          <div class="popup-type">
+            <p class="popup-width">币种</p>
+            <van-button type="default" size="mini" class="round popup-flex">{{
+              asset
+            }}</van-button>
+          </div>
+          <div class="popup-B">
+            <p class="popup-width">从</p>
+            <div class="popup-flex">
+              <van-button
+                type="default"
+                size="mini"
+                class="round"
+                style="flex: 1;"
+              >
+                充提账户
+              </van-button>
+              <div style="display: flex;align-items: center ;margin: 0 5px">
+                <img
+                  src="@/assets/img/hua.png"
+                  style="width: 15px; height15px"
+                  alt=""
+                />
+                <p style="margin-left: 10px">到</p>
+              </div>
+              <van-button
+                type="default"
+                size="mini"
+                class="round"
+                style="flex: 1;"
+              >
+                质押
+              </van-button>
+            </div>
+          </div>
+          <div class="popup-num">
+            <p class="popup-width">数量</p>
+
+            <van-field
+              v-model="number"
+              type="number"
+              placeholder="请输入划转数量"
+            />
+            <p>{{ asset }}</p>
+          </div>
+          <div class="popup-q">
+            <p style="width: 50px; height: 1px;"></p>
+            <p style="flex: 1">
+              {{
+                Math.min(
+                  done(maxPledged, 6) - done(currentPledged, 6),
+                  done(myAssetM.recharge, 6)
+                )
+              }}
+              <span
+                style="font-size: 14px"
+                @click="
+                  number = Math.min(
+                    done(maxPledged, 6) - done(currentPledged, 6),
+                    done(myAssetM.recharge, 6)
+                  )
+                "
+                >全部</span
+              >
+            </p>
+          </div>
+          <div class="popup-button">
+            <van-button class="popup-van-quxiao" @click="handleClear"
+              >取消</van-button
+            >
+            <van-button class="popup-van-huazhuan" @click="handleOk"
+              >划转</van-button
+            >
+          </div>
+        </div>
+      </van-popup>
     </vue-pull-refresh>
     <foot-box></foot-box>
   </div>
@@ -151,19 +265,44 @@
 import { mapState } from "vuex";
 import HeadNav from "@/components/HeadNav";
 import FootBox from "@/components/FootBox";
-import { myWeightApi } from "@/net/api/userInfoApi";
-import { PullRefresh, Progress } from "vant";
+import {
+  getMyPower,
+  myBalanceApi,
+  assetTypeApi,
+  getTransferPledged
+} from "@/net/api/userInfoApi";
+import {
+  PullRefresh,
+  Progress,
+  Divider,
+  Popup,
+  Button,
+  Field,
+  Toast
+} from "vant";
 export default {
   name: "Mine",
   components: {
     HeadNav,
     FootBox,
     "vue-pull-refresh": PullRefresh,
-    "van-progress": Progress
+    "van-progress": Progress,
+    [Divider.name]: Divider,
+    [Popup.name]: Popup,
+    [Button.name]: Button,
+    [Field.name]: Field,
+    [Toast.name]: Toast
   },
-  created() {
-    // this.$store.dispatch('reloadUserData');
-    this.loadTotalWeight();
+
+  watch: {
+    isDate() {
+      this.show = false;
+      if (this.isDate === 1) {
+        this.loadTotalWeight();
+      } else if (this.isDate === 2) {
+        this.getMyPowerTwo();
+      }
+    }
   },
   data() {
     return {
@@ -171,9 +310,18 @@ export default {
       validWeight: "---",
       maxAdj: 0,
       loading: false,
-      show: false
+      show: false,
+      isDate: 1,
+      popupShow: false,
+      number: "",
+      currentPledged: "",
+      maxPledged: "",
+      asset: "FIL",
+      myAssetM: {},
+      myTokensData: {}
     };
   },
+
   computed: {
     ...mapState(["userData"])
   },
@@ -181,10 +329,88 @@ export default {
     this.loadTotalWeight();
   },
   deactivated() {},
+  created() {
+    // this.$store.dispatch('reloadUserData');
+    this.loadTotalWeight();
+    this.myAsset();
+  },
   methods: {
+    // 钱包
+
+    getMyPowerTwo() {
+      getMyPower({ number: this.isDate }).then(res => {
+        console.log(res);
+        this.totalWeight = res.data.totalPower;
+        this.validWeight = res.data.adj;
+        this.maxAdj = res.data.maxAdj;
+        this.currentPledged = res.data.currentPledged;
+        this.maxPledged = res.data.maxPledged;
+        this.loading = false;
+        this.show = true;
+      });
+    },
+
+    myAsset() {
+      myBalanceApi().then(res => {
+        res.data.forEach(item => {
+          if (item.asset === this.asset) {
+            this.myAssetM = item;
+          }
+        });
+      });
+      assetTypeApi().then(res => {
+        if (res.ret == 200) {
+          res.data.forEach(item => {
+            if (item.asset === this.asset) {
+              this.myTokensData = item;
+            }
+          });
+        }
+      });
+    },
+
+    handleOk() {
+      console.log(this.number);
+      if (this.number) {
+        getTransferPledged({
+          amount: this.number
+        })
+          .then(res => {
+            console.log(res);
+            if (res.ret === 200) {
+              Toast.success("划转成功");
+              this.getMyPowerTwo();
+            }
+            this.popupShow = false;
+          })
+          .catch(() => {
+            this.popupShow = false;
+          });
+        //   getTransfer({
+        //     type: this.transferType,
+        //     asset_id: this.myTokensData.id,
+        //     amount: this.number
+        //   })
+        //     .then(res => {
+        //       if (res.ret == 200) {
+        //         Toast("划转成功");
+        //         this.myAsset();
+        //         this.show = false;
+        //       }
+        //     })
+        //     .catch(() => {
+        //       this.show = false;
+        //     });
+        // } else {
+        //   Toast("输入有误");
+        //   this.show = false;
+      }
+    },
+    handleClear() {
+      this.show = false;
+    },
     growth() {
-      console.log('asdsd')
-      this.$router.push('/powerDetails')
+      this.$router.push("/powerDetails");
     },
     done(num, count) {
       let newNum = parseInt(num * Math.pow(10, count)) / Math.pow(10, count);
@@ -212,9 +438,11 @@ export default {
     },
     loadTotalWeight() {
       // 获取总算力
-      myWeightApi().then(res => {
-        this.totalWeight = res.data.totalWeight;
-        this.validWeight = res.data.validWeight;
+      this.show = false;
+      getMyPower({ number: this.isDate }).then(res => {
+        console.log(res);
+        this.totalWeight = res.data.totalPower;
+        this.validWeight = res.data.adj;
         this.maxAdj = res.data.maxAdj;
         this.loading = false;
         this.show = true;
@@ -313,9 +541,24 @@ export default {
     }
   }
 }
+.total-header {
+  background: #fff7e8ff;
+  display: flex;
+  font-size: 14px;
+  color: #666666ff;
+  line-height: 34px;
+  border-radius: 8px 8px 0 0;
+  .header-data-color {
+    color: #f7a90eff;
+  }
+  div {
+    flex: 1;
+    text-align: center;
+  }
+}
 .header {
   padding: 0 16px;
-  border-radius: 8px;
+  border-radius: 0 0 8px 8px;
   background: $content-backgroun-color;
   .total {
     padding: 16px 0;
@@ -341,6 +584,15 @@ export default {
     }
     &-val {
       color: $h1-color;
+    }
+    .pledge-num {
+      display: flex;
+      text-align: center;
+      justify-content: space-around;
+      color: #666666ff;
+      .num-margin {
+        margin-top: 5px;
+      }
     }
     .styleFlex {
       display: flex;
@@ -405,5 +657,65 @@ export default {
   .title {
     margin-top: 8px;
   }
+}
+.popup-padding {
+  padding: 30px;
+  .popup-black {
+    font-size: 16px;
+    color: #333333ff;
+    font-weight: 500;
+  }
+  .popup-type {
+    margin-top: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .popup-B {
+    margin-top: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .popup-num {
+    margin-top: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .popup-q {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .popup-button {
+    margin-top: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .van-button {
+      width: 150px;
+    }
+    .popup-van-quxiao {
+      border-radius: 16px;
+      background: #d0d0d0;
+      color: #fff;
+    }
+    .popup-van-huazhuan {
+      border-radius: 16px;
+      background: #f9a03eff;
+      color: #fff;
+    }
+  }
+}
+.popup-width {
+  width: 50px;
+}
+.popup-flex {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex: 1;
 }
 </style>
