@@ -39,7 +39,7 @@
               </div>
             </van-list>
           </van-tab>
-          <van-tab title="详细规则">
+          <!-- <van-tab title="详细规则">
             <div class="detail">
               <p class="label">具体细则</p>
               <div class="content">
@@ -83,7 +83,7 @@
                 </p>
               </div>
             </div>
-          </van-tab>
+          </van-tab> -->
         </van-tabs>
         <van-popup
           v-model="show"
