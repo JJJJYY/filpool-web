@@ -269,7 +269,7 @@ import {
   getMyPower,
   myBalanceApi,
   assetTypeApi,
-  getTransferPledged,
+  getTransferPledged
 } from "@/net/api/userInfoApi";
 import {
   PullRefresh,
@@ -278,7 +278,7 @@ import {
   Popup,
   Button,
   Field,
-  Toast,
+  Toast
 } from "vant";
 export default {
   name: "Mine",
@@ -291,7 +291,7 @@ export default {
     [Popup.name]: Popup,
     [Button.name]: Button,
     [Field.name]: Field,
-    [Toast.name]: Toast,
+    [Toast.name]: Toast
   },
 
   watch: {
@@ -302,7 +302,7 @@ export default {
       } else if (this.isDate === 2) {
         this.getMyPowerTwo();
       }
-    },
+    }
   },
   data() {
     return {
@@ -318,12 +318,12 @@ export default {
       maxPledged: "",
       asset: "FIL",
       myAssetM: {},
-      myTokensData: {},
+      myTokensData: {}
     };
   },
 
   computed: {
-    ...mapState(["userData"]),
+    ...mapState(["userData"])
   },
   activated() {
     this.loadTotalWeight();
@@ -338,8 +338,8 @@ export default {
     // 钱包
 
     getMyPowerTwo() {
-      getMyPower({ number: this.isDate }).then((res) => {
-        console.log(res);
+      getMyPower({ number: this.isDate }).then(res => {
+        console.log("2", res);
         this.totalWeight = res.data.totalPower;
         this.validWeight = res.data.adj;
         this.maxAdj = res.data.maxAdj;
@@ -351,16 +351,16 @@ export default {
     },
 
     myAsset() {
-      myBalanceApi().then((res) => {
-        res.data.forEach((item) => {
+      myBalanceApi().then(res => {
+        res.data.forEach(item => {
           if (item.asset === this.asset) {
             this.myAssetM = item;
           }
         });
       });
-      assetTypeApi().then((res) => {
+      assetTypeApi().then(res => {
         if (res.ret == 200) {
-          res.data.forEach((item) => {
+          res.data.forEach(item => {
             if (item.asset === this.asset) {
               this.myTokensData = item;
             }
@@ -372,9 +372,9 @@ export default {
     handleOk() {
       if (this.number) {
         getTransferPledged({
-          amount: this.number,
+          amount: this.number
         })
-          .then((res) => {
+          .then(res => {
             console.log(res);
             if (res.ret === 200) {
               Toast.success("划转成功");
@@ -438,7 +438,8 @@ export default {
     loadTotalWeight() {
       // 获取总算力
       this.show = false;
-      getMyPower({ number: this.isDate }).then((res) => {
+      getMyPower({ number: this.isDate }).then(res => {
+        console.log("1", res);
         this.totalWeight = res.data.totalPower;
         this.validWeight = res.data.adj;
         this.maxAdj = res.data.maxAdj;
@@ -451,8 +452,8 @@ export default {
       this.loadTotalWeight();
       this.$store.dispatch("reloadUserData");
       this.getMyPowerTwo();
-    },
-  },
+    }
+  }
 };
 </script>
 
