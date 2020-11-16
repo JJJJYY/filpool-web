@@ -113,87 +113,54 @@ export default {
     /*拍照*/
     getImage() {
       let cmr = window.plus.camera.getCamera();
-      cmr.captureImage(path => {
-        // plus.io.resolveLocalFileSystemURL(path,(entry) => {
-        //     entry.file( (path) => {
-        //       console.log('11', path.fullPath);
-        this.checkImgSize(path);
-        //       this.loadImgUrl = path.fullPath;
-        //         let fileReader = new plus.io.FileReader();
-        //         fileReader.readAsDataURL(path); // 转base64
-        //         console.log('fileReader',fileReader)
-        //     });
-        // });
-        // this.uploadByPlus(path);
-      });
+      cmr.captureImage(
+        path => {
+          this.checkImgSize(path);
+        },
+        function() {
+          console.log("取消拍照");
+        },
+        {
+          filename: "_doc/camera/",
+          index: 1
+        }
+      );
     },
     /*从相册选择*/
     galleryImg() {
       window.plus.gallery.pick(
         path => {
           this.checkImgSize(path);
-          //this.uploadByPlus(path);
         },
         function() {
           console.log("取消选择图片");
         },
-        { filter: "image" }
+        {
+          filename: "_doc/camera/",
+          filter: "image",
+          system: false
+        }
       );
     },
-    /*检查图片大小，超过2M压缩*/
     checkImgSize(path, overwrite) {
+      console.log(path);
       window.plus.io.getFileInfo({
         filePath: path,
         success: res => {
-          // if (res.size / (1024 * 1024) > 2) {
           console.log("走targetPath");
           plus.io.resolveLocalFileSystemURL(path, entry => {
             let e = entry.toLocalURL() + "?version=" + new Date().getTime();
             console.log("entry", e);
 
             this.uploadByPlus(e);
-            // entry.file((path) => {
-            //   console.log("11", path);
-            //   this.loadImgUrl = path.fullPath;
-            //   // let fileReader = new plus.io.FileReader();
-            //   // fileReader.readAsDataURL(path); // 转base64
-            //   // console.log('fileReader',fileReader)
-            // });
           });
-
-          // let matchArr = path.match(/\/[^\/]+\.[a-zA-Z]+$/g);
-          // let fileName = matchArr[0].slice(1);
-          // let targetPath = `_doc/${fileName}${overwrite ? "" : "(1)"}`;
-          // window.plus.zip.compressImage(
-          //   {
-          //     src: path,
-          //     dst: targetPath,
-          //     overwrite: !!overwrite,
-          //   },
-          //   () => {
-          //     plus.io.resolveLocalFileSystemURL(targetPath, (entry) => {
-          //       entry.file((targetPath) => {
-          //         console.log("11", targetPath.fullPath);
-          //         this.loadImgUrl = targetPath.fullPath;
-          //         this.uploadByPlus(targetPath.fullPath);
-          //         // let fileReader = new plus.io.FileReader();
-          //         // fileReader.readAsDataURL(path); // 转base64
-          //         // console.log('fileReader',fileReader)
-          //       });
-          //     });
-          //   },
-          //   () => {}
-          // );
-          // }
-          // else {
-          //   console.log("走path");
-          //   this.uploadByPlus(path);
-          // }
         }
       });
     },
 
-    uploadByPlus(path) {
+    uploadByPlus(item) {
+      let path = item;
+      console.log(path);
       this.loading = true;
       this.loadImgUrl = path;
       let formData = new FormData();
@@ -215,25 +182,6 @@ export default {
             Toast("图片上传失败！");
           }
         }
-        // .then((res) => {
-        //   console.log(res);
-        //   this.loading = false;
-        //   this.loadImgUrl = URL.createObjectURL(path);
-        //   this.$emit("input", res.key);
-        // })
-        // `${serviceURL}/setting/upload`,
-        // { blocksize: 2000 },
-        // (t, status) => {
-        //   let resData = JSON.parse(t.responseText);
-        //   this.loading = false;
-        //   // 上传完成
-        //   if (resData.responseCode === "00") {
-        //     this.loadImgUrl = resData.content;
-        //     this.$emit("input", resData.content);
-        //   } else {
-        //     Toast(resData.responseMsg);
-        //   }
-        // }
       );
       task.addData("file", path);
       task.addData("token", this.token);
