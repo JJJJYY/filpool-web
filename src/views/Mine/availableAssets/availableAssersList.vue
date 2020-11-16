@@ -4,7 +4,13 @@
       <div>金额</div>
       <div>
         <p
-          style="height : 40px;font-size: 14px;color: #666666ff;  margin-top: 15px; border-bottom: 1px solid #EAEAEAFF;"
+          style="
+            height: 40px;
+            font-size: 14px;
+            color: #666666ff;
+            margin-top: 15px;
+            border-bottom: 1px solid #eaeaeaff;
+          "
           v-for="(item, index) in list"
           :key="index"
         >
@@ -16,7 +22,13 @@
       <div>类型</div>
       <div>
         <p
-          style="height : 40px;font-size: 14px;color: #666666ff;  margin-top: 15px;  border-bottom: 1px solid #EAEAEAFF;"
+          style="
+            height: 40px;
+            font-size: 14px;
+            color: #666666ff;
+            margin-top: 15px;
+            border-bottom: 1px solid #eaeaeaff;
+          "
           v-for="(item, index) in list"
           :key="index"
         >
@@ -28,7 +40,13 @@
       <div>时间</div>
       <div>
         <p
-          style="height : 40px;font-size: 14px;color: #666666ff;  margin-top: 15px; border-bottom: 1px solid #EAEAEAFF;"
+          style="
+            height: 40px;
+            font-size: 14px;
+            color: #666666ff;
+            margin-top: 15px;
+            border-bottom: 1px solid #eaeaeaff;
+          "
           v-for="(item, index) in list"
           :key="index"
         >
@@ -42,12 +60,12 @@
 export default {
   name: "availableAssetsList",
   props: {
-    list: Array
+    list: Array,
   },
   methods: {
     typeText(x) {
       let thisName = null;
-      this.dataType().map(val => {
+      this.dataType().map((val) => {
         if (val.type === x) {
           thisName = val.name;
         }
@@ -58,7 +76,7 @@ export default {
       return [
         { type: 0, name: "全部" },
         { type: 1, name: "购买算力" },
-        { type: 2, name: "购买加速算力" },
+        { type: 2, name: "申请加速算力" },
         { type: 3, name: "充值" },
         { type: 4, name: "提现" },
         { type: 5, name: "提现中" },
@@ -75,13 +93,15 @@ export default {
         { type: 20, name: "冻结金额扣除" },
         { type: 21, name: "25%收益直接释放" },
         { type: 22, name: "收益金额划转至抵押" },
-        { type: 23, name: "抵押金额返还至收益" },
+        { type: 23, name: "质押金额返还至收益" },
         { type: 24, name: "挖矿收益" },
         { type: 25, name: "SR质押币发放" },
-        { type: 26, name: "扣除质押币" }
+        { type: 26, name: "扣除质押币" },
+        { type: 27, name: "充值划转质押" },
+        { type: 28, name: "收益释放至质押" },
       ];
-    }
-  }
+    },
+  },
 };
 </script>
 <style lang="scss" scoped>

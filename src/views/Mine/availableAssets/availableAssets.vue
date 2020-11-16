@@ -1,7 +1,7 @@
 <template>
   <div>
     <HeadNav></HeadNav>
-    <div class="assetDetails  list page-container">
+    <div class="assetDetails list page-container">
       <div class="available-padding" v-if="viwe">
         <div class="available">
           <p class="available-assets">可用资产:</p>
@@ -22,30 +22,40 @@
         <van-divider />
         <div class="balance">
           <div class="assets-balance">
-            <p style="font-size: 12px;color:#666666FF">
+            <p style="font-size: 12px; color: #666666ff">
               充提账户<van-icon
                 name="question-o"
                 @click="toast(1)"
-                style="margin-left : 8px"
+                style="margin-left: 8px"
               />
             </p>
             <p
-              style="font-size: 14px;  font-weight: 500;ccolor:#333333FF;line-height: 30px;"
+              style="
+                font-size: 14px;
+                font-weight: 500;
+                ccolor: #333333ff;
+                line-height: 30px;
+              "
             >
               {{ myAssetM.recharge | parseFloatFilter }} {{ asset }}
             </p>
           </div>
           <div class="xian"></div>
           <div class="assets-balance" style="margin-left: 20px">
-            <p style="font-size: 12px;color:#666666FF">
+            <p style="font-size: 12px; color: #666666ff">
               收益账户<van-icon
                 name="question-o"
-                style="margin-left : 8px"
+                style="margin-left: 8px"
                 @click="toast(2)"
               />
             </p>
             <p
-              style="font-size: 14px; font-weight: 500;color:#333333FF ;line-height: 30px;"
+              style="
+                font-size: 14px;
+                font-weight: 500;
+                color: #333333ff;
+                line-height: 30px;
+              "
             >
               {{ myAssetM.available | parseFloatFilter }} {{ asset }}
             </p>
@@ -75,7 +85,7 @@
             <AvailableAssersList :list="list"></AvailableAssersList>
           </van-tab>
         </van-tabs>
-        <div v-else style="text-align: center;">暂无数据</div>
+        <div v-else style="text-align: center">暂无数据</div>
         <van-popup v-model="show" position="bottom">
           <div class="popup-padding">
             <div class="popup-black">划转</div>
@@ -92,11 +102,11 @@
                   type="default"
                   size="mini"
                   class="round"
-                  style="flex: 1;"
+                  style="flex: 1"
                 >
                   {{ transferType == 1 ? "收益账户" : "充提账户" }}
                 </van-button>
-                <div style="display: flex;align-items: center ;margin: 0 5px">
+                <div style="display: flex; align-items: center; margin: 0 5px">
                   <img
                     src="../../../assets/img/hua.png"
                     style="width: 15px; height15px"
@@ -109,7 +119,7 @@
                   type="default"
                   size="mini"
                   class="round"
-                  style="flex: 1;"
+                  style="flex: 1"
                 >
                   {{ transferType == 1 ? "充提账户" : "收益账户" }}
                 </van-button>
@@ -126,7 +136,7 @@
               <p>{{ asset }}</p>
             </div>
             <div class="popup-q">
-              <p style="width: 50px; height: 1px;"></p>
+              <p style="width: 50px; height: 1px"></p>
               <p style="flex: 1">
                 {{ transferType == 1 ? `收益账户` : `充提账户` }}
                 {{
@@ -173,13 +183,13 @@ import {
   Tab,
   Popup,
   Tabs,
-  Field
+  Field,
 } from "vant";
 import {
   recordListApi,
   assetTypeApi,
   myBalanceApi,
-  getTransfer
+  getTransfer,
 } from "@/net/api/userInfoApi";
 import AvailableAssersList from "./availableAssersList";
 
@@ -198,7 +208,7 @@ export default {
     [Tab.name]: Tab,
     [Tabs.name]: Tabs,
     [Popup.name]: Popup,
-    [Field.name]: Field
+    [Field.name]: Field,
   },
   data() {
     return {
@@ -211,7 +221,7 @@ export default {
       type: [3, 13],
       pagination: {
         current: 1, // 当前页
-        pageSize: 10 // 页大小
+        pageSize: 10, // 页大小
       },
       asset: this.$route.query.asset,
       active: 0,
@@ -219,7 +229,7 @@ export default {
       number: "",
       // 划转类型
       transferType: 1,
-      myTokensData: {}
+      myTokensData: {},
     };
   },
   created() {
@@ -246,9 +256,9 @@ export default {
         getTransfer({
           type: this.transferType,
           asset_id: this.myTokensData.id,
-          amount: this.number
+          amount: this.number,
         })
-          .then(res => {
+          .then((res) => {
             if (res.ret == 200) {
               Toast("划转成功");
               this.myAsset();
@@ -279,17 +289,17 @@ export default {
 
     // 获取钱包
     myAsset() {
-      myBalanceApi().then(res => {
-        res.data.forEach(item => {
+      myBalanceApi().then((res) => {
+        res.data.forEach((item) => {
           if (item.asset === this.asset) {
             this.myAssetM = item;
           }
         });
         this.viwe = true;
       });
-      assetTypeApi().then(res => {
+      assetTypeApi().then((res) => {
         if (res.ret == 200) {
-          res.data.forEach(item => {
+          res.data.forEach((item) => {
             if (item.asset === this.asset) {
               this.myTokensData = item;
             }
@@ -305,7 +315,7 @@ export default {
     beforeChange(index) {
       this.pagination = {
         current: 1, // 当前页
-        pageSize: 10 // 页大小
+        pageSize: 10, // 页大小
       };
       this.list = [];
       if (index === 0) {
@@ -332,10 +342,10 @@ export default {
         page: this.pagination.current,
         asset: this.asset,
         count: this.pagination.pageSize,
-        type: `${x}`
+        type: `${x}`,
       };
       recordListApi(getData)
-        .then(res => {
+        .then((res) => {
           let newList = res.data.list;
           // 后台返回无数据为对象进行判断
           if (res.data.list.length === 0) {
@@ -356,7 +366,7 @@ export default {
     // 类型判断
     typeText(x) {
       let thisName = null;
-      this.dataType().map(val => {
+      this.dataType().map((val) => {
         if (val.type === x) {
           thisName = val.name;
         }
@@ -367,7 +377,7 @@ export default {
       return [
         { type: 0, name: "全部" },
         { type: 1, name: "购买算力" },
-        { type: 2, name: "购买加速算力" },
+        { type: 2, name: "申请加速算力" },
         { type: 3, name: "充值" },
         { type: 4, name: "提现" },
         { type: 5, name: "提现中" },
@@ -384,13 +394,15 @@ export default {
         { type: 20, name: "冻结金额扣除" },
         { type: 21, name: "25%收益直接释放" },
         { type: 22, name: "收益金额划转至抵押" },
-        { type: 23, name: "抵押金额返还至收益" },
+        { type: 23, name: "质押金额返还至收益" },
         { type: 24, name: "挖矿收益" },
         { type: 25, name: "SR质押币发放" },
-        { type: 26, name: "扣除质押币" }
+        { type: 26, name: "扣除质押币" },
+        { type: 27, name: "充值划转质押" },
+        { type: 28, name: "收益释放至质押" },
       ];
-    }
-  }
+    },
+  },
 };
 </script>
 
