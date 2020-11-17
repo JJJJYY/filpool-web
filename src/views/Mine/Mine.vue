@@ -265,6 +265,7 @@
 import { mapState } from "vuex";
 import HeadNav from "@/components/HeadNav";
 import FootBox from "@/components/FootBox";
+import axios from "axios"; // 作用取消请求
 import {
   getMyPower,
   myBalanceApi,
@@ -298,7 +299,7 @@ export default {
     isDate() {
       this.show = false;
       if (this.isDate === 1) {
-        this.loadTotalWeight();
+        this.getMyPowerTwo();
       } else if (this.isDate === 2) {
         this.getMyPowerTwo();
       }
@@ -318,7 +319,8 @@ export default {
       maxPledged: "",
       asset: "FIL",
       myAssetM: {},
-      myTokensData: {}
+      myTokensData: {},
+      cancelAjax: null // 作用取消请求
     };
   },
 
@@ -326,25 +328,36 @@ export default {
     ...mapState(["userData"])
   },
   activated() {
-    this.loadTotalWeight();
+    this.getMyPowerTwo();
   },
   deactivated() {},
   created() {
     // this.$store.dispatch('reloadUserData');
-    this.loadTotalWeight();
+    this.getMyPowerTwo();
     this.myAsset();
   },
   methods: {
     // 钱包
 
     getMyPowerTwo() {
-      getMyPower({ number: this.isDate }).then(res => {
-        console.log("2", res);
+      const CancelToken = axios.CancelToken;
+      if (typeof this.cancelAjax === "function") {
+        console.log("fun");
+        this.cancelAjax();
+      }
+      let _this = this;
+      getMyPower(
+        { number: this.isDate },
+        // 取消请求
+        new CancelToken(function executor(c) {
+          _this.cancelAjax = c;
+        })
+      ).then(res => {
         this.totalWeight = res.data.totalPower;
         this.validWeight = res.data.adj;
         this.maxAdj = res.data.maxAdj;
-        this.currentPledged = res.data.currentPledged;
-        this.maxPledged = res.data.maxPledged;
+        this.currentPledged = res.data.currentPledged || "";
+        this.maxPledged = res.data.maxPledged || "";
         this.loading = false;
         this.show = true;
       });
@@ -375,7 +388,6 @@ export default {
           amount: this.number
         })
           .then(res => {
-            console.log(res);
             if (res.ret === 200) {
               Toast.success("划转成功");
               this.getMyPowerTwo();
@@ -385,24 +397,6 @@ export default {
           .catch(() => {
             this.popupShow = false;
           });
-        //   getTransfer({
-        //     type: this.transferType,
-        //     asset_id: this.myTokensData.id,
-        //     amount: this.number
-        //   })
-        //     .then(res => {
-        //       if (res.ret == 200) {
-        //         Toast("划转成功");
-        //         this.myAsset();
-        //         this.show = false;
-        //       }
-        //     })
-        //     .catch(() => {
-        //       this.show = false;
-        //     });
-        // } else {
-        //   Toast("输入有误");
-        //   this.show = false;
       }
     },
     handleClear() {
@@ -435,21 +429,9 @@ export default {
           return "普通用户";
       }
     },
-    loadTotalWeight() {
-      // 获取总算力
-      this.show = false;
-      getMyPower({ number: this.isDate }).then(res => {
-        console.log("1", res);
-        this.totalWeight = res.data.totalPower;
-        this.validWeight = res.data.adj;
-        this.maxAdj = res.data.maxAdj;
-        this.loading = false;
-        this.show = true;
-      });
-    },
     onRefresh() {
       this.loading = true;
-      this.loadTotalWeight();
+      this.getMyPowerTwo();
       this.$store.dispatch("reloadUserData");
       this.getMyPowerTwo();
     }

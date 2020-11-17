@@ -24,41 +24,41 @@ export default {
     value: Number,
     limit: {
       type: Number,
-      default: 1,
+      default: 1
     },
     maxlimit: {
       type: Number,
-      default: 1,
-    },
+      default: 1
+    }
   },
   data() {
     return {
       subImg: require("@/assets/img/sub.png"),
       subGrayImg: require("@/assets/img/subGray.png"),
       addImg: require("@/assets/img/add.png"),
-      number: this.value < this.limit ? this.limit : this.value,
+      number: this.value < this.limit ? this.limit : this.value
     };
   },
   computed: {
     subIcon() {
       return this.number > this.limit ? this.subImg : this.subGrayImg;
-    },
+    }
   },
   watch: {
-    value: function (val) {
+    value: function(val) {
       this.number = val;
     },
-    limit: function (val) {
+    limit: function(val) {
       if (this.number < val) {
         this.number = val;
         this.$emit("input", this.number);
       }
-    },
+    }
   },
   methods: {
     add() {
       if (this.number >= this.maxlimit) {
-        Toast("最大购买数量：" + this.maxlimit);
+        Toast("最大数量：" + this.maxlimit);
         return;
       }
       this.number += 1;
@@ -66,7 +66,7 @@ export default {
     },
     sub() {
       if (this.number <= this.limit) {
-        Toast("最少购买数量：" + this.limit);
+        Toast("最少数量：" + this.limit);
         return;
       }
       this.number -= 1;
@@ -78,8 +78,8 @@ export default {
       if (val >= this.limit) {
         this.$emit("input", val);
       }
-    },
-  },
+    }
+  }
 };
 </script>
 

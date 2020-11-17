@@ -9,18 +9,15 @@ import {
 import {
   isH5
 } from '@/utils/utilTools';
-import {
-  Form
-} from 'vant';
 
-const doGetFetch = url => new Promise((resolve, reject) => {
+const doGetFetch = (url, fun) => new Promise((resolve, reject) => {
   axios(url, {
       method: 'GET',
+      cancelToken: fun
     })
     .then(response => {
       resolve(response.data)
     })
-    // .then(res => resolve(res))
     .catch(err => reject(err));
 });
 
@@ -28,6 +25,9 @@ const doPostFetch = (url, jsondata) => new Promise((resolve, reject) => {
   axios(url, {
       method: 'POST',
       data: jsondata,
+      // cancelToken: new CancelToken(function executor(c) {
+      //   _this.cancelAjax = c
+      // })
     })
     .then(response => {
       resolve(response.data)
@@ -38,7 +38,7 @@ const doPostFetch = (url, jsondata) => new Promise((resolve, reject) => {
 });
 
 // get请求
-export const getRequest = (api, params) => {
+export const getRequest = (api, params, _this) => {
   let url = `${serviceURL}/public/`;
   params = {
     s: api,
@@ -55,7 +55,7 @@ export const getRequest = (api, params) => {
     }
   }
   if (isH5) {
-    return doGetFetch(url);
+    return doGetFetch(url, _this);
   } else {
     return get(url)
   }

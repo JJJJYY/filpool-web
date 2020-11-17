@@ -195,8 +195,8 @@ export function getListTopFlashUsers(data) {
   return getRequest('App.FlashSale.ListTopFlashUsers', data)
 }
 // 1 ， 2期
-export function getMyPower(data) {
-  return getRequest('App.Weight.MyPower', data)
+export function getMyPower(data, fun) {
+  return getRequest('App.Weight.MyPower', data, fun)
 }
 // 划转质押
 export function getTransferPledged(data) {
