@@ -1,11 +1,27 @@
 <template>
   <div>
     <div class="storage">FILPool矿池运营数据</div>
+    <div class="storage-data-num">
+      <div
+        class="storage-data-one"
+        @click="operationalData = 1"
+        :class="{ 'storage-data-color': operationalData === 1 }"
+      >
+        一期运营数据
+      </div>
+      <div
+        class="storage-data-two"
+        @click="operationalData = 2"
+        :class="{ 'storage-data-color': operationalData === 2 }"
+      >
+        二期运营数据
+      </div>
+    </div>
     <div class="storage-content">
       <div class="content-text">
         <p class="content-text-size">矿池填充进度</p>
         <p class="content-text-size-small">
-          最新区块高度：{{ poolData.height }}
+          最新区块高度：{{ poolData.height || 0 }}
         </p>
       </div>
       <van-progress
@@ -16,17 +32,17 @@
       <div class="storage-data">
         <div class="data-text">
           <p>总储存空间</p>
-          <p class="text-color">{{ poolData.poolPower }}T</p>
+          <p class="text-color">{{ poolData.poolPower || 0 }}T</p>
         </div>
         <div class="wire"></div>
         <div class="data-text">
           <p>总有效算力</p>
-          <p class="text-color">{{ poolData.poolAdjPower }}P</p>
+          <p class="text-color">{{ poolData.poolAdjPower || 0 }}P</p>
         </div>
         <div class="wire"></div>
         <div class="data-text">
           <p>全网有效算力</p>
-          <p class="text-color">{{ poolData.netAdjPower }}P</p>
+          <p class="text-color">{{ poolData.netAdjPower || 0 }}P</p>
         </div>
       </div>
       <div class="title-flex">矿池数据信息</div>
@@ -50,7 +66,7 @@
               alt=""
             />
             <div class="earnings-center">
-              <p>昨日收益</p>
+              <p>矿池昨日收益</p>
               <p class="earnings-center-size">
                 {{ poolData.yesterdayReward }} FIL
               </p>
@@ -87,12 +103,43 @@
         </div>
       </div>
     </div>
+    <div class="nodeInformation">
+      <div class="nodeInformation-centent">
+        <div class="nodeInformation-text">
+          节点信息
+        </div>
+        <div class="nodeInformation-list">
+          <div v-if="nodeList" class="nodeInformation-list-t">
+            <div class="nodeInformation-list-centent">
+              <p class="nodeInformation-list-titile">节点ID</p>
+              <p v-for="(item, index) in nodeList" :key="index">
+                {{ item.miner }}
+              </p>
+            </div>
+            <div class="nodeInformation-list-centent">
+              <p class="nodeInformation-list-titile">有效算力</p>
+              <p v-for="(item, index) in nodeList" :key="index">
+                {{ item.adj | parseFloatFilter }}
+              </p>
+            </div>
+            <div class="nodeInformation-list-centent">
+              <p class="nodeInformation-list-titile">24小时挖矿收益</p>
+              <p v-for="(item, index) in nodeList" :key="index">
+                {{ item.rewards | parseFloatFilter }}
+              </p>
+            </div>
+          </div>
+          <div v-else class="nodeInformation-list-none">暂无数据</div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import { Loading, Progress } from "vant";
 import { getPoolInfoApi } from "@/net/api/homeApi";
+import axios from "axios"; // 作用取消请求
 export default {
   name: "storage",
   components: {
@@ -102,28 +149,53 @@ export default {
     return {
       percentage: 0,
       poolData: {},
-      loading: false
+      loading: false,
+      operationalData: 1,
+      nodeList: null,
+      cancelAjax: null // 作用取消请求
     };
   },
+  watch: {
+    operationalData() {
+      console.log(this.operationalData);
+      this.operationalDataApi();
+    }
+  },
   created() {
-    getPoolInfoApi().then(res => {
-      if (res.ret === 200) {
-        this.loading = true;
-        this.percentage = this.done(
-          (res.data.poolAdjPower / res.data.poolMaxAdjPower) * 100,
-          1
-        );
-        this.poolData = res.data || {};
-        setTimeout(() => {
-          this.createDom();
-        }, 0);
-      }
-    });
+    this.operationalDataApi();
   },
   mounted() {
     // this.createDom();
   },
   methods: {
+    operationalDataApi() {
+      const CancelToken = axios.CancelToken;
+      if (typeof this.cancelAjax === "function") {
+        this.cancelAjax();
+      }
+      let _this = this;
+      getPoolInfoApi(
+        { number: this.operationalData },
+        // 频繁切换取消上次请求
+        new CancelToken(function executor(c) {
+          _this.cancelAjax = c;
+        })
+      ).then(res => {
+        console.log(res);
+        if (res.ret === 200) {
+          this.loading = true;
+          this.percentage = this.done(
+            (res.data.poolAdjPower / res.data.poolMaxAdjPower) * 100,
+            1
+          );
+          this.poolData = res.data || {};
+          this.nodeList = res.data.nodes;
+          setTimeout(() => {
+            this.createDom();
+          }, 1);
+        }
+      });
+    },
     done(num, count) {
       var newNum = parseInt(num * Math.pow(10, count)) / Math.pow(10, count);
       return newNum;
@@ -132,7 +204,9 @@ export default {
       const creatClass = document.querySelector(
         ".progress-storage .van-progress__portion .van-progress__pivot"
       );
-      creatClass.remove();
+      if (creatClass) {
+        creatClass.remove();
+      }
       const myComp = document.querySelector(
         ".progress-storage .van-progress__portion"
       );
@@ -156,6 +230,20 @@ export default {
   font-size: 16px;
   color: #333333;
   font-weight: 700;
+}
+.storage-data-num {
+  display: flex;
+  padding: 10px;
+  font-size: 14px;
+  color: #666666ff;
+  .storage-data-color {
+    color: #f9a03eff;
+  }
+  .storage-data-one {
+  }
+  .storage-data-two {
+    margin-left: 22px;
+  }
 }
 .storage-content {
   margin: 10px;
@@ -251,6 +339,37 @@ export default {
             color: #e59c0d;
           }
         }
+      }
+    }
+  }
+}
+.nodeInformation {
+  padding: 10px;
+  .nodeInformation-centent {
+    background: #fff;
+    border-radius: 8px;
+    padding: 12px;
+    .nodeInformation-text {
+      color: #333333ff;
+      font-weight: 400;
+    }
+    .nodeInformation-list {
+      padding: 15px 0;
+      .nodeInformation-list-t {
+        display: flex;
+        justify-content: space-around;
+        .nodeInformation-list-centent {
+          flex-grow: 1;
+          line-height: 27px;
+          text-align: center;
+          .nodeInformation-list-titile {
+            border-bottom: 1px solid #ebebebff;
+            color: #666666ff;
+          }
+        }
+      }
+      .nodeInformation-list-none {
+        text-align: center;
       }
     }
   }

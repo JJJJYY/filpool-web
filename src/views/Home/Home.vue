@@ -11,8 +11,20 @@
         ref="pullDown"
         @scroll.native="handleScroll($event)"
       >
+        <div class="title-image">
+          <img
+            class="title-fil"
+            src="../../assets/img/home/title-fil.png"
+            alt=""
+          />
+          <img
+            class="title-text"
+            src="../../assets/img/home/title-text.png"
+            alt=""
+          />
+        </div>
         <!--  Banner  -->
-        <Banner ref="Banner"></Banner>
+        <Banner ref="Banner" class="banner-margin"></Banner>
         <!--通知-->
         <Notice></Notice>
         <div class="guide">
@@ -32,26 +44,32 @@
           <CalcPowerItem :good-data="goodList" @select="onSelect" />
         </div>
         <!-- 存储空间 -->
-        <Storage></Storage>
+        <Storage style="margin-top: 30px"></Storage>
+        <!-- 节点信息 -->
+        <!-- <nodeInformation></nodeInformation> -->
         <!--介绍-->
         <div class="section intro">
           <h3 class="intro-title">IPFS社区介绍</h3>
-          <video
-            v-for="(x, i) in videos"
-            :key="i"
-            :src="x.content"
-            controls="true"
-            :poster="previewImg"
-          ></video>
+          <div class="intro-video">
+            <video
+              v-for="(x, i) in videos"
+              :key="i"
+              :src="x.content"
+              controls="true"
+              :poster="previewImg"
+            ></video>
+          </div>
         </div>
         <!-- IPfS特点介绍 -->
-        <div class="section intro2">
+        <div class="section-white intro2">
           <div class="item">
-            <img src="../../assets/img/home_icon_1.png" alt />
+            <!-- <img src="../../assets/img/home_icon_1.png" alt /> -->
             <div class="right">
-              <p class="title">IPFS</p>
+              <p class="title">
+                <span class="zhu"></span>
+                <span>IPFS</span>
+              </p>
               <p class="subtitle">Inter Planetary File System</p>
-              <div class="hr"></div>
               <ul>
                 <li>星际文件系统</li>
                 <li>下一代互联网的底层通信协议</li>
@@ -59,36 +77,39 @@
             </div>
           </div>
           <div class="item">
-            <img src="../../assets/img/home_icon_2.png" alt />
+            <!-- <img src="../../assets/img/home_icon_2.png" alt /> -->
             <div class="right">
-              <p class="title">Filecoin</p>
+              <p class="title">
+                <span class="zhu"></span>
+                <span>Filecoin</span>
+              </p>
               <p class="subtitle">Filecoin</p>
-              <div class="hr"></div>
               <ul>
-                <li>一个去中心化存储网络</li>
-                <li>IPFS 的激励层</li>
-                <li>打破 ICO 融资记录</li>
-                <li>2017 年筹集 2.57 亿美金</li>
+                <li>去中心化存储网络</li>
+                <li>下一代千亿级金矿</li>
+                <li>融资2.57亿美金创全球ICO记录</li>
               </ul>
             </div>
           </div>
           <div class="item">
-            <img src="../../assets/img/home_icon_3.png" alt />
+            <!-- <img src="../../assets/img/home_icon_3.png" alt /> -->
             <div class="right">
-              <p class="title">20亿枚</p>
+              <p class="title">
+                <span class="zhu"></span>
+                <span>20亿枚</span>
+              </p>
               <p class="subtitle">Filecoin总发行量</p>
-              <div class="hr"></div>
               <ul>
                 <li>
                   <span>Filecoin基金会</span>
                   <span class="persent">5%</span>
                 </li>
                 <li>
-                  <span>ICO 投资人（私募+公募）</span>
+                  <span>ICO投资人（私募+公募</span>
                   <span class="persent">10%</span>
                 </li>
                 <li>
-                  <span>Protocol labs（官方团队)</span>
+                  <span>Protocol labs（官方团队）</span>
                   <span class="persent">15%</span>
                 </li>
                 <li>
@@ -97,10 +118,14 @@
                 </li>
               </ul>
             </div>
+            <div class="image-centent">
+              <!-- <div class="img"></div> -->
+              <img src="../../assets/img/home/homeBigBanner.png" alt="" />
+            </div>
           </div>
         </div>
         <!--买币不如挖矿-->
-        <div class="section intro3">
+        <!-- <div class="section intro3">
           <h3>
             <span style="margin-right: 16px">炒币不如屯币</span>
             <span>屯币不如挖矿</span>
@@ -152,7 +177,7 @@
               <span>轻松认购</span>
             </div>
           </div>
-        </div>
+        </div> -->
         <!--  全网算力第一  -->
         <!--<div class="section intro4">
           <p class="title">全网算力持续排名第一</p>
@@ -165,13 +190,12 @@
         <!--  Banner介绍  -->
         <!-- <Banner5></Banner5> -->
         <!--  云算力优势  -->
-        <div class="section intro6">
+        <!-- <div class="section intro6">
           <div class="title">FILPool矿池优势</div>
-          <!--<div class="subtitle">FILPool矿池</div>-->
           <Banner6></Banner6>
-        </div>
+        </div> -->
         <!--  蜘蛛矿机  -->
-        <div class="section intro7">
+        <!-- <div class="section intro7">
           <div class="title">蜘蛛矿机</div>
           <div class="subtitle">
             支持多设备统一管理
@@ -224,7 +248,7 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
         <!--合作伙伴-->
         <Partner></Partner>
       </vue-pull-refresh>
@@ -253,6 +277,7 @@ import CalcPowerItem from "@/views/calcPower/CalcPowerItem";
 import Banner from "@/components/Banner";
 import Notice from "@/components/Notice";
 import Storage from "./components/storage";
+import nodeInformation from "./components/nodeInformation"; // 节点信息
 import Banner5 from "@/components/Banner5";
 import Banner6 from "@/components/Banner6";
 import Partner from "@/components/Partner";
@@ -274,22 +299,22 @@ export default {
     return {
       guideItems: [
         {
-          icon: require("../../assets/img/home_icon_class.png"),
+          icon: require("../../assets/img/mine/guide-4.png"),
           title: "进阶小课堂",
           router: "/classroom"
         },
         {
-          icon: require("../../assets/img/home_icon_invitation.png"),
+          icon: require("../../assets/img/mine/guide-3.png"),
           title: "邀请好友",
           router: "/invite"
         },
         {
-          icon: require("../../assets/img/home_icon_produce.png"),
+          icon: require("../../assets/img/mine/guide-2.png"),
           title: "项目动态",
           router: "/dynamic"
         },
         {
-          icon: require("../../assets/img/home_icon_help.png"),
+          icon: require("../../assets/img/mine/guide-1.png"),
           title: "帮助中心",
           router: "/helpCenter"
         }
@@ -319,7 +344,8 @@ export default {
     [Popup.name]: Popup,
     "vue-pull-refresh": VuePullRefresh,
     Browser,
-    Storage
+    Storage,
+    nodeInformation
     /*[PullRefresh.name]: PullRefresh*/
   },
   created() {
@@ -414,14 +440,39 @@ export default {
 @import "../../assets/scss/base";
 
 $section-margin-top: 12px;
+
+.title-image {
+  padding: 10px;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  .title-fil {
+    width: 22px;
+    height: 22px;
+    margin-left: 18px;
+  }
+  .title-text {
+    margin-left: 8px;
+    width: 60px;
+    height: 12px;
+  }
+}
+.banner-margin {
+  margin: 10px;
+  border-radius: 8px;
+  overflow: hidden;
+}
 .home-container {
   height: 100vh;
   background: #eeeaed;
 }
 .section {
-  background: white;
+  // background: white;
   margin-top: $section-margin-top;
 }
+// .section-white {
+//   background: white;
+// }
 
 .banner {
   background: white;
@@ -449,12 +500,11 @@ $section-margin-top: 12px;
 }
 
 .guide {
-  background: white;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  padding: 22px 12px;
-  margin-bottom: 12px;
+  padding: 12px 12px;
+  // margin-bottom: 12px;
   &-item {
     flex: 1;
     display: flex;
@@ -464,11 +514,11 @@ $section-margin-top: 12px;
     justify-content: center;
 
     img {
-      max-height: 24px;
+      max-height: 48px;
     }
 
     span {
-      margin-top: 12px;
+      margin-top: 6px;
     }
   }
 }
@@ -480,28 +530,32 @@ $section-margin-top: 12px;
 
   h3 {
     text-align: center;
-    color: $h2-color;
-    font-size: 15px;
+    font-size: 16px;
+    color: #333333;
+    font-weight: 700;
   }
-
+  .intro-video {
+    padding: 10px;
+  }
   video {
-    width: 92%;
-    height: 160px;
+    width: 100%;
+    height: 150px;
     margin-bottom: 12px;
+    border-radius: 8px;
+    overflow: hidden;
   }
 }
-
 .intro2 {
-  padding: 32px;
+  // padding: 10;
 
   .item {
+    background: #fff;
+    margin: 10px;
+    border-radius: 8px;
+    padding: 12px;
     &:first-child {
       margin-top: 0;
     }
-
-    margin-top: 24px;
-    display: flex;
-    align-items: flex-start;
 
     > img {
       max-width: 40px;
@@ -511,43 +565,63 @@ $section-margin-top: 12px;
       margin: 0;
     }
 
+    .image-centent {
+      background: #31363aff;
+      padding: 12px 20px;
+      // height: 126px;
+      margin-top: 20px;
+      img {
+        height: 100%;
+        width: 100%;
+        // background-image: url("../../assets/img/home/homeBigBanner.png");
+        // background-size: 100% 100%;
+      }
+    }
     .right {
-      margin-left: 30px;
+      // margin-left: 30px;
 
       .title {
         font-size: 16px;
         font-weight: bold;
         color: $h1-color;
+        .zhu {
+          display: inline-block;
+          width: 4px;
+          height: 14px;
+          background: #ffab17ff;
+          margin-right: 8px;
+        }
       }
 
       .subtitle {
         font-size: 14px;
         color: $h3-color;
         margin-top: 6px;
+        margin-left: 10px;
       }
-
-      .hr {
-        width: 36px;
-        height: 2px;
-        background: $main-color;
-        margin-top: 6px;
-      }
-
       ul {
         list-style-type: disc;
         list-style-position: inside;
+        margin-top: 18px;
 
         li {
           color: $h2-color;
           font-size: 13px;
           margin-top: 8px;
+          list-style: none;
+          &::before {
+            content: "\02022";
+            // margin-left: 20px;
+            margin-right: 8px;
+            color: #ffab17ff;
+            font-style: normal;
+          }
         }
       }
     }
   }
 }
 .intro-title {
-  margin: 16px 0;
 }
 .intro3 {
   background: white;
@@ -753,11 +827,10 @@ $section-margin-top: 12px;
 .persent {
   display: inline-block;
   min-width: 14px;
-  background: rgba(46, 18, 175, 1);
   border-radius: 6px;
   font-size: 10px;
   padding: 2px 5px;
-  color: #fff;
+  color: #333333ff;
   transform: scale(0.8);
   text-align: center;
   margin-left: 6px;

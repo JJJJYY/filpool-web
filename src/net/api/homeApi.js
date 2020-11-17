@@ -32,6 +32,6 @@ export function getPartnerListApi() {
   return getRequest('App.PartnerInfo.List');
 }
 // 存储空间
-export function getPoolInfoApi() {
-  return getRequest('App.PoolInfo.Info');
+export function getPoolInfoApi(data, fun) {
+  return getRequest('App.PoolInfo.Info', data, fun);
 }

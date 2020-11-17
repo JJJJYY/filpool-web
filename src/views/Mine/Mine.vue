@@ -342,7 +342,6 @@ export default {
     getMyPowerTwo() {
       const CancelToken = axios.CancelToken;
       if (typeof this.cancelAjax === "function") {
-        console.log("fun");
         this.cancelAjax();
       }
       let _this = this;
