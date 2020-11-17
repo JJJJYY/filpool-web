@@ -56,7 +56,9 @@
             />
             <div class="earnings-center">
               <p>矿池累计收益</p>
-              <p class="earnings-center-size">{{ poolData.totalReward }} FIL</p>
+              <p class="earnings-center-size">
+                {{ poolData.totalReward || 0 }} FIL
+              </p>
             </div>
           </div>
           <div class="earnings-width">
@@ -68,7 +70,7 @@
             <div class="earnings-center">
               <p>矿池昨日收益</p>
               <p class="earnings-center-size">
-                {{ poolData.yesterdayReward }} FIL
+                {{ poolData.yesterdayReward || 0 }} FIL
               </p>
             </div>
           </div>
@@ -83,7 +85,7 @@
             <div class="earnings-center">
               <p>累计单T收益</p>
               <p class="earnings-center-size">
-                {{ poolData.poolEfficiency }} FIL/T
+                {{ poolData.poolEfficiency || 0 }} FIL/T
               </p>
             </div>
           </div>
@@ -96,7 +98,7 @@
             <div class="earnings-center">
               <p>昨日单T收益</p>
               <p class="earnings-center-size">
-                {{ poolData.yesterdaySpaceEfficiency }} FIL/T
+                {{ poolData.yesterdaySpaceEfficiency || 0 }} FIL/T
               </p>
             </div>
           </div>
