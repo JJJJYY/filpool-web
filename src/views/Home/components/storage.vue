@@ -17,7 +17,7 @@
         二期运营数据
       </div>
     </div>
-    <div class="storage-content">
+    <div class="storage-content" v-if="loading">
       <div class="content-text">
         <p class="content-text-size">矿池填充进度</p>
         <p class="content-text-size-small">
@@ -105,7 +105,7 @@
         </div>
       </div>
     </div>
-    <div class="nodeInformation">
+    <div class="nodeInformation" v-if="loading">
       <div class="nodeInformation-centent">
         <div class="nodeInformation-text">
           节点信息
@@ -171,6 +171,7 @@ export default {
   },
   methods: {
     operationalDataApi() {
+      this.loading = false;
       const CancelToken = axios.CancelToken;
       if (typeof this.cancelAjax === "function") {
         this.cancelAjax();
@@ -194,7 +195,7 @@ export default {
           this.nodeList = res.data.nodes;
           setTimeout(() => {
             this.createDom();
-          }, 1);
+          }, 0);
         }
       });
     },

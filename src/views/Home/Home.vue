@@ -45,8 +45,6 @@
         </div>
         <!-- 存储空间 -->
         <Storage style="margin-top: 30px"></Storage>
-        <!-- 节点信息 -->
-        <!-- <nodeInformation></nodeInformation> -->
         <!--介绍-->
         <div class="section intro">
           <h3 class="intro-title">IPFS社区介绍</h3>
@@ -277,7 +275,6 @@ import CalcPowerItem from "@/views/calcPower/CalcPowerItem";
 import Banner from "@/components/Banner";
 import Notice from "@/components/Notice";
 import Storage from "./components/storage";
-import nodeInformation from "./components/nodeInformation"; // 节点信息
 import Banner5 from "@/components/Banner5";
 import Banner6 from "@/components/Banner6";
 import Partner from "@/components/Partner";
@@ -344,8 +341,7 @@ export default {
     [Popup.name]: Popup,
     "vue-pull-refresh": VuePullRefresh,
     Browser,
-    Storage,
-    nodeInformation
+    Storage
     /*[PullRefresh.name]: PullRefresh*/
   },
   created() {
