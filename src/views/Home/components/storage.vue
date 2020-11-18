@@ -32,23 +32,17 @@
       <div class="storage-data">
         <div class="data-text">
           <p>总储存空间</p>
-          <p class="text-color">
-            {{ done(poolData.poolPower) | parseFloatFilter || 0 }}T
-          </p>
+          <p class="text-color">{{ done(poolData.poolPower, 6) || 0 }}T</p>
         </div>
         <div class="wire"></div>
         <div class="data-text">
           <p>总有效算力</p>
-          <p class="text-color">
-            {{ done(poolData.poolAdjPower) | parseFloatFilter || 0 }}P
-          </p>
+          <p class="text-color">{{ done(poolData.poolAdjPower, 6) || 0 }}P</p>
         </div>
         <div class="wire"></div>
         <div class="data-text">
           <p>全网有效算力</p>
-          <p class="text-color">
-            {{ done(poolData.netAdjPower) | parseFloatFilter || 0 }}P
-          </p>
+          <p class="text-color">{{ done(poolData.netAdjPower, 6) || 0 }}P</p>
         </div>
       </div>
       <div class="title-flex">矿池数据信息</div>
@@ -63,7 +57,7 @@
             <div class="earnings-center">
               <p>矿池累计收益</p>
               <p class="earnings-center-size">
-                {{ done(poolData.totalReward) | parseFloatFilter || 0 }} FIL
+                {{ done(poolData.totalReward, 6) || 0 }} FIL
               </p>
             </div>
           </div>
@@ -76,7 +70,7 @@
             <div class="earnings-center">
               <p>矿池昨日收益</p>
               <p class="earnings-center-size">
-                {{ done(poolData.yesterdayReward) | parseFloatFilter || 0 }} FIL
+                {{ done(poolData.yesterdayReward, 6) || 0 }} FIL
               </p>
             </div>
           </div>
@@ -91,7 +85,7 @@
             <div class="earnings-center">
               <p>累计单T收益</p>
               <p class="earnings-center-size">
-                {{ done(poolData.poolEfficiency) || 0 }} FIL/T
+                {{ done(poolData.poolEfficiency, 6) || 0 }} FIL/T
               </p>
             </div>
           </div>
