@@ -322,7 +322,7 @@ export default {
         this.type = [3, 13];
         this.getRecordListApi(this.type);
       } else if (index === 1) {
-        this.type = [17, 21];
+        this.type = [17, 21, 30, 31];
         this.getRecordListApi(this.type);
       }
     },
