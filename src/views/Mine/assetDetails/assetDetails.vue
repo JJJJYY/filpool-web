@@ -171,6 +171,9 @@ export default {
         { type: 26, name: "扣除质押币" },
         { type: 27, name: "充值划转质押" },
         { type: 28, name: "收益释放至质押" },
+        { type: 29, name: "加速收益" },
+        { type: 30, name: "25%加速收益释放" },
+        { type: 31, name: "加速收益释放" },
       ];
     },
   },
