@@ -85,7 +85,7 @@
                     "
                     alt
                   />
-                  <span>去购买算力</span>
+                  <span>去申请算力</span>
                 </router-link>
                 <div
                   class="to-buy"
