@@ -32,7 +32,9 @@
               </div>
               <div class="total">
                 <div>{{ x.quantity | parseFloatFilter }} {{ x.asset }}</div>
-                <div style="color:#e17055;font-size: 12px;">(已扣除服务费)</div>
+                <div style="color: #e17055; font-size: 12px">
+                  (已扣除服务费)
+                </div>
               </div>
               <div class="detail-time">{{ timeStr(x.createTime) }}</div>
             </div>
@@ -65,14 +67,14 @@ export default {
       profitList: [],
       loading: false,
       finished: false,
-      page: 1
+      page: 1,
     };
   },
   components: {
     HeadNav,
     [Tab.name]: Tab,
     [Tabs.name]: Tabs,
-    [List.name]: List
+    [List.name]: List,
   },
   mounted() {
     this.loadData();
@@ -81,10 +83,10 @@ export default {
     onLoad() {
       const postData = {
         page: this.page,
-        count: 10
+        count: 10,
       };
       userIncomeApi(postData)
-        .then(res => {
+        .then((res) => {
           if (res.ret === 200) {
             let newList = res.data;
             if (res.data.length) {
@@ -100,7 +102,7 @@ export default {
         .finally(() => (this.loading = false));
     },
     loadData() {
-      myWeightGroupApi().then(res => {
+      myWeightGroupApi().then((res) => {
         this.list = res.data;
       });
     },
@@ -112,6 +114,8 @@ export default {
           return "挖矿收益";
         case 3:
           return "赠送收益";
+        case 4:
+          return "加速收益";
       }
     },
     typeDescription(x) {
@@ -145,11 +149,11 @@ export default {
         query: {
           title: this.typeDescription(x.type),
           type: x.type,
-          typeDescription: this.typeDescription(x.type)
-        }
+          typeDescription: this.typeDescription(x.type),
+        },
       });
-    }
-  }
+    },
+  },
 };
 </script>
 
