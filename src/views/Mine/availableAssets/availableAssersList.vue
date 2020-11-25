@@ -84,6 +84,8 @@ export default {
         { type: 7, name: "充值金额划转至收益" },
         { type: 8, name: "内部转出" },
         { type: 9, name: "内部转入" },
+        { type: 10, name: "借贷" },
+        { type: 11, name: "还贷" },
         { type: 12, name: "返佣" },
         { type: 13, name: "系统充币" },
         { type: 14, name: "活动奖励" },

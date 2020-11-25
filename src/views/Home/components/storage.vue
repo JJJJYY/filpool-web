@@ -96,9 +96,9 @@
               alt=""
             />
             <div class="earnings-center">
-              <p>昨日单T收益</p>
+              <p>昨日有效单T收益</p>
               <p class="earnings-center-size">
-                {{ done(poolData.yesterdaySpaceEfficiency, 6) || 0 }}
+                {{ done(poolData.yesterdayEfficiency, 6) || 0 }}
                 FIL/T
               </p>
             </div>
@@ -108,9 +108,7 @@
     </div>
     <div class="nodeInformation" v-if="loading">
       <div class="nodeInformation-centent">
-        <div class="nodeInformation-text">
-          节点信息
-        </div>
+        <div class="nodeInformation-text">节点信息</div>
         <div class="nodeInformation-list">
           <div v-if="nodeList" class="nodeInformation-list-t">
             <div class="nodeInformation-list-centent">
@@ -146,7 +144,7 @@ import axios from "axios"; // 作用取消请求
 export default {
   name: "storage",
   components: {
-    [Progress.name]: Progress
+    [Progress.name]: Progress,
   },
   data() {
     return {
@@ -155,14 +153,14 @@ export default {
       loading: false,
       operationalData: 1,
       nodeList: null,
-      cancelAjax: null // 作用取消请求
+      cancelAjax: null, // 作用取消请求
     };
   },
   watch: {
     operationalData() {
       console.log(this.operationalData);
       this.operationalDataApi();
-    }
+    },
   },
   created() {
     this.operationalDataApi();
@@ -184,7 +182,7 @@ export default {
         new CancelToken(function executor(c) {
           _this.cancelAjax = c;
         })
-      ).then(res => {
+      ).then((res) => {
         console.log(res);
         if (res.ret === 200) {
           this.loading = true;
@@ -223,8 +221,8 @@ export default {
         span.className = "van-progress__pivot-right";
       }
       myComp.appendChild(span);
-    }
-  }
+    },
+  },
 };
 </script>
 
