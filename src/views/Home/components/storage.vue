@@ -68,7 +68,7 @@
               alt=""
             />
             <div class="earnings-center">
-              <p>矿池昨日GAS费用</p>
+              <p>昨日收益</p>
               <p class="earnings-center-size">
                 {{ done(poolData.yesterdayReward, 6) || 0 }} FIL
               </p>
@@ -83,7 +83,7 @@
               alt=""
             />
             <div class="earnings-center">
-              <p>GAS消耗费用</p>
+              <p>累计单T收益</p>
               <p class="earnings-center-size">
                 {{ done(poolData.poolEfficiency, 6) || 0 }} FIL
               </p>
