@@ -55,7 +55,7 @@
               alt=""
             />
             <div class="earnings-center">
-              <p>矿池累计收益</p>
+              <p>矿池总收益</p>
               <p class="earnings-center-size">
                 {{ done(poolData.totalReward, 6) || 0 }} FIL
               </p>
@@ -68,7 +68,7 @@
               alt=""
             />
             <div class="earnings-center">
-              <p>矿池昨日收益</p>
+              <p>矿池昨日GAS费用</p>
               <p class="earnings-center-size">
                 {{ done(poolData.yesterdayReward, 6) || 0 }} FIL
               </p>
@@ -83,9 +83,9 @@
               alt=""
             />
             <div class="earnings-center">
-              <p>累计单T收益</p>
+              <p>GAS消耗费用</p>
               <p class="earnings-center-size">
-                {{ done(poolData.poolEfficiency, 6) || 0 }} FIL/T
+                {{ done(poolData.poolEfficiency, 6) || 0 }} FIL
               </p>
             </div>
           </div>
@@ -96,10 +96,10 @@
               alt=""
             />
             <div class="earnings-center">
-              <p>昨日有效单T收益</p>
+              <p>有效算力单T收益</p>
               <p class="earnings-center-size">
                 {{ done(poolData.yesterdayEfficiency, 6) || 0 }}
-                FIL/T
+                FIL
               </p>
             </div>
           </div>
@@ -118,13 +118,13 @@
               </p>
             </div>
             <div class="nodeInformation-list-centent">
-              <p class="nodeInformation-list-titile">有效算力</p>
+              <p class="nodeInformation-list-titile">有效算力(PiB)</p>
               <p v-for="(item, index) in nodeList" :key="index">
                 {{ item.adj | parseFloatFilter }}
               </p>
             </div>
             <div class="nodeInformation-list-centent">
-              <p class="nodeInformation-list-titile">24小时挖矿收益</p>
+              <p class="nodeInformation-list-titile">24小时挖矿收益(FIL)</p>
               <p v-for="(item, index) in nodeList" :key="index">
                 {{ item.rewards | parseFloatFilter }}
               </p>
@@ -144,7 +144,7 @@ import axios from "axios"; // 作用取消请求
 export default {
   name: "storage",
   components: {
-    [Progress.name]: Progress,
+    [Progress.name]: Progress
   },
   data() {
     return {
@@ -153,14 +153,14 @@ export default {
       loading: false,
       operationalData: 1,
       nodeList: null,
-      cancelAjax: null, // 作用取消请求
+      cancelAjax: null // 作用取消请求
     };
   },
   watch: {
     operationalData() {
       console.log(this.operationalData);
       this.operationalDataApi();
-    },
+    }
   },
   created() {
     this.operationalDataApi();
@@ -182,7 +182,7 @@ export default {
         new CancelToken(function executor(c) {
           _this.cancelAjax = c;
         })
-      ).then((res) => {
+      ).then(res => {
         console.log(res);
         if (res.ret === 200) {
           this.loading = true;
@@ -221,8 +221,8 @@ export default {
         span.className = "van-progress__pivot-right";
       }
       myComp.appendChild(span);
-    },
-  },
+    }
+  }
 };
 </script>
 
