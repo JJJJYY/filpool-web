@@ -84,7 +84,7 @@ export default {
         { type: 7, name: "充值金额划转至收益" },
         { type: 8, name: "内部转出" },
         { type: 9, name: "内部转入" },
-        { type: 10, name: "借贷" },
+        { type: 10, name: "预估借币本息" },
         { type: 11, name: "还贷" },
         { type: 12, name: "返佣" },
         { type: 13, name: "系统充币" },
@@ -104,6 +104,7 @@ export default {
         { type: 29, name: "加速收益" },
         { type: 30, name: "25%加速收益释放" },
         { type: 31, name: "加速收益释放" },
+        { type: 32, name: "借币质押" },
       ];
     },
   },
