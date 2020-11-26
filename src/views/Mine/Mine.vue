@@ -329,6 +329,7 @@ export default {
   },
   activated() {
     this.getMyPowerTwo();
+    this.myAsset();
   },
   deactivated() {},
   created() {
