@@ -112,19 +112,37 @@
         <div class="nodeInformation-list">
           <div v-if="nodeList" class="nodeInformation-list-t">
             <div class="nodeInformation-list-centent">
-              <p class="nodeInformation-list-titile">节点ID</p>
+              <p
+                class="nodeInformation-list-titile"
+                style="transform: scale(0.8)"
+              >
+                节点ID
+              </p>
+              <p class="titileXian"></p>
               <p v-for="(item, index) in nodeList" :key="index">
                 {{ item.miner }}
               </p>
             </div>
             <div class="nodeInformation-list-centent">
-              <p class="nodeInformation-list-titile">有效算力(PiB)</p>
+              <p
+                class="nodeInformation-list-titile"
+                style="transform: scale(0.8)"
+              >
+                有效算力(PiB)
+              </p>
+              <p class="titileXian"></p>
               <p v-for="(item, index) in nodeList" :key="index">
                 {{ item.adj | parseFloatFilter }}
               </p>
             </div>
             <div class="nodeInformation-list-centent">
-              <p class="nodeInformation-list-titile">24小时挖矿收益(FIL)</p>
+              <p
+                class="nodeInformation-list-titile"
+                style="transform: scale(0.8)"
+              >
+                24小时挖矿收益(FIL)
+              </p>
+              <p class="titileXian"></p>
               <p v-for="(item, index) in nodeList" :key="index">
                 {{ item.rewards | parseFloatFilter }}
               </p>
@@ -365,8 +383,13 @@ export default {
           line-height: 27px;
           text-align: center;
           .nodeInformation-list-titile {
-            border-bottom: 1px solid #ebebebff;
+            // border-bottom: 1px solid #ebebebff;
             color: #666666ff;
+          }
+          .titileXian {
+            width: 100%;
+            height: 1px;
+            background: #ebebebff;
           }
         }
       }

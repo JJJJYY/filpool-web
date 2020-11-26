@@ -433,6 +433,7 @@ export default {
       this.getMyPowerTwo();
       this.$store.dispatch("reloadUserData");
       this.getMyPowerTwo();
+      this.myAsset(); // 刷新钱包
     }
   }
 };
