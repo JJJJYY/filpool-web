@@ -19,7 +19,7 @@
       <div class="call-box" v-if="boxLoading">
         <div class="call-titleJump">
           <div v-if="isDate === 1" class="to-buy">
-            <router-link style="color: #666666ff" :to="{ path: '/rate' }">
+            <router-link class="call-jump" :to="{ path: '/rate' }">
               去申请算力>>
             </router-link>
           </div>
@@ -403,6 +403,9 @@ export default {
     font-size: 16px;
     color: #333333ff;
   }
+}
+.call-jump {
+  color: #666666ff;
 }
 .call-box-details {
   padding: 0 12px;
