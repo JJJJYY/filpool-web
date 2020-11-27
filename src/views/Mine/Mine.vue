@@ -55,7 +55,7 @@
               <div class="total-validWeight">:</div> -->
               </div>
               <van-divider />
-              <div v-if="isDate === 2" class="pledge-num">
+              <!-- <div v-if="isDate === 2" class="pledge-num">
                 <div>
                   <div>所需质押量</div>
                   <div class="num-margin">{{ done(maxPledged, 6) }}</div>
@@ -64,7 +64,7 @@
                   <div>当前质押量</div>
                   <div class="num-margin">{{ done(currentPledged, 6) }}</div>
                 </div>
-              </div>
+              </div> -->
               <div class="styleFlex">
                 <p>目前有效算力：{{ validWeight | parseFloatFilter }}T</p>
                 <router-link

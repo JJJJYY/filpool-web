@@ -18,15 +18,13 @@
       </div>
       <div class="call-box" v-if="boxLoading">
         <div class="call-titleJump">
-          <router-link
-            :to="{ path: '/rate' }"
-            v-if="isDate === 1"
-            class="to-buy"
-          >
-            去申请算力>>
-          </router-link>
-          <div class="to-buy" v-if="isDate === 2" @click="popupShow = true">
-            去质押>>
+          <div v-if="isDate === 1" class="to-buy">
+            <router-link style="color: #666666ff" :to="{ path: '/rate' }">
+              去申请算力>>
+            </router-link>
+          </div>
+          <div class="to-buy" v-if="isDate === 2">
+            <span @click="popupShow = true">去质押>></span>
           </div>
           <div class="power-storage">
             <div class="power-storage-box">
@@ -293,7 +291,6 @@ export default {
         })
       ).then(res => {
         this.boxLoading = true;
-        console.log(res);
         this.totalWeight = res.data.totalPower;
         this.validWeight = res.data.adj;
         this.maxAdj = res.data.maxAdj;
