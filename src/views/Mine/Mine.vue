@@ -105,9 +105,9 @@
                 color="#F7A90D"
               />
             </div>
+            <div class="cut-off-rule"></div>
             <div class="growth-flex">
               <div @click="growth">详情>></div>
-              <div @click="growth">算力增长明细>></div>
             </div>
           </div>
           <div class="group group-capital">
@@ -271,7 +271,7 @@ import {
   getMyPower,
   myBalanceApi,
   assetTypeApi,
-  getTransferPledged,
+  getTransferPledged
 } from "@/net/api/userInfoApi";
 import {
   PullRefresh,
@@ -280,7 +280,7 @@ import {
   Popup,
   Button,
   Field,
-  Toast,
+  Toast
 } from "vant";
 export default {
   name: "Mine",
@@ -293,7 +293,7 @@ export default {
     [Popup.name]: Popup,
     [Button.name]: Button,
     [Field.name]: Field,
-    [Toast.name]: Toast,
+    [Toast.name]: Toast
   },
 
   watch: {
@@ -304,7 +304,7 @@ export default {
       } else if (this.isDate === 2) {
         this.getMyPowerTwo();
       }
-    },
+    }
   },
   data() {
     return {
@@ -321,12 +321,12 @@ export default {
       asset: "FIL",
       myAssetM: {},
       myTokensData: {},
-      cancelAjax: null, // 作用取消请求
+      cancelAjax: null // 作用取消请求
     };
   },
 
   computed: {
-    ...mapState(["userData"]),
+    ...mapState(["userData"])
   },
   activated() {
     this.getMyPowerTwo();
@@ -353,7 +353,7 @@ export default {
         new CancelToken(function executor(c) {
           _this.cancelAjax = c;
         })
-      ).then((res) => {
+      ).then(res => {
         this.totalWeight = res.data.totalPower;
         this.validWeight = res.data.adj;
         this.maxAdj = res.data.maxAdj;
@@ -365,16 +365,16 @@ export default {
     },
 
     myAsset() {
-      myBalanceApi().then((res) => {
-        res.data.forEach((item) => {
+      myBalanceApi().then(res => {
+        res.data.forEach(item => {
           if (item.asset === this.asset) {
             this.myAssetM = item;
           }
         });
       });
-      assetTypeApi().then((res) => {
+      assetTypeApi().then(res => {
         if (res.ret == 200) {
-          res.data.forEach((item) => {
+          res.data.forEach(item => {
             if (item.asset === this.asset) {
               this.myTokensData = item;
             }
@@ -386,9 +386,9 @@ export default {
     handleOk() {
       if (this.number) {
         getTransferPledged({
-          amount: this.number,
+          amount: this.number
         })
-          .then((res) => {
+          .then(res => {
             if (res.ret === 200) {
               Toast.success("划转成功");
               this.getMyPowerTwo();
@@ -436,14 +436,20 @@ export default {
       this.$store.dispatch("reloadUserData");
       this.getMyPowerTwo();
       this.myAsset(); // 刷新钱包
-    },
-  },
+    }
+  }
 };
 </script>
 
 <style lang="scss" scoped>
 @import "../../assets/scss/base";
 
+.cut-off-rule {
+  width: 100%;
+  height: 1px;
+  background: #efefefff;
+  margin-bottom: 8px;
+}
 .growth-flex {
   display: flex;
   justify-content: space-between;
@@ -546,7 +552,7 @@ export default {
   }
 }
 .header {
-  padding: 0 16px 12px;
+  padding: 0 16px 5px;
   border-radius: 0 0 8px 8px;
   background: $content-backgroun-color;
   .total {

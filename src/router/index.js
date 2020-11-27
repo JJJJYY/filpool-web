@@ -342,7 +342,7 @@ const routes = [{
     name: 'powerDetails',
     component: () => import( /* webpackChunkName: "mine" */ '../views/Mine/powerDetails/powerDetails.vue'),
     meta: {
-      title: "算力增长明细",
+      title: "详情",
       needLogin: true
     }
   },
