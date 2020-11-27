@@ -167,13 +167,13 @@
           </div>
         </div>
       </van-popup>
-      <div v-if="isDate === 1" class="call-box-details">算力增长明细:</div>
+      <div v-if="boxLoading" class="call-box-details">算力增长明细:</div>
       <van-list
         v-model="loading"
         :finished="finished"
         finished-text="没有更多了"
         @load="onLoad"
-        v-if="isDate === 1"
+        v-if="boxLoading"
       >
         <!-- <van-cell v-for="item in list" :key="item" :title="item" /> -->
         <div class="list">
@@ -244,9 +244,21 @@ export default {
     isDate() {
       this.show = false;
       if (this.isDate === 1) {
+        this.list = [];
+        this.pagination = {
+          current: 1,
+          pageSize: 10
+        };
         this.getMyPowerTwo();
+        this.onLoad();
       } else if (this.isDate === 2) {
+        this.list = [];
+        this.pagination = {
+          current: 1,
+          pageSize: 10
+        };
         this.getMyPowerTwo();
+        this.onLoad();
       }
     }
   },
@@ -324,6 +336,7 @@ export default {
       return newNum;
     },
     onLoad() {
+      this.loading = true;
       this.getRecordListApi();
     },
     // 类型
@@ -346,15 +359,16 @@ export default {
     },
     // 数据请求
     getRecordListApi() {
-      this.loading = true;
       const getData = {
         page: this.pagination.current,
         asset: this.asset,
         count: this.pagination.pageSize,
-        type: this.type
+        type: this.type,
+        number: this.isDate
       };
       getUserAdjPowerList(getData)
         .then(res => {
+          console.log(res);
           let newList = res.data.list;
           // 后台返回无数据为对象进行判断
           if (res.data.list.length === 0) {
@@ -367,7 +381,7 @@ export default {
           }
           this.pagination.current += 1;
         })
-        .catch(() => (this.finished = true))
+        .catch(() => ((this.finished = true), (this.loading = false)))
         .finally(() => {
           this.loading = false;
         });
