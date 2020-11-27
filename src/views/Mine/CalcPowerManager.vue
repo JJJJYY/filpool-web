@@ -28,7 +28,7 @@
           <div class="list page-container" style="margin-top: 1px">
             <div class="cell" v-for="(x, index) in profitList" :key="index">
               <div class="type">
-                {{ profitType(x.type) }}
+                {{ x.number + "期--" + profitType(x.type) }}
               </div>
               <div class="total">
                 <div>{{ x.quantity | parseFloatFilter }} {{ x.asset }}</div>
