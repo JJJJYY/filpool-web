@@ -75,7 +75,19 @@
         <div class="cut-off-rule"></div>
         <div class="tow-date-title">
           <p class="tow-date-title-text">待质押：</p>
-          <p>{{ currentPledged | parseFloatFilter }} FIL</p>
+          <p>
+            {{ currentPledged | parseFloatFilter }} FIL
+            <van-icon
+              name="question-o"
+              @click="
+                () => {
+                  this.$toast(
+                    '系统会优先扣除待质押余额进行质押，如需扣除数量不够，默认向合作DeFil平台进行借贷'
+                  );
+                }
+              "
+            />
+          </p>
         </div>
         <div class="cut-off-rule"></div>
         <div class="tow-date-title">
@@ -85,7 +97,17 @@
         <div class="cut-off-rule"></div>
         <div class="tow-date-title">
           <p class="tow-date-title-text">待还款总额：</p>
-          <p>{{ surplusLoan | parseFloatFilter }} FIL</p>
+          <p>
+            {{ surplusLoan | parseFloatFilter }} FIL
+            <van-icon
+              name="question-o"
+              @click="
+                () => {
+                  this.$toast('每日释放收益的80%用于还款');
+                }
+              "
+            />
+          </p>
         </div>
       </div>
       <van-popup v-model="popupShow" position="bottom">
@@ -197,7 +219,7 @@
 
 <script>
 import HeadNav from "@/components/HeadNav";
-import { List, Progress, Popup, Toast, Button, Field } from "vant";
+import { List, Progress, Popup, Toast, Button, Field, Icon } from "vant";
 import axios from "axios"; // 作用取消请求
 import ProgressCircle from "../../../components/progress/ProgressCircle";
 import {
@@ -216,7 +238,8 @@ export default {
     [Popup.name]: Popup,
     [Toast.name]: Toast,
     [Button.name]: Button,
-    [Field.name]: Field
+    [Field.name]: Field,
+    [Icon.name]: Icon
   },
   data() {
     return {
