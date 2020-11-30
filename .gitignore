@@ -1,3 +1,7 @@
 /node_modules
 
 /dist
+/docker
+build.sh
+Dockerfile
+yarn.lock
