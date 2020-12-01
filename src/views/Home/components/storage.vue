@@ -83,9 +83,9 @@
               alt=""
             />
             <div class="earnings-center">
-              <p>累计单T收益</p>
+              <p>昨日消耗GAS</p>
               <p class="earnings-center-size">
-                {{ done(poolData.poolEfficiency, 6) || 0 }} FIL
+                {{ done(poolData.yesterdayGas, 6) || 0 }} FIL
               </p>
             </div>
           </div>
@@ -162,7 +162,7 @@ import axios from "axios"; // 作用取消请求
 export default {
   name: "storage",
   components: {
-    [Progress.name]: Progress
+    [Progress.name]: Progress,
   },
   data() {
     return {
@@ -171,14 +171,14 @@ export default {
       loading: false,
       operationalData: 1,
       nodeList: null,
-      cancelAjax: null // 作用取消请求
+      cancelAjax: null, // 作用取消请求
     };
   },
   watch: {
     operationalData() {
       console.log(this.operationalData);
       this.operationalDataApi();
-    }
+    },
   },
   created() {
     this.operationalDataApi();
@@ -200,7 +200,7 @@ export default {
         new CancelToken(function executor(c) {
           _this.cancelAjax = c;
         })
-      ).then(res => {
+      ).then((res) => {
         console.log(res);
         if (res.ret === 200) {
           this.loading = true;
@@ -239,8 +239,8 @@ export default {
         span.className = "van-progress__pivot-right";
       }
       myComp.appendChild(span);
-    }
-  }
+    },
+  },
 };
 </script>
 

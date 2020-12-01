@@ -95,7 +95,7 @@ export default {
         { type: 20, name: "冻结金额扣除" },
         { type: 21, name: "25%收益直接释放" },
         { type: 22, name: "收益金额划转至抵押" },
-        { type: 23, name: "质押金额返还至收益" },
+        { type: 23, name: "质押金额返还" },
         { type: 24, name: "挖矿收益" },
         { type: 25, name: "SR质押币发放" },
         { type: 26, name: "扣除质押币" },

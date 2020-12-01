@@ -38,13 +38,13 @@
           <div v-else class="none-data">暂无数据</div>
         </van-tabs>
       </van-tab>
-      <van-tab title="算力加速订单">
+      <van-tab class="list page-container" title="算力加速订单">
         <div
           class="speedUp-centent"
           v-for="(item, index) in speedUpData"
           :key="index"
         >
-          <div class="speedUp-d ">订单编号：{{ item.pid }}</div>
+          <div class="speedUp-d">订单编号：{{ item.pid }}</div>
           <div class="speedUp-s">
             <div class="speedUp-c">等待人数:{{ item.wait_num }}</div>
             <div>
@@ -87,7 +87,7 @@ export default {
     HeadNav,
     [Tab.name]: Tab,
     [Tabs.name]: Tabs,
-    [List.name]: List
+    [List.name]: List,
   },
   data() {
     return {
@@ -96,19 +96,19 @@ export default {
         { title: "全部", type: "" },
         { title: "待付款", type: 0 },
         { title: "已完成", type: 1 },
-        { title: "已取消", type: 2 }
+        { title: "已取消", type: 2 },
         // { title: "已超时", type: 3 },
       ],
       statustext: [
         { status: 0, name: "排队中" },
         { status: 1, name: "加速中" },
-        { status: 2, name: "已加速" }
+        { status: 2, name: "已加速" },
       ],
       list: [],
       listData: [],
       thisData: false,
       active: 0,
-      speedUpData: []
+      speedUpData: [],
     };
   },
   created() {
@@ -117,7 +117,7 @@ export default {
   methods: {
     statusData(v) {
       let thisName = null;
-      this.statustext.map(val => {
+      this.statustext.map((val) => {
         if (val.status === v) {
           thisName = val.name;
         }
@@ -128,8 +128,8 @@ export default {
       console.log(this.active);
       getFlashSaleOrderList({
         page: 1,
-        count: 1000
-      }).then(res => {
+        count: 1000,
+      }).then((res) => {
         console.log(res);
         this.speedUpData = res.data.list;
       });
@@ -140,14 +140,14 @@ export default {
         if (index === 0) {
           this.loadData();
         } else {
-          this.list = this.listData.filter(e => {
+          this.list = this.listData.filter((e) => {
             return e.status === this.items[this.selectedIndex].type;
           });
         }
       }
     },
     loadData() {
-      orderListApi().then(res => {
+      orderListApi().then((res) => {
         this.list = res.data;
         this.listData = res.data;
         if (this.listData.length) {
@@ -177,11 +177,11 @@ export default {
         path: "/countPay",
         query: {
           amount: item.paymentQuantity,
-          id: item.id
-        }
+          id: item.id,
+        },
       });
-    }
-  }
+    },
+  },
 };
 </script>
 
