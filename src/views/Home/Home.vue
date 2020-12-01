@@ -35,9 +35,9 @@
           </div>
         </div>
         <!-- 购买 -->
-        <div v-if="rateShow" class="buy" style="margin: 10px">
+        <!-- <div v-if="rateShow" class="buy" style="margin: 10px">
           <CalcPowerItem :good-data="goodList" @select="onSelect" />
-        </div>
+        </div> -->
         <!-- 存储空间 -->
         <Storage style="margin-top: 30px"></Storage>
         <!--介绍-->
