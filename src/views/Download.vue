@@ -5,7 +5,12 @@
       <img src="@/assets/img/download/download1.png" class="img1" alt />
       <div class="textBox">
         <img src="@/assets/img/download/download2-2.png" class="img2" alt />
-        <img src="@/assets/img/download/download2-1.png" class="img2" style="margin-top: 14px;" alt />
+        <img
+          src="@/assets/img/download/download2-1.png"
+          class="img2"
+          style="margin-top: 14px;"
+          alt
+        />
       </div>
       <div class="content">
         <img src="@/assets/img/download/download3.png" class="img3" alt />
@@ -14,7 +19,11 @@
     </div>
     <div id="modal" v-if="isWeixin">
       <div class="tipsBox">
-        <img src="@/assets/img/download/download_icon_more.png" class="more" alt />
+        <img
+          src="@/assets/img/download/download_icon_more.png"
+          class="more"
+          alt
+        />
         <div class="clear"></div>
         <p class="modalText" style="margin-top: 7vw;">请点击右上角...</p>
         <p class="modalText" style="margin-top: 1.2vh;">选择在“浏览器中打开”</p>
@@ -32,20 +41,20 @@ import { downloadApi } from "../net/api/download";
 export default {
   name: "Download",
   components: {
-    HeadNav,
+    HeadNav
   },
   data() {
     return {
       isWeixin: isWeixin(),
-      downloadUrl: "",
+      downloadUrl: ""
     };
   },
   created() {
     let platform = isiOS() ? "iOS" : "android";
     let getData = {
-      platform,
+      platform
     };
-    downloadApi(getData).then((res) => {
+    downloadApi(getData).then(res => {
       if (res.ret === 200) {
         this.downloadUrl = res.data;
       }
@@ -62,10 +71,10 @@ export default {
     back() {
       /*window.location.href = window.location.origin;*/
       this.$router.push({
-        path: "/",
+        path: "/"
       });
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -102,7 +111,7 @@ export default {
 }
 .download {
   width: 38vw;
-  background: linear-gradient(135deg, #f18729, #fdb552);
+  background: #2559a5ff;
   color: #fff;
   font-size: 4.5vw;
   outline: none;

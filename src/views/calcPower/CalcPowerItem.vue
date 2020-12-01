@@ -3,17 +3,17 @@
     <div class="item">
       <div>
         <div class="name">
-          <img
+          <!-- <img
             src="../../assets/img/buy-icon.png"
             alt=""
             style="width: 16px; height: 12px"
-          />
+          /> -->
           <h3>{{ goodData.tittle }}</h3>
-          <img
+          <!-- <img
             src="../../assets/img/fire.png"
             alt=""
             style="width: 12px; height: 14px"
-          />
+          /> -->
         </div>
         <div class="padding">
           <p class="subtitle">开始时间{{ goodData.start_time }}</p>
@@ -274,7 +274,7 @@ export default {
     justify-content: space-between;
     .recharge {
       font-size: 12px;
-      color: #f9a03e;
+      color: #2559a5ff;
     }
     .buy-centent-left {
       font-size: 14px;
@@ -299,7 +299,7 @@ export default {
   .van-progress__portion {
     background-image: url("../../assets/img/progress.png");
     .van-progress__pivot {
-      background: linear-gradient(to right, #f18c2e, #fbae4e);
+      background: #2559a5ff;
     }
   }
 }
@@ -426,7 +426,7 @@ export default {
   margin-top: 20px;
 }
 .all {
-  color: #f3a50aff;
+  color: #2559a5ff;
   cursor: pointer;
 }
 </style>

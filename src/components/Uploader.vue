@@ -7,7 +7,7 @@
         icon="photo"
         type="primary"
         style="width: 120px"
-        color="#f18a2d"
+        color="#2559A5FF"
         :loading="loading"
         loading-text="正在上传"
         @click="openAcsheel"
@@ -212,11 +212,7 @@ export default {
     .uploadButton {
       width: 99px;
       height: 28px;
-      background: linear-gradient(
-        90deg,
-        rgba(241, 138, 45, 1) 0%,
-        rgba(252, 177, 80, 1) 100%
-      );
+      background: #2559a5ff;
       border-radius: 14px;
       margin-top: 18px;
       color: #fff;

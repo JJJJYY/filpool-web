@@ -195,7 +195,7 @@ export default {
   color: #666666ff;
 }
 #styleskySize {
-  color: #f7a90dff;
+  color: #2559a5ff;
 }
 #stylegreenSize {
   color: #67c23a;
@@ -205,7 +205,7 @@ export default {
   background-color: #666666ff;
 }
 #stylesky {
-  background-color: #f7a90dff;
+  background-color: #2559a5ff;
 }
 #stylegreen {
   background-color: #67c23a;

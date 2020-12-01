@@ -49,7 +49,7 @@
                 ? 0
                 : done((parseFloat(validWeight) / parseFloat(maxAdj)) * 100, 4)
             "
-            color="#F7A90D"
+            color="#2559A5FF"
           />
         </div>
       </div>
@@ -464,7 +464,7 @@ export default {
       .fang {
         width: 8px;
         height: 8px;
-        background: #f7a90dff;
+        background: #2559a5ff;
         margin: 0 10px;
       }
       .fang-two {
@@ -501,7 +501,7 @@ export default {
     .power-storage-box {
       text-align: center;
       .num-color {
-        color: #f0ac25ff;
+        color: #2559a5ff;
         font-size: 14px;
         margin-top: 12px;
       }
@@ -582,7 +582,7 @@ export default {
     }
     .popup-van-huazhuan {
       border-radius: 16px;
-      background: #f9a03eff;
+      background: #2559a5ff;
       color: #fff;
     }
   }

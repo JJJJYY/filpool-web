@@ -182,10 +182,6 @@
     </div>
     <div class="inviteImg" id="qrCodeUrl" ref="qrCodeUrl" />
     <img class="inviteImg" id="test1" />
-    <!-- <div class="image-size" id="downloadImgUrl" ref="downloadImgUrl">
-      <img class="inviteImg" :src="imageSrc" alt />
-      <div class="qr" id="qrCodeUrl" ref="qrCodeUrl"></div>
-    </div>-->
   </div>
 </template>
 
@@ -198,6 +194,7 @@ import HeadNav from "@/components/HeadNav";
 import { downloadImg, saveBase64Img } from "@/utils/utilTools";
 import { distributionDetailApi } from "@/net/api/userInfoApi";
 import html2canvas from "html2canvas";
+import { serviceURL } from "@/config";
 
 export default {
   name: "Invite",
@@ -243,7 +240,7 @@ export default {
     loadData() {
       let Host = "";
       if (!this.$isH5) {
-        Host = "https://www.filpool.io";
+        Host = serviceURL;
       }
       distributionDetailApi().then(res => {
         if (res.ret === 200) {
@@ -261,7 +258,6 @@ export default {
       });
     },
     calcLevel() {
-      //let currentReward = this.item.usdtReward;
       let currentReward = this.item.totalPurchase / 1000;
       let currentProgress = 0;
       if (currentReward < 8) {
@@ -282,7 +278,6 @@ export default {
     createQr() {
       // 绘图
       var canvas = document.createElement("canvas");
-      // var qrcode = document.querySelectorAll("#qrCodeUrl>img")[0];
       let self = this;
       html2canvas(document.getElementById("qrCodeUrl")).then(canvas2 => {
         var img = document.createElement("img");
@@ -298,29 +293,7 @@ export default {
           self.imageData = imgData;
         };
       });
-      // var img = document.createElement("img");
-      // img.src = self.imageSrc;
-      // img.onload = function () {
-      //   canvas.height = img.height;
-      //   canvas.width = img.width;
-      //   var cx = canvas.getContext("2d");
-      //   cx.drawImage(img, 0, 0);
-      //   qrcode.onload = function () {};
-
-      //   cx.drawImage(qrcode, 60, 1194);
-      //   let imgData = canvas.toDataURL("image/png");
-      //   self.imageData = imgData;
-      // };
     },
-    // convertBase64UrlToFile(base64) {
-    //   const bytes = window.atob(base64.split(",")[1]);
-    //   const ab = new ArrayBuffer(bytes.length);
-    //   const ia = new Uint8Array(ab);
-    //   for (let i = 0; i < bytes.length; i++) {
-    //     ia[i] = bytes.charCodeAt(i);
-    //   }
-    //   return new Blob([ab], { type: "image/jpeg" });
-    // },
     //保存到相册
     saveToGallery() {
       // const link = document.createElement("a");
@@ -478,7 +451,6 @@ export default {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-    /*padding: 0 16px;*/
 
     img {
       @include size(34px);
@@ -489,7 +461,6 @@ export default {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-    /*justify-content: space-evenly;*/
     margin-top: 8px;
     position: relative;
 
@@ -501,8 +472,6 @@ export default {
       top: calc(50% - 3px);
       left: 0;
       right: 0;
-      /*left: 16px;*/
-      /*right: 16px;*/
 
       &-high {
         position: absolute;
@@ -570,7 +539,7 @@ export default {
   .downloadBtn {
     width: 120px;
     line-height: 32px;
-    background-color: #f28714;
+    background-color: #2559a5ff;
     position: absolute;
     left: 50%;
     bottom: 20px;
@@ -585,7 +554,6 @@ export default {
   overflow: hidden;
 }
 .inviteImg {
-  // display: none;
   position: absolute;
   top: -110px;
   z-index: -1;
@@ -598,7 +566,6 @@ export default {
   position: absolute;
   left: 0;
   top: 0;
-  // transform: translate(-50%, -50%);
   z-index: -1;
 
   .qr {

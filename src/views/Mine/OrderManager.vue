@@ -1,9 +1,9 @@
 <template>
   <div>
     <head-nav></head-nav>
-    <van-tabs v-model="active" @change="speedUpType" color="#F7A90DFF">
+    <van-tabs v-model="active" @change="speedUpType" color="#2559A5FF">
       <van-tab title="算力订单">
-        <van-tabs sticky color="#E9901D" :scrollspy="false" @click="click">
+        <van-tabs sticky color="#2559A5FF" :scrollspy="false" @click="click">
           <van-tab v-for="(x, i) in items" :key="i" :title="x.title"></van-tab>
           <div v-if="thisData" class="list page-container">
             <div class="cell" v-for="(x, index) in list" :key="index">
@@ -87,7 +87,7 @@ export default {
     HeadNav,
     [Tab.name]: Tab,
     [Tabs.name]: Tabs,
-    [List.name]: List,
+    [List.name]: List
   },
   data() {
     return {
@@ -96,19 +96,18 @@ export default {
         { title: "全部", type: "" },
         { title: "待付款", type: 0 },
         { title: "已完成", type: 1 },
-        { title: "已取消", type: 2 },
-        // { title: "已超时", type: 3 },
+        { title: "已取消", type: 2 }
       ],
       statustext: [
         { status: 0, name: "排队中" },
         { status: 1, name: "加速中" },
-        { status: 2, name: "已加速" },
+        { status: 2, name: "已加速" }
       ],
       list: [],
       listData: [],
       thisData: false,
       active: 0,
-      speedUpData: [],
+      speedUpData: []
     };
   },
   created() {
@@ -117,7 +116,7 @@ export default {
   methods: {
     statusData(v) {
       let thisName = null;
-      this.statustext.map((val) => {
+      this.statustext.map(val => {
         if (val.status === v) {
           thisName = val.name;
         }
@@ -128,8 +127,8 @@ export default {
       console.log(this.active);
       getFlashSaleOrderList({
         page: 1,
-        count: 1000,
-      }).then((res) => {
+        count: 1000
+      }).then(res => {
         console.log(res);
         this.speedUpData = res.data.list;
       });
@@ -140,14 +139,14 @@ export default {
         if (index === 0) {
           this.loadData();
         } else {
-          this.list = this.listData.filter((e) => {
+          this.list = this.listData.filter(e => {
             return e.status === this.items[this.selectedIndex].type;
           });
         }
       }
     },
     loadData() {
-      orderListApi().then((res) => {
+      orderListApi().then(res => {
         this.list = res.data;
         this.listData = res.data;
         if (this.listData.length) {
@@ -177,11 +176,11 @@ export default {
         path: "/countPay",
         query: {
           amount: item.paymentQuantity,
-          id: item.id,
-        },
+          id: item.id
+        }
       });
-    },
-  },
+    }
+  }
 };
 </script>
 

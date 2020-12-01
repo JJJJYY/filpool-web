@@ -75,11 +75,7 @@ export default {
       height: 40px;
       line-height: 40px;
       color: #fff;
-      background: linear-gradient(
-        90deg,
-        rgba(241, 138, 45, 1) 0%,
-        rgba(252, 177, 80, 1) 100%
-      );
+      background: #2559a5ff;
       border-radius: 16px;
       font-size: 16px;
       margin: 30px auto 60px;

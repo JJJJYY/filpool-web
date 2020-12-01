@@ -1,13 +1,12 @@
 <template>
   <div class="mine">
     <vue-pull-refresh v-model="loading" @refresh="onRefresh">
-      <!-- <head-nav></head-nav> -->
       <div class="page-container-mine">
         <div class="head-nav">
           <div class="personalCenter">个人中心</div>
           <div class="header-user">
             <div class="user">
-              <img src="../../assets/img/personalfil.png" alt class="avatar" />
+              <!-- <img src="../../assets/img/personalfil.png" alt class="avatar" /> -->
               <div class="user-info">
                 <div class="user-name">
                   <div class="name">{{ userData.nickname || "" }}</div>
@@ -51,20 +50,8 @@
                   <p style="color: #666666">上限有效算力</p>
                   <p class="total-val-text">{{ maxAdj | parseFloatFilter }}T</p>
                 </div>
-                <!-- <div>总存储空间:</div>
-              <div class="total-validWeight">:</div> -->
               </div>
               <van-divider />
-              <!-- <div v-if="isDate === 2" class="pledge-num">
-                <div>
-                  <div>所需质押量</div>
-                  <div class="num-margin">{{ done(maxPledged, 6) }}</div>
-                </div>
-                <div>
-                  <div>当前质押量</div>
-                  <div class="num-margin">{{ done(currentPledged, 6) }}</div>
-                </div>
-              </div> -->
               <div class="styleFlex">
                 <p>目前有效算力：{{ validWeight | parseFloatFilter }}T</p>
                 <router-link
@@ -73,7 +60,7 @@
                   style="margin-left: 4px"
                   v-if="isDate === 1"
                 >
-                  <img
+                  <!-- <img
                     src="../../assets/img/mine/user_icon_buy.png"
                     style="
                       max-height: 15px;
@@ -81,7 +68,7 @@
                       margin-right: 5px;
                     "
                     alt
-                  />
+                  /> -->
                   <span>去申请算力</span>
                 </router-link>
                 <div
@@ -102,7 +89,7 @@
                         4
                       )
                 "
-                color="#F7A90D"
+                color="#2559A5FF"
               />
             </div>
             <div class="cut-off-rule"></div>
@@ -334,7 +321,6 @@ export default {
   },
   deactivated() {},
   created() {
-    // this.$store.dispatch('reloadUserData');
     this.getMyPowerTwo();
     this.myAsset();
   },
@@ -457,7 +443,7 @@ export default {
 }
 .head-nav {
   height: 200px;
-  background: linear-gradient(-65deg, #f0ac25 0%, #f9a808 100%);
+  background: #2559a5ff;
   border-radius: 0 0 20% 20%;
   overflow: auto;
   position: relative;
@@ -473,7 +459,6 @@ export default {
   display: flex;
   flex-direction: column;
   background-color: #eeeaed;
-  /*margin-top: 8px;*/
 }
 .mine-container {
   margin-top: -55px;
@@ -537,14 +522,14 @@ export default {
   }
 }
 .total-header {
-  background: #fff7e8ff;
+  background: #f8fbffff;
   display: flex;
   font-size: 14px;
   color: #666666ff;
   line-height: 34px;
   border-radius: 8px 8px 0 0;
   .header-data-color {
-    color: #f7a90eff;
+    color: #2559a5ff;
   }
   div {
     flex: 1;
@@ -573,7 +558,7 @@ export default {
       .total-val-text {
         margin-top: 10px;
         font-size: 24px;
-        color: #f0ac25;
+        color: #2559a5ff;
         font-weight: 500;
       }
     }
@@ -699,7 +684,7 @@ export default {
     }
     .popup-van-huazhuan {
       border-radius: 16px;
-      background: #f9a03eff;
+      background: #2559a5ff;
       color: #fff;
     }
   }

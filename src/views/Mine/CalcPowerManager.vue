@@ -1,7 +1,7 @@
 <template>
   <div style="height: 100%; display: flex; flex-direction: column">
     <head-nav></head-nav>
-    <van-tabs sticky color="#E9901D">
+    <van-tabs sticky color="#2559A5FF">
       <van-tab title="算力管理">
         <div class="list page-container" style="margin-top: 1px">
           <div
@@ -40,15 +40,6 @@
             </div>
           </div>
         </van-list>
-        <!-- <div
-          style="color: #86929D; font-size: 13px; text-align: center; height: 100%; margin-top: 60%; line-height: 160%;"
-        >
-          <div style="display: inline-block;text-align: left;">
-            您所持有的算力收益，将从Filecoin主网上线后
-            <br />正式挖矿并发放收益之日开始计算。
-            <br />敬请期待！
-          </div>
-        </div> -->
       </van-tab>
     </van-tabs>
   </div>
@@ -67,14 +58,14 @@ export default {
       profitList: [],
       loading: false,
       finished: false,
-      page: 1,
+      page: 1
     };
   },
   components: {
     HeadNav,
     [Tab.name]: Tab,
     [Tabs.name]: Tabs,
-    [List.name]: List,
+    [List.name]: List
   },
   mounted() {
     this.loadData();
@@ -83,10 +74,10 @@ export default {
     onLoad() {
       const postData = {
         page: this.page,
-        count: 10,
+        count: 10
       };
       userIncomeApi(postData)
-        .then((res) => {
+        .then(res => {
           if (res.ret === 200) {
             let newList = res.data;
             if (res.data.length) {
@@ -102,7 +93,7 @@ export default {
         .finally(() => (this.loading = false));
     },
     loadData() {
-      myWeightGroupApi().then((res) => {
+      myWeightGroupApi().then(res => {
         this.list = res.data;
       });
     },
@@ -149,11 +140,11 @@ export default {
         query: {
           title: this.typeDescription(x.type),
           type: x.type,
-          typeDescription: this.typeDescription(x.type),
-        },
+          typeDescription: this.typeDescription(x.type)
+        }
       });
-    },
-  },
+    }
+  }
 };
 </script>
 

@@ -130,7 +130,7 @@
             <div class="intro">我已阅读并同意<a @click="showAircle">《用户协议》</a></div>-->
             <van-checkbox
               v-model="read"
-              checked-color="#e49c3a"
+              checked-color="#2559A5FF"
               icon-size="13px"
               shape="square"
             >
@@ -138,7 +138,7 @@
                 >我已阅读并同意</span
               >
               <span
-                style="color: #e49c3a; font-size: 13px"
+                style="color: #2559A5FF; font-size: 13px"
                 @click.stop="showAircle"
                 >《用户协议》</span
               >
@@ -178,7 +178,7 @@ export default {
     AreaSelect,
     LoginBackground,
     [Checkbox.name]: Checkbox,
-    [Popup.name]: Popup,
+    [Popup.name]: Popup
   },
   data() {
     return {
@@ -197,7 +197,7 @@ export default {
       isTimer: false, ///< 是否在倒计时,
       isSecurity: true,
       channelData: {},
-      showChannelModal: false,
+      showChannelModal: false
     };
   },
   created() {
@@ -214,7 +214,7 @@ export default {
     next();
   },
   watch: {
-    imgCodeUrl: function () {},
+    imgCodeUrl: function() {}
   },
   methods: {
     checkChannel() {
@@ -222,7 +222,7 @@ export default {
       const postData = {
         // channel: "yangtuo",
       };
-      ByChannelApi(postData).then((res) => {
+      ByChannelApi(postData).then(res => {
         if (res.data) {
           this.channelData = res.data;
           this.showChannelModal = true;
@@ -264,8 +264,8 @@ export default {
           pwd: this.pwd,
           inviteCode: this.inviteCode,
           area: this.countryInfo.code,
-          type: this.isMobileType ? "phone" : "email",
-        },
+          type: this.isMobileType ? "phone" : "email"
+        }
       });
     },
     getImgCode() {
@@ -299,15 +299,15 @@ export default {
         areaCode: this.countryInfo.code,
         type: this.isMobileType ? "phone" : "email",
         to: this.account,
-        imageCaptcha: this.imgCode,
+        imageCaptcha: this.imgCode
       };
       sendApi(postData)
-        .then((res) => {
+        .then(res => {
           if (res.ret === 200) {
             this.startTimer();
           }
         })
-        .catch((err) => {});
+        .catch(err => {});
     },
     /*设置国家*/
     setCountry(item) {
@@ -316,10 +316,10 @@ export default {
     /*查看用户协议*/
     showAircle() {
       this.$router.push({
-        path: "/ServiceDetail",
+        path: "/ServiceDetail"
       });
-    },
-  },
+    }
+  }
 };
 </script>
 

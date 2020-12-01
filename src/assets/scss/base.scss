@@ -1,4 +1,4 @@
-$main-color: #e49c3a;
+$main-color:#2559A5FF;
 $nav-bar-color: #f8fafd;
 $h1-color: #24375E;
 $h2-color: #575c62;
@@ -17,13 +17,13 @@ html,body{
   /*overflow: hidden;*/
 }
 .btn-gradient {
-    background: linear-gradient(90deg,rgba(241,138,45,1) 0%,rgba(252,177,80,1) 100%);
+    background: #2559A5FF;
     border: 0;
     color: white;
 }
 
 .gradient {
-  background: linear-gradient(90deg,rgba(241,138,45,1) 0%,rgba(252,177,80,1) 100%);
+  background: #2559A5FF;
 }
 
 input{
@@ -36,7 +36,7 @@ p,ul,h3{
   padding: 0;
 }
 .submit {
-  background: linear-gradient(90deg, rgb(241, 138, 45) 0%,rgba(252,177,80,1) 100%);
+  background: #2559A5FF;
   align-self: center;
   width: 80%;
   height: 44px;

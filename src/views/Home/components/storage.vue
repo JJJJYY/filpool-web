@@ -51,7 +51,7 @@
           <div class="earnings-width">
             <img
               class="earnings-image"
-              src="../../../assets/img/webPageIcon/矿池总收益.png"
+              src="../../../assets/img/webPageIcon/storageimg-1.png"
               alt=""
             />
             <div class="earnings-center">
@@ -64,7 +64,7 @@
           <div class="earnings-width">
             <img
               class="earnings-image"
-              src="../../../assets/img/webPageIcon/昨日收益.png"
+              src="../../../assets/img/webPageIcon/storageimg-2.png"
               alt=""
             />
             <div class="earnings-center">
@@ -79,7 +79,7 @@
           <div class="earnings-width">
             <img
               class="earnings-image"
-              src="../../../assets/img/webPageIcon/累计单t收益.png"
+              src="../../../assets/img/webPageIcon/storageimg-3.png"
               alt=""
             />
             <div class="earnings-center">
@@ -92,7 +92,7 @@
           <div class="earnings-width">
             <img
               class="earnings-image"
-              src="../../../assets/img/webPageIcon/昨日单t收益.png"
+              src="../../../assets/img/webPageIcon/storageimg-4.png"
               alt=""
             />
             <div class="earnings-center">
@@ -162,7 +162,7 @@ import axios from "axios"; // 作用取消请求
 export default {
   name: "storage",
   components: {
-    [Progress.name]: Progress,
+    [Progress.name]: Progress
   },
   data() {
     return {
@@ -171,14 +171,14 @@ export default {
       loading: false,
       operationalData: 1,
       nodeList: null,
-      cancelAjax: null, // 作用取消请求
+      cancelAjax: null // 作用取消请求
     };
   },
   watch: {
     operationalData() {
       console.log(this.operationalData);
       this.operationalDataApi();
-    },
+    }
   },
   created() {
     this.operationalDataApi();
@@ -200,7 +200,7 @@ export default {
         new CancelToken(function executor(c) {
           _this.cancelAjax = c;
         })
-      ).then((res) => {
+      ).then(res => {
         console.log(res);
         if (res.ret === 200) {
           this.loading = true;
@@ -239,8 +239,8 @@ export default {
         span.className = "van-progress__pivot-right";
       }
       myComp.appendChild(span);
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -347,8 +347,8 @@ export default {
         align-items: center;
         color: #666666;
         .earnings-image {
-          width: 40px;
-          height: 40px;
+          width: 25px;
+          height: 25px;
         }
         .earnings-center {
           text-align: center;

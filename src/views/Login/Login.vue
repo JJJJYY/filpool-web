@@ -1,8 +1,5 @@
 <template>
   <login-background class="container" style="overflow: hidden">
-    <!--<div class="back" @click="backToHome">
-      <img src="../../assets/img/tibi_icon_return.png" alt="">
-    </div>-->
     <head-nav
       :overrideBack="true"
       :border="false"
@@ -11,14 +8,8 @@
     ></head-nav>
     <div class="login-box page-container">
       <img src="../../assets/img/login/login_icon_logo.png" alt class="logo" />
-      <div class="logo-title">FlLPool.io</div>
       <div class="form">
         <div class="form-item">
-          <img
-            src="../../assets/img/login/login_icon_user.png"
-            alt
-            class="form-item-icon"
-          />
           <input
             type="text"
             title
@@ -27,11 +18,6 @@
           />
         </div>
         <div class="form-item" style="margin-top: 50px">
-          <img
-            src="../../assets/img/login/login_icon_password.png"
-            alt
-            class="form-item-icon"
-          />
           <input
             :type="isSecurity ? 'password' : 'text'"
             title
@@ -73,13 +59,11 @@
 </template>
 
 <script>
-//import HeadNav from '@/components/HeadNav';
 import LoginBackground from "@/views/Login/LoginBackground";
 import md5 from "md5";
 import { Toast, Loading } from "vant";
 import { delCookie } from "@/utils/utilTools";
 import HeadNav from "@/components/HeadNav";
-//import corsRequest from '@/utils/corsRequest';
 import { getLoginApi } from "@/net/api/loginApi";
 
 export default {
@@ -87,14 +71,14 @@ export default {
   components: {
     LoginBackground,
     [Loading.name]: Loading,
-    HeadNav,
+    HeadNav
   },
   data() {
     return {
       isSecurity: true,
       account: "",
       pwd: "",
-      loading: false,
+      loading: false
     };
   },
   created() {
@@ -109,23 +93,23 @@ export default {
       this.loading = true;
       const postData = {
         account: this.account,
-        password: md5(this.pwd),
+        password: md5(this.pwd)
       };
       getLoginApi(postData)
-        .then((res) => {
+        .then(res => {
           this.$store.dispatch("reloadUserData").then(() => {
             this.$router.push({ path: "/" });
           });
         })
-        .catch((err) => {})
+        .catch(err => {})
         .finally(() => {
           this.loading = false;
         });
     },
     backToHome() {
       this.$router.push({ path: "/" });
-    },
-  },
+    }
+  }
 };
 </script>
 

@@ -17,11 +17,6 @@
             src="../../assets/img/home/title-fil.png"
             alt=""
           />
-          <img
-            class="title-text"
-            src="../../assets/img/home/title-text.png"
-            alt=""
-          />
         </div>
         <!--  Banner  -->
         <Banner ref="Banner" class="banner-margin"></Banner>
@@ -440,8 +435,8 @@ $section-margin-top: 12px;
   display: flex;
   align-items: center;
   .title-fil {
-    width: 22px;
-    height: 22px;
+    width: 66px;
+    height: 20px;
     margin-left: 18px;
   }
   .title-text {

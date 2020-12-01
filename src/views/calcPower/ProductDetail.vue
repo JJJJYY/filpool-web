@@ -3,7 +3,7 @@
     <head-nav class="headNavStyle"></head-nav>
 
     <div class="container  list page-container">
-      <div class="imageSize"></div>
+      <!-- <div class="imageSize"></div> -->
       <!-- <img src="../../assets/img/smallBanner.png" class="imageSize" alt="" /> -->
       <div class="goodBox">
         <CalcPowerItem
@@ -233,7 +233,7 @@ export default {
             background: none !important;
 
             .van-tab__text {
-              color: #f9a03eff;
+              color: #2559a5ff;
             }
           }
         }

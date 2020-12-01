@@ -6,26 +6,34 @@
     <van-divider style="margin: 0;" />
     <div class="item">
       <div class="key">合约名称：</div>
-      <div class="value">{{item.name}}</div>
+      <div class="value">{{ item.name }}</div>
     </div>
     <div class="item">
       <div class="key">合约期限：</div>
-      <div class="value">{{item.contractDuration}}天（自Filecoin主网上线后发放收益之日起开始计算；后两年需按矿池届时收费标准续费)</div>
+      <div class="value">
+        {{
+          item.contractDuration
+        }}天（自Filecoin主网上线后发放收益之日起开始计算；后两年需按矿池届时收费标准续费)
+      </div>
     </div>
     <div class="item">
       <div class="key">技术服务费：</div>
-      <div class="value">{{item.serviceChargeRate*100}}%（从挖矿收益中直接扣除）</div>
+      <div class="value">
+        {{ item.serviceChargeRate * 100 }}%（从挖矿收益中直接扣除）
+      </div>
     </div>
     <div class="item">
       <div class="key">结算周期：</div>
-      <div class="value">{{item.settlementPeriod}}</div>
+      <div class="value">{{ item.settlementPeriod }}</div>
     </div>
     <div class="item">
       <div class="key">单价：</div>
-      <div class="value">${{item.price}}/{{item.unit}}</div>
+      <div class="value">${{ item.price }}/{{ item.unit }}</div>
     </div>
     <div class="item">
-      <div class="key" style="display: flex;align-items: center;">购买数量：</div>
+      <div class="key" style="display: flex;align-items: center;">
+        购买数量：
+      </div>
       <div class="number">
         <AddSubtractBox v-model="orderNum" :limit="item.minLimit" />
       </div>
@@ -35,19 +43,21 @@
       <div class="key">总计金额</div>
       <!--<div class="amount">{{orderNum*item.price}} USDT</div>-->
       <div class="amount">
-        <span style="font-size: 24px;">{{orderNum*item.price}}</span>
+        <span style="font-size: 24px;">{{ orderNum * item.price }}</span>
         <span style="font-size: 18px;">USDT</span>
       </div>
     </div>
     <div class="prot">
-      <!--<div class="dot" :class="{selected: agree}" @click="agree = !agree"></div>
-      <p>
-        <span>我已阅读并同意</span>
-        <span style="color: #e49c3a;" @click="showAircle">《 用户云算力租赁协议》</span>
-      </p>-->
-      <van-checkbox v-model="agree" checked-color="#e49c3a" icon-size="13px" shape="square">
+      <van-checkbox
+        v-model="agree"
+        checked-color="#2559A5FF"
+        icon-size="13px"
+        shape="square"
+      >
         <span style="font-size: 13px;color: #575c62;">我已阅读并同意</span>
-        <span style="font-size: 13px;color: #e49c3a;" @click.stop="showAircle">《 用户云算力租赁协议》</span>
+        <span style="font-size: 13px;color: #2559A5FF;" @click.stop="showAircle"
+          >《 用户云算力租赁协议》</span
+        >
       </van-checkbox>
     </div>
     <button class="btn-gradient" @click="buy">立即购买</button>
@@ -63,22 +73,22 @@ export default {
   components: {
     [Divider.name]: Divider,
     [Checkbox.name]: Checkbox,
-    AddSubtractBox,
+    AddSubtractBox
   },
   props: {
     item: {},
-    number: Number,
+    number: Number
   },
   data() {
     return {
       agree: false,
-      orderNum: this.number,
+      orderNum: this.number
     };
   },
   watch: {
-    number: function (val) {
+    number: function(val) {
       this.orderNum = val;
-    },
+    }
   },
   methods: {
     buy() {
@@ -94,10 +104,10 @@ export default {
     /*查看用户协议*/
     showAircle() {
       this.$router.push({
-        path: "/ServiceDetail",
+        path: "/ServiceDetail"
       });
-    },
-  },
+    }
+  }
 };
 </script>
 

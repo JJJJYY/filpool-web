@@ -4,29 +4,29 @@
     <div class="page-container">
       <div class="title">绑定谷歌验证</div>
       <div class="explain">
-        谷歌验证器是一款动口令工具，工作原理类似短信动态验证。
-        绑定后每 30s 生成一个动态验证码，验证码可用于登录、提
+        谷歌验证器是一款动口令工具，工作原理类似短信动态验证。 绑定后每 30s
+        生成一个动态验证码，验证码可用于登录、提
         现、修改安全设置等操作的安全验证。
       </div>
       <div class="stepBox">
-        <div class="stepItem" :class="{active: stepIndex === 1}">
-          <span class="icon" :class="{active: stepIndex >1}">
+        <div class="stepItem" :class="{ active: stepIndex === 1 }">
+          <span class="icon" :class="{ active: stepIndex > 1 }">
             <span v-if="stepIndex <= 1">1</span>
-            <van-icon v-else name="success" size="13px" color="#E49C3A" />
+            <van-icon v-else name="success" size="13px" color="#2559A5FF" />
           </span>
           <span class="stepText">下载谷歌验证器</span>
         </div>
-        <div class="stepItem" :class="{active: stepIndex === 2}">
-          <span class="icon" :class="{active: stepIndex >2}">
+        <div class="stepItem" :class="{ active: stepIndex === 2 }">
+          <span class="icon" :class="{ active: stepIndex > 2 }">
             <span v-if="stepIndex <= 2">2</span>
-            <van-icon v-else name="success" size="13px" color="#E49C3A" />
+            <van-icon v-else name="success" size="13px" color="#2559A5FF" />
           </span>
           <span class="stepText">添加秘钥并备份</span>
         </div>
-        <div class="stepItem" :class="{active: stepIndex === 3}">
-          <span class="icon" :class="{active: stepIndex >3}">
+        <div class="stepItem" :class="{ active: stepIndex === 3 }">
+          <span class="icon" :class="{ active: stepIndex > 3 }">
             <span v-if="stepIndex <= 3">3</span>
-            <van-icon v-else name="success" size="13px" color="#E49C3A" />
+            <van-icon v-else name="success" size="13px" color="#2559A5FF" />
           </span>
           <span class="stepText">绑定验证</span>
         </div>
@@ -49,12 +49,12 @@ export default {
     Step1,
     Step2,
     Step3,
-    HeadNav,
+    HeadNav
   },
   data() {
     return {
       stepIndex: 1,
-      middleComponent: "Step1",
+      middleComponent: "Step1"
     };
   },
   mounted() {
@@ -64,8 +64,8 @@ export default {
     setStep(index) {
       this.stepIndex = index;
       this.middleComponent = `Step${index}`;
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -115,7 +115,7 @@ export default {
       margin-right: 8px;
       font-size: 12px;
       &.active {
-        border-color: #e49c3a;
+        border-color: #2559a5ff;
       }
     }
     .stepText {

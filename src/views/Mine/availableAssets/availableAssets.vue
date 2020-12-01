@@ -72,7 +72,7 @@
         <van-tabs
           class="tab-available"
           background="transparent"
-          color="#F7A90DFF"
+          color="#2559A5FF"
           v-model="active"
           animated
           @change="beforeChange"
@@ -183,13 +183,13 @@ import {
   Tab,
   Popup,
   Tabs,
-  Field,
+  Field
 } from "vant";
 import {
   recordListApi,
   assetTypeApi,
   myBalanceApi,
-  getTransfer,
+  getTransfer
 } from "@/net/api/userInfoApi";
 import AvailableAssersList from "./availableAssersList";
 
@@ -208,7 +208,7 @@ export default {
     [Tab.name]: Tab,
     [Tabs.name]: Tabs,
     [Popup.name]: Popup,
-    [Field.name]: Field,
+    [Field.name]: Field
   },
   data() {
     return {
@@ -221,7 +221,7 @@ export default {
       type: [3, 13],
       pagination: {
         current: 1, // 当前页
-        pageSize: 10, // 页大小
+        pageSize: 10 // 页大小
       },
       asset: this.$route.query.asset,
       active: 0,
@@ -229,7 +229,7 @@ export default {
       number: "",
       // 划转类型
       transferType: 1,
-      myTokensData: {},
+      myTokensData: {}
     };
   },
   created() {
@@ -256,9 +256,9 @@ export default {
         getTransfer({
           type: this.transferType,
           asset_id: this.myTokensData.id,
-          amount: this.number,
+          amount: this.number
         })
-          .then((res) => {
+          .then(res => {
             if (res.ret == 200) {
               Toast("划转成功");
               this.myAsset();
@@ -289,17 +289,17 @@ export default {
 
     // 获取钱包
     myAsset() {
-      myBalanceApi().then((res) => {
-        res.data.forEach((item) => {
+      myBalanceApi().then(res => {
+        res.data.forEach(item => {
           if (item.asset === this.asset) {
             this.myAssetM = item;
           }
         });
         this.viwe = true;
       });
-      assetTypeApi().then((res) => {
+      assetTypeApi().then(res => {
         if (res.ret == 200) {
-          res.data.forEach((item) => {
+          res.data.forEach(item => {
             if (item.asset === this.asset) {
               this.myTokensData = item;
             }
@@ -315,7 +315,7 @@ export default {
     beforeChange(index) {
       this.pagination = {
         current: 1, // 当前页
-        pageSize: 10, // 页大小
+        pageSize: 10 // 页大小
       };
       this.list = [];
       if (index === 0) {
@@ -342,10 +342,10 @@ export default {
         page: this.pagination.current,
         asset: this.asset,
         count: this.pagination.pageSize,
-        type: `${x}`,
+        type: `${x}`
       };
       recordListApi(getData)
-        .then((res) => {
+        .then(res => {
           let newList = res.data.list;
           // 后台返回无数据为对象进行判断
           if (res.data.list.length === 0) {
@@ -366,7 +366,7 @@ export default {
     // 类型判断
     typeText(x) {
       let thisName = null;
-      this.dataType().map((val) => {
+      this.dataType().map(val => {
         if (val.type === x) {
           thisName = val.name;
         }
@@ -405,10 +405,10 @@ export default {
         { type: 29, name: "加速收益" },
         { type: 30, name: "25%加速收益释放" },
         { type: 31, name: "加速收益释放" },
-        { type: 32, name: "借币质押" },
+        { type: 32, name: "借币质押" }
       ];
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -468,7 +468,7 @@ export default {
     }
     .popup-van-huazhuan {
       border-radius: 16px;
-      background: #f9a03eff;
+      background: #2559a5ff;
       color: #fff;
     }
   }
@@ -499,7 +499,7 @@ export default {
       .available-assets-button {
         margin-left: 20px;
         padding: 0 15px;
-        background: #f7a90dff;
+        background: #2559a5ff;
         color: #fff;
         border-radius: 8px;
       }

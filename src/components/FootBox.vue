@@ -2,7 +2,7 @@
   <div class="FootBox">
     <van-tabbar
       v-model="active"
-      active-color="#E49C3A"
+      active-color="#2559A5FF"
       inactive-color="#86929D"
       :safe-area-inset-bottom="true"
     >
