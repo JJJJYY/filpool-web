@@ -581,7 +581,7 @@ $section-margin-top: 12px;
           display: inline-block;
           width: 4px;
           height: 14px;
-          background: #ffab17ff;
+          background: #2559a5ff;
           margin-right: 8px;
         }
       }
@@ -606,7 +606,7 @@ $section-margin-top: 12px;
             content: "\02022";
             // margin-left: 20px;
             margin-right: 8px;
-            color: #ffab17ff;
+            color: #2559a5ff;
             font-style: normal;
           }
         }

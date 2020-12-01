@@ -257,7 +257,7 @@ export default {
   font-size: 14px;
   color: #666666ff;
   .storage-data-color {
-    color: #f9a03eff;
+    color: #2559a5ff;
   }
   .storage-data-one {
   }
@@ -288,7 +288,7 @@ export default {
     margin-top: 20px;
     height: 15px !important;
     /deep/.van-progress__portion {
-      background: #f0ac25;
+      background: #2559a5ff;
       .van-progress__pivot-right {
         color: #ffffff;
         position: absolute;
@@ -314,7 +314,7 @@ export default {
     .data-text {
       text-align: center;
       .text-color {
-        color: #e59c0d;
+        color: #2559a5ff;
         font-size: 18px;
         margin-top: 8px;
       }
@@ -356,7 +356,7 @@ export default {
           .earnings-center-size {
             margin-top: 8px;
             font-size: 14px;
-            color: #e59c0d;
+            color: #2559a5ff;
           }
         }
       }
