@@ -172,7 +172,7 @@
         <!--<div class="section intro4">
           <p class="title">全网算力持续排名第一</p>
           <p class="subtitle">Filecoin测试网</p>
-          <img src="https://filpool.oss-cn-hongkong.aliyuncs.com/image/home_picture_calculate.png" alt="">
+          <img src="https://bpool.oss-cn-hongkong.aliyuncs.com/image/home_picture_calculate.png" alt="">
         </div>-->
         <!-- <div v-scroll-show="{callback: toggleBrowser,showHeight: -200, container: isH5?'':$refs.pullDown.$el}" v-if="showContainer">
           <Browser v-if="showBrowser"></Browser>
@@ -181,7 +181,7 @@
         <!-- <Banner5></Banner5> -->
         <!--  云算力优势  -->
         <!-- <div class="section intro6">
-          <div class="title">FILPool矿池优势</div>
+          <div class="title">bpool矿池优势</div>
           <Banner6></Banner6>
         </div> -->
         <!--  蜘蛛矿机  -->

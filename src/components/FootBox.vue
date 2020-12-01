@@ -39,12 +39,12 @@ export default {
           title: "首页",
           router: "/"
         },
-        {
-          image: require("@/assets/img/tab_icon_count_normal.png"),
-          selectImage: require("@/assets/img/tab_icon_count_selected.png"),
-          title: "算力加速",
-          router: "/rate"
-        },
+        // {
+        //   image: require("@/assets/img/tab_icon_count_normal.png"),
+        //   selectImage: require("@/assets/img/tab_icon_count_selected.png"),
+        //   title: "算力加速",
+        //   router: "/rate"
+        // },
         // {
         //   image: require("@/assets/img/icon-market-select.png"),
         //   selectImage: require("@/assets/img/icon-market.png"),

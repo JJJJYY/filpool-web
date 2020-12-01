@@ -53,7 +53,7 @@ class CheckUpdate {
               showCancelButton: '稍候更新',
               beforeClose: (action, done) => {
                 if (action === 'confirm') {
-                  let downloadURL = resData.downloadURL || "https://www.filpool.io/#/download";
+                  let downloadURL = resData.downloadURL || "https://www.bpool.io/#/download";
                   window.plus.runtime.openURL(downloadURL);
                 } else {
                   done();
@@ -69,7 +69,7 @@ class CheckUpdate {
               showCancelButton: false,
               beforeClose: (action, done) => {
                 if (action === 'confirm') {
-                  let downloadURL = resData.downloadURL || "https://www.filpool.io/#/download";
+                  let downloadURL = resData.downloadURL || "https://www.bpool.io/#/download";
                   window.plus.runtime.openURL(downloadURL);
                 } else {
                   done(false);
@@ -95,7 +95,7 @@ class CheckUpdate {
         //     showCancelButton: false,
         //     beforeClose: (action, done) => {
         //       if (action === 'confirm') {
-        //         let downloadURL = resData.downloadURL || "https://www.filpool.io/#/download";
+        //         let downloadURL = resData.downloadURL || "https://www.bpool.io/#/download";
         //         window.plus.runtime.openURL(downloadURL);
         //       } else {
         //         done(false);
@@ -136,7 +136,7 @@ class CheckUpdate {
   downWgt() {
     let that = this;
     window.plus.nativeUI.showWaiting("正在下载安装包...");
-    window.plus.downloader.createDownload('https://www.filpool.io/#/download', {
+    window.plus.downloader.createDownload('https://www.bpool.io/#/download', {
       filename: "_doc/update/"
     }, function (d, status) {
       window.plus.nativeUI.closeWaiting();

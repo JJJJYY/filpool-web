@@ -300,7 +300,7 @@ export default {
       // link.href = URL.createObjectURL(
       //   this.convertBase64UrlToFile(this.imageData)
       // );
-      // link.download = "FILPool.jpeg";
+      // link.download = "bpool.jpeg";
       // link.click();
       // URL.revokeObjectURL(link.href);
       saveBase64Img(this.imageData)

@@ -19,9 +19,9 @@
       <div class="call-box" v-if="boxLoading">
         <div class="call-titleJump">
           <div v-if="isDate === 1" class="to-buy">
-            <router-link class="call-jump" :to="{ path: '/rate' }">
+            <!-- <router-link class="call-jump" :to="{ path: '/rate' }">
               去申请算力>>
-            </router-link>
+            </router-link> -->
           </div>
           <div class="to-buy" v-if="isDate === 2">
             <span @click="popupShow = true">去质押>></span>

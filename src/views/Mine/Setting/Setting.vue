@@ -88,7 +88,7 @@ export default {
       this.$router.push({
         path: "/ServiceDetail"
       });
-      /*let url = 'https://www.filpool.io/user/xieyi.html';
+      /*let url = 'https://www.bpool.io/user/xieyi.html';
         if (this.$isH5) {
           window.location.href = url;
         } else {

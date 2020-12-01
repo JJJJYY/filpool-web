@@ -54,23 +54,14 @@
               <van-divider />
               <div class="styleFlex">
                 <p>目前有效算力：{{ validWeight | parseFloatFilter }}T</p>
-                <router-link
+                <!-- <router-link
                   :to="{ path: '/rate' }"
                   class="to-buy"
                   style="margin-left: 4px"
                   v-if="isDate === 1"
                 >
-                  <!-- <img
-                    src="../../assets/img/mine/user_icon_buy.png"
-                    style="
-                      max-height: 15px;
-                      vertical-align: bottom;
-                      margin-right: 5px;
-                    "
-                    alt
-                  /> -->
                   <span>去申请算力</span>
-                </router-link>
+                </router-link> -->
                 <div
                   class="to-buy"
                   v-if="isDate === 2"

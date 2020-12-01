@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="storage">FILPool矿池运营数据</div>
+    <div class="storage">Bpool矿池运营数据</div>
     <div class="storage-data-num">
       <div
         class="storage-data-one"
