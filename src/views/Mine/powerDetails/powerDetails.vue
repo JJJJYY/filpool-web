@@ -2,7 +2,7 @@
   <div>
     <HeadNav></HeadNav>
     <div class="assetDetails list page-container">
-      <div class="isDataFlex">
+      <!-- <div class="isDataFlex">
         <p
           :class="['isDataText', { 'isDataText-active': isDate === 1 }]"
           @click="isDate = 1"
@@ -15,7 +15,7 @@
         >
           二期
         </p>
-      </div>
+      </div> -->
       <div class="call-box" v-if="boxLoading">
         <div class="call-titleJump">
           <div v-if="isDate === 1" class="to-buy">
@@ -53,7 +53,7 @@
           />
         </div>
       </div>
-      <div class="call-box" v-if="boxLoading && isDate === 2">
+      <!-- <div class="call-box" v-if="boxLoading && isDate === 2">
         <div class="progress-box-flex">
           <div class="progress-circle">
             <v-progressCircle
@@ -109,8 +109,8 @@
             />
           </p>
         </div>
-      </div>
-      <van-popup v-model="popupShow" position="bottom">
+      </div> -->
+      <!-- <van-popup v-model="popupShow" position="bottom">
         <div class="popup-padding">
           <div class="popup-black">划转</div>
           <div class="popup-type">
@@ -188,7 +188,7 @@
             >
           </div>
         </div>
-      </van-popup>
+      </van-popup> -->
       <div v-if="boxLoading" class="call-box-details">算力增长明细:</div>
       <van-list
         v-model="loading"
@@ -253,7 +253,7 @@ export default {
         current: 1, // 当前页
         pageSize: 10 // 页大小
       },
-      isDate: 1,
+      isDate: 3,
       cancelAjax: null, // 作用取消请求
       popupShow: false,
       asset: "FIL",
@@ -263,54 +263,54 @@ export default {
       currentPledged: 0
     };
   },
-  watch: {
-    isDate() {
-      this.show = false;
-      if (this.isDate === 1) {
-        this.list = [];
-        this.pagination = {
-          current: 1,
-          pageSize: 10
-        };
-        this.getMyPowerTwo();
-        this.onLoad();
-      } else if (this.isDate === 2) {
-        this.list = [];
-        this.pagination = {
-          current: 1,
-          pageSize: 10
-        };
-        this.getMyPowerTwo();
-        this.onLoad();
-      }
-    }
-  },
+  // watch: {
+  //   isDate() {
+  //     this.show = false;
+  //     if (this.isDate === 1) {
+  //       this.list = [];
+  //       this.pagination = {
+  //         current: 1,
+  //         pageSize: 10
+  //       };
+  //       this.getMyPowerTwo();
+  //       this.onLoad();
+  //     } else if (this.isDate === 2) {
+  //       this.list = [];
+  //       this.pagination = {
+  //         current: 1,
+  //         pageSize: 10
+  //       };
+  //       this.getMyPowerTwo();
+  //       this.onLoad();
+  //     }
+  //   }
+  // },
   created() {
-    this.myAsset();
+    // this.myAsset();
     this.getMyPowerTwo();
   },
   methods: {
-    handleOk() {
-      if (this.number) {
-        getTransferPledged({
-          amount: this.number
-        })
-          .then(res => {
-            if (res.ret === 200) {
-              Toast.success("划转成功");
-              this.getMyPowerTwo();
-              this.myAsset();
-            }
-            this.popupShow = false;
-          })
-          .catch(() => {
-            this.popupShow = false;
-          });
-      }
-    },
-    handleClear() {
-      this.popupShow = false;
-    },
+    // handleOk() {
+    //   if (this.number) {
+    //     getTransferPledged({
+    //       amount: this.number
+    //     })
+    //       .then(res => {
+    //         if (res.ret === 200) {
+    //           Toast.success("划转成功");
+    //           this.getMyPowerTwo();
+    //           this.myAsset();
+    //         }
+    //         this.popupShow = false;
+    //       })
+    //       .catch(() => {
+    //         this.popupShow = false;
+    //       });
+    //   }
+    // },
+    // handleClear() {
+    //   this.popupShow = false;
+    // },
     getMyPowerTwo() {
       this.boxLoading = false;
       const CancelToken = axios.CancelToken;
@@ -342,15 +342,15 @@ export default {
         );
       });
     },
-    myAsset() {
-      myBalanceApi().then(res => {
-        res.data.forEach(item => {
-          if (item.asset === this.asset) {
-            this.myAssetM = item;
-          }
-        });
-      });
-    },
+    // myAsset() {
+    //   myBalanceApi().then(res => {
+    //     res.data.forEach(item => {
+    //       if (item.asset === this.asset) {
+    //         this.myAssetM = item;
+    //       }
+    //     });
+    //   });
+    // },
     done(num, count) {
       let newNum = parseInt(num * Math.pow(10, count)) / Math.pow(10, count);
       if (isNaN(newNum)) {
@@ -391,7 +391,6 @@ export default {
       };
       getUserAdjPowerList(getData)
         .then(res => {
-          console.log(res);
           let newList = res.data.list;
           // 后台返回无数据为对象进行判断
           if (res.data.list.length === 0) {

@@ -20,20 +20,6 @@
           </div>
         </div>
         <div class="mine-container">
-          <div class="total-header">
-            <div
-              @click="isDate = 1"
-              :class="{ 'header-data-color': isDate === 1 }"
-            >
-              一期
-            </div>
-            <div
-              @click="isDate = 2"
-              :class="{ 'header-data-color': isDate === 2 }"
-            >
-              二期
-            </div>
-          </div>
           <div class="header" v-if="show">
             <div class="total">
               <div class="total-val">
@@ -54,21 +40,6 @@
               <van-divider />
               <div class="styleFlex">
                 <p>目前有效算力：{{ validWeight | parseFloatFilter }}T</p>
-                <!-- <router-link
-                  :to="{ path: '/rate' }"
-                  class="to-buy"
-                  style="margin-left: 4px"
-                  v-if="isDate === 1"
-                >
-                  <span>去申请算力</span>
-                </router-link> -->
-                <div
-                  class="to-buy"
-                  v-if="isDate === 2"
-                  @click="popupShow = true"
-                >
-                  去质押
-                </div>
               </div>
               <van-progress
                 style="margin-top: 15px"
@@ -156,7 +127,7 @@
           </div>
         </div>
       </div>
-      <van-popup v-model="popupShow" position="bottom">
+      <!-- <van-popup v-model="popupShow" position="bottom">
         <div class="popup-padding">
           <div class="popup-black">划转</div>
           <div class="popup-type">
@@ -234,7 +205,7 @@
             >
           </div>
         </div>
-      </van-popup>
+      </van-popup> -->
     </vue-pull-refresh>
     <foot-box></foot-box>
   </div>
@@ -273,17 +244,6 @@ export default {
     [Field.name]: Field,
     [Toast.name]: Toast
   },
-
-  watch: {
-    isDate() {
-      this.show = false;
-      if (this.isDate === 1) {
-        this.getMyPowerTwo();
-      } else if (this.isDate === 2) {
-        this.getMyPowerTwo();
-      }
-    }
-  },
   data() {
     return {
       totalWeight: "---",
@@ -291,7 +251,7 @@ export default {
       maxAdj: 0,
       loading: false,
       show: false,
-      isDate: 1,
+      isDate: 3,
       popupShow: false,
       number: "",
       currentPledged: "",
@@ -317,7 +277,6 @@ export default {
   },
   methods: {
     // 钱包
-
     getMyPowerTwo() {
       const CancelToken = axios.CancelToken;
       if (typeof this.cancelAjax === "function") {
@@ -360,26 +319,26 @@ export default {
       });
     },
 
-    handleOk() {
-      if (this.number) {
-        getTransferPledged({
-          amount: this.number
-        })
-          .then(res => {
-            if (res.ret === 200) {
-              Toast.success("划转成功");
-              this.getMyPowerTwo();
-            }
-            this.popupShow = false;
-          })
-          .catch(() => {
-            this.popupShow = false;
-          });
-      }
-    },
-    handleClear() {
-      this.popupShow = false;
-    },
+    // handleOk() {
+    //   if (this.number) {
+    //     getTransferPledged({
+    //       amount: this.number
+    //     })
+    //       .then(res => {
+    //         if (res.ret === 200) {
+    //           Toast.success("划转成功");
+    //           this.getMyPowerTwo();
+    //         }
+    //         this.popupShow = false;
+    //       })
+    //       .catch(() => {
+    //         this.popupShow = false;
+    //       });
+    //   }
+    // },
+    // handleClear() {
+    //   this.popupShow = false;
+    // },
     growth() {
       this.$router.push("/powerDetails");
     },
@@ -529,7 +488,7 @@ export default {
 }
 .header {
   padding: 0 16px 5px;
-  border-radius: 0 0 8px 8px;
+  border-radius: 8px;
   background: $content-backgroun-color;
   .total {
     padding: 16px 0;

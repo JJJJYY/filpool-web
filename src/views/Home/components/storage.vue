@@ -1,22 +1,6 @@
 <template>
   <div>
     <div class="storage">Bpool矿池运营数据</div>
-    <div class="storage-data-num">
-      <div
-        class="storage-data-one"
-        @click="operationalData = 1"
-        :class="{ 'storage-data-color': operationalData === 1 }"
-      >
-        一期运营数据
-      </div>
-      <div
-        class="storage-data-two"
-        @click="operationalData = 2"
-        :class="{ 'storage-data-color': operationalData === 2 }"
-      >
-        二期运营数据
-      </div>
-    </div>
     <div class="storage-content" v-if="loading">
       <div class="content-text">
         <p class="content-text-size">矿池填充进度</p>
@@ -169,16 +153,10 @@ export default {
       percentage: 0,
       poolData: {},
       loading: false,
-      operationalData: 1,
+      operationalData: 3,
       nodeList: null,
       cancelAjax: null // 作用取消请求
     };
-  },
-  watch: {
-    operationalData() {
-      console.log(this.operationalData);
-      this.operationalDataApi();
-    }
   },
   created() {
     this.operationalDataApi();
@@ -201,7 +179,6 @@ export default {
           _this.cancelAjax = c;
         })
       ).then(res => {
-        console.log(res);
         if (res.ret === 200) {
           this.loading = true;
           this.percentage = this.done(
