@@ -2,18 +2,17 @@
   <div class="Download">
     <head-nav left-text="首页" @back="back" :overrideBack="true"></head-nav>
     <div class="page-container back">
-      <img src="@/assets/img/download/download1.png" class="img1" alt />
+      <!-- <img src="@/assets/img/download/download1.png" class="img1" alt /> -->
       <div class="textBox">
-        <img src="@/assets/img/download/download2-2.png" class="img2" alt />
+        <!-- <img src="@/assets/img/download/download2-2.png" class="img2" alt /> -->
         <img
-          src="@/assets/img/download/download2-1.png"
+          src="@/assets/img/download/2423.png"
           class="img2"
-          style="margin-top: 14px;"
+          style="margin-top: 24px;"
           alt
         />
       </div>
       <div class="content">
-        <img src="@/assets/img/download/download3.png" class="img3" alt />
         <button class="download" @click="download">下载APP</button>
       </div>
     </div>
@@ -89,16 +88,11 @@ export default {
   min-height: calc(100vh - 54px);
   overflow: hidden;
 }
-.img1 {
-  width: 26.93vw;
-  height: auto;
-  margin: 4vw;
-  vertical-align: bottom;
-}
 .img2 {
+  display: block;
   width: 72.8vw;
   height: auto;
-  margin: 0 4vw;
+  margin: 0 auto;
   vertical-align: bottom;
 }
 .content {
@@ -111,7 +105,7 @@ export default {
 }
 .download {
   width: 38vw;
-  background: #2559a5ff;
+  background: #13c2c5;
   color: #fff;
   font-size: 4.5vw;
   outline: none;
