@@ -132,7 +132,7 @@
               </p>
               <p class="titileXian"></p>
               <p v-for="(item, index) in nodeList" :key="index">
-                {{ item.adj | parseFloatFilter }}
+                {{ done(item.adj, 2) || 0 }}
               </p>
             </div>
             <div class="nodeInformation-list-centent">
@@ -144,7 +144,19 @@
               </p>
               <p class="titileXian"></p>
               <p v-for="(item, index) in nodeList" :key="index">
-                {{ item.rewards | parseFloatFilter }}
+                {{ done(item.rewards, 2) || 0 }}
+              </p>
+            </div>
+            <div class="nodeInformation-list-centent">
+              <p
+                class="nodeInformation-list-titile"
+                style="transform: scale(0.8)"
+              >
+                gas
+              </p>
+              <p class="titileXian"></p>
+              <p v-for="(item, index) in nodeList" :key="index">
+                {{ done(item.gas, 2) || 0 }}
               </p>
             </div>
           </div>
@@ -162,7 +174,7 @@ import axios from "axios"; // 作用取消请求
 export default {
   name: "storage",
   components: {
-    [Progress.name]: Progress,
+    [Progress.name]: Progress
   },
   data() {
     return {
@@ -171,14 +183,14 @@ export default {
       loading: false,
       operationalData: 1,
       nodeList: null,
-      cancelAjax: null, // 作用取消请求
+      cancelAjax: null // 作用取消请求
     };
   },
   watch: {
     operationalData() {
       console.log(this.operationalData);
       this.operationalDataApi();
-    },
+    }
   },
   created() {
     this.operationalDataApi();
@@ -200,8 +212,8 @@ export default {
         new CancelToken(function executor(c) {
           _this.cancelAjax = c;
         })
-      ).then((res) => {
-        console.log(res);
+      ).then(res => {
+        console.log("11", res);
         if (res.ret === 200) {
           this.loading = true;
           this.percentage = this.done(
@@ -239,8 +251,8 @@ export default {
         span.className = "van-progress__pivot-right";
       }
       myComp.appendChild(span);
-    },
-  },
+    }
+  }
 };
 </script>
 
