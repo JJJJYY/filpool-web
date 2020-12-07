@@ -1,7 +1,7 @@
 <template>
   <div
     id="app"
-    :class="{mContainer: $isH5}"
+    :class="{ mContainer: $isH5 }"
     v-on:touchstart="bodyTouchStart"
     v-on:touchmove="bodyTouchMove"
     v-on:touchend="bodyTouchEnd"
@@ -10,7 +10,7 @@
       <keep-alive>
         <router-view
           class="tabContent"
-          :class="{isQuit: isMainPage,mContainer: $isH5}"
+          :class="{ isQuit: isMainPage, mContainer: $isH5 }"
           :style="mStyle"
           v-if="$route.meta.isQuit"
         ></router-view>
@@ -18,7 +18,7 @@
     </transition>
     <router-view
       class="tabContent"
-      :class="{mContainer: $isH5}"
+      :class="{ mContainer: $isH5 }"
       :style="mStyle"
       v-if="!$route.meta.isQuit"
     ></router-view>

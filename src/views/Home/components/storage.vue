@@ -108,7 +108,7 @@
     </div>
     <div class="nodeInformation" v-if="loading">
       <div class="nodeInformation-centent">
-        <div class="nodeInformation-text">节点信息</div>
+        <div class="nodeInformation-text">节点信息（24小时）</div>
         <div class="nodeInformation-list">
           <div v-if="nodeList" class="nodeInformation-list-t">
             <div class="nodeInformation-list-centent">
@@ -140,7 +140,7 @@
                 class="nodeInformation-list-titile"
                 style="transform: scale(0.8)"
               >
-                24小时挖矿收益(FIL)
+                收益(FIL)
               </p>
               <p class="titileXian"></p>
               <p v-for="(item, index) in nodeList" :key="index">
@@ -152,7 +152,7 @@
                 class="nodeInformation-list-titile"
                 style="transform: scale(0.8)"
               >
-                gas
+                GAS(FIL)
               </p>
               <p class="titileXian"></p>
               <p v-for="(item, index) in nodeList" :key="index">
@@ -174,7 +174,7 @@ import axios from "axios"; // 作用取消请求
 export default {
   name: "storage",
   components: {
-    [Progress.name]: Progress
+    [Progress.name]: Progress,
   },
   data() {
     return {
@@ -183,14 +183,14 @@ export default {
       loading: false,
       operationalData: 1,
       nodeList: null,
-      cancelAjax: null // 作用取消请求
+      cancelAjax: null, // 作用取消请求
     };
   },
   watch: {
     operationalData() {
       console.log(this.operationalData);
       this.operationalDataApi();
-    }
+    },
   },
   created() {
     this.operationalDataApi();
@@ -212,7 +212,7 @@ export default {
         new CancelToken(function executor(c) {
           _this.cancelAjax = c;
         })
-      ).then(res => {
+      ).then((res) => {
         console.log("11", res);
         if (res.ret === 200) {
           this.loading = true;
@@ -251,8 +251,8 @@ export default {
         span.className = "van-progress__pivot-right";
       }
       myComp.appendChild(span);
-    }
-  }
+    },
+  },
 };
 </script>
 
