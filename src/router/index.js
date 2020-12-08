@@ -16,7 +16,7 @@ const routes = [{
     component: () => import( /* webpackChunkName: "index" */ '../views/Home/Home.vue'),
     meta: {
       showTabBar: true,
-      title: "Bpool.io",
+      title: "BPool.io",
       backBtnHidden: true,
       isQuit: true
     }
@@ -311,7 +311,7 @@ const routes = [{
     name: 'download',
     component: () => import( /* webpackChunkName: "download" */ '@/views/Download'),
     meta: {
-      title: '下载Bpool'
+      title: '下载BPool'
     }
   },
   {

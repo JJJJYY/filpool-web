@@ -12,7 +12,7 @@
             <div class="item-title">技术实力强</div>
             <div class="item-dir"></div>
             <div class="item-content">
-              Bpool矿池是由IPFS中国社区投资孵化的一家专业
+              BPool矿池是由IPFS中国社区投资孵化的一家专业
               Filecoin矿池，其核心技术团队有着超过十年的分布式存储行业开发经验，在Filecoin各个阶段测试网的测试成绩持续处于行业领先地位。
             </div>
           </div>
@@ -27,7 +27,7 @@
             <div class="item-title">挖矿效率高</div>
             <div class="item-dir"></div>
             <div class="item-content">
-              Bpool矿池采用时空云科技独家研发的Bpool矿池采用时空云科技的IPFS深度定制分布式存储服务器“蜘蛛矿机”及分布式存储系统“MineOS”挖矿系统，在Filecoin的挖矿效率、稳定性以及安全性上持续处于行业领先水平。
+              BPool矿池采用时空云科技独家研发的BPool矿池采用时空云科技的IPFS深度定制分布式存储服务器“蜘蛛矿机”及分布式存储系统“MineOS”挖矿系统，在Filecoin的挖矿效率、稳定性以及安全性上持续处于行业领先水平。
             </div>
           </div>
         </swiper-slide>
@@ -41,7 +41,7 @@
             <div class="item-title">安全有保障</div>
             <div class="item-dir"></div>
             <div class="item-content">
-              Bpool矿池由多家知名机构战略投资，收益公开透明，采用独创安全架构有效防范DDoS攻击，拥有十余年大规模IDC机房运维服务经验，提供2倍风险保证金承诺，全面保障用户收益。
+              BPool矿池由多家知名机构战略投资，收益公开透明，采用独创安全架构有效防范DDoS攻击，拥有十余年大规模IDC机房运维服务经验，提供2倍风险保证金承诺，全面保障用户收益。
             </div>
           </div>
         </swiper-slide>

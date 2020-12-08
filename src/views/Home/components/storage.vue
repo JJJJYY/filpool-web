@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="storage">Bpool矿池运营数据</div>
+    <div class="storage">BPool矿池运营数据</div>
     <div class="storage-content" v-if="loading">
       <div class="content-text">
         <p class="content-text-size">矿池填充进度</p>
