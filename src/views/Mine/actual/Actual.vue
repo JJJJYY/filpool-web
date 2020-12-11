@@ -2,10 +2,9 @@
   <div class="form">
     <div class="form-container actual-form" style="padding-bottom: 50px">
       <h3 class="title">实名认证</h3>
-      <p
-        class="normalText"
-        v-if="userData.authStatus !== 1"
-      >请上传清晰的证件照片，必须能看清证件号和姓名；仅支持PNG、JPG、JPEG格式，每张大小限制在2M以内</p>
+      <p class="normalText" v-if="userData.authStatus !== 1">
+        请上传清晰的证件照片，必须能看清证件号和姓名；仅支持PNG、JPG、JPEG格式，每张大小限制在2M以内
+      </p>
       <p class="normalText" v-else>实名认证已通过</p>
       <div class="inputItem form-item">
         <div class="form-title">国家和地区</div>
@@ -45,10 +44,21 @@
       </div>
       <div v-if="userData.authStatus !== 1" style="text-align: center;">
         <div class="uploadContainer">
-          <Uploader :value="idFrontBg" @input="setIdFront" text="请上传身份证正面" bg-img></Uploader>
-          <Uploader :value="idVersoBg" @input="setIdVerso" text="请上传身份证反面"></Uploader>
+          <Uploader
+            :value="idFrontBg"
+            @input="setIdFront"
+            text="请上传身份证正面"
+            bg-img
+          ></Uploader>
+          <Uploader
+            :value="idVersoBg"
+            @input="setIdVerso"
+            text="请上传身份证反面"
+          ></Uploader>
         </div>
-        <button class="submit" style="margin-top: 40px;" @click="submit">提交审核</button>
+        <button class="submit" style="margin-top: 40px;" @click="submit">
+          提交审核
+        </button>
       </div>
     </div>
     <area-select v-model="showAreaPicker" @select="setCountry" />
@@ -62,7 +72,7 @@ import AreaSelect from "@/views/Login/AreaSelect";
 import Uploader from "@/components/Uploader";
 import {
   submitUserIdInfoApi,
-  userIdInfoApi,
+  userIdInfoApi
 } from "../../../net/api/userInfoApi";
 export default {
   name: "Actual",
@@ -70,7 +80,7 @@ export default {
     AreaSelect,
     [Icon.name]: Icon,
     [Button.name]: Button,
-    Uploader,
+    Uploader
   },
   data() {
     return {
@@ -85,11 +95,11 @@ export default {
       idCardNo: "",
       countryInfo: {},
       showAreaPicker: false,
-      fileList: [],
+      fileList: []
     };
   },
   computed: {
-    ...mapState(["userData"]),
+    ...mapState(["userData"])
   },
   created() {
     if (this.userData.authStatus === 1) {
@@ -104,7 +114,8 @@ export default {
       this.idVerso = key;
     },
     getActualInfo() {
-      userIdInfoApi().then((res) => {
+      userIdInfoApi().then(res => {
+        console.log(res);
         if (res.ret === 200) {
           this.actualData = res.data;
           this.areaCode = res.data.country;
@@ -140,10 +151,10 @@ export default {
         idFront: this.idFront,
         idVerso: this.idVerso,
         realName: this.realName,
-        country: this.areaCode,
+        country: this.areaCode
       };
       submitUserIdInfoApi(postData)
-        .then((res) => {
+        .then(res => {
           if (res.ret === 200) {
             Toast("实名认证已提交");
             this.$store.dispatch("reloadUserData");
@@ -152,11 +163,11 @@ export default {
             Toast(res.msg);
           }
         })
-        .catch((err) => {
+        .catch(err => {
           Toast(err.data.msg);
         });
-    },
-  },
+    }
+  }
 };
 </script>
 

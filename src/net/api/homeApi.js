@@ -35,3 +35,7 @@ export function getPartnerListApi() {
 export function getPoolInfoApi(data, fun) {
   return getRequest('App.PoolInfo.Info', data, fun);
 }
+// 联盟
+export function getAllianceInfo(data, fun) {
+  return getRequest('PoolInfo.AllianceInfo', data, fun);
+}

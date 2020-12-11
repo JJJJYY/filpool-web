@@ -135,13 +135,85 @@
           <div v-else class="nodeInformation-list-none">暂无数据</div>
         </div>
       </div>
+      <div class="nodeInformation-centent" style="margin-top: 10px">
+        <div class="nodeInformation-text">BPool矿池联盟</div>
+        <div class="nodeInformation-list">
+          <div v-if="nodeListTeam" class="nodeInformation-list-t">
+            <div class="nodeInformation-list-centent">
+              <p
+                class="nodeInformation-list-titile"
+                style="transform: scale(0.8)"
+              >
+                联盟成员
+              </p>
+              <p class="titileXian"></p>
+              <p v-for="(item, index) in nodeListTeam" :key="index">
+                {{ item.name }}
+              </p>
+            </div>
+            <div class="nodeFelxCententOver">
+              <div class="nodeFelxCentent">
+                <div class="nodeInformation-list-centent">
+                  <p
+                    class="nodeInformation-list-titile"
+                    style="transform: scale(0.8)"
+                  >
+                    存储空间（TB)
+                  </p>
+                  <p class="titileXian"></p>
+                  <p v-for="(item, index) in nodeListTeam" :key="index">
+                    {{ item.power | parseFloatFilter }}
+                  </p>
+                </div>
+                <div class="nodeInformation-list-centent">
+                  <p
+                    class="nodeInformation-list-titile"
+                    style="transform: scale(0.8)"
+                  >
+                    有效算力（TiB）
+                  </p>
+                  <p class="titileXian"></p>
+                  <p v-for="(item, index) in nodeListTeam" :key="index">
+                    {{ item.adj | parseFloatFilter }}
+                  </p>
+                </div>
+                <div class="nodeInformation-list-centent">
+                  <p
+                    class="nodeInformation-list-titile"
+                    style="transform: scale(0.8)"
+                  >
+                    累计消耗GAS（FIL）
+                  </p>
+                  <p class="titileXian"></p>
+                  <p v-for="(item, index) in nodeListTeam" :key="index">
+                    {{ item.gas | parseFloatFilter }}
+                  </p>
+                </div>
+                <div class="nodeInformation-list-centent">
+                  <p
+                    class="nodeInformation-list-titile"
+                    style="transform: scale(0.8)"
+                  >
+                    24小时挖矿收益（FIL）
+                  </p>
+                  <p class="titileXian"></p>
+                  <p v-for="(item, index) in nodeListTeam" :key="index">
+                    {{ item.income | parseFloatFilter }}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div v-else class="nodeInformation-list-none">暂无数据</div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import { Loading, Progress } from "vant";
-import { getPoolInfoApi } from "@/net/api/homeApi";
+import { getPoolInfoApi, getAllianceInfo } from "@/net/api/homeApi";
 import axios from "axios"; // 作用取消请求
 export default {
   name: "storage",
@@ -155,7 +227,8 @@ export default {
       loading: false,
       operationalData: 3,
       nodeList: null,
-      cancelAjax: null // 作用取消请求
+      cancelAjax: null, // 作用取消请求
+      nodeListTeam: null
     };
   },
   created() {
@@ -172,6 +245,13 @@ export default {
         this.cancelAjax();
       }
       let _this = this;
+
+      getAllianceInfo().then(res => {
+        if (res.ret === 200) {
+          this.nodeListTeam = res.data;
+        }
+      });
+
       getPoolInfoApi(
         { number: this.operationalData },
         // 频繁切换取消上次请求
@@ -352,9 +432,21 @@ export default {
     }
     .nodeInformation-list {
       padding: 15px 0;
+      overflow: auto;
       .nodeInformation-list-t {
+        // white-space: nowrap;
+        // display: -webkit-box; /* Chrome 4+, Safari 3.1, iOS Safari 3.2+ */
         display: flex;
         justify-content: space-around;
+        .nodeFelxCententOver {
+          overflow: auto;
+          .nodeFelxCentent {
+            // display: flex;
+            white-space: nowrap;
+            display: -webkit-box; /* Chrome 4+, Safari 3.1, iOS Safari 3.2+ */
+          }
+        }
+
         .nodeInformation-list-centent {
           flex-grow: 1;
           line-height: 27px;
