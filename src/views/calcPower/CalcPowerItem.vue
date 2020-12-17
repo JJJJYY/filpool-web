@@ -127,9 +127,9 @@ export default {
   height: 10px;
   border-radius: 8px;
   .van-progress__portion {
-    background-image: url("../../assets/img/progress.png");
+    // background-image: url("../../assets/img/progress.png");
     .van-progress__pivot {
-      background: linear-gradient(to right, #f18c2e, #fbae4e);
+      // background: linear-gradient(to right, #f18c2e, #fbae4e);
     }
   }
 }
