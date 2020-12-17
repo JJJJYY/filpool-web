@@ -107,7 +107,11 @@ export default {
         });
     },
     backToHome() {
-      this.$router.push({ path: "/" });
+      if (!localStorage.getItem("userData")) {
+        this.$router.push({ path: "/login" });
+      } else {
+        this.$router.push({ path: "/" });
+      }
     }
   }
 };
