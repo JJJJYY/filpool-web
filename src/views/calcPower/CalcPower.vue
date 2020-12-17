@@ -5,15 +5,11 @@
       <van-pull-refresh
         v-model="refreshing"
         @refresh="onRefresh"
-        style="min-height: 100vh"
+        style="min-height: 100vh;"
         :disabled="disablePull"
       >
-        <div class="item">
-          <CalcPowerItem
-            :good-data="list"
-            @select="onSelect"
-            v-if="rateShow"
-          ></CalcPowerItem>
+        <div class="item" v-for="item in list" :key="item.id">
+          <CalcPowerItem :good-data="item" @select="onSelect"></CalcPowerItem>
         </div>
         <van-popup
           v-model="show"
@@ -21,13 +17,13 @@
           closeable
           :safe-area-inset-bottom="true"
         >
-          <!-- <CalcPowerBuyPopup
+          <CalcPowerBuyPopup
             v-on:dismiss="show = false"
             :number="number"
             :item="selectedItem"
             v-on:enterOrder="buySubmit"
             @changeNumber="onSelect"
-          /> -->
+          />
         </van-popup>
       </van-pull-refresh>
     </div>
@@ -37,11 +33,11 @@
 
 <script>
 import CalcPowerBuyPopup from "./CalcPowerBuyPopup";
-import { List, Popup, PullRefresh, Toast } from "vant";
+import { List, Popup, PullRefresh } from "vant";
 import CalcPowerItem from "./CalcPowerItem";
 import HeadNav from "@/components/HeadNav";
 import FootBox from "@/components/FootBox";
-import { getHomePageSaleLatestInfo } from "@/net/api/userInfoApi";
+import { getGoodListApi } from "@/net/api/homeApi";
 import { orderApi } from "@/net/api/userInfoApi";
 
 export default {
@@ -52,8 +48,7 @@ export default {
     CalcPowerBuyPopup,
     [Popup.name]: Popup,
     [List.name]: List,
-    [PullRefresh.name]: PullRefresh,
-    [Toast.name]: Toast
+    [PullRefresh.name]: PullRefresh
   },
   created: function() {
     this.onRefresh();
@@ -66,8 +61,7 @@ export default {
       list: [],
       selectedItem: {},
       number: 1,
-      disablePull: false,
-      rateShow: false
+      disablePull: false
     };
   },
   mounted() {
@@ -75,9 +69,7 @@ export default {
       window.addEventListener("scroll", this.handleScroll);
     }
   },
-  activated() {
-    this.onRefresh();
-  },
+  activated() {},
   deactivated() {
     this.onRefresh();
   },
@@ -114,17 +106,9 @@ export default {
       });
     },
     onRefresh() {
-      getHomePageSaleLatestInfo()
+      getGoodListApi()
         .then(res => {
-          if (res.data) {
-            this.list = res.data;
-            this.rateShow = true;
-          } else {
-            this.$router.push({
-              path: "/"
-            });
-            Toast("活动暂未开放");
-          }
+          this.list = res.data;
         })
         .finally(() => (this.refreshing = false));
     }

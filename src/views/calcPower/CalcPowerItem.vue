@@ -1,228 +1,102 @@
 <template>
-  <div class="padding">
-    <div class="item">
-      <div>
-        <div class="name">
-          <!-- <img
-            src="../../assets/img/buy-icon.png"
-            alt=""
-            style="width: 16px; height: 12px"
-          /> -->
-          <h3>{{ goodData.tittle }}</h3>
-          <!-- <img
-            src="../../assets/img/fire.png"
-            alt=""
-            style="width: 12px; height: 14px"
-          /> -->
-        </div>
-        <div class="padding">
-          <p class="subtitle">开始时间{{ goodData.start_time }}</p>
-          <!-- <p class="subtitle">结束时间{{ goodData.finish_time }}</p> -->
-          <div class="intro">
-            <div class="intro-item">
-              <p class="intro-item-title">当前有效算力质押</p>
-              <p style="margin-top: 8px">
-                {{ goodData.price | parseFloatFilter }}FIL/TiB
-              </p>
-            </div>
-            <div class="intro-item">
-              <p class="intro-item-title">排队中</p>
-              <p style="margin-top: 8px">{{ this.people }}/人</p>
-            </div>
-          </div>
-          <div v-if="show" class="handler">
-            <div class="handler-amount">
-              <div style="font-size: 20px">
-                <p style="font-size: 12px; color: #24375e">需要质押：</p>
-                <p>
-                  <span>{{ (goodData.price * amount) | parseFloatFilter }}</span
-                  ><span style="font-s  ize: 18px">FIL</span>
-                </p>
-              </div>
-            </div>
-            <div style="flex: 1"></div>
-            <AddSubtractBox
-              v-if="show"
-              v-model="amount"
-              :maxlimit="parseFloat(goodData.avl_buy_power)"
-              :limit="parseInt(goodData.minimum_unit)"
-            />
-            <div style="color: #575c62; font-size: 12px; margin-left: 12px">
-              TiB
-            </div>
-          </div>
-          <div v-if="show" class="maxBuy">
-            可申请的最大值
-            {{ Math.min(goodData.avl_buy_power, goodData.remain_power) }}TiB
-            <span
-              class="all"
-              @click="
-                amount = Math.min(goodData.avl_buy_power, goodData.remain_power)
-              "
-              >全部</span
-            >
-          </div>
-          <!-- <van-progress class="vanProgress" :percentage="progress" /> -->
-        </div>
-        <div class="hr" />
+  <div class="item">
+    <div @click="toDetail">
+      <div class="name">
+        <h3>{{ goodData.name }}</h3>
+        <span class="state">{{ goodData.highlight }}</span>
       </div>
-      <div
-        style="
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-        "
-      >
-        <a v-if="!show" @click="toDetail" style="color: #666666">产品详情>></a>
-        <p v-else></p>
-        <a class="btn-gradient" @click="toDetail">申请加速包</a>
+      <p class="subtitle">{{ goodData.slogan }}</p>
+      <div class="intro">
+        <div class="intro-item">
+          <span class="intro-item-title">挖矿币种</span>
+          <span class="intro-item-value">{{ goodData.weightAsset }}</span>
+        </div>
+        <div class="intro-item">
+          <span class="intro-item-title">结算周期</span>
+          <span class="intro-item-value">{{ goodData.settlementPeriod }}</span>
+        </div>
+        <div class="intro-item">
+          <span class="intro-item-title">合约期限</span>
+          <span class="intro-item-value">{{ goodData.day }}天</span>
+        </div>
+        <div class="intro-item">
+          <span class="intro-item-title">技术服务费</span>
+          <span class="intro-item-value"
+            >{{ goodData.serviceChargeRate * 100 }}%</span
+          >
+        </div>
       </div>
-      <span class="tag">限量</span>
+      <div class="handler">
+        <div class="handler-amount">
+          <span style="font-size: 24px">{{ goodData.price * amount }}</span>
+          <span style="font-size: 18px">USDT</span>
+        </div>
+        <div style="flex: 1"></div>
+        <AddSubtractBox v-model="amount" :limit="goodData.minLimit" />
+        <div style="color: #575c62; font-size: 12px; margin-left: 12px">
+          {{ goodData.unit }}
+        </div>
+      </div>
+      <van-progress
+        class="vanProgress"
+        v-if="goodData.status === 1"
+        :percentage="progress"
+      />
     </div>
-
-    <van-popup
-      v-model="thisShow"
-      position="bottom"
-      :safe-area-inset-bottom="true"
+    <div class="hr" />
+    <a
+      class="btn-gradient"
+      :class="{ gray: goodData.status !== 1 }"
+      @click="enterPay(goodData)"
+      >{{ this.statusBtnTitle(goodData.status) }}</a
     >
-      <div class="buy-centent">
-        <div class="buy-centent-flex">
-          <p>订单信息</p>
-          <p class="recharge" @click="topUp">去充值</p>
-        </div>
-        <div class="buy-centent-flex" style="margin-top: 20px">
-          <div class="buy-centent-left">
-            <p>抢购算力：</p>
-            <p>单价：</p>
-            <p>金额：</p>
-          </div>
-          <div class="buy-centent-right">
-            <p>{{ amount }} TiB</p>
-            <p>{{ goodData.price | parseFloatFilter }} FIL/TiB</p>
-            <p>{{ (goodData.price * amount) | parseFloatFilter }} FIL</p>
-          </div>
-        </div>
-        <div style="margin-top: 20px">
-          <p style="font-size: 12px; color: #666666">资金密码：</p>
-          <van-field
-            style="width: 100%; background: #e6e6e6; border-radius: 8px"
-            v-model="password"
-            type="password"
-            placeholder="请输入资金密码"
-          />
-          <p style="font-size: 12px; color: #666666; margin-top: 10px">
-            仅充值余额可进行算力加速购买，当前充值余额为{{
-              goodData.avl_fil | parseFloatFilter
-            }}FIL
-          </p>
-        </div>
-        <div class="buy-centent-flex" style="margin-top: 20px">
-          <van-button
-            style="background: #d0d0d0; color: #fff; padding: 0 40px"
-            round
-            @click="thisShow = false"
-            >取消</van-button
-          >
-          <van-button
-            style="background: #f9a03e; color: #fff; padding: 0 40px"
-            round
-            @click="buyOk"
-            >确认</van-button
-          >
-        </div>
-      </div>
-    </van-popup>
+    <span class="tag">{{ goodData.tag }}</span>
   </div>
 </template>
 
 <script>
-import { Popup, Field, Button, Toast, Loading } from "vant";
 import AddSubtractBox from "@/components/AddSubtractBox";
 import { Progress } from "vant";
-import md5 from "md5";
-import {
-  getPurchaseInfo,
-  getPurchase,
-  getCheckOrderStatus,
-  getListTopFlashUsers
-} from "../../net/api/userInfoApi";
 export default {
   props: {
-    goodData: {},
-    show: Boolean
+    goodData: {
+      default: () => ({})
+    }
   },
   components: {
     AddSubtractBox,
-    [Progress.name]: Progress,
-    [Popup.name]: Popup,
-    [Field.name]: Field,
-    [Button.name]: Button,
-    [Toast.name]: Toast,
-    [Loading.name]: Loading
+    [Progress.name]: Progress
   },
   data() {
     return {
-      amount: parseInt(this.goodData.minimum_unit),
-      progress: 0,
-      thisShow: false,
-      password: "",
-      pid: "",
-      people: 0
+      amount: this.goodData.minLimit || 1,
+      progress: 0
     };
   },
   watch: {
     goodData: function() {
-      this.amount = parseInt(this.goodData.minimum_unit);
-      this.progress = this.done(
-        ((this.goodData.total_power - this.goodData.remain_power) /
-          this.goodData.total_power) *
-          100,
-        2
-      );
+      this.amount = this.goodData.minLimit;
+      this.progress =
+        Math.floor(
+          (this.goodData.sellQuantity / this.goodData.quantity) * 100 * 100
+        ) / 100;
     }
   },
   created() {
     if (this.goodData.id) {
-      this.progress = this.done(
-        ((this.goodData.total_power - this.goodData.remain_power) /
-          this.goodData.total_power) *
-          100,
-        2
-      );
+      this.progress =
+        Math.floor(
+          (this.goodData.sellQuantity / this.goodData.quantity) * 100 * 100
+        ) / 100;
     }
-
-    getListTopFlashUsers().then(res => {
-      this.people = res.data.total;
-    });
   },
   methods: {
-    topUp() {
-      this.$router.push({
-        path: "/currencyTopup?asset=FIL"
-      });
-    },
-    buyOk() {
-      getPurchase({
-        buy_power: this.amount,
-        capital_pwd: md5(this.password),
-        product_id: this.goodData.id
-      })
-        .then(res => {
-          if (res.ret === 200) {
-            this.pid = res.data;
-            this.thisShow = false;
-            Toast.success("购买成功");
-          } else {
-            this.thisShow = false;
-            Toast.fail(res.msg);
-          }
-        })
-        .catch(() => (this.thisShow = false));
-    },
-
-    done(num, count) {
-      let newNum = parseInt(num * Math.pow(10, count)) / Math.pow(10, count);
-      return newNum;
+    enterPay(x) {
+      if (x.status !== 1) {
+        return;
+      }
+      let data = Object.assign(this.goodData, { amount: this.amount });
+      this.$emit("select", data); // 点击购买弹框
     },
     statusBtnTitle(status) {
       switch (status) {
@@ -236,28 +110,10 @@ export default {
     },
     // 商品详情
     toDetail() {
-      if (this.show) {
-        if (this.goodData.avl_buy_power == 0 || this.amount == 0) {
-          Toast("无可申请数量");
-          return;
-        }
-        if (this.goodData.price * this.amount > this.goodData.avl_fil) {
-          Toast("余额不足");
-          return;
-        }
-        this.thisShow = true;
-      } else {
-        if (this.$store.state.userData.id) {
-          if (this.goodData.status === 1) {
-            this.$router.push({
-              path: `/rate_detail/${this.goodData.id}/${this.amount}`
-            });
-          }
-        } else {
-          this.$router.push({
-            path: `/login`
-          });
-        }
+      if (this.goodData.status === 1) {
+        this.$router.push({
+          path: `/rate_detail/${this.goodData.id}/${this.amount}`
+        });
       }
     }
   }
@@ -267,46 +123,20 @@ export default {
 <style lang="scss" scoped>
 @import "../../assets/scss/base.scss";
 
-.buy-centent {
-  padding: 16px 30px;
-  .buy-centent-flex {
-    display: flex;
-    justify-content: space-between;
-    .recharge {
-      font-size: 12px;
-      color: #2559a5ff;
-    }
-    .buy-centent-left {
-      font-size: 14px;
-      color: #666666;
-      p {
-        line-height: 25px;
-      }
-    }
-    .buy-centent-right {
-      font-size: 14px;
-      color: #333333;
-      p {
-        line-height: 25px;
-      }
-    }
-  }
-}
-
 /deep/.van-progress {
   height: 10px;
   border-radius: 8px;
   .van-progress__portion {
     background-image: url("../../assets/img/progress.png");
     .van-progress__pivot {
-      background: #2559a5ff;
+      background: linear-gradient(to right, #f18c2e, #fbae4e);
     }
   }
 }
+
 .item {
   margin-bottom: 8px;
   padding: 16px;
-  border-radius: 8px;
   background: $content-backgroun-color;
   /*margin-top: 12px;*/
   display: flex;
@@ -322,7 +152,8 @@ export default {
       color: $h1-color;
       font-size: 15px;
       font-weight: bold;
-      margin: 0 5px;
+      margin: 0;
+      width: 70%;
     }
 
     span {
@@ -334,27 +165,21 @@ export default {
       margin-left: 6px;
     }
   }
-  .padding {
-    padding: 0 12px;
-  }
+
   .subtitle {
     margin-top: 6px;
     font-size: 12px;
     color: $h3-color;
   }
-  .maxBuy {
-    text-align: right;
-    font-size: 12px;
-    margin-top: 10px;
-    color: #999999;
-  }
+
   .intro {
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
     margin-top: 6px;
     &-item {
+      display: flex;
       margin-top: 12px;
-      text-align: center;
+
       &-title {
         font-size: 14px;
         color: $h3-color;
@@ -377,14 +202,14 @@ export default {
     &-amount {
       display: inline-block;
       font-size: 18px;
-      font-weight: 500;
+      font-weight: bold;
       color: $main-color;
     }
   }
 
   .hr {
-    margin: 8px 0;
-    // background: $divider-color;
+    margin: 18px 0;
+    background: $divider-color;
     height: 0.5px;
   }
 
@@ -412,7 +237,7 @@ export default {
     padding: 4px 6px;
     background: $main-color;
     position: absolute;
-    border-radius: 0 8px 0 2px;
+    border-radius: 0 0 0 2px;
     top: 0;
     right: 0;
   }
@@ -424,9 +249,5 @@ export default {
 .vanProgress {
   display: flex;
   margin-top: 20px;
-}
-.all {
-  color: #2559a5ff;
-  cursor: pointer;
 }
 </style>

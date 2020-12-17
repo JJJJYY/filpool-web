@@ -38,6 +38,14 @@
         <!-- <div v-if="rateShow" class="buy" style="margin: 10px">
           <CalcPowerItem :good-data="goodList" @select="onSelect" />
         </div> -->
+        <div class="buy" style="min-height: 66vw;">
+          <CalcPowerItem
+            v-for="item in goodList"
+            :key="item.id"
+            :good-data="item"
+            @select="onSelect"
+          />
+        </div>
         <!-- 存储空间 -->
         <Storage style="margin-top: 30px"></Storage>
         <!--介绍-->
@@ -248,13 +256,13 @@
         closeable
         :safe-area-inset-bottom="true"
       >
-        <!-- <CalcPowerBuyPopup
+        <CalcPowerBuyPopup
           v-on:dismiss="show = false"
           :number="number"
           :item="selectedItem"
           v-on:enterOrder="buySubmit"
           @changeNumber="onSelect"
-        /> -->
+        />
       </van-popup>
     </div>
     <FootBox></FootBox>
@@ -278,8 +286,8 @@ import FootBox from "@/components/FootBox";
 import plusready from "@/utils/plusReady";
 import Browser from "./browser/Browser";
 import { isH5 } from "@/utils/utilTools";
-import { getVideoListApi } from "@/net/api/homeApi";
-import { getHomePageSaleLatestInfo } from "@/net/api/userInfoApi";
+import { getVideoListApi, getGoodListApi } from "@/net/api/homeApi";
+// import { getHomePageSaleLatestInfo } from "@/net/api/userInfoApi";
 import { orderApi } from "@/net/api/userInfoApi";
 
 export default {
@@ -378,7 +386,8 @@ export default {
       return Promise.all([this.getGoodList(), this.videoList()]);
     },
     getGoodList() {
-      return getHomePageSaleLatestInfo()
+      // return getHomePageSaleLatestInfo()
+      return getGoodListApi()
         .then(res => {
           if (res.data) {
             this.goodList = res.data;
@@ -395,7 +404,7 @@ export default {
       });
     },
     onSelect(item) {
-      // this.selectedItem = Object.assign({}, item);
+      this.selectedItem = Object.assign({}, item);
       this.number = this.selectedItem.amount;
       this.show = true;
     },

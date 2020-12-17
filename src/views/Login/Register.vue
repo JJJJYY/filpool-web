@@ -204,7 +204,7 @@ export default {
     this.uuid = "";
     this.getImgCode();
     if (isH5) {
-      this.checkChannel();
+      // this.checkChannel();
     }
   },
   beforeRouteLeave(to, from, next) {

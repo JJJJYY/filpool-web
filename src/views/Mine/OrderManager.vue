@@ -15,9 +15,10 @@
               <div class="detail">
                 <div class="detail-item">{{ x.name }}</div>
                 <div class="detail-item">
-                  单价：{{ x.price | parseFloatFilter }} {{ x.asset }}/{{
-                    x.unit
+                  单价：{{
+                    (x.paymentQuantity / x.quantity) | parseFloatFilter
                   }}
+                  {{ x.asset }}/{{ x.unit }}
                 </div>
                 <div class="detail-item">
                   数量： {{ x.quantity | parseFloatFilter }}
@@ -124,12 +125,10 @@ export default {
       return thisName;
     },
     speedUpType() {
-      console.log(this.active);
       getFlashSaleOrderList({
         page: 1,
         count: 1000
       }).then(res => {
-        console.log(res);
         this.speedUpData = res.data.list;
       });
     },

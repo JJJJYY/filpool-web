@@ -9,7 +9,7 @@ export function getGeneralBannerApi() {
 
 // 商品列表
 export function getGoodListApi() {
-  return getRequest('App.Goods.List');
+  return getRequest('AgentGoods.List');
 }
 
 // 公告列表

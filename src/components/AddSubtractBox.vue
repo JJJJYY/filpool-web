@@ -1,7 +1,7 @@
 <template>
   <div class="box" @click.stop="clickContent">
-    <button class="sub flex-box" @click.stop="sub">
-      <img :src="subIcon" alt="" style="width: 12px" />
+    <button class="sub flex-box" @click.stop="sub" :disabled="number <= limit">
+      <img :src="subIcon" alt="" style="width: 12px;" />
     </button>
     <input
       type="number"
@@ -11,7 +11,7 @@
       title=""
     />
     <button class="add flex-box" @click.stop="add">
-      <img :src="addImg" alt="" style="width: 12px" />
+      <img :src="addImg" alt="" style="width: 12px;" />
     </button>
   </div>
 </template>
@@ -23,10 +23,6 @@ export default {
   props: {
     value: Number,
     limit: {
-      type: Number,
-      default: 1
-    },
-    maxlimit: {
       type: Number,
       default: 1
     }
@@ -57,16 +53,12 @@ export default {
   },
   methods: {
     add() {
-      if (this.number >= this.maxlimit) {
-        Toast("最大数量：" + this.maxlimit);
-        return;
-      }
       this.number += 1;
       this.$emit("input", this.number);
     },
     sub() {
       if (this.number <= this.limit) {
-        Toast("最少数量：" + this.limit);
+        Toast("最少购买数量：" + this.limit);
         return;
       }
       this.number -= 1;

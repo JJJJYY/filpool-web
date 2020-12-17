@@ -115,7 +115,6 @@ export default {
     },
     getActualInfo() {
       userIdInfoApi().then(res => {
-        console.log(res);
         if (res.ret === 200) {
           this.actualData = res.data;
           this.areaCode = res.data.country;

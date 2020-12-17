@@ -142,7 +142,7 @@
             <div class="nodeInformation-list-centent">
               <p
                 class="nodeInformation-list-titile"
-                style="transform: scale(0.8)"
+                style="transform: scale(0.8); min-width: 60px;"
               >
                 联盟成员
               </p>

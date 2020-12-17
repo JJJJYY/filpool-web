@@ -112,7 +112,7 @@ export function internalTransferApi(data) {
 }
 // 商品某条数据
 export function goodGetApi(data) {
-  return postRequest('App.Goods.Get', data)
+  return postRequest('AgentGoods.Get', data)
 }
 // 确认订单
 export function confirmOrderApi(data) {

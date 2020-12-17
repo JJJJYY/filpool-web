@@ -21,31 +21,31 @@ const routes = [{
       isQuit: true
     }
   },
-  // {
-  //   path: '/rate',
-  //   name: 'rate',
-  //   component: () => import( /* webpackChunkName: "count" */ '../views/calcPower/CalcPower'),
-  //   meta: {
-  //     showTabBar: true,
-  //     title: "云算力",
-  //     backBtnHidden: true,
-  //     isQuit: true
-  //   }
-  // },
+  {
+    path: '/rate',
+    name: 'rate',
+    component: () => import( /* webpackChunkName: "count" */ '../views/calcPower/CalcPower'),
+    meta: {
+      showTabBar: true,
+      title: "云算力",
+      backBtnHidden: true,
+      isQuit: true
+    }
+  },
   {
     path: '/ServiceDetail',
     name: 'ServiceDetail',
     component: () => import( /* webpackChunkName: "count" */ '../views/ServiceDetail'),
     meta: {}
   },
-  // {
-  //   path: '/rate_detail/:id?/:amount?',
-  //   name: 'rate_detail',
-  //   component: () => import( /* webpackChunkName: "count" */ '../views/calcPower/ProductDetail'),
-  //   meta: {
-  //     title: '产品详情'
-  //   }
-  // },
+  {
+    path: '/rate_detail/:id?/:amount?',
+    name: 'rate_detail',
+    component: () => import( /* webpackChunkName: "count" */ '../views/calcPower/ProductDetail'),
+    meta: {
+      title: '产品详情'
+    }
+  },
   {
     path: '/mine',
     name: 'Mine',

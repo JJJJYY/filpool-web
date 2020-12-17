@@ -3,7 +3,7 @@
     <head-nav></head-nav>
     <div class="payinfo">
       <span class="pay-title">订单金额</span>
-      <p class="amount">$ {{$route.query.amount | parseFloatFilter }} USDT</p>
+      <p class="amount">$ {{ $route.query.amount | parseFloatFilter }} USDT</p>
       <div class="time">
         倒计时
         <van-count-down style="display: inline-block;" :time="time" />
@@ -12,12 +12,18 @@
       <div class="hr"></div>
       <div class="pay-type-list">
         <img src="../../assets/img/pay_icon_usdt.png" alt class="icon" />
-        <p class="pay-type-name">USDT支付(余额 {{usdt.available | parseFloatFilter}} USDT)</p>
+        <p class="pay-type-name">
+          USDT支付(余额 {{ usdt.recharge | parseFloatFilter }} USDT)
+        </p>
         <img src="../../assets/img/pay_icon_ok.png" alt />
       </div>
     </div>
     <button class="btn-gradient" @click="enter">确认付款</button>
-    <PasswordPopup v-model="isShowPwdPopup" v-if="isShowPwdPopup" @enter="enterPassword" />
+    <PasswordPopup
+      v-model="isShowPwdPopup"
+      v-if="isShowPwdPopup"
+      @enter="enterPassword"
+    />
   </div>
 </template>
 
@@ -34,7 +40,7 @@ export default {
     return {
       isShowPwdPopup: false,
       usdt: {},
-      time: 15 * 60 * 1000,
+      time: 15 * 60 * 1000
     };
   },
   created() {
@@ -43,7 +49,7 @@ export default {
   components: {
     HeadNav,
     PasswordPopup,
-    [CountDown.name]: CountDown,
+    [CountDown.name]: CountDown
   },
   methods: {
     enter() {
@@ -53,23 +59,23 @@ export default {
       const postData = {
         id: this.$route.query.id,
         operation: 1,
-        payPwd: md5(str),
+        payPwd: md5(str)
       };
-      confirmOrderApi(postData).then((res) => {
+      confirmOrderApi(postData).then(res => {
         if (res.ret === 200) {
           this.$router.replace({
-            path: "/countPayCompletion",
+            path: "/countPayCompletion"
           });
         }
       });
     },
     /// 获取余额
     loadData() {
-      myBalanceApi().then((res) => {
-        this.usdt = res.data.filter((x) => x.asset === "USDT")[0];
+      myBalanceApi().then(res => {
+        this.usdt = res.data.filter(x => x.asset === "USDT")[0];
       });
-    },
-  },
+    }
+  }
 };
 </script>
 
