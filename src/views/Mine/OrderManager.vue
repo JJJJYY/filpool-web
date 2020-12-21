@@ -14,12 +14,12 @@
               <div class="hr"></div>
               <div class="detail">
                 <div class="detail-item">{{ x.name }}</div>
-                <div class="detail-item">
+                <!-- <div class="detail-item">
                   单价：{{
                     (x.paymentQuantity / x.quantity) | parseFloatFilter
                   }}
                   {{ x.asset }}/{{ x.unit }}
-                </div>
+                </div> -->
                 <div class="detail-item">
                   数量： {{ x.quantity | parseFloatFilter }}
                 </div>
@@ -39,7 +39,7 @@
           <div v-else class="none-data">暂无数据</div>
         </van-tabs>
       </van-tab>
-      <van-tab class="list page-container" title="算力加速订单">
+      <!-- <van-tab class="list page-container" title="算力加速订单">
         <div
           class="speedUp-centent"
           v-for="(item, index) in speedUpData"
@@ -71,7 +71,7 @@
             >
           </div>
         </div>
-      </van-tab>
+      </van-tab> -->
     </van-tabs>
   </div>
 </template>

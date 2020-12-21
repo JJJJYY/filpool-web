@@ -295,11 +295,11 @@ export default {
   data() {
     return {
       guideItems: [
-        {
-          icon: require("../../assets/img/mine/guide-4.png"),
-          title: "进阶小课堂",
-          router: "/classroom"
-        },
+        // {
+        //   icon: require("../../assets/img/mine/guide-4.png"),
+        //   title: "进阶小课堂",
+        //   router: "/classroom"
+        // },
         {
           icon: require("../../assets/img/mine/guide-3.png"),
           title: "邀请好友",
