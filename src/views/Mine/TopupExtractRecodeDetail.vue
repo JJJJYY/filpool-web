@@ -2,31 +2,39 @@
   <div style="background: white; min-height: 100%">
     <head-nav></head-nav>
     <div class="header">
-      <img src="../../assets/img/transaction_details_icon_successful.png" alt class="icon" />
-      <div class="state">{{$route.query.statusDesc}}</div>
-      <div class="amount">{{item.amount | parseFloatFilter}} {{item.asset}}</div>
+      <img
+        src="../../assets/img/transaction_details_icon_successful.png"
+        alt
+        class="icon"
+      />
+      <div class="state">{{ $route.query.statusDesc }}</div>
+      <div class="amount">
+        {{ item.amount | parseFloatFilter }} {{ item.asset }}
+      </div>
     </div>
     <div class="hr"></div>
     <div class="detail">
       <div class="row">
         <div class="title">类型</div>
-        <div class="content">{{$route.query.isTopUp === 'ture' ? '充币' : '提币'}}</div>
+        <div class="content">
+          {{ $route.query.isTopUp === "ture" ? "充币" : "提币" }}
+        </div>
       </div>
       <div class="row">
         <div class="title">充币地址</div>
-        <div class="content">{{item.fromAddress || '---'}}</div>
+        <div class="content">{{ item.fromAddress || "---" }}</div>
       </div>
       <div class="row">
         <div class="title">提币地址</div>
-        <div class="content">{{item.address}}</div>
+        <div class="content">{{ item.address }}</div>
       </div>
       <div class="row">
         <div class="title">区块号</div>
-        <div class="content">{{item.hash}}</div>
+        <div class="content">{{ item.hash }}</div>
       </div>
       <div class="row">
         <div class="title">交易时间</div>
-        <div class="content">{{item.createTime}}</div>
+        <div class="content">{{ item.createTime }}</div>
       </div>
       <div class="qr" ref="qrCodeUrl" />
     </div>
@@ -41,12 +49,12 @@ import HeadNav from "@/components/HeadNav";
 export default {
   name: "TopupExtractRecodeDetail",
   components: {
-    HeadNav,
+    HeadNav
   },
   data() {
     return {
       isTopUp: this.$route.query.isTopUp,
-      item: {},
+      item: {}
     };
   },
   created() {
@@ -62,17 +70,21 @@ export default {
         : withdrawalApi(data);
     },
     toBlockExplore() {
-      window.location.href = `https://www.blockchain.com/eth/tx/${this.item.hash}`;
+      if (this.item.asset === "FIL") {
+        window.location.href = `https://filfox.info/zh/message/${this.item.hash}`;
+      } else {
+        window.location.href = `https://www.blockchain.com/eth/tx/${this.item.hash}`;
+      }
     },
     createQr() {
       let url = `https://www.blockchain.com/eth/tx/${this.item.hash}`;
       new QRCode(this.$refs.qrCodeUrl, {
         text: url,
         width: 100,
-        height: 100,
+        height: 100
       });
-    },
-  },
+    }
+  }
 };
 </script>
 
