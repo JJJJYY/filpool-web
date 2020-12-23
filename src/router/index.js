@@ -33,6 +33,17 @@ const routes = [{
     }
   },
   {
+    path: '/saveMoney',
+    name: 'saveMoney',
+    component: () => import( /* webpackChunkName: "count" */ '../views/saveMoney/saveMoney.vue'),
+    meta: {
+      showTabBar: true,
+      title: "存比宝",
+      backBtnHidden: true,
+      isQuit: true
+    }
+  },
+  {
     path: '/ServiceDetail',
     name: 'ServiceDetail',
     component: () => import( /* webpackChunkName: "count" */ '../views/ServiceDetail'),
