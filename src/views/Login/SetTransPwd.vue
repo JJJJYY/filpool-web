@@ -10,7 +10,7 @@
             <div class="form-title">资金密码</div>
             <div class="form-input">
               <input
-                :type="isSecurity ? 'password':'text'"
+                :type="isSecurity ? 'password' : 'text'"
                 title
                 placeholder="请设置新密码"
                 maxlength="18"
@@ -53,13 +53,13 @@ export default {
   name: "SetTransPwd",
   components: {
     HeadNav,
-    LoginBackground,
+    LoginBackground
   },
   data() {
     return {
       payPwd: "",
       isSecurity: true,
-      type: this.$route.query.type,
+      type: this.$route.query.type
     };
   },
   methods: {
@@ -75,17 +75,17 @@ export default {
         account: this.$route.query.account,
         channel: "",
         type: this.type,
-        invitationCode: this.$route.query.inviteCode,
-        code: this.$route.query.accountCode,
+        invitationCode: this.$route.query.inviteCode || "",
+        code: this.$route.query.accountCode
       };
       registerApi(postData)
-        .then((res) => {
+        .then(res => {
           Toast("注册成功");
           this.$router.replace({ path: isH5 ? "/download" : "/login" });
         })
-        .catch((err) => {});
-    },
-  },
+        .catch(err => {});
+    }
+  }
 };
 </script>
 

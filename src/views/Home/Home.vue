@@ -248,7 +248,7 @@
           </div>
         </div> -->
         <!--合作伙伴-->
-        <Partner></Partner>
+        <!-- <Partner></Partner> -->
       </vue-pull-refresh>
       <van-popup
         v-model="show"
