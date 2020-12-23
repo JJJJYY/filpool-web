@@ -3,7 +3,7 @@
     <head-nav></head-nav>
     <div class="page-container">
       <div class="list">
-        <div class="cell" @click="$router.push('/aboutUs')">
+        <!-- <div class="cell" @click="$router.push('/aboutUs')">
           <div class="name">关于我们</div>
           <img
             class="more"
@@ -18,11 +18,11 @@
             src="../../../assets/img/mine/tab_icon_more.png"
             alt
           />
-        </div>
+        </div> -->
         <div class="cell" @click="checkUpdate" v-if="!$isH5">
           <div class="name">检查更新</div>
           <div class="check-box flex-box" v-if="!checking">
-            <span style="margin-right: 8px">{{ version }}</span>
+            <span style="margin-right: 8px">{{ versionCode }}</span>
             <img
               v-if="!checking"
               class="more"
@@ -58,12 +58,14 @@ export default {
   data() {
     return {
       checking: false,
-      version: ""
+      version: "",
+      versionCode: ""
     };
   },
   mounted() {
     plusReady(() => {
       window.plus.runtime.getProperty(window.plus.runtime.appid, inf => {
+        this.versionCode = inf.versionCode;
         this.version = `v${inf.version}`;
       });
     });

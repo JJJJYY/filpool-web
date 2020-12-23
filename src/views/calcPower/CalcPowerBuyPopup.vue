@@ -10,11 +10,7 @@
     </div>
     <div class="item">
       <div class="key">合约期限：</div>
-      <div class="value">
-        {{
-          item.contractDuration
-        }}天（自Filecoin主网上线后发放收益之日起开始计算；后两年需按矿池届时收费标准续费)
-      </div>
+      <div class="value">{{ item.day }}天</div>
     </div>
     <div class="item">
       <div class="key">技术服务费：</div>
