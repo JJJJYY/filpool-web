@@ -102,8 +102,26 @@
             <p>{{ (goodData.price * amount) | parseFloatFilter }} FIL</p>
           </div>
         </div>
+        <div class="buy-margin">
+          <p>支付方式：</p>
+          <select
+            class="buy-margin-select"
+            v-model="values"
+            @change="changeHandle($event)"
+          >
+            <option :value="1"
+              >充提账户（余额：{{ goodData.avl_fil | parseFloatFilter }}FIL）
+            </option>
+            <option :value="2">借贷账户</option>
+          </select>
+        </div>
         <div style="margin-top: 20px">
-          <p style="font-size: 12px; color: #666666">资金密码：</p>
+          <div
+            style="font-size: 12px; color: #666666 ; display: flex; justify-content: space-between"
+          >
+            <p>资金密码：</p>
+            <p class="recharge" @click="topUpPaw">忘记密码？</p>
+          </div>
           <van-field
             style="width: 100%; background: #e6e6e6; border-radius: 8px"
             v-model="password"
@@ -111,9 +129,7 @@
             placeholder="请输入资金密码"
           />
           <p style="font-size: 12px; color: #666666; margin-top: 10px">
-            仅充值余额可进行算力加速购买，当前充值余额为{{
-              goodData.avl_fil | parseFloatFilter
-            }}FIL
+            温馨提示：选择借贷账户支付，系统默认向DeFil平台 进行借贷
           </p>
         </div>
         <div class="buy-centent-flex" style="margin-top: 20px">
@@ -167,7 +183,8 @@ export default {
       thisShow: false,
       password: "",
       pid: "",
-      people: 0
+      people: 0,
+      values: "1"
     };
   },
   watch: {
@@ -196,14 +213,23 @@ export default {
     });
   },
   methods: {
+    changeHandle(event) {
+      this.values = event.target.value;
+    },
     topUp() {
       this.$router.push({
         path: "/currencyTopup?asset=FIL"
       });
     },
+    topUpPaw() {
+      this.$router.push({
+        path: "/securityCenter"
+      });
+    },
     buyOk() {
       getPurchase({
         buy_power: this.amount,
+        pay_type: this.values,
         capital_pwd: md5(this.password),
         product_id: this.goodData.id
       })
@@ -269,6 +295,24 @@ export default {
 
 .buy-centent {
   padding: 16px 30px;
+  .buy-margin {
+    display: flex;
+    align-items: center;
+    color: #666666;
+    margin-top: 20px;
+    .buy-margin-select {
+      flex: 1;
+      outline: none;
+      border: 1px solid #c8c8c8;
+      padding: 5px 0;
+      border-radius: 4px;
+      background: #fff;
+    }
+  }
+  .recharge {
+    font-size: 12px;
+    color: #f9a03e;
+  }
   .buy-centent-flex {
     display: flex;
     justify-content: space-between;

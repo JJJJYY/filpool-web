@@ -202,3 +202,7 @@ export function getMyPower(data, fun) {
 export function getTransferPledged(data) {
   return getRequest('App.Balance.TransferPledged', data)
 }
+// 借贷
+export function getFlashSale(data) {
+  return getRequest('FlashSale.CancelOrder', data)
+}
