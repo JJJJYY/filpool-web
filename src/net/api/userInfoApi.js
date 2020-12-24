@@ -11,6 +11,10 @@ export function myWeightApi(data) {
 export function myBalanceApi() {
   return postRequest('App.Balance.My');
 }
+// 代理商信息
+export function AuthAgent() {
+  return postRequest('AuthAgent.Info');
+}
 
 // 获取币种
 export function assetTypeApi() {

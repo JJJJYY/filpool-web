@@ -33,6 +33,13 @@ Vue.directive("scrollToView", scrollToView);
 Vue.directive("onlyNumber", onlyNumber);
 Vue.directive("scrollShow", scrollShow);
 
+Vue.directive('title', {
+  inserted: function (el, binding) {
+    document.title = el.dataset.title
+    console.log(document.title)
+  }
+})
+
 function done(num, count) {
   var newNum = parseInt(num * Math.pow(10, count)) / Math.pow(10, count);
   return newNum;
