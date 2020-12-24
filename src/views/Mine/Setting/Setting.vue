@@ -22,7 +22,9 @@
         <div class="cell" @click="checkUpdate" v-if="!$isH5">
           <div class="name">检查更新</div>
           <div class="check-box flex-box" v-if="!checking">
-            <span style="margin-right: 8px">{{ versionCode }}</span>
+            <span style="margin-right: 8px"
+              >{{ versionCode }}-{{ versionCode }}</span
+            >
             <img
               v-if="!checking"
               class="more"
