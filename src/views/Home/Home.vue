@@ -345,10 +345,7 @@ export default {
     this.getGoodList();
     this.videoList();
     this.setStatusStyle("light");
-    AuthAgent().then(res => {
-      console.log(res);
-      this.titleImage = res.data.logoUrl;
-    });
+    this.getAuthAgent();
   },
   mounted() {
     this.showContainer = true;
@@ -361,6 +358,13 @@ export default {
     this.setStatusStyle("dark");
   },
   methods: {
+    getAuthAgent() {
+      AuthAgent().then(res => {
+        console.log(res);
+        this.titleImage = res.data.logoUrl;
+        document.title = res.data.name;
+      });
+    },
     toggleBrowser() {
       this.showBrowser = true;
     },
@@ -384,7 +388,11 @@ export default {
       }
     },
     onRefresh() {
-      return Promise.all([this.getGoodList(), this.videoList()]);
+      return Promise.all([
+        this.getGoodList(),
+        this.videoList(),
+        this.getAuthAgent()
+      ]);
     },
     getGoodList() {
       // return getHomePageSaleLatestInfo()
