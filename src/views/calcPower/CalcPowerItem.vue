@@ -227,6 +227,13 @@ export default {
       });
     },
     buyOk() {
+      if (
+        this.goodData.price * this.amount > this.goodData.avl_fil &&
+        this.values == "1"
+      ) {
+        Toast("余额不足");
+        return;
+      }
       getPurchase({
         buy_power: this.amount,
         pay_type: this.values,
@@ -267,13 +274,7 @@ export default {
           Toast("无可申请数量");
           return;
         }
-        if (
-          this.goodData.price * this.amount > this.goodData.avl_fil &&
-          values == "1"
-        ) {
-          Toast("余额不足");
-          return;
-        }
+
         this.thisShow = true;
       } else {
         if (this.$store.state.userData.id) {
