@@ -267,7 +267,10 @@ export default {
           Toast("无可申请数量");
           return;
         }
-        if (this.goodData.price * this.amount > this.goodData.avl_fil) {
+        if (
+          this.goodData.price * this.amount > this.goodData.avl_fil &&
+          values == "1"
+        ) {
           Toast("余额不足");
           return;
         }
