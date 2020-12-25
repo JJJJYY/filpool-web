@@ -20,8 +20,8 @@
     </div>
     <div class="asset">
       <div class="asset-usable" v-for="(i, index) in item.myAsset" :key="index">
-        <div class="asset-usable-div">
-          <p class="asset-usable-text" @click="availableAssets">
+        <div class="asset-usable-div" @click="availableAssets(i)">
+          <p class="asset-usable-text">
             {{ i.isAsset }}
           </p>
           <p
@@ -34,7 +34,6 @@
         </div>
         <p class="asset-usable-num">{{ i.num | parseFloatFilter }}</p>
       </div>
-      <!-- 提示 -->
       <van-overlay :show="overlayShow" @click="overlayShow = false" @click.stop>
         <div class="wrapper">
           <p class="block">{{ thisText }}</p>
@@ -87,13 +86,23 @@ export default {
   //   console.log(this.item);
   // },
   methods: {
-    availableAssets() {
-      this.$router.push({
-        path: "/availableAssets",
-        query: {
-          asset: this.item.asset
-        }
-      });
+    availableAssets(i) {
+      console.log(i);
+      if (i.jump === 1) {
+        this.$router.push({
+          path: "/availableAssets",
+          query: {
+            asset: this.item.asset
+          }
+        });
+      } else if (i.jump === 2) {
+        this.$router.push({
+          path: "/loan",
+          query: {
+            asset: this.item.asset
+          }
+        });
+      }
     },
     handleIcon(val) {
       this.thisText = val;
@@ -195,19 +204,20 @@ export default {
     }
   }
   .asset {
-    display: flex;
-    justify-content: space-around;
-    margin-top: 14px;
-    position: relative;
+    display: Grid;
+    grid-template-columns: 1fr 1fr;
     .asset-usable {
-      text-align: center;
-      position: relative;
+      padding: 10px;
+      border-right: 1px solid #f0f0f0;
+      border-bottom: 1px solid #f0f0f0;
+      text-align: start;
       .asset-usable-div {
         display: flex;
         flex-direction: row;
-        justify-content: center;
+        // justify-content: center;
         align-items: center;
         .asset-usable-query {
+          text-align: center;
           transform: scale(0.7);
           border: 1px solid #999999;
           border-radius: 50%;

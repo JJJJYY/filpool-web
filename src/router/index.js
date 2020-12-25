@@ -349,6 +349,15 @@ const routes = [{
     }
   },
   {
+    path: '/loan',
+    name: 'loan',
+    component: () => import( /* webpackChunkName: "mine" */ '../views/Mine/loan/loan.vue'),
+    meta: {
+      title: "借贷资金",
+      needLogin: true
+    }
+  },
+  {
     path: '/powerDetails',
     name: 'powerDetails',
     component: () => import( /* webpackChunkName: "mine" */ '../views/Mine/powerDetails/powerDetails.vue'),

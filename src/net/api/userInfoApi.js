@@ -206,3 +206,11 @@ export function getTransferPledged(data) {
 export function getFlashSale(data) {
   return getRequest('FlashSale.CancelOrder', data)
 }
+// 借贷
+export function Loan(data) {
+  return getRequest('Loan.Info', data)
+}
+// 借贷列表
+export function LoanRecordList(data) {
+  return getRequest('BalanceModify.LoanRecordList', data)
+}
