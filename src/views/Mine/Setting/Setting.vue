@@ -22,7 +22,9 @@
         <div class="cell" @click="checkUpdate" v-if="!$isH5">
           <div class="name">检查更新</div>
           <div class="check-box flex-box" v-if="!checking">
-            <span style="margin-right: 8px">{{ version }}</span>
+            <span style="margin-right: 8px"
+              >{{ version }}-{{ versionBuild }}</span
+            >
             <img
               v-if="!checking"
               class="more"
@@ -53,17 +55,19 @@ export default {
   components: {
     HeadNav,
     [Dialog.Component.name]: Dialog.Component,
-    [Loading.name]: Loading,
+    [Loading.name]: Loading
   },
   data() {
     return {
       checking: false,
       version: "",
+      versionBuild: ""
     };
   },
   mounted() {
     plusReady(() => {
-      window.plus.runtime.getProperty(window.plus.runtime.appid, (inf) => {
+      window.plus.runtime.getProperty(window.plus.runtime.appid, inf => {
+        this.versionBuild = inf.versionCode;
         this.version = `v${inf.version}`;
       });
     });
@@ -72,9 +76,9 @@ export default {
     logout() {
       Dialog.confirm({
         message: "是否退出当前账户？",
-        confirmButtonColor: "#e49c3a",
+        confirmButtonColor: "#e49c3a"
       }).then(() => {
-        logoutApi().then((res) => {
+        logoutApi().then(res => {
           if (res.ret === 200) {
             window.localStorage.clear();
             this.$store.commit("setUserData", {});
@@ -86,7 +90,7 @@ export default {
     /*查看用户协议*/
     showAircle() {
       this.$router.push({
-        path: "/ServiceDetail",
+        path: "/ServiceDetail"
       });
       /*let url = 'https://www.filpool.io/user/xieyi.html';
         if (this.$isH5) {
@@ -99,7 +103,7 @@ export default {
     },
     checkUpdate() {
       this.checking = true;
-      new CheckUpdate(false, (msg) => {
+      new CheckUpdate(false, msg => {
         if (msg) {
           Toast(msg);
         }
@@ -108,8 +112,8 @@ export default {
       setTimeout(() => {
         this.checking = false;
       }, 1000);
-    },
-  },
+    }
+  }
 };
 </script>
 
