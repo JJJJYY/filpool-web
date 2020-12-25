@@ -23,7 +23,7 @@
           <div class="name">检查更新</div>
           <div class="check-box flex-box" v-if="!checking">
             <span style="margin-right: 8px"
-              >{{ versionCode }}-{{ versionCode }}</span
+              >{{ version }}-{{ versionCode }}</span
             >
             <img
               v-if="!checking"
