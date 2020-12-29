@@ -3,11 +3,19 @@
     <div class="title">分享好友</div>
     <div class="btn-group">
       <div class="btn" @click="$emit('save')">
-        <img src="../../../assets/img/invite/invitation_icon_save.png" alt class="img" />
+        <img
+          src="../../../assets/img/invite/invitation_icon_save.png"
+          alt
+          class="img"
+        />
         <div class="title">我的专属海报</div>
       </div>
       <div class="btn copy" :data-clipboard-text="clipboardText">
-        <img src="../../../assets/img/invite/invitation_icon_copy.png" alt class="img" />
+        <img
+          src="../../../assets/img/invite/invitation_icon_copy.png"
+          alt
+          class="img"
+        />
         <div class="title">复制链接</div>
       </div>
     </div>
@@ -28,7 +36,7 @@ export default {
   },
   computed: {
     clipboardText() {
-      return `${pcOrigin}/#/register/${this.inviteInfo.invitationCode}`;
+      return `${window.location.host}/#/register/${this.inviteInfo.invitationCode}`;
     },
   },
   mounted() {
