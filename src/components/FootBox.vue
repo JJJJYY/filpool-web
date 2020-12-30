@@ -42,7 +42,7 @@ export default {
         {
           image: require("@/assets/img/tab_icon_count_normal.png"),
           selectImage: require("@/assets/img/tab_icon_count_selected.png"),
-          title: "运算力",
+          title: "云算力",
           router: "/rate"
         },
         // {
