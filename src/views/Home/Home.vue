@@ -34,7 +34,7 @@
         <!-- <div v-if="rateShow" class="buy" style="margin: 10px">
           <CalcPowerItem :good-data="goodList" @select="onSelect" />
         </div> -->
-        <div class="buy" style="min-height: 66vw;">
+        <div class="buy">
           <CalcPowerItem
             v-for="item in goodList"
             :key="item.id"
@@ -299,18 +299,18 @@ export default {
         {
           icon: require("../../assets/img/mine/guide-3.png"),
           title: "邀请好友",
-          router: "/invite"
+          router: "/invite",
         },
         {
           icon: require("../../assets/img/mine/guide-2.png"),
           title: "项目动态",
-          router: "/dynamic"
+          router: "/dynamic",
         },
         {
           icon: require("../../assets/img/mine/guide-1.png"),
           title: "帮助中心",
-          router: "/helpCenter"
-        }
+          router: "/helpCenter",
+        },
       ],
       videos: [],
       previewImg: require("@/assets/img/preview.png"),
@@ -323,7 +323,7 @@ export default {
       showBrowser: false,
       isH5: isH5,
       rateShow: false,
-      titleImage: ""
+      titleImage: "",
     };
   },
   components: {
@@ -338,7 +338,7 @@ export default {
     [Popup.name]: Popup,
     "vue-pull-refresh": VuePullRefresh,
     Browser,
-    Storage
+    Storage,
     /*[PullRefresh.name]: PullRefresh*/
   },
   created() {
@@ -359,7 +359,7 @@ export default {
   },
   methods: {
     getAuthAgent() {
-      AuthAgent().then(res => {
+      AuthAgent().then((res) => {
         console.log(res);
         this.titleImage = res.data.logoUrl;
         document.title = res.data.name;
@@ -391,13 +391,13 @@ export default {
       return Promise.all([
         this.getGoodList(),
         this.videoList(),
-        this.getAuthAgent()
+        this.getAuthAgent(),
       ]);
     },
     getGoodList() {
       // return getHomePageSaleLatestInfo()
       return getGoodListApi()
-        .then(res => {
+        .then((res) => {
           if (res.data) {
             this.goodList = res.data;
             this.rateShow = true;
@@ -406,8 +406,8 @@ export default {
         .finally(() => (this.refreshing = false));
     },
     videoList() {
-      return getVideoListApi().then(res => {
-        this.videos = res.data.filter(item => {
+      return getVideoListApi().then((res) => {
+        this.videos = res.data.filter((item) => {
           return item.type === 1;
         });
       });
@@ -424,21 +424,21 @@ export default {
       const postData = {
         id: item.id,
         asset: "USDT",
-        quantity: item.amount
+        quantity: item.amount,
       };
-      orderApi(postData).then(res => {
+      orderApi(postData).then((res) => {
         if (res.ret === 200) {
           this.$router.push({
             path: "/countPay",
             query: {
               amount: item.price * item.amount,
-              id: res.data
-            }
+              id: res.data,
+            },
           });
         }
       });
-    }
-  }
+    },
+  },
 };
 </script>
 
