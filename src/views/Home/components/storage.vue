@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="storage">BPool矿池运营数据</div>
+    <div class="storage">矿池运营数据</div>
     <div class="storage-content" v-if="loading">
       <div class="content-text">
         <p class="content-text-size">矿池填充进度</p>
@@ -135,7 +135,7 @@
           <div v-else class="nodeInformation-list-none">暂无数据</div>
         </div>
       </div>
-      <div class="nodeInformation-centent" style="margin-top: 10px">
+      <!-- <div class="nodeInformation-centent" style="margin-top: 10px">
         <div class="nodeInformation-text">BPool矿池联盟</div>
         <div class="nodeInformation-list">
           <div v-if="nodeListTeam" class="nodeInformation-list-t">
@@ -206,7 +206,7 @@
           </div>
           <div v-else class="nodeInformation-list-none">暂无数据</div>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
@@ -218,7 +218,7 @@ import axios from "axios"; // 作用取消请求
 export default {
   name: "storage",
   components: {
-    [Progress.name]: Progress
+    [Progress.name]: Progress,
   },
   data() {
     return {
@@ -228,7 +228,7 @@ export default {
       operationalData: 3,
       nodeList: null,
       cancelAjax: null, // 作用取消请求
-      nodeListTeam: null
+      nodeListTeam: null,
     };
   },
   created() {
@@ -246,7 +246,7 @@ export default {
       }
       let _this = this;
 
-      getAllianceInfo().then(res => {
+      getAllianceInfo().then((res) => {
         if (res.ret === 200) {
           this.nodeListTeam = res.data;
         }
@@ -258,7 +258,7 @@ export default {
         new CancelToken(function executor(c) {
           _this.cancelAjax = c;
         })
-      ).then(res => {
+      ).then((res) => {
         if (res.ret === 200) {
           this.loading = true;
           this.percentage = this.done(
@@ -296,8 +296,8 @@ export default {
         span.className = "van-progress__pivot-right";
       }
       myComp.appendChild(span);
-    }
-  }
+    },
+  },
 };
 </script>
 

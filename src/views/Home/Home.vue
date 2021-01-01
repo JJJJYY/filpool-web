@@ -453,8 +453,8 @@ $section-margin-top: 12px;
   display: flex;
   align-items: center;
   .title-fil {
-    width: 50px;
-    height: 20px;
+    width: auto;
+    height: 30px;
     margin-left: 18px;
   }
   .title-text {
