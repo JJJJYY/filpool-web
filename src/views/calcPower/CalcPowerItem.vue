@@ -37,7 +37,12 @@
           {{ goodData.unit }}
         </div>
       </div>
-      <div style="color:red">质押： {{ goodData.pledge * amount }} FIL</div>
+      <div
+        v-if="goodData.includePledge == 0 && goodData.pledge > 0"
+        style="color:red"
+      >
+        质押： {{ goodData.pledge * amount }} FIL
+      </div>
       <van-progress
         class="vanProgress"
         v-if="goodData.status === 1"
