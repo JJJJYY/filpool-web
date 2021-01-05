@@ -299,8 +299,8 @@ export default {
         },
         {
           icon: require("../../assets/img/mine/guide-3.png"),
-          title: "邀请好友",
-          router: "/invite"
+          title: "公告中心",
+          router: "/NoticeList"
         },
         {
           icon: require("../../assets/img/mine/guide-2.png"),
