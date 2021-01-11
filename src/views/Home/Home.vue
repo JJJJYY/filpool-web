@@ -457,7 +457,7 @@ $section-margin-top: 12px;
 }
 .home-container {
   height: 100vh;
-  background: #eeeaed;
+  background: #f6f6f6;
 }
 .section {
   // background: white;

@@ -110,6 +110,21 @@
               <div @click="growth">详情>></div>
             </div>
           </div>
+
+          <div class="banner">
+            <a
+              href="https://defil.org/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img
+                class="bannerImage"
+                src="../../assets/img/mine/banner.png"
+                alt=""
+              />
+            </a>
+          </div>
+
           <div class="group group-capital">
             <div class="capital-t" @click="$router.push('/calcPowerManager')">
               <img
@@ -444,6 +459,15 @@ export default {
 <style lang="scss" scoped>
 @import "../../assets/scss/base";
 
+.banner {
+  height: 80px;
+  margin-top: 8px;
+  .bannerImage {
+    width: 100%;
+    height: 100%;
+  }
+}
+
 .cut-off-rule {
   width: 100%;
   height: 1px;
@@ -472,7 +496,7 @@ export default {
 .mine {
   display: flex;
   flex-direction: column;
-  background-color: #eeeaed;
+  background-color: #f6f6f6;
   /*margin-top: 8px;*/
 }
 .mine-container {

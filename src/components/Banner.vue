@@ -1,6 +1,6 @@
 <template>
   <div class="Banner">
-    <swiper :options="swiperOption" ref="bannerSwiper">
+    <swiper class="swiper" :options="swiperOption" ref="bannerSwiper">
       <swiper-slide v-for="(item, index) in bannerList" :key="index">
         <img class="banner-item" :src="item.image" alt />
       </swiper-slide>
@@ -19,7 +19,7 @@ export default {
   name: "Banner",
   components: {
     Swiper,
-    SwiperSlide,
+    SwiperSlide
   },
   data() {
     return {
@@ -28,14 +28,14 @@ export default {
         autoplay: true,
         loop: true,
         pagination: {
-          el: ".swiper-pagination",
+          el: ".swiper-pagination"
         },
         on: {
-          click: function () {
+          click: function() {
             vm.handleClick(this.realIndex);
-          },
-        },
-      },
+          }
+        }
+      }
     };
   },
   created() {
@@ -44,7 +44,7 @@ export default {
   },
   methods: {
     getBanner() {
-      getGeneralBannerApi().then((res) => {
+      getGeneralBannerApi().then(res => {
         this.bannerList = res.data;
         this.$nextTick(() => {
           if (this.$refs.bannerSwiper) {
@@ -59,14 +59,14 @@ export default {
       linkObj.href = url;
 
       let useHash = false;
-      commonHash.forEach((item) => {
+      commonHash.forEach(item => {
         if (linkObj.hash.indexOf(item) === 0) {
           useHash = true;
         }
       });
       if (useHash) {
         this.$router.push({
-          path: linkObj.hash.replace("#", ""),
+          path: linkObj.hash.replace("#", "")
         });
         return;
       }
@@ -81,8 +81,8 @@ export default {
       let webview = createWebview(url, "filpcoin", { titleText: "filpcoin" });
       webview.show("slide-in-right");
       this.$store.commit("setWebview", webview);
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -92,6 +92,12 @@ export default {
   background-color: #fff;
   /*padding-top: 32px;*/
   min-height: 32vw;
+  .swiper {
+    height: auto;
+    .swiper-slide {
+      height: 130px;
+    }
+  }
 }
 .swiper-pagination {
   position: absolute;
@@ -101,6 +107,7 @@ export default {
 }
 .banner-item {
   width: 100%;
+  height: 100%;
   vertical-align: bottom;
 }
 .swiper-pagination {

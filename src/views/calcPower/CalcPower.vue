@@ -138,7 +138,7 @@ export default {
 <style lang="scss" scoped>
 @import "../../assets/scss/base";
 .list {
-  background-color: #eeeaed;
+  background-color: #f6f6f6;
 }
 .power {
   height: calc(100vh - 96px);
