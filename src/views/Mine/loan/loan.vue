@@ -83,8 +83,8 @@
           @change="beforeChange"
           v-if="list"
         >
-          <van-tab title="算力一期">
-            <div class="call-box">
+          <van-tab title="借币记录">
+            <!-- <div class="call-box">
               <div class="tow-date-title">
                 <p class="tow-date-title-text">借币数量：</p>
                 <p>{{ loan1.capital | parseFloatFilter }}{{ asset }}</p>
@@ -99,7 +99,7 @@
                 <p class="tow-date-title-text">待还本息:</p>
                 <p>{{ loan1.surplus | parseFloatFilter }}{{ asset }}</p>
               </div>
-            </div>
+            </div> -->
             <!-- <van-list
             v-model="loading"
             :finished="finished"
@@ -108,33 +108,53 @@
           > -->
             <!-- <van-cell v-for="item in list" :key="item" :title="item" /> -->
             <div class="list">
-              <div class="call" v-for="(item, index) in list" :key="index">
-                <div class="call-top">
-                  <template v-if="item.type === 10">
-                    <p>借币</p>
+              <van-checkbox-group v-model="result" ref="CheckboxGroup">
+                <div
+                  class="call"
+                  v-for="(item, index) in list"
+                  :key="index"
+                  @click="toggle(index)"
+                >
+                  <div class="call-select">
+                    <div>
+                      <van-checkbox
+                        :name="item"
+                        ref="checkboxes"
+                        shape="square"
+                        checked-color="#EF8C21"
+                        v-if="type === 1"
+                      />
+                    </div>
+                    <div>状态：已生效</div>
+                  </div>
+                  <div class="xian"></div>
+                  <div class="call-top">
+                    <template v-if="item.type === 10">
+                      <p>借币</p>
+                      <p class="call-color">
+                        +{{ item.quantity | parseFloatFilter }}{{ asset }}
+                      </p>
+                    </template>
+                    <template v-if="item.type === 11">
+                      <p>还币</p>
+                      <p class="call-color">
+                        -{{ item.quantity | parseFloatFilter }}{{ asset }}
+                      </p>
+                    </template>
+                  </div>
+                  <div class="call-buttom">
+                    <p class="call-time">{{ item.createTime }}</p>
                     <p class="call-color">
-                      +{{ item.quantity | parseFloatFilter }}{{ asset }}
+                      <span>待还本息：240FIL</span>
                     </p>
-                  </template>
-                  <template v-if="item.type === 11">
-                    <p>还币</p>
-                    <p class="call-color">
-                      -{{ item.quantity | parseFloatFilter }}{{ asset }}
-                    </p>
-                  </template>
+                  </div>
                 </div>
-                <div class="call-buttom">
-                  <p class="call-time">{{ item.createTime }}</p>
-                  <p class="call-color">
-                    <span></span>
-                  </p>
-                </div>
-              </div>
+              </van-checkbox-group>
             </div>
             <!-- </van-list> -->
           </van-tab>
-          <van-tab title="算力二期">
-            <div class="call-box">
+          <van-tab title="还币记录">
+            <!-- <div class="call-box">
               <div class="tow-date-title">
                 <p class="tow-date-title-text">借币数量：</p>
                 <p>{{ loan2.capital | parseFloatFilter }}{{ asset }}</p>
@@ -149,7 +169,7 @@
                 <p class="tow-date-title-text">待还本息:</p>
                 <p>{{ loan2.surplus | parseFloatFilter }}{{ asset }}</p>
               </div>
-            </div>
+            </div> -->
             <!-- <van-list
             v-model="loading"
             :finished="finished"
@@ -158,34 +178,110 @@
           > -->
             <!-- <van-cell v-for="item in list" :key="item" :title="item" /> -->
             <div class="list">
-              <div class="call" v-for="(item, index) in list" :key="index">
-                <div class="call-top">
-                  <template v-if="item.type === 10">
-                    <p>借币</p>
+              <van-checkbox-group v-model="result" ref="CheckboxGroup">
+                <div
+                  class="call"
+                  v-for="(item, index) in list"
+                  :key="index"
+                  @click="toggle(index)"
+                >
+                  <div class="call-select">
+                    <div>
+                      <van-checkbox
+                        :name="item"
+                        ref="checkboxes"
+                        shape="square"
+                        checked-color="#EF8C21"
+                        v-if="type === 1"
+                      />
+                    </div>
+                    <div>状态：已生效</div>
+                  </div>
+                  <div class="xian"></div>
+                  <div class="call-top">
+                    <template v-if="item.type === 10">
+                      <p>借币</p>
+                      <p class="call-color">
+                        +{{ item.quantity | parseFloatFilter }}{{ asset }}
+                      </p>
+                    </template>
+                    <template v-if="item.type === 11">
+                      <p>还币</p>
+                      <p class="call-color">
+                        -{{ item.quantity | parseFloatFilter }}{{ asset }}
+                      </p>
+                    </template>
+                  </div>
+                  <div class="call-buttom">
+                    <p class="call-time">{{ item.createTime }}</p>
                     <p class="call-color">
-                      +{{ item.quantity | parseFloatFilter }}{{ asset }}
+                      <span>待还本息：240FIL</span>
                     </p>
-                  </template>
-                  <template v-if="item.type === 11">
-                    <p>还币</p>
-                    <p class="call-color">
-                      -{{ item.quantity | parseFloatFilter }}{{ asset }}
-                    </p>
-                  </template>
+                  </div>
                 </div>
-                <div class="call-buttom">
-                  <p class="call-time">{{ item.createTime }}{{ asset }}</p>
-                  <p class="call-color">
-                    <span></span>
-                  </p>
-                </div>
-              </div>
+              </van-checkbox-group>
             </div>
             <!-- </van-list> -->
           </van-tab>
         </van-tabs>
         <div v-else style="text-align: center">暂无数据</div>
       </van-list>
+    </div>
+    <van-popup
+      v-model="thisShow"
+      position="bottom"
+      :safe-area-inset-bottom="true"
+    >
+      <div class="buy-centent">
+        <div style="font-size: 18px;font-weight: 500">
+          提前还款
+        </div>
+        <div style="margin-top: 30px">
+          <span>还款金额：</span>
+          <span style="color: #F9A03E;font-size: 18px">14785.1122 FIL</span>
+        </div>
+        <div style="margin-top: 20px">
+          <p>资金密码：</p>
+          <van-field
+            style="width: 100%; background: #e6e6e6; border-radius: 8px;margin-top:10px"
+            v-model="password"
+            type="password"
+            placeholder="请输入资金密码"
+          />
+          <div
+            style="font-size: 12px; color: #666666 ; display: flex; justify-content: space-between;margin-top:10px"
+          >
+            <p>当前充提账户余额为 134324.76898 FIL</p>
+            <p class="recharge" @click="topUpPaw">请充值</p>
+          </div>
+        </div>
+        <div class="buy-centent-flex" style="margin-top: 20px">
+          <van-button
+            style="background: #d0d0d0; color: #fff; padding: 0 40px"
+            round
+            @click="thisShow = false"
+            >取消</van-button
+          >
+          <van-button
+            style="background: #f9a03e; color: #fff; padding: 0 40px"
+            round
+            @click="buyOk"
+            >确认</van-button
+          >
+        </div>
+      </div>
+    </van-popup>
+    <div class="footer" v-if="type === 1">
+      <van-checkbox
+        checked-color="#EF8C21"
+        class="checkbox"
+        v-model="checkedTotal"
+        >全选</van-checkbox
+      >
+      <div class="money-color">
+        还款金额：<span> {{ totalMoneyNumData }}FIL</span>
+      </div>
+      <van-button color="#F9A03E" @click="thisShow = true">提前还币</van-button>
     </div>
   </div>
 </template>
@@ -202,7 +298,11 @@ import {
   Tab,
   Popup,
   Tabs,
-  Field
+  Field,
+  Checkbox,
+  CheckboxGroup,
+  Cell,
+  CellGroup
 } from "vant";
 import {
   recordListApi,
@@ -227,7 +327,11 @@ export default {
     [Tab.name]: Tab,
     [Tabs.name]: Tabs,
     [Popup.name]: Popup,
-    [Field.name]: Field
+    [Field.name]: Field,
+    [Checkbox.name]: Checkbox,
+    [CheckboxGroup.name]: CheckboxGroup,
+    [Cell.name]: CheckboxGroup,
+    [CellGroup.name]: CheckboxGroup
   },
   data() {
     return {
@@ -242,7 +346,12 @@ export default {
         pageSize: 10 // 页大小
       },
       asset: this.$route.query.asset,
-      active: 0
+      active: 0,
+      result: [],
+      checkedTotal: false,
+      totalMoneyNumData: 0,
+      thisShow: false,
+      password: ""
     };
   },
   created() {
@@ -253,7 +362,32 @@ export default {
       }
     });
   },
+  watch: {
+    checkedTotal: function(newVal) {
+      if (newVal) {
+        this.$refs.CheckboxGroup.toggleAll(true);
+      } else {
+        this.$refs.CheckboxGroup.toggleAll();
+      }
+    },
+    result: function(e) {
+      let totalMoneyNum = 0;
+      e.forEach(val => {
+        totalMoneyNum = totalMoneyNum + +val.quantity * Math.pow(10, 10);
+      });
+      this.totalMoneyNumData = totalMoneyNum / Math.pow(10, 10);
+    }
+  },
   methods: {
+    buyOk() {},
+    topUpPaw() {
+      this.$router.push({
+        path: "/myasset"
+      });
+    },
+    toggle(index) {
+      this.$refs.checkboxes[index].toggle();
+    },
     onLoad() {
       this.loading = true;
       this.getRecordListApi(this.type);
@@ -383,14 +517,62 @@ export default {
     }
   }
 }
+.buy-centent {
+  padding: 16px 30px;
+  .buy-margin {
+    display: flex;
+    align-items: center;
+    color: #666666;
+    margin-top: 20px;
+  }
+  .recharge {
+    font-size: 12px;
+    color: #f9a03e;
+  }
+  .buy-centent-flex {
+    display: flex;
+    justify-content: space-between;
+  }
+}
 
+.footer {
+  background: #fff;
+  position: fixed;
+  width: 100%;
+  left: 0px;
+  bottom: 0px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  .checkbox {
+    margin-left: 20px;
+  }
+  .money-color {
+    color: #666;
+    span {
+      color: #000;
+    }
+  }
+}
 .assetDetails {
+  margin-bottom: 50px;
   .call {
     padding: 8px 16px;
     border-bottom: 1px solid #dedede;
-    // background-color: #fff;
+    background-color: #fff;
     border-radius: 4px;
     margin-top: 8px;
+    .call-select {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .xian {
+      height: 1px;
+      width: 100%;
+      margin: 5px 0;
+      background: #f5f5f5;
+    }
     .call-top {
       display: flex;
       justify-content: space-between;
