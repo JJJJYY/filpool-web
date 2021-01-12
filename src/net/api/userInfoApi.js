@@ -210,7 +210,19 @@ export function getFlashSale(data) {
 export function Loan(data) {
   return getRequest('Loan.Info', data)
 }
-// 借贷列表
-export function LoanRecordList(data) {
-  return getRequest('BalanceModify.LoanRecordList', data)
+// 还币记录
+export function RepaymentRecordList(data) {
+  return getRequest('BalanceModify.RepaymentRecordList', data)
+}
+// 借币记录
+export function BorrowList(data) {
+  return getRequest('Loan.List', data)
+}
+// 还币
+export function Repayment(data) {
+  return getRequest('Loan.Repayment', data)
+}
+// 还款总数
+export function Calculate(data) {
+  return getRequest('Loan.Calculate', data)
 }

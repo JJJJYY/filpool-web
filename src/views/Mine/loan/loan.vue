@@ -84,36 +84,13 @@
           v-if="list"
         >
           <van-tab title="借币记录">
-            <!-- <div class="call-box">
-              <div class="tow-date-title">
-                <p class="tow-date-title-text">借币数量：</p>
-                <p>{{ loan1.capital | parseFloatFilter }}{{ asset }}</p>
-              </div>
-              <div class="cut-off-rule"></div>
-              <div class="tow-date-title">
-                <p class="tow-date-title-text">预估本息:</p>
-                <p>{{ loan1.total | parseFloatFilter }}{{ asset }}</p>
-              </div>
-              <div class="cut-off-rule"></div>
-              <div class="tow-date-title">
-                <p class="tow-date-title-text">待还本息:</p>
-                <p>{{ loan1.surplus | parseFloatFilter }}{{ asset }}</p>
-              </div>
-            </div> -->
-            <!-- <van-list
-            v-model="loading"
-            :finished="finished"
-            finished-text="没有更多了"
-            @load="onLoad"
-          > -->
-            <!-- <van-cell v-for="item in list" :key="item" :title="item" /> -->
             <div class="list">
               <van-checkbox-group v-model="result" ref="CheckboxGroup">
                 <div
                   class="call"
                   v-for="(item, index) in list"
                   :key="index"
-                  @click="toggle(index)"
+                  @click="toggle(item, index)"
                 >
                   <div class="call-select">
                     <div>
@@ -122,30 +99,33 @@
                         ref="checkboxes"
                         shape="square"
                         checked-color="#EF8C21"
-                        v-if="type === 1"
+                        v-show="type === 1 && item.start_time"
                       />
                     </div>
-                    <div>状态：已生效</div>
+                    <div v-if="item.start_time">状态：已生效</div>
+                    <div v-if="!item.start_time">状态：未生效</div>
                   </div>
                   <div class="xian"></div>
                   <div class="call-top">
-                    <template v-if="item.type === 10">
-                      <p>借币</p>
+                    <template v-if="item.number === 1">
+                      <p>一期借币</p>
                       <p class="call-color">
-                        +{{ item.quantity | parseFloatFilter }}{{ asset }}
+                        数量：{{ item.capital | parseFloatFilter }}{{ asset }}
                       </p>
                     </template>
-                    <template v-if="item.type === 11">
-                      <p>还币</p>
+                    <template v-if="item.number === 2">
+                      <p>二期借币</p>
                       <p class="call-color">
-                        -{{ item.quantity | parseFloatFilter }}{{ asset }}
+                        数量：{{ item.capital | parseFloatFilter }}{{ asset }}
                       </p>
                     </template>
                   </div>
                   <div class="call-buttom">
-                    <p class="call-time">{{ item.createTime }}</p>
+                    <p class="call-time">{{ item.start_time }}</p>
                     <p class="call-color">
-                      <span>待还本息：240FIL</span>
+                      <span
+                        >待还本息：{{ item.surplus | parseFloatFilter }}</span
+                      >
                     </p>
                   </div>
                 </div>
@@ -154,68 +134,41 @@
             <!-- </van-list> -->
           </van-tab>
           <van-tab title="还币记录">
-            <!-- <div class="call-box">
-              <div class="tow-date-title">
-                <p class="tow-date-title-text">借币数量：</p>
-                <p>{{ loan2.capital | parseFloatFilter }}{{ asset }}</p>
-              </div>
-              <div class="cut-off-rule"></div>
-              <div class="tow-date-title">
-                <p class="tow-date-title-text">预估本息:</p>
-                <p>{{ loan2.total | parseFloatFilter }}{{ asset }}</p>
-              </div>
-              <div class="cut-off-rule"></div>
-              <div class="tow-date-title">
-                <p class="tow-date-title-text">待还本息:</p>
-                <p>{{ loan2.surplus | parseFloatFilter }}{{ asset }}</p>
-              </div>
-            </div> -->
-            <!-- <van-list
-            v-model="loading"
-            :finished="finished"
-            finished-text="没有更多了"
-            @load="onLoad"
-          > -->
-            <!-- <van-cell v-for="item in list" :key="item" :title="item" /> -->
             <div class="list">
-              <van-checkbox-group v-model="result" ref="CheckboxGroup">
-                <div
-                  class="call"
-                  v-for="(item, index) in list"
-                  :key="index"
-                  @click="toggle(index)"
-                >
+              <van-checkbox-group>
+                <div class="call" v-for="(item, index) in list" :key="index">
                   <div class="call-select">
                     <div>
-                      <van-checkbox
+                      <!-- <van-checkbox
                         :name="item"
                         ref="checkboxes"
                         shape="square"
                         checked-color="#EF8C21"
-                        v-if="type === 1"
-                      />
+                        v-show="type === 1"
+                      /> -->
                     </div>
-                    <div>状态：已生效</div>
+                    <div v-if="item.status === 1">状态：还款成功</div>
+                    <div v-else>状态：还款失败</div>
                   </div>
                   <div class="xian"></div>
                   <div class="call-top">
-                    <template v-if="item.type === 10">
-                      <p>借币</p>
+                    <template v-if="item.number === 1">
+                      <p>一期还币</p>
                       <p class="call-color">
-                        +{{ item.quantity | parseFloatFilter }}{{ asset }}
+                        数量：{{ item.quantity | parseFloatFilter }}{{ asset }}
                       </p>
                     </template>
-                    <template v-if="item.type === 11">
-                      <p>还币</p>
+                    <template v-if="item.number === 2">
+                      <p>二期还币</p>
                       <p class="call-color">
-                        -{{ item.quantity | parseFloatFilter }}{{ asset }}
+                        数量：{{ item.quantity | parseFloatFilter }}{{ asset }}
                       </p>
                     </template>
                   </div>
                   <div class="call-buttom">
                     <p class="call-time">{{ item.createTime }}</p>
                     <p class="call-color">
-                      <span>待还本息：240FIL</span>
+                      <span></span>
                     </p>
                   </div>
                 </div>
@@ -238,7 +191,9 @@
         </div>
         <div style="margin-top: 30px">
           <span>还款金额：</span>
-          <span style="color: #F9A03E;font-size: 18px">14785.1122 FIL</span>
+          <span style="color: #F9A03E;font-size: 18px">
+            {{ totalMoneyNumData | parseFloatFilter }}FIL</span
+          >
         </div>
         <div style="margin-top: 20px">
           <p>资金密码：</p>
@@ -251,7 +206,9 @@
           <div
             style="font-size: 12px; color: #666666 ; display: flex; justify-content: space-between;margin-top:10px"
           >
-            <p>当前充提账户余额为 134324.76898 FIL</p>
+            <p>
+              当前充提账户余额为 {{ myAssetM.recharge | parseFloatFilter }} FIL
+            </p>
             <p class="recharge" @click="topUpPaw">请充值</p>
           </div>
         </div>
@@ -278,10 +235,10 @@
         v-model="checkedTotal"
         >全选</van-checkbox
       >
-      <div class="money-color">
-        还款金额：<span> {{ totalMoneyNumData }}FIL</span>
-      </div>
-      <van-button color="#F9A03E" @click="thisShow = true">提前还币</van-button>
+      <!-- <div class="money-color">
+        还款金额：<span> {{ totalMoneyNumData | parseFloatFilter }}FIL</span>
+      </div> -->
+      <van-button color="#F9A03E" @click="returnMoney">提前还币</van-button>
     </div>
   </div>
 </template>
@@ -305,15 +262,15 @@ import {
   CellGroup
 } from "vant";
 import {
-  recordListApi,
-  assetTypeApi,
   myBalanceApi,
-  getTransfer,
   Loan,
-  LoanRecordList
+  RepaymentRecordList,
+  BorrowList,
+  Repayment,
+  Calculate
 } from "@/net/api/userInfoApi";
-
-import { Decimal } from "decimal.js";
+import md5 from "md5";
+// import { Decimal } from "decimal.js";
 export default {
   name: "loan",
   components: {
@@ -351,7 +308,9 @@ export default {
       checkedTotal: false,
       totalMoneyNumData: 0,
       thisShow: false,
-      password: ""
+      password: "",
+      pidList: [],
+      myAssetM: {}
     };
   },
   created() {
@@ -361,6 +320,7 @@ export default {
         this.loan2 = res.data.loan2;
       }
     });
+    this.myAsset();
   },
   watch: {
     checkedTotal: function(newVal) {
@@ -371,22 +331,73 @@ export default {
       }
     },
     result: function(e) {
-      let totalMoneyNum = 0;
+      let idList = [];
       e.forEach(val => {
-        totalMoneyNum = totalMoneyNum + +val.quantity * Math.pow(10, 10);
+        idList.push(val.id);
       });
-      this.totalMoneyNumData = totalMoneyNum / Math.pow(10, 10);
+      this.pidList = idList;
     }
   },
   methods: {
-    buyOk() {},
+    returnMoney() {
+      if (this.pidList.length > 0) {
+        this.thisShow = true;
+        this.password = "";
+        const postData = {
+          ids: this.pidList
+        };
+        Calculate(postData).then(res => {
+          this.totalMoneyNumData =
+            (res.data.capital * Math.pow(10, 10)) / Math.pow(10, 10) +
+            (res.data.interest * Math.pow(10, 10)) / Math.pow(10, 10);
+        });
+      } else {
+        Toast("请选择");
+      }
+    },
+    buyOk() {
+      const postData = {
+        capital_pwd: md5(this.password),
+        ids: this.pidList
+      };
+      Repayment(postData)
+        .then(res => {
+          if (res.ret === 200) {
+            Toast("还款成功");
+            this.list = [];
+            this.pagination = {
+              current: 1, // 当前页
+              pageSize: 10 // 页大小
+            };
+            this.finished = false;
+            this.loading = true;
+            this.onLoad();
+          } else {
+            Toast("还款失败");
+          }
+          this.thisShow = false;
+        })
+        .catch(err => {
+          this.list = [];
+          this.pagination = {
+            current: 1, // 当前页
+            pageSize: 10 // 页大小
+          };
+          this.finished = false;
+          this.loading = true;
+          this.onLoad();
+          this.thisShow = false;
+        });
+    },
     topUpPaw() {
       this.$router.push({
         path: "/myasset"
       });
     },
-    toggle(index) {
-      this.$refs.checkboxes[index].toggle();
+    toggle(item, index) {
+      if (item.start_time) {
+        this.$refs.checkboxes[index].toggle();
+      }
     },
     onLoad() {
       this.loading = true;
@@ -413,33 +424,62 @@ export default {
         Toast("预估本息=借币本金+年化利息30%");
       }
     },
+    // 获取钱包
+    myAsset() {
+      myBalanceApi().then(res => {
+        res.data.forEach(item => {
+          if (item.asset === this.asset) {
+            this.myAssetM = item;
+          }
+        });
+      });
+    },
     // 数据请求
     getRecordListApi(x = this.type) {
       this.loading = true;
       const getData = {
         page: this.pagination.current,
-        count: this.pagination.pageSize,
-        number: `${x}`
+        count: this.pagination.pageSize
       };
-      LoanRecordList(getData)
-        .then(res => {
-          console.log(res);
-          let newList = res.data.list;
-          // 后台返回无数据为对象进行判断
-          if (res.data.list.length === 0) {
-            this.finished = true;
-          } else {
-            this.list =
-              this.pagination.current === 1
-                ? newList
-                : this.list.concat(newList);
-          }
-          this.pagination.current += 1;
-        })
-        .catch(() => (this.finished = true))
-        .finally(() => {
-          this.loading = false;
-        });
+      if (x === 1) {
+        BorrowList(getData)
+          .then(res => {
+            let newList = res.data.list;
+            // 后台返回无数据为对象进行判断
+            if (res.data.list.length === 0) {
+              this.finished = true;
+            } else {
+              this.list =
+                this.pagination.current === 1
+                  ? newList
+                  : this.list.concat(newList);
+            }
+            this.pagination.current += 1;
+          })
+          .catch(() => (this.finished = true))
+          .finally(() => {
+            this.loading = false;
+          });
+      } else {
+        RepaymentRecordList(getData)
+          .then(res => {
+            let newList = res.data.list;
+            // 后台返回无数据为对象进行判断
+            if (res.data.list.length === 0) {
+              this.finished = true;
+            } else {
+              this.list =
+                this.pagination.current === 1
+                  ? newList
+                  : this.list.concat(newList);
+            }
+            this.pagination.current += 1;
+          })
+          .catch(() => (this.finished = true))
+          .finally(() => {
+            this.loading = false;
+          });
+      }
     }
   }
 };
