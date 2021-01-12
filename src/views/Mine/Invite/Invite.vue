@@ -248,7 +248,7 @@ export default {
           new QRCode(
             "qrCodeUrl",
             {
-              text: `${window.location.host}${Host}/#/register/${this.item.invitationCode}`,
+              text: `http://${window.location.host}${Host}/#/register/${this.item.invitationCode}`,
               width: 110,
               height: 110
             },
