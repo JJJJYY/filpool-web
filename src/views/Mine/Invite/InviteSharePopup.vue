@@ -36,7 +36,7 @@ export default {
   },
   computed: {
     clipboardText() {
-      return `${window.location.host}/#/register/${this.inviteInfo.invitationCode}`;
+      return `http://${window.location.host}/#/register/${this.inviteInfo.invitationCode}`;
     },
   },
   mounted() {
