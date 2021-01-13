@@ -79,25 +79,29 @@ export default {
               isAsset: "可用资产>>",
               jump: 1, // 跳转可用
               num: parseFloat(x.available) + parseFloat(x.recharge),
-              icon: false
+              icon: false,
+              totalMoney: true
             },
             {
               isAsset: "借贷资金>>",
               jump: 2, // 跳转借贷
               num: parseFloat(x.totalLoan),
-              icon: false
+              icon: false,
+              totalMoney: false
             },
             {
               isAsset: "冻结资产",
               jump: false,
               num: x.frozen,
-              icon: "每天线性释放，释放周期180天"
+              icon: "每天线性释放，释放周期180天",
+              totalMoney: true
             },
             {
               isAsset: "质押",
               jump: false,
               num: x.pledged,
-              icon: "质押金额用于有效算力增长"
+              icon: "质押金额用于有效算力增长",
+              totalMoney: true
             }
           ]
         };

@@ -129,8 +129,10 @@ export default {
     getTotal(item) {
       const myMoney = [];
       for (let i = 0; i < item.length; i++) {
-        const val = item[i].num;
-        myMoney.push(new Decimal(val));
+        if (item[i].totalMoney) {
+          const val = item[i].num;
+          myMoney.push(new Decimal(val));
+        }
       }
       return eval(myMoney.join("+"));
     }
