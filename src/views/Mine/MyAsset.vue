@@ -114,13 +114,15 @@ export default {
               isAsset: "可用资产>>",
               jump: 1, // 跳转可用
               num: parseFloat(x.available) + parseFloat(x.recharge),
-              icon: false
+              icon: false,
+              totalMoney: true
             },
             {
               isAsset: "冻结资产",
               jump: false,
               num: x.frozen,
-              icon: false
+              icon: false,
+              totalMoney: true
             }
             // {
             //   isAsset: "质押",

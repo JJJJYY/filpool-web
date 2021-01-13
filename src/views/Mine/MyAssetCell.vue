@@ -131,7 +131,7 @@ export default {
       for (let i = 0; i < item.length; i++) {
         if (item[i].totalMoney) {
           const val = item[i].num;
-          myMoney.push(new Decimal(val));
+          myMoney.push(new Decimal(parseFloat(val)));
         }
       }
       return eval(myMoney.join("+"));
