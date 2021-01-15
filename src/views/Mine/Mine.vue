@@ -113,8 +113,7 @@
 
           <div class="banner">
             <a
-              href="https://defil.org/"
-              target="_blank"
+              @click.prevent="$isH5 ? openURL() : openWebview()"
               rel="noopener noreferrer"
             >
               <img
@@ -297,6 +296,7 @@ import {
   Field,
   Toast
 } from "vant";
+import { createWebview } from "@/utils/utilTools";
 export default {
   name: "Mine",
   components: {
@@ -354,7 +354,16 @@ export default {
     this.myAsset();
   },
   methods: {
-    // 钱包
+    openURL() {
+      window.location.href = "https://defil.org/";
+    },
+    openWebview() {
+      let webview = createWebview("https://defil.org/", "DeFIL", {
+        titleText: "DeFIL"
+      });
+      webview.show("slide-in-right");
+      this.$store.commit("setWebview", webview);
+    },
 
     getMyPowerTwo() {
       const CancelToken = axios.CancelToken;
