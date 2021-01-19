@@ -50,24 +50,10 @@ export default {
   },
   methods: {
     showHint(asset) {
-      if (asset == "FIL") {
-        Dialog.alert({
-          title: "提示",
-          message:
-            "BPool矿池每天12：00发放上一日挖矿收益，如用户选择不提币，则可用资产将用于BPool矿池第二天算力增长所需的质押币。 由于目前需要质押币才能保持算力稳定增长，如用户提币导致账户质押币不足将影响您的算力增长以及次日挖矿收益。",
-          showCancelButton: true
-        }).then(() => {
-          this.$router.push({
-            path: "/currencyExtract",
-            query: { asset: asset }
-          });
-        });
-      } else {
-        this.$router.push({
-          path: "/currencyExtract",
-          query: { asset: asset }
-        });
-      }
+      this.$router.push({
+        path: "/currencyExtract",
+        query: { asset: asset }
+      });
     },
     isMyAsset(x) {
       if (x.asset === "FIL") {

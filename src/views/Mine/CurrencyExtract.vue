@@ -323,19 +323,7 @@ export default {
       if (this.typeInfo.value === "trans") {
         this.trans();
       } else {
-        if (this.number >= this.currSymbol.maxWithdraw) {
-          Dialog.confirm({
-            message: "为确保资金安全，请联系客服核查！"
-          })
-            .then(() => {
-              this.isShowGoogleValid = true;
-            })
-            .catch(() => {
-              // on cancel
-            });
-        } else {
-          this.isShowGoogleValid = true;
-        }
+        this.isShowGoogleValid = true;
       }
     },
     // 内部转账
