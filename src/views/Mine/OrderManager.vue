@@ -125,12 +125,66 @@
           </div>
         </van-popup>
       </van-tab>
+      <van-tab class="list page-container" title="存币宝订单">
+        <div class="type">
+          <div class="type-left">定期理财到期后，本息会自动转入充提账户</div>
+          <div class="type-right">
+            <div>类型</div>
+            <van-button
+              type="default"
+              size="mini"
+              class="round"
+              @click="show = true"
+              >{{ buttonType }}</van-button
+            >
+          </div>
+          <van-action-sheet
+            v-model="show"
+            :actions="actions"
+            @select="onSelect"
+          />
+        </div>
+        <div class="speedUp-centent">
+          <div class="speedUp-d">
+            <div>进行中</div>
+            <div class="speedUp-d-b">
+              2020-12-12 12:12:12到期，剩余10天
+            </div>
+          </div>
+          <div class="xian"></div>
+          <div class="speedUp-s">
+            <div class="speedUp-c">存币生息</div>
+            <div>
+              <span class="speedUp-c">1000000</span>
+            </div>
+          </div>
+          <div class="speedUp-t">
+            <div class="speedUp-c">预计年化：5.6%</div>
+            <div class="speedUp-c">金额（FIL）</div>
+          </div>
+          <div class="speedUp-m">
+            转让<img
+              src="../../assets/img/moneyManagement/jiantou.png"
+              alt=""
+            />
+          </div>
+        </div>
+      </van-tab>
     </van-tabs>
   </div>
 </template>
 
 <script>
-import { Tab, Tabs, List, Popup, Button, Field, Toast } from "vant";
+import {
+  Tab,
+  Tabs,
+  List,
+  Popup,
+  Button,
+  Field,
+  Toast,
+  ActionSheet
+} from "vant";
 import dayjs from "dayjs";
 import HeadNav from "@/components/HeadNav";
 import md5 from "md5";
@@ -150,7 +204,8 @@ export default {
     [Popup.name]: Popup,
     [Button.name]: Button,
     [Field.name]: Field,
-    [Toast.name]: Toast
+    [Toast.name]: Toast,
+    [ActionSheet.name]: ActionSheet
   },
   data() {
     return {
@@ -174,13 +229,68 @@ export default {
       speedUpData: [],
       thisShow: false,
       password: "",
-      id: ""
+      id: "",
+      show: false, // 底部弹出框
+      actions: this.dataType(),
+      buttonType: "全部"
     };
   },
   created() {
     this.loadData();
   },
   methods: {
+    // 类型判断
+    typeText(x) {
+      let thisName = null;
+      this.dataType().map(val => {
+        if (val.type === x) {
+          thisName = val.name;
+        }
+      });
+      return thisName;
+    },
+    dataType() {
+      return [
+        { type: 0, name: "全部" },
+        { type: 1, name: "购买算力" },
+        { type: 2, name: "申请加速算力" },
+        { type: 3, name: "充值" },
+        { type: 4, name: "提现" },
+        { type: 5, name: "提现中" },
+        { type: 6, name: "收益金额划转至充值" },
+        { type: 7, name: "充值金额划转至收益" },
+        { type: 8, name: "内部转出" },
+        { type: 9, name: "内部转入" },
+        { type: 10, name: "预估借币本息" },
+        { type: 11, name: "还贷" },
+        { type: 12, name: "返佣" },
+        { type: 13, name: "系统充币" },
+        { type: 14, name: "活动奖励" },
+        { type: 15, name: "系统提币" },
+        { type: 17, name: "收益线性释放" },
+        { type: 18, name: "系统扣除" },
+        { type: 20, name: "冻结金额扣除" },
+        { type: 21, name: "25%收益直接释放" },
+        { type: 22, name: "收益金额划转至抵押" },
+        { type: 23, name: "质押金额返还" },
+        { type: 24, name: "挖矿收益" },
+        { type: 25, name: "SR质押币发放" },
+        { type: 26, name: "扣除质押币" },
+        { type: 27, name: "充值划转质押" },
+        { type: 28, name: "收益释放至质押" },
+        { type: 29, name: "加速收益" },
+        { type: 30, name: "25%加速收益释放" },
+        { type: 31, name: "加速收益释放" },
+        { type: 32, name: "借币质押" }
+      ];
+    },
+    onSelect(item) {
+      console.log(item);
+      this.show = false;
+      this.buttonType = this.typeText(item.type);
+      this.type = item.type;
+    },
+
     buyOk() {
       const postData = {
         id: this.id,
@@ -281,7 +391,28 @@ export default {
 
 <style lang="scss" scoped>
 @import "../../assets/scss/base";
-
+.type {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 10px;
+  .type-left {
+    margin-left: 8px;
+    color: #999999;
+  }
+  .type-right {
+    display: flex;
+    align-items: center;
+    margin-right: 8px;
+    color: #666666;
+    button {
+      margin-left: 5px;
+    }
+  }
+  .round {
+    border-radius: 4px;
+  }
+}
 .buy-centent {
   padding: 16px 30px;
   .buy-margin {
@@ -318,6 +449,12 @@ export default {
       border: none;
     }
   }
+  .xian {
+    width: 100%;
+    height: 1px;
+    background: #e4e4e4;
+    margin-top: 8px;
+  }
   .speedUp-s {
     display: flex;
     margin-top: 16px;
@@ -334,6 +471,11 @@ export default {
   .speedUp-m {
     margin-top: 20px;
     text-align: right;
+    img {
+      width: 8px;
+      height: 8px;
+      margin-left: 4px;
+    }
   }
 }
 

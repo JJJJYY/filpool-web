@@ -325,7 +325,8 @@ export default {
       } else {
         if (this.number >= this.currSymbol.maxWithdraw) {
           Dialog.confirm({
-            message: "为确保资金安全，请联系客服核查！"
+            message:
+              "为保障您的资金安全，请仔细核对提币地址信息，避免造成不必要的财产损失。提交提币申请后正常1个工作日内到账（周末及节假日顺延）"
           })
             .then(() => {
               this.isShowGoogleValid = true;

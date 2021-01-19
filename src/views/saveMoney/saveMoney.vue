@@ -68,18 +68,57 @@
         已结算(54)
       </div>
     </div>
-    <div class="cententBox"></div>
-    <div class="cententBox"></div>
+    <div class="cententBox">
+      <div v-if="titleSelect === 2" class="cententBoxTitlejump2">
+        <img src="../../assets/img/moneyManagement/shouyi.png" alt="" />
+      </div>
+      <div v-if="titleSelect === 3" class="cententBoxTitlejump2">
+        <img src="../../assets/img/moneyManagement/profit.png" alt="" />
+      </div>
+      <div class="cententBoxTitle">
+        <div class="cententBoxTitleIcon">
+          <img src="../../assets/img/moneyManagement/fil.png" alt="" />
+          <p class="Filecoin">Filecoin</p>
+          <p class="xian">|</p>
+          <p>存币生息</p>
+        </div>
+        <div
+          @click="jumpDetail"
+          v-if="titleSelect === 1"
+          class="cententBoxTitlejump"
+        >
+          <p>产品详情</p>
+          <img src="../../assets/img/moneyManagement/jiantou.png" alt="" />
+        </div>
+      </div>
+      <div class="boxCentent">
+        <div class="boxCententAlign">
+          <p class="boxCententText">5.6%</p>
+          <p class="boxCententTwoP">预计年化</p>
+        </div>
+        <div class="xian"></div>
+        <div class="boxCententAlign">
+          <p>限购0.1-1000</p>
+          <p class="boxCententTwoP">存币周期180天</p>
+        </div>
+      </div>
+      <van-progress
+        :color="titleSelect <= 1 ? '#F9A03E' : '#B0B0B0'"
+        :percentage="50"
+      />
+    </div>
     <FootBox></FootBox>
   </div>
 </template>
 
 <script>
 import FootBox from "@/components/FootBox";
+import { Progress } from "vant";
 export default {
   name: "saveMoney",
   components: {
-    FootBox
+    FootBox,
+    [Progress.name]: Progress
   },
   data() {
     return {
@@ -87,6 +126,18 @@ export default {
       eyeSelect: true,
       titleSelect: 1
     };
+  },
+  watch: {
+    titleSelect: function(val) {
+      console.log(val);
+    }
+  },
+  methods: {
+    jumpDetail() {
+      this.$router.push({
+        path: "/saveMoneyDetail"
+      });
+    }
   }
 };
 </script>
@@ -160,9 +211,73 @@ export default {
   }
 }
 .cententBox {
+  position: relative;
   margin: 0 10px 10px 10px;
-  height: 134px;
+  // height: 134px;
+  padding: 15px;
   background: #fff;
   border-radius: 4px;
+  .cententBoxTitlejump2 {
+    position: absolute;
+    top: 0;
+    right: 0;
+    img {
+      width: 60px;
+      height: 70px;
+    }
+  }
+  .boxCentent {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 25px;
+    margin-bottom: 30px;
+    .boxCententAlign {
+      text-align: center;
+      .boxCententText {
+        font-weight: bold;
+      }
+      .boxCententTwoP {
+        margin-top: 8px;
+      }
+    }
+
+    .xian {
+      height: 30px;
+      width: 1px;
+      background: #e9e9e9;
+    }
+  }
+  .cententBoxTitle {
+    display: flex;
+    justify-content: space-between;
+    .cententBoxTitleIcon {
+      img {
+        width: 16px;
+        height: 16px;
+        margin-right: 5px;
+      }
+      display: flex;
+      align-items: center;
+      p {
+        margin-right: 15px;
+      }
+      .Filecoin {
+        font-weight: bold;
+      }
+      .xian {
+        color: #dadada;
+      }
+    }
+    .cententBoxTitlejump {
+      display: flex;
+      align-items: center;
+      img {
+        width: 8px;
+        height: 8px;
+        margin-left: 5px;
+      }
+    }
+  }
 }
 </style>

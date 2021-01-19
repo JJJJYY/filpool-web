@@ -58,6 +58,30 @@ const routes = [{
     }
   },
   {
+    path: '/saveMoneyDetail',
+    name: 'saveMoneyDetail',
+    component: () => import( /* webpackChunkName: "count" */ '../components/saveMoneyDetail.vue'),
+    meta: {
+      title: '产品详情'
+    }
+  },
+  {
+    path: '/rule',
+    name: 'rule',
+    component: () => import( /* webpackChunkName: "count" */ '../components/rule.vue'),
+    meta: {
+      title: '参与细则'
+    }
+  },
+  {
+    path: '/interest',
+    name: 'interest',
+    component: () => import( /* webpackChunkName: "count" */ '../components/interest.vue'),
+    meta: {
+      title: '产品详情'
+    }
+  },
+  {
     path: '/mine',
     name: 'Mine',
     component: () => import( /* webpackChunkName: "mine" */ '../views/Mine/Mine'),

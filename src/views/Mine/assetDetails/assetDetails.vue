@@ -55,7 +55,7 @@ export default {
     HeadNav,
     "van-button": Button,
     "van-list": List,
-    "van-action-sheet": ActionSheet,
+    "van-action-sheet": ActionSheet
   },
   data() {
     return {
@@ -68,9 +68,9 @@ export default {
       type: 0,
       pagination: {
         current: 1, // 当前页
-        pageSize: 10, // 页大小
+        pageSize: 10 // 页大小
       },
-      asset: this.$route.query.asset,
+      asset: this.$route.query.asset
     };
   },
   methods: {
@@ -81,10 +81,10 @@ export default {
         page: this.pagination.current,
         asset: this.asset,
         count: this.pagination.pageSize,
-        type: this.type,
+        type: this.type
       };
       recordListApi(getData)
-        .then((res) => {
+        .then(res => {
           console.log(res);
           let newList = res.data.list;
           // 后台返回无数据为对象进行判断
@@ -111,7 +111,7 @@ export default {
       this.list = [];
       (this.pagination = {
         current: 1,
-        pageSize: 10,
+        pageSize: 10
       }),
         // 重新请求
         (this.finished = false); // 加载状态开启
@@ -123,7 +123,7 @@ export default {
     // 类型判断
     typeText(x) {
       let thisName = null;
-      this.dataType().map((val) => {
+      this.dataType().map(val => {
         if (val.type === x) {
           thisName = val.name;
         }
@@ -134,10 +134,10 @@ export default {
       const statusData = [
         { type: 0, name: "提现中" },
         { type: 1, name: "成功" },
-        { type: 2, name: "拒绝" },
+        { type: 2, name: "拒绝" }
       ];
       let thisName = null;
-      statusData.forEach((val) => {
+      statusData.forEach(val => {
         if (val.type === x) {
           thisName = val.name;
         }
@@ -176,10 +176,10 @@ export default {
         { type: 29, name: "加速收益" },
         { type: 30, name: "25%加速收益释放" },
         { type: 31, name: "加速收益释放" },
-        { type: 32, name: "借币质押" },
+        { type: 32, name: "借币质押" }
       ];
-    },
-  },
+    }
+  }
 };
 </script>
 
