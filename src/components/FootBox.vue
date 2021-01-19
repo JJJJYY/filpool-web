@@ -45,12 +45,12 @@ export default {
           title: "算力加速",
           router: "/rate"
         },
-        {
-          image: require("@/assets/img/money-management.png"),
-          selectImage: require("@/assets/img/money-management-1.png"),
-          title: "存比宝",
-          router: "/saveMoney"
-        },
+        // {
+        //   image: require("@/assets/img/money-management.png"),
+        //   selectImage: require("@/assets/img/money-management-1.png"),
+        //   title: "存比宝",
+        //   router: "/saveMoney"
+        // },
         // {
         //   image: require("@/assets/img/icon-market-select.png"),
         //   selectImage: require("@/assets/img/icon-market.png"),
