@@ -273,7 +273,9 @@ export default {
           pageSize: 10
         };
         this.getMyPowerTwo();
-        this.onLoad();
+        this.loading = true;
+        this.finished = false;
+        // this.onLoad();
       } else if (this.isDate === 2) {
         this.list = [];
         this.pagination = {
@@ -281,7 +283,9 @@ export default {
           pageSize: 10
         };
         this.getMyPowerTwo();
-        this.onLoad();
+        this.loading = true;
+        this.finished = false;
+        // this.onLoad();
       }
     }
   },
@@ -359,7 +363,7 @@ export default {
       return newNum;
     },
     onLoad() {
-      this.loading = true;
+      console.log("open");
       this.getRecordListApi();
     },
     // 类型
@@ -391,7 +395,7 @@ export default {
       };
       getUserAdjPowerList(getData)
         .then(res => {
-          console.log(res);
+          // console.log(res);
           let newList = res.data.list;
           // 后台返回无数据为对象进行判断
           if (res.data.list.length === 0) {
