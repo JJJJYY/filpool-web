@@ -39,7 +39,7 @@ export default {
       touchStartPointY: 0,
       // distance 记录划动的距离
       distance: 0,
-      distanceY: 0,
+      distanceY: 0
     };
   },
   computed: {
@@ -49,10 +49,10 @@ export default {
       } else {
         return {};
       }
-    },
+    }
   },
   watch: {
-    $route: function (val, old) {
+    $route: function(val, old) {
       /*路由动画*/
       let isBack = this.$router.isBack;
       if (
@@ -70,7 +70,7 @@ export default {
         this.transitionName = "slide-left";
       }
       this.$router.isBack = false;
-    },
+    }
   },
   mounted() {
     if (!this.$isH5) {
@@ -90,7 +90,7 @@ export default {
         this.isMainPage = true;
       }
     },
-    bodyTouchStart: function (event) {
+    bodyTouchStart: function(event) {
       if (this.$route.meta.isQuit || this.$isH5) {
         return;
       }
@@ -100,7 +100,7 @@ export default {
       this.distance = 0;
       this.distanceY = 0;
     },
-    bodyTouchMove: function (event) {
+    bodyTouchMove: function(event) {
       if (this.$route.meta.isQuit || this.$isH5) {
         return;
       }
@@ -114,7 +114,7 @@ export default {
         this.distanceY = event.targetTouches[0].clientY - this.touchStartPointY;
       }
     },
-    bodyTouchEnd: function () {
+    bodyTouchEnd: function() {
       if (this.$route.meta.isQuit || this.$isH5) {
         return;
       }
@@ -132,14 +132,14 @@ export default {
           this.$router.goBack();
         }
       }
-    },
-  },
+    }
+  }
 };
 </script>
 
 <style lang="scss">
 html {
-  background: #eee;
+  background: #f6f6f6;
 }
 
 #app {

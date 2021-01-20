@@ -82,6 +82,14 @@ const routes = [{
     }
   },
   {
+    path: '/makeOver',
+    name: 'makeOver',
+    component: () => import( /* webpackChunkName: "count" */ '../components/makeOver.vue'),
+    meta: {
+      title: '产品详情'
+    }
+  },
+  {
     path: '/mine',
     name: 'Mine',
     component: () => import( /* webpackChunkName: "mine" */ '../views/Mine/Mine'),

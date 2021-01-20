@@ -127,13 +127,13 @@
             </div>
           </div> -->
         </van-list>
-        <van-popup
+        <!-- <van-popup
           v-model="show"
           position="bottom"
           closeable
           :safe-area-inset-bottom="true"
         >
-        </van-popup>
+        </van-popup> -->
       </div>
     </div>
     <div @click="jumpInterest" class="footer">

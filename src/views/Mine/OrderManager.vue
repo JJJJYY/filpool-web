@@ -125,7 +125,7 @@
           </div>
         </van-popup>
       </van-tab>
-      <van-tab class="list page-container" title="存币宝订单">
+      <!-- <van-tab class="list page-container" title="存币宝订单">
         <div class="type">
           <div class="type-left">定期理财到期后，本息会自动转入充提账户</div>
           <div class="type-right">
@@ -162,14 +162,14 @@
             <div class="speedUp-c">预计年化：5.6%</div>
             <div class="speedUp-c">金额（FIL）</div>
           </div>
-          <div class="speedUp-m">
+          <div @click="jumpMakeover" class="speedUp-m">
             转让<img
               src="../../assets/img/moneyManagement/jiantou.png"
               alt=""
             />
           </div>
         </div>
-      </van-tab>
+      </van-tab> -->
     </van-tabs>
   </div>
 </template>
@@ -252,36 +252,10 @@ export default {
     dataType() {
       return [
         { type: 0, name: "全部" },
-        { type: 1, name: "购买算力" },
-        { type: 2, name: "申请加速算力" },
-        { type: 3, name: "充值" },
-        { type: 4, name: "提现" },
-        { type: 5, name: "提现中" },
-        { type: 6, name: "收益金额划转至充值" },
-        { type: 7, name: "充值金额划转至收益" },
-        { type: 8, name: "内部转出" },
-        { type: 9, name: "内部转入" },
-        { type: 10, name: "预估借币本息" },
-        { type: 11, name: "还贷" },
-        { type: 12, name: "返佣" },
-        { type: 13, name: "系统充币" },
-        { type: 14, name: "活动奖励" },
-        { type: 15, name: "系统提币" },
-        { type: 17, name: "收益线性释放" },
-        { type: 18, name: "系统扣除" },
-        { type: 20, name: "冻结金额扣除" },
-        { type: 21, name: "25%收益直接释放" },
-        { type: 22, name: "收益金额划转至抵押" },
-        { type: 23, name: "质押金额返还" },
-        { type: 24, name: "挖矿收益" },
-        { type: 25, name: "SR质押币发放" },
-        { type: 26, name: "扣除质押币" },
-        { type: 27, name: "充值划转质押" },
-        { type: 28, name: "收益释放至质押" },
-        { type: 29, name: "加速收益" },
-        { type: 30, name: "25%加速收益释放" },
-        { type: 31, name: "加速收益释放" },
-        { type: 32, name: "借币质押" }
+        { type: 1, name: "进行中" },
+        { type: 2, name: "已到期" },
+        { type: 3, name: "已转让" },
+        { type: 4, name: "转让中" }
       ];
     },
     onSelect(item) {
@@ -312,6 +286,11 @@ export default {
       this.id = v;
       this.password = "";
       this.thisShow = true;
+    },
+    jumpMakeover() {
+      this.$router.push({
+        path: "/makeOver"
+      });
     },
     topUpPaw() {
       this.$router.push({
