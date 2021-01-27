@@ -381,6 +381,15 @@ const routes = [{
     }
   },
   {
+    path: '/frozen',
+    name: 'frozen',
+    component: () => import( /* webpackChunkName: "mine" */ '../views/Mine/frozen/frozen.vue'),
+    meta: {
+      title: "冻结资产",
+      needLogin: true
+    }
+  },
+  {
     path: '/loan',
     name: 'loan',
     component: () => import( /* webpackChunkName: "mine" */ '../views/Mine/loan/loan.vue'),

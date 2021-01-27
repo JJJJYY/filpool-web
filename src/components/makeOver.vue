@@ -5,23 +5,25 @@
       <div class="makeOverContent">
         <div class="makeOverTitle">
           <span class="makeOverContentTitle">存币生息</span>
-          <span class="makeOverContentTitleId">定期ID（1230012）</span>
+          <span class="makeOverContentTitleId"
+            >定期ID（{{ orderInfo.auth_user_id }}）</span
+          >
         </div>
         <div class="makeOverContentNum">
           <p>存币金额（FIL）</p>
-          <p>10000000.000000</p>
+          <p>{{ orderInfo.amount }}</p>
         </div>
         <div class="makeOverContentNum">
           <p>预计年化</p>
-          <p>60%</p>
+          <p>{{ orderInfo.expected_earning_rate }}%</p>
         </div>
         <div class="makeOverContentNum">
           <p>预计利息（FIL）</p>
-          <p>10000000.000000</p>
+          <p>{{ orderInfo.expected_interest }}</p>
         </div>
         <div class="makeOverContentTime">
-          <p>存入时间：2020-09-12 12:12:12</p>
-          <p>预计到期时间：2020-09-12 12:12:12</p>
+          <p>存入时间：{{ orderInfo.purchase_time }}</p>
+          <p>预计到期时间：{{ orderInfo.expected_end_time }}</p>
         </div>
       </div>
       <div class="makeOverList">
@@ -85,6 +87,7 @@
           >
           <van-button
             style="background: #f9a03e; color: #fff; padding: 0 40px"
+            @click="buOk"
             round
             >确认</van-button
           >
@@ -95,9 +98,23 @@
 </template>
 
 <script>
-import { Popup, Tab, Tabs, List, Progress, Divider, field, button } from "vant";
+import {
+  Popup,
+  Tab,
+  Tabs,
+  List,
+  Progress,
+  Divider,
+  field,
+  button,
+  Toast
+} from "vant";
 import HeadNav from "@/components/HeadNav";
-import {} from "@/net/api/userInfoApi";
+import md5 from "md5";
+import {
+  CbbUserOrdersTransfer,
+  CbbUserOrdersDetail
+} from "@/net/api/userInfoApi";
 
 export default {
   name: "makeOver",
@@ -110,16 +127,50 @@ export default {
     [Progress.name]: Progress,
     [Divider.name]: Divider,
     [field.name]: field,
-    [button.name]: button
+    [button.name]: button,
+    [Toast.name]: Toast
   },
   data() {
     return {
       thisShow: false,
-      password: ""
+      password: "",
+      id: this.$route.query.id,
+      orderInfo: ""
     };
   },
-  created() {},
-  methods: {}
+  created() {
+    this.CbbUserOrdersDetailApi();
+  },
+  methods: {
+    buOk() {
+      this.CbbUserOrdersTransferApi();
+    },
+    CbbUserOrdersTransferApi() {
+      const postData = {
+        capital_pwd: md5(this.password),
+        id: this.id
+      };
+      CbbUserOrdersTransfer(postData).then(res => {
+        console.log(res);
+        if (res.ret === 200) {
+          Toast("转让成功");
+          this.$router.goBack();
+        }
+        this.thisShow = false;
+      });
+    },
+    CbbUserOrdersDetailApi() {
+      const postData = {
+        id: this.id
+      };
+      CbbUserOrdersDetail(postData).then(res => {
+        if (res.ret === 200) {
+          this.orderInfo = res.data;
+          console.log(res);
+        }
+      });
+    }
+  }
 };
 </script>
 

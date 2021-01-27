@@ -102,6 +102,13 @@ export default {
             asset: this.item.asset
           }
         });
+      } else if (i.jump === 3) {
+        this.$router.push({
+          path: "/frozen",
+          query: {
+            asset: this.item.asset
+          }
+        });
       }
     },
     handleIcon(val) {

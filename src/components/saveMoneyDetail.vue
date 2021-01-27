@@ -19,7 +19,7 @@
           <div class="goodBoxItemTitle">
             <div class="goodBoxItemTitleLeft">
               <div class="xian"></div>
-              <p class="goodBoxItemTitleLeftTitle">存币生息</p>
+              <p class="goodBoxItemTitleLeftTitle">{{ detailInfo.tittle }}</p>
             </div>
             <div @click="jumpRule" class="goodBoxItemTitleRight">
               <p>参与细则</p>
@@ -27,37 +27,50 @@
             </div>
           </div>
           <div class="goodBoxItemProgress">
-            <van-progress color="#F9A03E" :percentage="50" />
+            <van-progress
+              v-if="detailInfo"
+              color="#F9A03E"
+              :percentage="
+                done(
+                  (-detailInfo.collected_amount / -detailInfo.total) * 100,
+                  2
+                )
+              "
+            />
             <div class="goodBoxItemProgressText">
-              <span class="spanText">7.00%</span>
+              <span class="spanText">{{ detailInfo.earning_rate }}%</span>
               <span>预计年化</span>
             </div>
             <div class="goodBoxItemProgressTime">
-              <span>发布时间：2020-12-02 12:12:23</span>
+              <span>发布时间：{{ detailInfo.start_sale_time }}</span>
             </div>
           </div>
           <van-divider />
           <div class="goodBoxItemCentent">
             <div class="goodBoxItemCententBox">
-              <p class="goodBoxItemCententBoxNum">70FIL</p>
+              <p class="goodBoxItemCententBoxNum">
+                {{ detailInfo.minimum_amount }}FIL
+              </p>
               <p>起存金额</p>
             </div>
             <div class="xian"></div>
             <div class="goodBoxItemCententBox">
-              <p class="goodBoxItemCententBoxNum">70FIL</p>
+              <p class="goodBoxItemCententBoxNum">
+                {{ detailInfo.maximum_amount }}FIL
+              </p>
               <p>最高可持</p>
             </div>
             <div class="xian"></div>
             <div class="goodBoxItemCententBox">
-              <p class="goodBoxItemCententBoxNum">70FIL</p>
+              <p class="goodBoxItemCententBoxNum">{{ detailInfo.total }}FIL</p>
               <p>总额</p>
             </div>
           </div>
           <van-divider />
           <div class="goodBoxItemFooter">
             <div class="goodBoxItemFooterPadding">
-              <div>募集周期：7天</div>
-              <div>存币周期：180天</div>
+              <div>募集周期：{{ detailInfo.collect_days }}天</div>
+              <div>存币周期：{{ detailInfo.last_days }}天</div>
             </div>
           </div>
         </div>
@@ -74,11 +87,15 @@
         <div class="policyWidth">
           <div>
             <p>预计起息日</p>
-            <p>2020-12-09</p>
+            <p>{{ dayStr(detailInfo.start_cal_interest_time) }}</p>
           </div>
           <div>
             <p>预计到期日</p>
-            <p>2020-12-09</p>
+            <p>
+              {{
+                dayStr(detailInfo.start_cal_interest_time, detailInfo.last_days)
+              }}
+            </p>
           </div>
         </div>
       </div>
@@ -91,49 +108,22 @@
         >
           <div class="investmentList">
             <div class="investmentListTitle">投资列表</div>
-            <div class="investmentForList">
+            <div
+              class="investmentForList"
+              v-for="(i, index) in list"
+              :key="index"
+            >
               <div class="investmentForListFlex">
-                <p>UID：152875</p>
-                <p>数量：100FIL</p>
+                <p>UID：{{ i.nickname }}</p>
+                <p>数量：{{ i.amount }}FIL</p>
               </div>
               <div class="investmentForListFlex marginTop">
                 <p></p>
-                <p>2020-11-11 20:20:20</p>
-              </div>
-            </div>
-            <div class="investmentForList">
-              <div class="investmentForListFlex">
-                <p>UID：152875</p>
-                <p>数量：100FIL</p>
-              </div>
-              <div class="investmentForListFlex marginTop">
-                <p></p>
-                <p>2020-11-11 20:20:20</p>
+                <p>{{ i.purchase_time }}</p>
               </div>
             </div>
           </div>
-          <!-- <div class="vanTab-r" v-for="(item, index) in list" :key="index">
-            <div class="vanTab-padding">
-              <div class="vanTab-flex">
-                <div>排序： {{ index + 1 }}</div>
-                <div>数量： {{ item.power | parseFloatFilter }}TiB</div>
-              </div>
-              <div class="vanTab-flex">
-                <div>ID： {{ item.auth_user_id }}</div>
-                <div style="color: #666666 ; font-size: 12px">
-                  {{ item.create_time }}
-                </div>
-              </div>
-            </div>
-          </div> -->
         </van-list>
-        <!-- <van-popup
-          v-model="show"
-          position="bottom"
-          closeable
-          :safe-area-inset-bottom="true"
-        >
-        </van-popup> -->
       </div>
     </div>
     <div @click="jumpInterest" class="footer">
@@ -144,17 +134,13 @@
 
 <script>
 import { Popup, Tab, Tabs, List, Progress, Divider } from "vant";
-// import CalcPowerBuyPopup from "@/views/calcPower/CalcPowerBuyPopup";
-// import CalcPowerItem from "@/views/calcPower/CalcPowerItem";
 import HeadNav from "@/components/HeadNav";
-import {} from "@/net/api/userInfoApi";
-
+import { CbbProductShow, CbbUserOrdersList } from "@/net/api/userInfoApi";
+import dayjs from "dayjs";
 export default {
   name: "saveMoneyDetail",
   components: {
     HeadNav,
-    // CalcPowerItem,
-    // CalcPowerBuyPopup,
     [Popup.name]: Popup,
     [Tab.name]: Tab,
     [Tabs.name]: Tabs,
@@ -165,29 +151,90 @@ export default {
   data() {
     return {
       show: false,
-      detailInfo: {},
+      detailInfo: "",
       number: this.$route.params.amount || 1,
       active: 0,
       list: [],
       loading: false,
-      finished: true,
-      page: 1,
-      count: 10
+      finished: false,
+      pagination: {
+        current: 1, // 当前页
+        pageSize: 10 // 页大小
+      },
+      id: this.$route.query.id
     };
   },
-  created() {},
+  created() {
+    console.log(this.id);
+    this.CbbProductShowApi();
+  },
   methods: {
+    dayStr(x, num = null) {
+      if (num) {
+        return dayjs(x)
+          .add(num, "day")
+          .format("YYYY-MM-DD");
+      } else {
+        return dayjs(x).format("YYYY-MM-DD");
+      }
+    },
+    // 数据请求
+    CbbUserOrdersListApi() {
+      this.loading = true;
+      const getData = {
+        page: this.pagination.current,
+        count: this.pagination.pageSize
+      };
+      CbbUserOrdersList(getData)
+        .then(res => {
+          console.log(res);
+          let newList = res.data.list;
+          // 后台返回无数据为对象进行判断
+          if (res.data.list.length === 0) {
+            this.finished = true;
+          } else {
+            this.list =
+              this.pagination.current === 1
+                ? newList
+                : this.list.concat(newList);
+          }
+          this.pagination.current += 1;
+        })
+        .catch(() => (this.finished = true))
+        .finally(() => {
+          this.loading = false;
+        });
+    },
     jumpRule() {
       this.$router.push({
         path: "/rule"
       });
     },
-    jumpInterest() {
-      this.$router.push({
-        path: "/interest"
+    done(num, count) {
+      let newNum = parseInt(num * Math.pow(10, count)) / Math.pow(10, count);
+      return newNum;
+    },
+    CbbProductShowApi() {
+      const postData = {
+        id: this.id
+      };
+      CbbProductShow(postData).then(res => {
+        if (res.ret === 200) {
+          this.detailInfo = res.data;
+        }
       });
     },
-    onLoad() {},
+    jumpInterest() {
+      this.$router.push({
+        path: "/interest",
+        query: {
+          id: this.id
+        }
+      });
+    },
+    onLoad() {
+      this.CbbUserOrdersListApi();
+    },
     /*根据id获取详情*/
     getDetailById() {},
     onSelect() {}
@@ -325,6 +372,7 @@ export default {
       font-weight: 600;
     }
     .policyWidth {
+      text-align: center;
       display: flex;
       justify-content: space-between;
       color: #666666;
@@ -382,21 +430,4 @@ export default {
   font-size: 18px;
   color: #fff;
 }
-// .vanTab-r {
-//   // padding: 0 10px;
-//   border-bottom: 1px solid #e8e8e8ff;
-//   .vanTab-padding {
-//     border-radius: 8px;
-//     background: #fff;
-//     padding: 10px 0;
-//     .vanTab-flex {
-//       padding: 0 20px;
-//       display: flex;
-//       margin-top: 10px;
-//       justify-content: space-between;
-//       font-size: 14px;
-//       color: #666666ff;
-//     }
-//   }
-// }
 </style>

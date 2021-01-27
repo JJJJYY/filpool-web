@@ -226,3 +226,35 @@ export function Repayment(data) {
 export function Calculate(data) {
   return getRequest('Loan.Calculate', data)
 }
+// 理财产品列表
+export function CbbProduct(data) {
+  return getRequest('App.CbbProduct.List', data)
+}
+// 理财产品详情
+export function CbbProductShow(data) {
+  return getRequest('App.CbbProduct.Show', data)
+}
+// 投资列表
+export function CbbUserOrdersList(data) {
+  return getRequest('App.CbbUserOrders.List', data)
+}
+// 购买
+export function CbbUserOrdersAdd(data) {
+  return getRequest('App.CbbUserOrders.Add', data)
+}
+// 理财订单列表
+export function CbbUserOrdersCbbList(data) {
+  return getRequest('App.CbbUserOrders.CbbList', data)
+}
+// 理财订单转让
+export function CbbUserOrdersTransfer(data) {
+  return getRequest('App.CbbUserOrders.Transfer', data)
+}
+// 理财记录
+export function CbbSeriesRecordsList(data) {
+  return getRequest('App.CbbSeriesRecords.List', data)
+}
+// 订单详情
+export function CbbUserOrdersDetail(data) {
+  return getRequest('App.CbbUserOrders.Detail', data)
+}

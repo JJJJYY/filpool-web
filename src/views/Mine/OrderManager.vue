@@ -125,7 +125,7 @@
           </div>
         </van-popup>
       </van-tab>
-      <!-- <van-tab class="list page-container" title="存币宝订单">
+      <van-tab class="list page-container" title="存币宝订单">
         <div class="type">
           <div class="type-left">定期理财到期后，本息会自动转入充提账户</div>
           <div class="type-right">
@@ -144,32 +144,44 @@
             @select="onSelect"
           />
         </div>
-        <div class="speedUp-centent">
+        <div
+          class="speedUp-centent"
+          v-for="(item, index) in moneyList"
+          :key="index"
+        >
           <div class="speedUp-d">
-            <div>进行中</div>
+            <div>{{ typeText(item.status) }}</div>
             <div class="speedUp-d-b">
-              2020-12-12 12:12:12到期，剩余10天
+              {{ timeStrDay(item.expected_end_time) }}到期
             </div>
           </div>
           <div class="xian"></div>
           <div class="speedUp-s">
-            <div class="speedUp-c">存币生息</div>
+            <div class="speedUp-c">{{ item.tittle }}</div>
             <div>
-              <span class="speedUp-c">1000000</span>
+              <span class="speedUp-c">{{
+                item.amount | parseFloatFilter
+              }}</span>
             </div>
           </div>
           <div class="speedUp-t">
-            <div class="speedUp-c">预计年化：5.6%</div>
-            <div class="speedUp-c">金额（FIL）</div>
+            <div class="speedUp-c">
+              预计年化：{{ item.expected_earning_rate * 100 }}%
+            </div>
+            <div class="speedUp-c">金额({{ item.pay_coin }})</div>
           </div>
-          <div @click="jumpMakeover" class="speedUp-m">
+          <div
+            v-if="item.status === 1"
+            @click="jumpMakeover(item.id)"
+            class="speedUp-m"
+          >
             转让<img
               src="../../assets/img/moneyManagement/jiantou.png"
               alt=""
             />
           </div>
         </div>
-      </van-tab> -->
+      </van-tab>
     </van-tabs>
   </div>
 </template>
@@ -191,7 +203,8 @@ import md5 from "md5";
 import {
   orderListApi,
   getFlashSaleOrderList,
-  getFlashSale
+  getFlashSale,
+  CbbUserOrdersCbbList
 } from "../../net/api/userInfoApi";
 
 export default {
@@ -232,13 +245,25 @@ export default {
       id: "",
       show: false, // 底部弹出框
       actions: this.dataType(),
-      buttonType: "全部"
+      buttonType: "全部",
+      moneyData: "",
+      moneyList: ""
     };
   },
   created() {
     this.loadData();
+    this.CbbUserOrdersCbbListApi();
   },
   methods: {
+    CbbUserOrdersCbbListApi() {
+      CbbUserOrdersCbbList().then(res => {
+        console.log(res);
+        if (res.ret === 200) {
+          this.moneyList = res.data;
+          this.moneyData = res.data;
+        }
+      });
+    },
     // 类型判断
     typeText(x) {
       let thisName = null;
@@ -253,9 +278,9 @@ export default {
       return [
         { type: 0, name: "全部" },
         { type: 1, name: "进行中" },
-        { type: 2, name: "已到期" },
+        { type: 2, name: "转让中" },
         { type: 3, name: "已转让" },
-        { type: 4, name: "转让中" }
+        { type: 4, name: "已到期" }
       ];
     },
     onSelect(item) {
@@ -263,6 +288,13 @@ export default {
       this.show = false;
       this.buttonType = this.typeText(item.type);
       this.type = item.type;
+      if (this.type) {
+        this.moneyList = this.moneyData.filter(s => {
+          return s.status === this.type;
+        });
+      } else {
+        this.moneyList = this.moneyData;
+      }
     },
 
     buyOk() {
@@ -287,9 +319,12 @@ export default {
       this.password = "";
       this.thisShow = true;
     },
-    jumpMakeover() {
+    jumpMakeover(x) {
       this.$router.push({
-        path: "/makeOver"
+        path: "/makeOver",
+        query: {
+          id: x
+        }
       });
     },
     topUpPaw() {
@@ -354,6 +389,9 @@ export default {
     },
     timeStr(date) {
       return dayjs(date).format("MM-DD HH:mm:ss");
+    },
+    timeStrDay(date) {
+      return dayjs(date).format("YYYY-MM-DD");
     },
     toPay(item) {
       this.$router.push({

@@ -35,7 +35,7 @@
               alt=""
             />
           </div>
-          <div>
+          <div @click="$router.push('/orderManager')">
             定期记录
             <img
               class="detailImage"
@@ -50,25 +50,18 @@
     </div>
     <div class="titleSelect">
       <div
-        @click="titleSelect = 1"
-        :class="['titleSelectOn', titleSelect === 1 ? 'activeSelectTitle' : '']"
+        @click="titleSelect = item.status"
+        :class="[
+          'titleSelectOn',
+          titleSelect === item.status ? 'activeSelectTitle' : ''
+        ]"
+        v-for="item in agg"
+        :key="item.status"
       >
-        募集中(54)
-      </div>
-      <div
-        @click="titleSelect = 2"
-        :class="['titleSelectOn', titleSelect === 2 ? 'activeSelectTitle' : '']"
-      >
-        收益中(54)
-      </div>
-      <div
-        @click="titleSelect = 3"
-        :class="['titleSelectOn', titleSelect === 3 ? 'activeSelectTitle' : '']"
-      >
-        已结算(54)
+        {{ item.name }}({{ item.num }})
       </div>
     </div>
-    <div class="cententBox">
+    <div class="cententBox" v-for="(x, index) in saveMoneyList" :key="index">
       <div v-if="titleSelect === 2" class="cententBoxTitlejump2">
         <img src="../../assets/img/moneyManagement/shouyi.png" alt="" />
       </div>
@@ -80,10 +73,10 @@
           <img src="../../assets/img/moneyManagement/fil.png" alt="" />
           <p class="Filecoin">Filecoin</p>
           <p class="xian">|</p>
-          <p>存币生息</p>
+          <p>{{ x.tittle }}</p>
         </div>
         <div
-          @click="jumpDetail"
+          @click="jumpDetail(x.id)"
           v-if="titleSelect === 1"
           class="cententBoxTitlejump"
         >
@@ -93,18 +86,22 @@
       </div>
       <div class="boxCentent">
         <div class="boxCententAlign">
-          <p class="boxCententText">5.6%</p>
+          <p class="boxCententText">{{ x.earning_rate }}%</p>
           <p class="boxCententTwoP">预计年化</p>
         </div>
         <div class="xian"></div>
         <div class="boxCententAlign">
-          <p>限购0.1-1000</p>
-          <p class="boxCententTwoP">存币周期180天</p>
+          <p>
+            限购{{ x.minimum_amount | parseFloatFilter }}-{{
+              x.maximum_amount | parseFloatFilter
+            }}{{ x.pay_coin }}
+          </p>
+          <p class="boxCententTwoP">存币周期{{ x.last_days }}天</p>
         </div>
       </div>
       <van-progress
         :color="titleSelect <= 1 ? '#F9A03E' : '#B0B0B0'"
-        :percentage="50"
+        :percentage="done((-x.collected_amount / -x.total) * 100, 2)"
       />
     </div>
     <FootBox></FootBox>
@@ -114,6 +111,7 @@
 <script>
 import FootBox from "@/components/FootBox";
 import { Progress } from "vant";
+import { CbbProduct } from "@/net/api/userInfoApi";
 export default {
   name: "saveMoney",
   components: {
@@ -124,18 +122,42 @@ export default {
     return {
       select: 0,
       eyeSelect: true,
-      titleSelect: 1
+      titleSelect: 1,
+      agg: "",
+      saveMoneyList: ""
     };
   },
   watch: {
-    titleSelect: function(val) {
-      console.log(val);
+    titleSelect: function() {
+      this.cbbProductApi();
     }
   },
+  created() {
+    this.cbbProductApi();
+  },
   methods: {
-    jumpDetail() {
+    done(num, count) {
+      let newNum = parseInt(num * Math.pow(10, count)) / Math.pow(10, count);
+      return newNum;
+    },
+    cbbProductApi() {
+      const postData = {
+        status: this.titleSelect
+      };
+      CbbProduct(postData).then(res => {
+        console.log(res);
+        if (res.ret === 200) {
+          this.agg = res.data.agg;
+          this.saveMoneyList = res.data.list;
+        }
+      });
+    },
+    jumpDetail(id) {
       this.$router.push({
-        path: "/saveMoneyDetail"
+        path: "/saveMoneyDetail",
+        query: {
+          id
+        }
       });
     }
   }
