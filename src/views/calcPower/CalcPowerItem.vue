@@ -75,7 +75,7 @@
       >
         <a v-if="!show" @click="toDetail" style="color: #666666">产品详情>></a>
         <p v-else></p>
-        <a class="btn-gradient" @click="toDetail">申请加速包</a>
+        <a class="btn-gradient">已结束</a>
       </div>
       <span class="tag">限量</span>
     </div>
