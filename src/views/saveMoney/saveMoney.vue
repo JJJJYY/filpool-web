@@ -86,7 +86,7 @@
       </div>
       <div class="boxCentent">
         <div class="boxCententAlign">
-          <p class="boxCententText">{{ x.earning_rate }}%</p>
+          <p class="boxCententText">{{ x.earning_rate * 100 }}%</p>
           <p class="boxCententTwoP">预计年化</p>
         </div>
         <div class="xian"></div>

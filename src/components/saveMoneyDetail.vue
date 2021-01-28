@@ -38,7 +38,7 @@
               "
             />
             <div class="goodBoxItemProgressText">
-              <span class="spanText">{{ detailInfo.earning_rate }}%</span>
+              <span class="spanText">{{ detailInfo.earning_rate * 100 }}%</span>
               <span>预计年化</span>
             </div>
             <div class="goodBoxItemProgressTime">

@@ -16,7 +16,7 @@
           </div>
           <div class="makeOverContentNum">
             <p>预计年化</p>
-            <p>{{ orderInfo.expected_earning_rate }}%</p>
+            <p>{{ orderInfo.expected_earning_rate * 100}}%</p>
           </div>
           <div class="makeOverContentNum">
             <p>预计利息（FIL）</p>
