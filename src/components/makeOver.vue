@@ -170,7 +170,7 @@ export default {
       CbbUserOrdersTransfer(postData).then(res => {
         console.log(res);
         if (res.ret === 200) {
-          Toast("转让成功");
+          Toast("已提交");
           this.$router.goBack();
         }
         this.thisShow = false;
