@@ -107,7 +107,7 @@
           @load="onLoad"
         >
           <div class="investmentList">
-            <div class="investmentListTitle">投资列表</div>
+            <div class="investmentListTitle">参与列表</div>
             <div
               class="investmentForList"
               v-for="(i, index) in list"

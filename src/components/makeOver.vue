@@ -1,60 +1,46 @@
 <template>
   <div>
     <head-nav class="headNavStyle"></head-nav>
-    <div class="makeOverBox">
-      <div class="makeOverContent">
-        <div class="makeOverTitle">
-          <span class="makeOverContentTitle">存币生息</span>
-          <span class="makeOverContentTitleId"
-            >定期ID（{{ orderInfo.auth_user_id }}）</span
+    <div class="container  list page-container">
+      <div class="makeOverBox">
+        <div class="makeOverContent">
+          <div class="makeOverTitle">
+            <span class="makeOverContentTitle">存币生息</span>
+            <span class="makeOverContentTitleId"
+              >定期ID（{{ orderInfo.auth_user_id }}）</span
+            >
+          </div>
+          <div class="makeOverContentNum">
+            <p>存币金额（FIL）</p>
+            <p>{{ orderInfo.amount }}</p>
+          </div>
+          <div class="makeOverContentNum">
+            <p>预计年化</p>
+            <p>{{ orderInfo.expected_earning_rate }}%</p>
+          </div>
+          <div class="makeOverContentNum">
+            <p>预计利息（FIL）</p>
+            <p>{{ orderInfo.expected_interest }}</p>
+          </div>
+          <div class="makeOverContentTime">
+            <p>存入时间：{{ orderInfo.purchase_time }}</p>
+            <p>预计到期时间：{{ orderInfo.expected_end_time }}</p>
+          </div>
+        </div>
+        <div class="makeOverList">
+          <div
+            class="makeOverListFor"
+            v-for="(x, index) in ordersList"
+            :key="index"
           >
-        </div>
-        <div class="makeOverContentNum">
-          <p>存币金额（FIL）</p>
-          <p>{{ orderInfo.amount }}</p>
-        </div>
-        <div class="makeOverContentNum">
-          <p>预计年化</p>
-          <p>{{ orderInfo.expected_earning_rate }}%</p>
-        </div>
-        <div class="makeOverContentNum">
-          <p>预计利息（FIL）</p>
-          <p>{{ orderInfo.expected_interest }}</p>
-        </div>
-        <div class="makeOverContentTime">
-          <p>存入时间：{{ orderInfo.purchase_time }}</p>
-          <p>预计到期时间：{{ orderInfo.expected_end_time }}</p>
-        </div>
-      </div>
-      <div class="makeOverList">
-        <div class="makeOverListFor">
-          <div class="makeOverListForFlex">
-            <p class="makeOverListForNum">购入</p>
-            <p class="makeOverListForNum">+123.00</p>
-          </div>
-          <div class="makeOverListForFlex">
-            <p>2020-12-12 10：34</p>
-            <p>余额 123</p>
-          </div>
-        </div>
-        <div class="makeOverListFor">
-          <div class="makeOverListForFlex">
-            <p class="makeOverListForNum">购入</p>
-            <p class="makeOverListForNum">+123.00</p>
-          </div>
-          <div class="makeOverListForFlex">
-            <p>2020-12-12 10：34</p>
-            <p>余额 123</p>
-          </div>
-        </div>
-        <div class="makeOverListFor">
-          <div class="makeOverListForFlex">
-            <p class="makeOverListForNum">购入</p>
-            <p class="makeOverListForNum">+123.00</p>
-          </div>
-          <div class="makeOverListForFlex">
-            <p>2020-12-12 10：34</p>
-            <p>余额 123</p>
+            <div class="makeOverListForFlex">
+              <p class="makeOverListForNum">{{ typeText(x.type) }}</p>
+              <p class="makeOverListForNum">{{ x.amount }}</p>
+            </div>
+            <div class="makeOverListForFlex">
+              <p>{{ x.create_time }}</p>
+              <p></p>
+            </div>
           </div>
         </div>
       </div>
@@ -113,7 +99,8 @@ import HeadNav from "@/components/HeadNav";
 import md5 from "md5";
 import {
   CbbUserOrdersTransfer,
-  CbbUserOrdersDetail
+  CbbUserOrdersDetail,
+  getCbbSeriesRecords
 } from "@/net/api/userInfoApi";
 
 export default {
@@ -135,15 +122,45 @@ export default {
       thisShow: false,
       password: "",
       id: this.$route.query.id,
-      orderInfo: ""
+      orderInfo: "",
+      ordersList: ""
     };
   },
   created() {
     this.CbbUserOrdersDetailApi();
+    this.getCbbSeriesRecordsApi();
   },
   methods: {
     buOk() {
       this.CbbUserOrdersTransferApi();
+    },
+    // 类型判断
+    typeText(x) {
+      let thisName = null;
+      this.orederType().map(val => {
+        if (val.type === x) {
+          thisName = val.status;
+        }
+      });
+      return thisName;
+    },
+    orederType() {
+      return [
+        { type: 1, status: "购入" },
+        { type: 2, status: "转让" },
+        { type: 3, status: "利息" },
+        { type: 4, status: "到期" },
+        { type: 5, status: "额外奖励" }
+      ];
+    },
+    getCbbSeriesRecordsApi() {
+      const postData = {
+        id: this.id
+      };
+      getCbbSeriesRecords(postData).then(res => {
+        console.log(res);
+        this.ordersList = res.data;
+      });
     },
     CbbUserOrdersTransferApi() {
       const postData = {
@@ -166,7 +183,6 @@ export default {
       CbbUserOrdersDetail(postData).then(res => {
         if (res.ret === 200) {
           this.orderInfo = res.data;
-          console.log(res);
         }
       });
     }

@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <div class="container  list page-container">
     <div class="headCentent">
       <div class="cententselect">
-        <div
+        <!-- <div
           @click="select = 0"
           :class="['cententselect-1', select === 0 ? 'activeSelect' : '']"
         >
@@ -14,12 +14,12 @@
           :class="['cententselect-2', select === 1 ? 'activeSelect' : '']"
         >
           定期
-        </div>
+        </div> -->
       </div>
       <div class="cententData">
         <div class="cententDataNum">
           <div>
-            FIL定期存款总额
+            我的锁仓 (FIL)
             <img
               @click="eyeSelect = true"
               v-if="!eyeSelect"
@@ -36,7 +36,7 @@
             />
           </div>
           <div @click="$router.push('/orderManager')">
-            定期记录
+            联合挖矿订单
             <img
               class="detailImage"
               src="../../assets/img/detail-jump.png"
@@ -44,7 +44,7 @@
             />
           </div>
         </div>
-        <div v-if="eyeSelect" class="cententDataNumBi">47.000000</div>
+        <div v-if="eyeSelect" class="cententDataNumBi">{{ totalFIL }}</div>
         <div v-if="!eyeSelect" class="cententDataNumBi">******</div>
       </div>
     </div>
@@ -111,7 +111,7 @@
 <script>
 import FootBox from "@/components/FootBox";
 import { Progress } from "vant";
-import { CbbProduct } from "@/net/api/userInfoApi";
+import { CbbProduct, totalLockedFIL } from "@/net/api/userInfoApi";
 export default {
   name: "saveMoney",
   components: {
@@ -120,11 +120,12 @@ export default {
   },
   data() {
     return {
-      select: 0,
+      // select: 0,
       eyeSelect: true,
       titleSelect: 1,
       agg: "",
-      saveMoneyList: ""
+      saveMoneyList: "",
+      totalFIL: ""
     };
   },
   watch: {
@@ -134,6 +135,11 @@ export default {
   },
   created() {
     this.cbbProductApi();
+    totalLockedFIL().then(res => {
+      if (res.ret === 200) {
+        this.totalFIL = res.data;
+      }
+    });
   },
   methods: {
     done(num, count) {
@@ -173,7 +179,7 @@ export default {
     height: 27px;
     display: flex;
     align-items: center;
-    border: 1px solid #fff;
+    // border: 1px solid #fff;
     margin: 0 auto;
     margin-top: 24px;
     color: #fff;

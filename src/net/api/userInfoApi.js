@@ -258,3 +258,11 @@ export function CbbSeriesRecordsList(data) {
 export function CbbUserOrdersDetail(data) {
   return getRequest('App.CbbUserOrders.Detail', data)
 }
+// 锁仓金额
+export function totalLockedFIL(data) {
+  return getRequest('CbbUserOrders.totalLockedFIL', data)
+}
+// 订单列表记录
+export function getCbbSeriesRecords(data) {
+  return getRequest('CbbUserOrders.getCbbSeriesRecords', data)
+}
