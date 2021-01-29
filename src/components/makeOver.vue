@@ -152,7 +152,7 @@ export default {
         { type: 2, status: "转让" },
         { type: 3, status: "利息" },
         { type: 4, status: "到期" },
-        { type: 5, status: "额外奖励" }
+        { type: 5, status: "额外奖励" },
         { type: 6, status: "拒绝" }
       ];
     },
