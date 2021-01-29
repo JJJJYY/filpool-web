@@ -125,7 +125,7 @@
           </div>
         </van-popup>
       </van-tab>
-      <van-tab class="list page-container" title="存币宝订单">
+      <van-tab class="list page-container" title="联合挖矿订单">
         <div class="type">
           <div class="type-left">定期理财到期后，本息会自动转入充提账户</div>
           <div class="type-right">

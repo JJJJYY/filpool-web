@@ -5,7 +5,7 @@
     <div class="container  list page-container">
       <div class="imageSize">
         <div>
-          <h1 class="imageSizeH1">存币宝</h1>
+          <h1 class="imageSizeH1">联合挖矿</h1>
           <p class="imageSizeP">实现收益最大化</p>
         </div>
         <img

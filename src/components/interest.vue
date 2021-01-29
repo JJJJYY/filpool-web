@@ -34,7 +34,7 @@
       </div>
     </div>
     <div class="reminder">
-      温馨提示：仅充提账户余额可进行参与存币宝
+      温馨提示：仅充提账户余额可进行参与联合挖矿
     </div>
     <van-popup
       v-model="thisShow"
