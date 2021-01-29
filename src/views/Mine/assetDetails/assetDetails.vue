@@ -176,7 +176,12 @@ export default {
         { type: 29, name: "加速收益" },
         { type: 30, name: "25%加速收益释放" },
         { type: 31, name: "加速收益释放" },
-        { type: 32, name: "借币质押" }
+        { type: 32, name: "借币质押" },
+        { type: 33, name: "联合挖矿购入" },
+        { type: 34, name: "联合挖矿转让" },
+        { type: 35, name: "联合挖矿到期" },
+        { type: 36, name: "联合挖矿利息" },
+        { type: 37, name: "联合挖矿defi额外奖励" }
       ];
     }
   }
