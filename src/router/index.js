@@ -38,7 +38,7 @@ const routes = [{
     component: () => import( /* webpackChunkName: "count" */ '../views/saveMoney/saveMoney.vue'),
     meta: {
       showTabBar: true,
-      title: "存比宝",
+      title: "联合挖矿",
       backBtnHidden: true,
       isQuit: true
     }

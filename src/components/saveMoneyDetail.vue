@@ -49,20 +49,22 @@
           <div class="goodBoxItemCentent">
             <div class="goodBoxItemCententBox">
               <p class="goodBoxItemCententBoxNum">
-                {{ detailInfo.minimum_amount }}FIL
+                {{ detailInfo.minimum_amount | parseFloatFilter }}FIL
               </p>
               <p>起存金额</p>
             </div>
             <div class="xian"></div>
             <div class="goodBoxItemCententBox">
               <p class="goodBoxItemCententBoxNum">
-                {{ detailInfo.maximum_amount }}FIL
+                {{ detailInfo.maximum_amount | parseFloatFilter }}FIL
               </p>
               <p>最高可持</p>
             </div>
             <div class="xian"></div>
             <div class="goodBoxItemCententBox">
-              <p class="goodBoxItemCententBoxNum">{{ detailInfo.total }}FIL</p>
+              <p class="goodBoxItemCententBoxNum">
+                {{ detailInfo.total | parseFloatFilter }}FIL
+              </p>
               <p>总额</p>
             </div>
           </div>
@@ -115,7 +117,7 @@
             >
               <div class="investmentForListFlex">
                 <p>UID：{{ i.nickname }}</p>
-                <p>数量：{{ i.amount }}FIL</p>
+                <p>数量：{{ i.amount | parseFloatFilter }}FIL</p>
               </div>
               <div class="investmentForListFlex marginTop">
                 <p></p>
@@ -183,11 +185,11 @@ export default {
       this.loading = true;
       const getData = {
         page: this.pagination.current,
-        count: this.pagination.pageSize
+        count: this.pagination.pageSize,
+        id: this.id
       };
       CbbUserOrdersList(getData)
         .then(res => {
-          console.log(res);
           let newList = res.data.list;
           // 后台返回无数据为对象进行判断
           if (res.data.list.length === 0) {

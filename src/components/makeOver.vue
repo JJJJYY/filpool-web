@@ -12,15 +12,15 @@
           </div>
           <div class="makeOverContentNum">
             <p>存币金额（FIL）</p>
-            <p>{{ orderInfo.amount }}</p>
+            <p>{{ orderInfo.amount | parseFloatFilter }}</p>
           </div>
           <div class="makeOverContentNum">
             <p>预计年化</p>
-            <p>{{ orderInfo.expected_earning_rate * 100}}%</p>
+            <p>{{ orderInfo.expected_earning_rate * 100 }}%</p>
           </div>
           <div class="makeOverContentNum">
             <p>预计利息（FIL）</p>
-            <p>{{ orderInfo.expected_interest }}</p>
+            <p>{{ orderInfo.expected_interest | parseFloatFilter }}</p>
           </div>
           <div class="makeOverContentTime">
             <p>存入时间：{{ orderInfo.purchase_time }}</p>
@@ -35,7 +35,9 @@
           >
             <div class="makeOverListForFlex">
               <p class="makeOverListForNum">{{ typeText(x.type) }}</p>
-              <p class="makeOverListForNum">{{ x.amount }}</p>
+              <p class="makeOverListForNum">
+                {{ x.amount | parseFloatFilter }}
+              </p>
             </div>
             <div class="makeOverListForFlex">
               <p>{{ x.create_time }}</p>

@@ -48,7 +48,7 @@ export default {
         {
           image: require("@/assets/img/money-management.png"),
           selectImage: require("@/assets/img/money-management-1.png"),
-          title: "存比宝",
+          title: "联合挖矿",
           router: "/saveMoney"
         },
         // {

@@ -44,7 +44,9 @@
             />
           </div>
         </div>
-        <div v-if="eyeSelect" class="cententDataNumBi">{{ totalFIL }}</div>
+        <div v-if="eyeSelect" class="cententDataNumBi">
+          {{ totalFIL | parseFloatFilter }}
+        </div>
         <div v-if="!eyeSelect" class="cententDataNumBi">******</div>
       </div>
     </div>
