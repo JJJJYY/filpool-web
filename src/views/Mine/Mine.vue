@@ -111,7 +111,7 @@
             </div>
           </div>
 
-          <div class="banner">
+          <!-- <div class="banner">
             <a
               @click.prevent="$isH5 ? openURL() : openWebview()"
               rel="noopener noreferrer"
@@ -122,7 +122,7 @@
                 alt=""
               />
             </a>
-          </div>
+          </div> -->
 
           <div class="group group-capital">
             <div class="capital-t" @click="$router.push('/calcPowerManager')">
