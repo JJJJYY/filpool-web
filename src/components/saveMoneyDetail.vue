@@ -27,7 +27,7 @@
             </div>
           </div>
           <div class="goodBoxItemProgress">
-            <van-progress
+            <!-- <van-progress
               v-if="detailInfo"
               color="#F9A03E"
               :percentage="
@@ -36,7 +36,7 @@
                   2
                 )
               "
-            />
+            /> -->
             <div class="goodBoxItemProgressText">
               <span class="spanText">{{ detailInfo.earning_rate * 100 }}%</span>
               <span>预计年化</span>
@@ -101,7 +101,7 @@
           </div>
         </div>
       </div>
-      <div class="listBox">
+      <!-- <div class="listBox">
         <van-list
           v-model="loading"
           :finished="finished"
@@ -126,7 +126,7 @@
             </div>
           </div>
         </van-list>
-      </div>
+      </div> -->
     </div>
     <div @click="jumpInterest" class="footer">
       立即参与
@@ -268,6 +268,7 @@ export default {
 }
 .ProductDetail {
   background: #1f1f1e;
+  height: 100vh !important;
   .headNavStyle {
     /deep/.van-nav-bar {
       background: #1f1f1e !important;

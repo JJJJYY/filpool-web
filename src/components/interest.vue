@@ -3,11 +3,11 @@
     <head-nav class="headNavStyle"></head-nav>
     <div class="intersetContent">
       <h2>存币生息</h2>
-      <p class="intersetContentP">
+      <!-- <p class="intersetContentP">
         剩余额度：{{
           (detailInfo.total - detailInfo.collected_amount) | parseFloatFilter
         }}{{ asset }}
-      </p>
+      </p> -->
       <div class="intersetContentText">
         <p class="intersetContentTextNum">
           充提账户余额： {{ myAssetM.recharge | parseFloatFilter }}{{ asset }}

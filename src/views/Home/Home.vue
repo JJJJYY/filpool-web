@@ -39,12 +39,12 @@
             <span>{{ item.title }}</span>
           </div>
         </div>
+        <!-- 存储空间 -->
+        <Storage style="margin-top: 30px"></Storage>
         <!-- 购买 -->
         <div v-if="rateShow" class="buy" style="margin: 10px">
           <CalcPowerItem :good-data="goodList" @select="onSelect" />
         </div>
-        <!-- 存储空间 -->
-        <Storage style="margin-top: 30px"></Storage>
         <!--介绍-->
         <div class="section intro">
           <h3 class="intro-title">IPFS官方视频</h3>

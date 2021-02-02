@@ -101,10 +101,10 @@
           <p class="boxCententTwoP">存币周期{{ x.last_days }}天</p>
         </div>
       </div>
-      <van-progress
+      <!-- <van-progress
         :color="titleSelect <= 1 ? '#F9A03E' : '#B0B0B0'"
         :percentage="done((-x.collected_amount / -x.total) * 100, 2)"
-      />
+      /> -->
     </div>
     <FootBox></FootBox>
   </div>

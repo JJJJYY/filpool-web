@@ -2,6 +2,63 @@
   <div>
     <head-nav></head-nav>
     <van-tabs v-model="active" @change="speedUpType" color="#F7A90DFF">
+      <van-tab title="联合挖矿订单" class="list page-container">
+        <div class="type">
+          <div class="type-left">定期理财到期后，本息会自动转入充提账户</div>
+          <div class="type-right">
+            <div>类型</div>
+            <van-button
+              type="default"
+              size="mini"
+              class="round"
+              @click="show = true"
+              >{{ buttonType }}</van-button
+            >
+          </div>
+          <van-action-sheet
+            v-model="show"
+            :actions="actions"
+            @select="onSelect"
+          />
+        </div>
+        <div
+          class="speedUp-centent"
+          v-for="(item, index) in moneyList"
+          :key="index"
+        >
+          <div class="speedUp-d">
+            <div>{{ typeText(item.status) }}</div>
+            <div class="speedUp-d-b">
+              {{ timeStrDay(item.expected_end_time) }}到期
+            </div>
+          </div>
+          <div class="xian"></div>
+          <div class="speedUp-s">
+            <div class="speedUp-c">{{ item.tittle }}</div>
+            <div>
+              <span class="speedUp-c">{{
+                item.amount | parseFloatFilter
+              }}</span>
+            </div>
+          </div>
+          <div class="speedUp-t">
+            <div class="speedUp-c">
+              预计年化：{{ item.expected_earning_rate * 100 }}%
+            </div>
+            <div class="speedUp-c">金额({{ item.pay_coin }})</div>
+          </div>
+          <div
+            v-if="item.status === 1"
+            @click="jumpMakeover(item.id)"
+            class="speedUp-m"
+          >
+            转让<img
+              src="../../assets/img/moneyManagement/jiantou.png"
+              alt=""
+            />
+          </div>
+        </div>
+      </van-tab>
       <van-tab title="算力订单" class="list page-container">
         <van-tabs sticky color="#E9901D" :scrollspy="false" @click="click">
           <van-tab v-for="(x, i) in items" :key="i" :title="x.title"></van-tab>
@@ -38,7 +95,7 @@
           <div v-else class="none-data">暂无数据</div>
         </van-tabs>
       </van-tab>
-      <van-tab class="list page-container" title="算力加速订单">
+      <van-tab title="算力加速订单" class="list page-container">
         <div
           class="speedUp-centent"
           v-for="(item, index) in speedUpData"
@@ -124,63 +181,6 @@
             </div>
           </div>
         </van-popup>
-      </van-tab>
-      <van-tab class="list page-container" title="联合挖矿订单">
-        <div class="type">
-          <div class="type-left">定期理财到期后，本息会自动转入充提账户</div>
-          <div class="type-right">
-            <div>类型</div>
-            <van-button
-              type="default"
-              size="mini"
-              class="round"
-              @click="show = true"
-              >{{ buttonType }}</van-button
-            >
-          </div>
-          <van-action-sheet
-            v-model="show"
-            :actions="actions"
-            @select="onSelect"
-          />
-        </div>
-        <div
-          class="speedUp-centent"
-          v-for="(item, index) in moneyList"
-          :key="index"
-        >
-          <div class="speedUp-d">
-            <div>{{ typeText(item.status) }}</div>
-            <div class="speedUp-d-b">
-              {{ timeStrDay(item.expected_end_time) }}到期
-            </div>
-          </div>
-          <div class="xian"></div>
-          <div class="speedUp-s">
-            <div class="speedUp-c">{{ item.tittle }}</div>
-            <div>
-              <span class="speedUp-c">{{
-                item.amount | parseFloatFilter
-              }}</span>
-            </div>
-          </div>
-          <div class="speedUp-t">
-            <div class="speedUp-c">
-              预计年化：{{ item.expected_earning_rate * 100 }}%
-            </div>
-            <div class="speedUp-c">金额({{ item.pay_coin }})</div>
-          </div>
-          <div
-            v-if="item.status === 1"
-            @click="jumpMakeover(item.id)"
-            class="speedUp-m"
-          >
-            转让<img
-              src="../../assets/img/moneyManagement/jiantou.png"
-              alt=""
-            />
-          </div>
-        </div>
       </van-tab>
     </van-tabs>
   </div>
