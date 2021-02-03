@@ -35,12 +35,12 @@
           <p class="text-color">{{ done(poolData.poolPower, 6) || 0 }}T</p>
         </div> -->
         <div class="data-text">
-          <p>矿池总算力</p>
+          <p>全网总算力</p>
           <p class="text-color">{{ done(poolData.netAdjPower, 6) || 0 }}P</p>
         </div>
         <div class="wire"></div>
         <div class="data-text">
-          <p>总有效算力</p>
+          <p>矿池总算力</p>
           <p class="text-color">{{ done(poolData.poolAdjPower, 6) || 0 }}P</p>
         </div>
         <!-- <div class="wire"></div> -->
