@@ -38,11 +38,13 @@
               "
             /> -->
             <div class="goodBoxItemProgressText">
-              <span class="spanText">{{ detailInfo.earning_rate * 100 }}%</span>
+              <span class="spanText"
+                >{{ (detailInfo.earning_rate * 10000) / 100 }}%</span
+              >
               <span>预计年化</span>
             </div>
             <div class="goodBoxItemProgressTime">
-              <span>发布时间：{{ detailInfo.start_sale_time }}</span>
+              <span>募集时间：{{ dayStr(detailInfo.start_sale_time) }}</span>
             </div>
           </div>
           <van-divider />
@@ -71,7 +73,7 @@
           <van-divider />
           <div class="goodBoxItemFooter">
             <div class="goodBoxItemFooterPadding">
-              <div>募集周期：{{ detailInfo.collect_days }}天</div>
+              <div>提取收益：{{ dayStr(detailInfo.expected_end_time, 1) }}</div>
               <div>存币周期：{{ detailInfo.last_days }}天</div>
             </div>
           </div>
@@ -88,11 +90,11 @@
         </div>
         <div class="policyWidth">
           <div>
-            <p>预计起息日</p>
+            <p>生效时间</p>
             <p>{{ dayStr(detailInfo.start_cal_interest_time) }}</p>
           </div>
           <div>
-            <p>预计到期日</p>
+            <p>到期时间</p>
             <p>
               {{
                 dayStr(detailInfo.start_cal_interest_time, detailInfo.last_days)

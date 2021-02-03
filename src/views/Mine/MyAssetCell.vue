@@ -9,12 +9,12 @@
           </p>
         </div>
         <div class="jump" @click="handleJump">
-          <p>资产明细</p>
+          <p>通证明细</p>
           <p class="margin">>></p>
         </div>
       </div>
       <div class="sum">
-        <p>总资产：</p>
+        <p>通证总额：</p>
         <p class="sum-num">{{ getTotal(item.myAsset) | parseFloatFilter }}</p>
       </div>
     </div>

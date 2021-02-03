@@ -30,18 +30,28 @@
 import MyAssetCell from "@/views/Mine/MyAssetCell";
 import { PullRefresh, Dialog } from "vant";
 import HeadNav from "@/components/HeadNav";
-import { assetTypeApi, myBalanceApi } from "../../net/api/userInfoApi";
+import {
+  assetTypeApi,
+  myBalanceApi,
+  totalLockedFIL
+} from "../../net/api/userInfoApi";
 export default {
   name: "MyAsset",
   data() {
     return {
       isLoading: false,
       list: [],
-      type: ""
+      type: "",
+      totalFIL: ""
     };
   },
   created() {
     this.onRefresh();
+    totalLockedFIL().then(res => {
+      if (res.ret === 200) {
+        this.totalFIL = res.data;
+      }
+    });
   },
   components: {
     HeadNav,
@@ -76,31 +86,45 @@ export default {
           // 展示资产
           myAsset: [
             {
-              isAsset: "可用资产>>",
+              isAsset: "收益通证>>",
               jump: 1, // 跳转可用
-              num: parseFloat(x.available) + parseFloat(x.recharge),
+              num: parseFloat(x.available),
               icon: false,
               totalMoney: true
             },
             {
-              isAsset: "借贷资金>>",
+              isAsset: "充提通证>>",
+              jump: 1, // 跳转可用
+              num: parseFloat(x.recharge),
+              icon: false,
+              totalMoney: true
+            },
+            {
+              isAsset: "借贷通证>>",
               jump: 2, // 跳转借贷
               num: parseFloat(x.totalLoan),
               icon: false,
               totalMoney: false
             },
             {
-              isAsset: "冻结资产",
+              isAsset: "冻结通证",
               jump: false,
               num: x.frozen,
               icon: "每天线性释放，释放周期180天",
               totalMoney: true
             },
             {
-              isAsset: "质押",
+              isAsset: "质押通证",
               jump: false,
               num: x.pledged,
-              icon: "质押金额用于有效算力增长",
+              icon: "质押通证用于有效算力增长",
+              totalMoney: true
+            },
+            {
+              isAsset: "联合挖矿",
+              jump: false,
+              num: this.totalFIL,
+              icon: false,
               totalMoney: true
             }
           ]
@@ -108,17 +132,17 @@ export default {
       } else {
         return {
           ...x,
-          // 展示资产
+          // 展示通证
           myAsset: [
             {
-              isAsset: "可用资产>>",
+              isAsset: "充提通证>>",
               jump: 1, // 跳转可用
-              num: parseFloat(x.available) + parseFloat(x.recharge),
+              num: parseFloat(x.recharge),
               icon: false,
               totalMoney: true
             },
             {
-              isAsset: "冻结资产",
+              isAsset: "冻结通证",
               jump: false,
               num: x.frozen,
               icon: false,
@@ -127,7 +151,7 @@ export default {
             // {
             //   isAsset: "质押",
             //   num: x.pledged,
-            //   icon: "质押金额用于有效算力增长"
+            //   icon: "质押通证用于有效算力增长"
             // }
           ]
         };

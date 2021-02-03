@@ -16,15 +16,15 @@
           </div>
           <div class="makeOverContentNum">
             <p>预计年化</p>
-            <p>{{ orderInfo.expected_earning_rate * 100 }}%</p>
+            <p>{{ (orderInfo.expected_earning_rate * 10000) / 100 }}%</p>
           </div>
           <div class="makeOverContentNum">
             <p>预计利息（FIL）</p>
             <p>{{ orderInfo.expected_interest | parseFloatFilter }}</p>
           </div>
           <div class="makeOverContentTime">
-            <p>存入时间：{{ orderInfo.purchase_time }}</p>
-            <p>预计到期时间：{{ orderInfo.expected_end_time }}</p>
+            <p>存入时间：{{ dayStr(orderInfo.purchase_time) }}</p>
+            <p>预计到期时间：{{ dayStr(orderInfo.expected_end_time) }}</p>
           </div>
         </div>
         <div class="makeOverList">
@@ -99,6 +99,7 @@ import {
 } from "vant";
 import HeadNav from "@/components/HeadNav";
 import md5 from "md5";
+import dayjs from "dayjs";
 import {
   CbbUserOrdersTransfer,
   CbbUserOrdersDetail,
@@ -133,6 +134,15 @@ export default {
     this.getCbbSeriesRecordsApi();
   },
   methods: {
+    dayStr(x, num = null) {
+      if (num) {
+        return dayjs(x)
+          .add(num, "day")
+          .format("YYYY-MM-DD");
+      } else {
+        return dayjs(x).format("YYYY-MM-DD");
+      }
+    },
     buOk() {
       this.CbbUserOrdersTransferApi();
     },

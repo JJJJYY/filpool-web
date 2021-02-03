@@ -43,7 +43,7 @@
           </div>
           <div class="speedUp-t">
             <div class="speedUp-c">
-              预计年化：{{ item.expected_earning_rate * 100 }}%
+              预计年化：{{ (item.expected_earning_rate * 10000) / 100 }}%
             </div>
             <div class="speedUp-c">金额({{ item.pay_coin }})</div>
           </div>

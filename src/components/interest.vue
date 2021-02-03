@@ -140,7 +140,10 @@ export default {
           if (res.ret === 200) {
             Toast("已完成");
             this.amountF = "";
-            this.CbbProductShowApi();
+            this.$router.push({
+              path: "/orderManager"
+            });
+            // this.CbbProductShowApi();
           }
           this.thisShow = false;
         })

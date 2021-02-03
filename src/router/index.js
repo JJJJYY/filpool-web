@@ -150,7 +150,7 @@ const routes = [{
     name: 'MyAsset',
     component: () => import( /* webpackChunkName: "mine" */ '../views/Mine/MyAsset'),
     meta: {
-      title: "我的资产",
+      title: "我的通证",
       needLogin: true
     }
   }, {
@@ -367,7 +367,7 @@ const routes = [{
     name: 'assetDetails',
     component: () => import( /* webpackChunkName: "mine" */ '../views/Mine/assetDetails/assetDetails.vue'),
     meta: {
-      title: "资产明细",
+      title: "通证明细",
       needLogin: true
     }
   },
@@ -376,7 +376,7 @@ const routes = [{
     name: 'availableAssets',
     component: () => import( /* webpackChunkName: "mine" */ '../views/Mine/availableAssets/availableAssets.vue'),
     meta: {
-      title: "可用资产",
+      title: "可用通证",
       needLogin: true
     }
   },
@@ -385,7 +385,7 @@ const routes = [{
     name: 'frozen',
     component: () => import( /* webpackChunkName: "mine" */ '../views/Mine/frozen/frozen.vue'),
     meta: {
-      title: "冻结资产",
+      title: "冻结通证",
       needLogin: true
     }
   },
