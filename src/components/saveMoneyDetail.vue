@@ -280,7 +280,8 @@ export default {
   margin-bottom: 50px;
 }
 .imageSize {
-  height: 90px;
+  // height: 90px;
+  padding-bottom: 20px;
   // background-image: url("../assets/img/moneyManagement/detailBanner.png");
   // background-size: 100% 100%;
   display: flex;

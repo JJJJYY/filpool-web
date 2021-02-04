@@ -93,14 +93,13 @@
         </div>
         <div class="xian"></div>
         <div class="boxCententAlign">
-          <p>
-            限购{{ x.minimum_amount | parseFloatFilter }}-{{
+          <p class="boxCententText">
+            <!-- 限购{{ x.minimum_amount | parseFloatFilter }}-{{
               x.maximum_amount | parseFloatFilter
-            }}{{ x.pay_coin }}
+            }}{{ x.pay_coin }} -->
+            {{ x.last_days }}天
           </p>
-          <p class="boxCententTwoP">
-            存币周期<span>{{ x.last_days }}天</span>
-          </p>
+          <p class="boxCententTwoP">挖矿周期</p>
         </div>
       </div>
       <!-- <van-progress
