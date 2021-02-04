@@ -26,8 +26,8 @@
               <img src="../assets/img/moneyManagement/jiantou.png" alt="" />
             </div>
           </div>
-          <div class="goodBoxItemProgress">
-            <!-- <van-progress
+          <!-- <div class="goodBoxItemProgress">
+            <van-progress
               v-if="detailInfo"
               color="#F9A03E"
               :percentage="
@@ -36,7 +36,7 @@
                   2
                 )
               "
-            /> -->
+            />
             <div class="goodBoxItemProgressText">
               <span class="spanText"
                 >{{ (detailInfo.earning_rate * 10000) / 100 }}%</span
@@ -46,41 +46,69 @@
             <div class="goodBoxItemProgressTime">
               <span>募集时间：{{ dayStr(detailInfo.start_sale_time) }}</span>
             </div>
-          </div>
-          <van-divider />
+          </div> -->
+          <!-- <van-divider /> -->
+          <div class="height"></div>
           <div class="goodBoxItemCentent">
             <div class="goodBoxItemCententBox">
               <p class="goodBoxItemCententBoxNum">
-                {{ detailInfo.minimum_amount | parseFloatFilter }}FIL
+                <!-- {{ detailInfo.minimum_amount | parseFloatFilter }}FIL -->
+                {{ (detailInfo.earning_rate * 10000) / 100 }}%
               </p>
-              <p>起存金额</p>
+              <p>预计年化</p>
             </div>
             <div class="xian"></div>
             <div class="goodBoxItemCententBox">
               <p class="goodBoxItemCententBoxNum">
-                {{ detailInfo.maximum_amount | parseFloatFilter }}FIL
+                <!-- {{ detailInfo.maximum_amount | parseFloatFilter }}FIL -->
+                {{ detailInfo.last_days }}天
               </p>
-              <p>最高可持</p>
+              <p>挖矿周期</p>
             </div>
-            <div class="xian"></div>
-            <div class="goodBoxItemCententBox">
+            <!-- <div class="xian"></div> -->
+            <!-- <div class="goodBoxItemCententBox">
               <p class="goodBoxItemCententBoxNum">
                 {{ detailInfo.total | parseFloatFilter }}FIL
               </p>
               <p>总额</p>
-            </div>
+            </div> -->
           </div>
-          <van-divider />
+          <div class="height"></div>
+          <!-- <van-divider /> -->
           <div class="goodBoxItemFooter">
             <div class="goodBoxItemFooterPadding">
-              <div>提取收益：{{ dayStr(detailInfo.expected_end_time, 1) }}</div>
-              <div>存币周期：{{ detailInfo.last_days }}天</div>
+              <!-- <div>提取收益：{{ dayStr(detailInfo.expected_end_time, 1) }}</div> -->
+              <div>挖矿金额：</div>
+              <div>
+                投入量≥{{ detailInfo.minimum_amount | parseFloatFilter }}FIL
+              </div>
             </div>
           </div>
         </div>
       </div>
       <div class="policy">
-        <div class="policyTitle">
+        <div class="time">时间</div>
+        <div class="timeFlex">
+          <p>募集时间:</p>
+          <p>{{ dayStr(detailInfo.start_sale_time) }}</p>
+        </div>
+        <div class="timeFlex">
+          <p>生效时间:</p>
+          <p>{{ dayStr(detailInfo.start_cal_interest_time) }}</p>
+        </div>
+        <div class="timeFlex">
+          <p>到期时间:</p>
+          <p>
+            {{
+              dayStr(detailInfo.start_cal_interest_time, detailInfo.last_days)
+            }}
+          </p>
+        </div>
+        <div class="timeFlex">
+          <p>提前收益:</p>
+          <p>{{ dayStr(detailInfo.expected_end_time, 1) }}</p>
+        </div>
+        <!-- <div class="policyTitle">
           本息政策
         </div>
         <div class="circularWidth">
@@ -101,7 +129,7 @@
               }}
             </p>
           </div>
-        </div>
+        </div> -->
       </div>
       <!-- <div class="listBox">
         <van-list
@@ -131,7 +159,7 @@
       </div> -->
     </div>
     <div @click="jumpInterest" class="footer">
-      立即参与
+      立即挖矿
     </div>
   </div>
 </template>
@@ -223,6 +251,7 @@ export default {
         id: this.id
       };
       CbbProductShow(postData).then(res => {
+        console.log(res);
         if (res.ret === 200) {
           this.detailInfo = res.data;
         }
@@ -347,9 +376,10 @@ export default {
         .goodBoxItemCententBox {
           text-align: center;
           .goodBoxItemCententBoxNum {
-            color: #333;
+            color: #f7a910;
             margin-bottom: 10px;
-            font-weight: 600;
+            font-size: 20px;
+            font-weight: bold;
           }
         }
         .xian {
@@ -357,6 +387,9 @@ export default {
           height: 24px;
           background: #ededed;
         }
+      }
+      .height {
+        height: 30px;
       }
       .goodBoxItemFooter {
         .goodBoxItemFooterPadding {
@@ -373,6 +406,16 @@ export default {
     border-radius: 4px;
     margin: 10px;
     padding: 10px 20px;
+    .time {
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    .timeFlex {
+      display: flex;
+      justify-content: space-between;
+      line-height: 24px;
+      color: #74767d;
+    }
     .policyTitle {
       font-weight: 600;
     }

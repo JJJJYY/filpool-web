@@ -19,7 +19,7 @@
       <div class="cententData">
         <div class="cententDataNum">
           <div>
-            我的锁仓 (FIL)
+            联合挖矿资产
             <img
               @click="eyeSelect = true"
               v-if="!eyeSelect"
@@ -36,7 +36,7 @@
             />
           </div>
           <div @click="$router.push('/orderManager')">
-            联合挖矿订单
+            订单详情
             <img
               class="detailImage"
               src="../../assets/img/detail-jump.png"
@@ -98,7 +98,9 @@
               x.maximum_amount | parseFloatFilter
             }}{{ x.pay_coin }}
           </p>
-          <p class="boxCententTwoP">存币周期{{ x.last_days }}天</p>
+          <p class="boxCententTwoP">
+            存币周期<span>{{ x.last_days }}天</span>
+          </p>
         </div>
       </div>
       <!-- <van-progress
@@ -266,9 +268,16 @@ export default {
       text-align: center;
       .boxCententText {
         font-weight: bold;
+        font-size: 20px;
+        color: #f7a910;
       }
       .boxCententTwoP {
         margin-top: 8px;
+        span {
+          font-weight: bold;
+          color: #f7a910;
+          font-size: 14px;
+        }
       }
     }
 

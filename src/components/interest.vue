@@ -2,7 +2,7 @@
   <div>
     <head-nav class="headNavStyle"></head-nav>
     <div class="intersetContent">
-      <h2>存币生息</h2>
+      <h2>{{ detailInfo.tittle }}</h2>
       <!-- <p class="intersetContentP">
         剩余额度：{{
           (detailInfo.total - detailInfo.collected_amount) | parseFloatFilter
@@ -20,9 +20,7 @@
         <input
           type="text"
           v-model="amountF"
-          :placeholder="
-            `${detailInfo.minimum_amount}${asset}起投，最多可投${detailInfo.maximum_amount}${asset}`
-          "
+          :placeholder="`${detailInfo.minimum_amount}${asset}起投`"
         />
         <div>{{ asset }}</div>
       </div>
@@ -68,7 +66,7 @@
       </div>
     </van-popup>
     <div @click="add" class="ButtonClick">
-      立即参与
+      立即挖矿
     </div>
   </div>
 </template>
