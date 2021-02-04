@@ -2,6 +2,7 @@
   <div class="container  list page-container">
     <div class="headCentent">
       <div class="cententselect">
+        <div class="cententselectTitle">Filecoin联合挖矿</div>
         <!-- <div
           @click="select = 0"
           :class="['cententselect-1', select === 0 ? 'activeSelect' : '']"
@@ -77,14 +78,14 @@
           <p class="xian">|</p>
           <p>{{ x.tittle }}</p>
         </div>
-        <div
+        <!-- <div
           @click="jumpDetail(x.id)"
           v-if="titleSelect === 1"
           class="cententBoxTitlejump"
         >
           <p>产品详情</p>
           <img src="../../assets/img/moneyManagement/jiantou.png" alt="" />
-        </div>
+        </div> -->
       </div>
       <div class="boxCentent">
         <div class="boxCententAlign">
@@ -101,6 +102,11 @@
           </p>
           <p class="boxCententTwoP">挖矿周期</p>
         </div>
+      </div>
+      <div class="boxCententTwoButton">
+        <button @click="jumpDetail(x.id)" v-if="titleSelect === 1">
+          立即挖矿
+        </button>
       </div>
       <!-- <van-progress
         :color="titleSelect <= 1 ? '#F9A03E' : '#B0B0B0'"
@@ -178,10 +184,15 @@ export default {
   background: #f7a910;
   overflow: auto;
   .cententselect {
-    width: 126px;
+    .cententselectTitle {
+      font-weight: bold;
+      font-size: 18px;
+    }
+    // width: 126px;
     height: 27px;
     display: flex;
     align-items: center;
+    justify-content: center;
     // border: 1px solid #fff;
     margin: 0 auto;
     margin-top: 24px;
@@ -255,6 +266,16 @@ export default {
     img {
       width: 60px;
       height: 70px;
+    }
+  }
+  .boxCententTwoButton {
+    button {
+      background: #f7a910;
+      border: none;
+      border-radius: 4px;
+      width: 100%;
+      padding: 10px 0;
+      color: #fff;
     }
   }
   .boxCentent {
