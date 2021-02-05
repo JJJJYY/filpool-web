@@ -3,30 +3,30 @@
     <div class="storage">矿池运营数据</div>
     <div class="storage-content" v-if="loading">
       <div class="content-text">
-        <p class="content-text-size">矿池填充进度</p>
+        <!-- <p class="content-text-size">矿池填充进度</p> -->
         <p class="content-text-size-small">
           最新区块高度：{{ poolData.height || 0 }}
         </p>
       </div>
-      <van-progress
+      <!-- <van-progress
         v-if="loading"
         class="progress-storage"
         :percentage="percentage"
-      />
+      /> -->
       <div class="storage-data">
-        <div class="data-text">
+        <!-- <div class="data-text">
           <p>总储存空间</p>
           <p class="text-color">{{ done(poolData.poolPower, 6) || 0 }}T</p>
-        </div>
-        <div class="wire"></div>
+        </div> -->
+        <!-- <div class="wire"></div> -->
         <div class="data-text">
-          <p>总有效算力</p>
-          <p class="text-color">{{ done(poolData.poolAdjPower, 6) || 0 }}P</p>
-        </div>
-        <div class="wire"></div>
-        <div class="data-text">
-          <p>全网有效算力</p>
+          <p>全网总算力</p>
           <p class="text-color">{{ done(poolData.netAdjPower, 6) || 0 }}P</p>
+        </div>
+        <div class="wire"></div>
+        <div class="data-text">
+          <p>矿池总算力</p>
+          <p class="text-color">{{ done(poolData.poolAdjPower, 6) || 0 }}P</p>
         </div>
       </div>
       <div class="title-flex">矿池数据信息</div>
@@ -218,7 +218,7 @@ import axios from "axios"; // 作用取消请求
 export default {
   name: "storage",
   components: {
-    [Progress.name]: Progress,
+    [Progress.name]: Progress
   },
   data() {
     return {
@@ -228,7 +228,7 @@ export default {
       operationalData: 3,
       nodeList: null,
       cancelAjax: null, // 作用取消请求
-      nodeListTeam: null,
+      nodeListTeam: null
     };
   },
   created() {
@@ -246,7 +246,7 @@ export default {
       }
       let _this = this;
 
-      getAllianceInfo().then((res) => {
+      getAllianceInfo().then(res => {
         if (res.ret === 200) {
           this.nodeListTeam = res.data;
         }
@@ -258,7 +258,7 @@ export default {
         new CancelToken(function executor(c) {
           _this.cancelAjax = c;
         })
-      ).then((res) => {
+      ).then(res => {
         if (res.ret === 200) {
           this.loading = true;
           this.percentage = this.done(
@@ -296,8 +296,8 @@ export default {
         span.className = "van-progress__pivot-right";
       }
       myComp.appendChild(span);
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -363,7 +363,7 @@ export default {
   }
   .storage-data {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
     margin-top: 30px;
     color: #666;
