@@ -32,17 +32,17 @@ const routes = [{
       isQuit: true
     }
   },
-  {
-    path: '/saveMoney',
-    name: 'saveMoney',
-    component: () => import( /* webpackChunkName: "count" */ '../views/saveMoney/saveMoney.vue'),
-    meta: {
-      showTabBar: true,
-      title: "联合挖矿",
-      backBtnHidden: true,
-      isQuit: true
-    }
-  },
+  // {
+  //   path: '/saveMoney',
+  //   name: 'saveMoney',
+  //   component: () => import( /* webpackChunkName: "count" */ '../views/saveMoney/saveMoney.vue'),
+  //   meta: {
+  //     showTabBar: true,
+  //     title: "联合挖矿",
+  //     backBtnHidden: true,
+  //     isQuit: true
+  //   }
+  // },
   {
     path: '/ServiceDetail',
     name: 'ServiceDetail',
@@ -57,14 +57,14 @@ const routes = [{
       title: '产品详情'
     }
   },
-  {
-    path: '/saveMoneyDetail',
-    name: 'saveMoneyDetail',
-    component: () => import( /* webpackChunkName: "count" */ '../components/saveMoneyDetail.vue'),
-    meta: {
-      title: '产品详情'
-    }
-  },
+  // {
+  //   path: '/saveMoneyDetail',
+  //   name: 'saveMoneyDetail',
+  //   component: () => import( /* webpackChunkName: "count" */ '../components/saveMoneyDetail.vue'),
+  //   meta: {
+  //     title: '产品详情'
+  //   }
+  // },
   {
     path: '/rule',
     name: 'rule',
@@ -81,14 +81,14 @@ const routes = [{
       title: '产品详情'
     }
   },
-  {
-    path: '/makeOver',
-    name: 'makeOver',
-    component: () => import( /* webpackChunkName: "count" */ '../components/makeOver.vue'),
-    meta: {
-      title: '产品详情'
-    }
-  },
+  // {
+  //   path: '/makeOver',
+  //   name: 'makeOver',
+  //   component: () => import( /* webpackChunkName: "count" */ '../components/makeOver.vue'),
+  //   meta: {
+  //     title: '产品详情'
+  //   }
+  // },
   {
     path: '/mine',
     name: 'Mine',

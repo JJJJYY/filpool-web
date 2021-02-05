@@ -2,7 +2,7 @@
   <div>
     <head-nav></head-nav>
     <van-tabs v-model="active" @change="speedUpType" color="#F7A90DFF">
-      <van-tab title="联合挖矿订单" class="list page-container">
+      <!-- <van-tab title="联合挖矿订单" class="list page-container">
         <div class="type">
           <div class="type-left">定期理财到期后，本息会自动转入充提账户</div>
           <div class="type-right">
@@ -58,7 +58,7 @@
             />
           </div>
         </div>
-      </van-tab>
+      </van-tab> -->
       <van-tab title="算力订单" class="list page-container">
         <van-tabs sticky color="#E9901D" :scrollspy="false" @click="click">
           <van-tab v-for="(x, i) in items" :key="i" :title="x.title"></van-tab>
