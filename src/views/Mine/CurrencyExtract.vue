@@ -213,6 +213,7 @@ import {
   assetTypeApi,
   myBalanceApi,
   authSendApi,
+  withdrawalSendApi, 
   withdrawalCurrencyApi,
   internalTransferApi
 } from "@/net/api/userInfoApi";
@@ -393,9 +394,11 @@ export default {
       this.sendding = true;
       const postData = {
         type: this.isMobileValid ? "phone" : "email",
-        imageCaptcha: this.imgCode
+        imageCaptcha: this.imgCode,
+        asset: this.currSymbol.asset
       };
-      authSendApi(postData)
+      var func = this.typeInfo.value === "trans" ? authSendApi : withdrawalSendApi;
+      func(postData)
         .then(res => {
           if (res.ret === 200) {
             Toast("验证码已发送，请注意查收");

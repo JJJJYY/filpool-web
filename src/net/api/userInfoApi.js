@@ -59,6 +59,10 @@ export function modifyPasswordApi(data) {
 export function authSendApi(data) {
   return postRequest('App.SMS.AuthSend', data)
 }
+// 提币验证码
+export function withdrawalSendApi(data) {
+  return postRequest('App.SMS.WithdrawalSend', data)
+}
 // 修改手机号码
 export function modifyPhoneApi(data) {
   return postRequest('App.AuthUser.ModifyPhone', data)
