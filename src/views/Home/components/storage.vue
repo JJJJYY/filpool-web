@@ -46,7 +46,7 @@
         <div class="wire"></div>
         <div class="data-text">
           <p>昨日算力增量</p>
-          <p class="text-color">{{ done(poolData.yesterdayPower, 6) || 0 }}P</p>
+          <p class="text-color">{{ done(poolData.yesterdayPower, 6) || 0 }}T</p>
         </div>
         <!-- <div class="wire"></div> -->
       </div>
