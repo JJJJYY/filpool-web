@@ -43,6 +43,11 @@
           <p>矿池总算力</p>
           <p class="text-color">{{ done(poolData.poolAdjPower, 6) || 0 }}P</p>
         </div>
+        <div class="wire"></div>
+        <div class="data-text">
+          <p>昨日算力增量</p>
+          <p class="text-color">{{ done(poolData.yesterdayPower, 6) || 0 }}P</p>
+        </div>
         <!-- <div class="wire"></div> -->
       </div>
       <div class="title-flex">矿池数据信息</div>
@@ -55,7 +60,7 @@
               alt=""
             />
             <div class="earnings-center">
-              <p>矿池总收益</p>
+              <p>矿池总产量</p>
               <p class="earnings-center-size">
                 {{ done(poolData.totalReward, 6) || 0 }} FIL
               </p>
@@ -68,7 +73,7 @@
               alt=""
             />
             <div class="earnings-center">
-              <p>昨日收益</p>
+              <p>昨日产量</p>
               <p class="earnings-center-size">
                 {{ done(poolData.yesterdayReward, 6) || 0 }} FIL
               </p>
@@ -96,7 +101,7 @@
               alt=""
             />
             <div class="earnings-center">
-              <p>有效算力单T收益</p>
+              <p>有效算力单T产量</p>
               <p class="earnings-center-size">
                 {{ done(poolData.yesterdayEfficiency, 6) || 0 }}
                 FIL
@@ -140,7 +145,7 @@
                 class="nodeInformation-list-titile"
                 style="transform: scale(0.8)"
               >
-                收益(FIL)
+                产量(FIL)
               </p>
               <p class="titileXian"></p>
               <p v-for="(item, index) in nodeList" :key="index">
