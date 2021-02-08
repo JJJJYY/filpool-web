@@ -105,7 +105,7 @@
           </p>
         </div>
         <div class="timeFlex">
-          <p>提前收益:</p>
+          <p>提取收益:</p>
           <p>{{ dayStr(detailInfo.expected_end_time, 1) }}</p>
         </div>
         <!-- <div class="policyTitle">
