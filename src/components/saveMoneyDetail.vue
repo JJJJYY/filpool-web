@@ -22,7 +22,7 @@
               <p class="goodBoxItemTitleLeftTitle">{{ detailInfo.tittle }}</p>
             </div>
             <div @click="jumpRule" class="goodBoxItemTitleRight">
-              <p>参与细则</p>
+              <p>规则说明</p>
               <img src="../assets/img/moneyManagement/jiantou.png" alt="" />
             </div>
           </div>
@@ -73,17 +73,16 @@
               <p>总额</p>
             </div> -->
           </div>
-          <div class="height"></div>
+         
           <!-- <van-divider /> -->
-          <div class="goodBoxItemFooter">
+          <!--  <div class="goodBoxItemFooter">
             <div class="goodBoxItemFooterPadding">
-              <!-- <div>提取收益：{{ dayStr(detailInfo.expected_end_time, 1) }}</div> -->
               <div>挖矿金额：</div>
               <div>
                 投入量≥{{ detailInfo.minimum_amount | parseFloatFilter }}FIL
               </div>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
       <div class="policy">
@@ -97,17 +96,17 @@
           <p>{{ dayStr(detailInfo.start_cal_interest_time) }}</p>
         </div>
         <div class="timeFlex">
-          <p>到期时间:</p>
+          <p>赎回时间:</p>
           <p>
             {{
-              dayStr(detailInfo.start_cal_interest_time, detailInfo.last_days)
+              dayStr(detailInfo.expected_end_time)
             }}
           </p>
         </div>
-        <div class="timeFlex">
+        <!-- <div class="timeFlex">
           <p>提取收益:</p>
           <p>{{ dayStr(detailInfo.expected_end_time, 1) }}</p>
-        </div>
+        </div> -->
         <!-- <div class="policyTitle">
           本息政策
         </div>

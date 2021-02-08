@@ -70,7 +70,7 @@ const routes = [{
   name: 'rule',
   component: () => import( /* webpackChunkName: "count" */ '../components/rule.vue'),
   meta: {
-    title: '参与细则'
+    title: '规则说明'
   }
 },
 {
