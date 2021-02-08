@@ -130,7 +130,7 @@
           </div>
         </div> -->
       </div>
-      <!-- <div class="listBox">
+      <div class="listBox">
         <van-list
           v-model="loading"
           :finished="finished"
@@ -145,7 +145,7 @@
               :key="index"
             >
               <div class="investmentForListFlex">
-                <p>UID：{{ i.nickname }}</p>
+                <p>{{ i.nickname }}</p>
                 <p>数量：{{ i.amount | parseFloatFilter }}FIL</p>
               </div>
               <div class="investmentForListFlex marginTop">
@@ -155,7 +155,7 @@
             </div>
           </div>
         </van-list>
-      </div> -->
+      </div>
     </div>
     <div @click="jumpInterest" class="footer">
       立即挖矿
