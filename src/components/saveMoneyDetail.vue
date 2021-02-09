@@ -4,10 +4,6 @@
 
     <div class="container list page-container">
       <div class="imageSize">
-        <div>
-          <h1 class="imageSizeH1">联合挖矿</h1>
-          <p class="imageSizeP">实现收益最大化</p>
-        </div>
         <img
           src="../assets/img/moneyManagement/detailBanner.png"
           class="imageSizeClass"
@@ -274,7 +270,7 @@ export default {
 }
 .imageSize {
   // height: 90px;
-  padding-bottom: 20px;
+  padding: 20px 0;
   // background-image: url("../assets/img/moneyManagement/detailBanner.png");
   // background-size: 100% 100%;
   display: flex;
@@ -288,15 +284,15 @@ export default {
 }
 
 .imageSizeClass {
-  width: 100px;
+  // width: 100px;
   height: 70px;
 }
 .ProductDetail {
-  background: #1f1f1e;
+  background: #0E285D;
   min-height: 100vh !important;
   .headNavStyle {
     /deep/.van-nav-bar {
-      background: #1f1f1e !important;
+      background: #0E285D !important;
       &:after {
         border: none;
       }
