@@ -4,7 +4,7 @@
     <van-tabs v-model="active" @change="speedUpType" color="#F7A90DFF">
       <van-tab title="联合挖矿订单" class="list page-container">
         <div class="type">
-          <div class="type-left">定期理财到期后，本息会自动转入充提账户</div>
+          <div class="type-left">联合挖矿订单到期后，本金及通证奖励将会自动转入充提账户</div>
           <div class="type-right">
             <div>类型</div>
             <van-button
