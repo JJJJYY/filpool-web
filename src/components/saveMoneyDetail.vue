@@ -2,7 +2,7 @@
   <div class="ProductDetail">
     <head-nav class="headNavStyle"></head-nav>
 
-    <div class="container  list page-container">
+    <div class="container list page-container">
       <div class="imageSize">
         <div>
           <h1 class="imageSizeH1">联合挖矿</h1>
@@ -73,7 +73,7 @@
               <p>总额</p>
             </div> -->
           </div>
-         
+
           <!-- <van-divider /> -->
           <!--  <div class="goodBoxItemFooter">
             <div class="goodBoxItemFooterPadding">
@@ -98,9 +98,7 @@
         <div class="timeFlex">
           <p>赎回时间:</p>
           <p>
-            {{
-              dayStr(detailInfo.expected_end_time)
-            }}
+            {{ dayStr(detailInfo.expected_end_time) }}
           </p>
         </div>
         <!-- <div class="timeFlex">
@@ -157,9 +155,7 @@
         </van-list>
       </div>
     </div>
-    <div @click="jumpInterest" class="footer">
-      立即挖矿
-    </div>
+    <div @click="jumpInterest" class="footer">立即挖矿</div>
   </div>
 </template>
 
@@ -177,7 +173,7 @@ export default {
     [Tabs.name]: Tabs,
     [List.name]: List,
     [Progress.name]: Progress,
-    [Divider.name]: Divider
+    [Divider.name]: Divider,
   },
   data() {
     return {
@@ -190,9 +186,9 @@ export default {
       finished: false,
       pagination: {
         current: 1, // 当前页
-        pageSize: 10 // 页大小
+        pageSize: 10, // 页大小
       },
-      id: this.$route.query.id
+      id: this.$route.query.id,
     };
   },
   created() {
@@ -202,9 +198,7 @@ export default {
   methods: {
     dayStr(x, num = null) {
       if (num) {
-        return dayjs(x)
-          .add(num, "day")
-          .format("YYYY-MM-DD");
+        return dayjs(x).add(num, "day").format("YYYY-MM-DD");
       } else {
         return dayjs(x).format("YYYY-MM-DD");
       }
@@ -215,10 +209,10 @@ export default {
       const getData = {
         page: this.pagination.current,
         count: this.pagination.pageSize,
-        id: this.id
+        id: this.id,
       };
       CbbUserOrdersList(getData)
-        .then(res => {
+        .then((res) => {
           let newList = res.data.list;
           // 后台返回无数据为对象进行判断
           if (res.data.list.length === 0) {
@@ -238,7 +232,7 @@ export default {
     },
     jumpRule() {
       this.$router.push({
-        path: "/rule"
+        path: "/rule",
       });
     },
     done(num, count) {
@@ -247,9 +241,9 @@ export default {
     },
     CbbProductShowApi() {
       const postData = {
-        id: this.id
+        id: this.id,
       };
-      CbbProductShow(postData).then(res => {
+      CbbProductShow(postData).then((res) => {
         console.log(res);
         if (res.ret === 200) {
           this.detailInfo = res.data;
@@ -260,8 +254,8 @@ export default {
       this.$router.push({
         path: "/interest",
         query: {
-          id: this.id
-        }
+          id: this.id,
+        },
       });
     },
     onLoad() {
@@ -269,8 +263,8 @@ export default {
     },
     /*根据id获取详情*/
     getDetailById() {},
-    onSelect() {}
-  }
+    onSelect() {},
+  },
 };
 </script>
 
@@ -299,7 +293,7 @@ export default {
 }
 .ProductDetail {
   background: #1f1f1e;
-  height: 100vh !important;
+  min-height: 100vh !important;
   .headNavStyle {
     /deep/.van-nav-bar {
       background: #1f1f1e !important;
