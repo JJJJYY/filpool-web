@@ -19,7 +19,7 @@
             <p>{{ (orderInfo.expected_earning_rate * 10000) / 100 }}%</p>
           </div>
           <div class="makeOverContentNum">
-            <p>预计利息（FIL）</p>
+            <p>预计收益（FIL）</p>
             <p>{{ orderInfo.expected_interest | parseFloatFilter }}</p>
           </div>
           <div class="makeOverContentTime">
