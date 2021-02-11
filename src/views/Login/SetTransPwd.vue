@@ -81,7 +81,8 @@ export default {
       registerApi(postData)
         .then(res => {
           Toast("注册成功");
-          this.$router.replace({ path: isH5 ? "/download" : "/login" });
+          // this.$router.replace({ path: isH5 ? "/download" : "/login" });
+          this.$router.replace({ path: "/login" });
         })
         .catch(err => {});
     }
