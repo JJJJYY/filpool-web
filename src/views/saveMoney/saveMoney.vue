@@ -1,9 +1,10 @@
 <template>
-  <div class="container  list page-container">
-    <div class="headCentent">
-      <div class="cententselect">
-        <div class="cententselectTitle">Filecoin联合挖矿</div>
-        <!-- <div
+  <div class="container ">
+    <div class="list page-container">
+      <div class="headCentent">
+        <div class="cententselect">
+          <div class="cententselectTitle">Filecoin联合挖矿</div>
+          <!-- <div
           @click="select = 0"
           :class="['cententselect-1', select === 0 ? 'activeSelect' : '']"
         >
@@ -16,69 +17,69 @@
         >
           定期
         </div> -->
-      </div>
-      <div class="cententData">
-        <div class="cententDataNum">
-          <div>
-            联合挖矿资产
-            <img
-              @click="eyeSelect = true"
-              v-if="!eyeSelect"
-              class="eyeImage"
-              src="../../assets/img/moneyManagement/eye1.png"
-              alt=""
-            />
-            <img
-              v-if="eyeSelect"
-              @click="eyeSelect = false"
-              class="eyeImage"
-              src="../../assets/img/moneyManagement/eye.png"
-              alt=""
-            />
+        </div>
+        <div class="cententData">
+          <div class="cententDataNum">
+            <div>
+              联合挖矿资产
+              <img
+                @click="eyeSelect = true"
+                v-if="!eyeSelect"
+                class="eyeImage"
+                src="../../assets/img/moneyManagement/eye1.png"
+                alt=""
+              />
+              <img
+                v-if="eyeSelect"
+                @click="eyeSelect = false"
+                class="eyeImage"
+                src="../../assets/img/moneyManagement/eye.png"
+                alt=""
+              />
+            </div>
+            <div @click="$router.push('/orderManager')">
+              订单详情
+              <img
+                class="detailImage"
+                src="../../assets/img/detail-jump.png"
+                alt=""
+              />
+            </div>
           </div>
-          <div @click="$router.push('/orderManager')">
-            订单详情
-            <img
-              class="detailImage"
-              src="../../assets/img/detail-jump.png"
-              alt=""
-            />
+          <div v-if="eyeSelect" class="cententDataNumBi">
+            {{ totalFIL | parseFloatFilter }}
           </div>
+          <div v-if="!eyeSelect" class="cententDataNumBi">******</div>
         </div>
-        <div v-if="eyeSelect" class="cententDataNumBi">
-          {{ totalFIL | parseFloatFilter }}
+      </div>
+      <div class="titleSelect">
+        <div
+          @click="titleSelect = item.status"
+          :class="[
+            'titleSelectOn',
+            titleSelect === item.status ? 'activeSelectTitle' : ''
+          ]"
+          v-for="item in agg"
+          :key="item.status"
+        >
+          {{ item.name }}({{ item.num }})
         </div>
-        <div v-if="!eyeSelect" class="cententDataNumBi">******</div>
       </div>
-    </div>
-    <div class="titleSelect">
-      <div
-        @click="titleSelect = item.status"
-        :class="[
-          'titleSelectOn',
-          titleSelect === item.status ? 'activeSelectTitle' : ''
-        ]"
-        v-for="item in agg"
-        :key="item.status"
-      >
-        {{ item.name }}({{ item.num }})
-      </div>
-    </div>
-    <div class="cententBox" v-for="(x, index) in saveMoneyList" :key="index">
-      <div v-if="titleSelect === 2" class="cententBoxTitlejump2">
-        <img src="../../assets/img/moneyManagement/shouyi.png" alt="" />
-      </div>
-      <div v-if="titleSelect === 3" class="cententBoxTitlejump2">
-        <img src="../../assets/img/moneyManagement/profit.png" alt="" />
-      </div>
-      <div class="cententBoxTitle">
-        <div class="cententBoxTitleIcon">
-          <img src="../../assets/img/moneyManagement/fil.png" alt="" />
-          <p class="Filecoin">Filecoin</p>
-          <p class="xian">|</p>
-          <p>{{ x.tittle }}</p>
+      <div class="cententBox" v-for="(x, index) in saveMoneyList" :key="index">
+        <div v-if="titleSelect === 2" class="cententBoxTitlejump2">
+          <img src="../../assets/img/moneyManagement/shouyi.png" alt="" />
         </div>
-        <!-- <div
+        <div v-if="titleSelect === 3" class="cententBoxTitlejump2">
+          <img src="../../assets/img/moneyManagement/profit.png" alt="" />
+        </div>
+        <div class="cententBoxTitle">
+          <div class="cententBoxTitleIcon">
+            <img src="../../assets/img/moneyManagement/fil.png" alt="" />
+            <p class="Filecoin">Filecoin</p>
+            <p class="xian">|</p>
+            <p>{{ x.tittle }}</p>
+          </div>
+          <!-- <div
           @click="jumpDetail(x.id)"
           v-if="titleSelect === 1"
           class="cententBoxTitlejump"
@@ -86,32 +87,33 @@
           <p>产品详情</p>
           <img src="../../assets/img/moneyManagement/jiantou.png" alt="" />
         </div> -->
-      </div>
-      <div class="boxCentent">
-        <div class="boxCententAlign">
-          <p class="boxCententText">{{ (x.earning_rate * 10000) / 100 }}%</p>
-          <p class="boxCententTwoP">预计年化</p>
         </div>
-        <div class="xian"></div>
-        <div class="boxCententAlign">
-          <p class="boxCententText">
-            <!-- 限购{{ x.minimum_amount | parseFloatFilter }}-{{
+        <div class="boxCentent">
+          <div class="boxCententAlign">
+            <p class="boxCententText">{{ (x.earning_rate * 10000) / 100 }}%</p>
+            <p class="boxCententTwoP">预计年化</p>
+          </div>
+          <div class="xian"></div>
+          <div class="boxCententAlign">
+            <p class="boxCententText">
+              <!-- 限购{{ x.minimum_amount | parseFloatFilter }}-{{
               x.maximum_amount | parseFloatFilter
             }}{{ x.pay_coin }} -->
-            {{ x.last_days }}天
-          </p>
-          <p class="boxCententTwoP">挖矿周期</p>
+              {{ x.last_days }}天
+            </p>
+            <p class="boxCententTwoP">挖矿周期</p>
+          </div>
         </div>
-      </div>
-      <div class="boxCententTwoButton">
-        <button @click="jumpDetail(x.id)" v-if="titleSelect === 1">
-          立即挖矿
-        </button>
-      </div>
-      <!-- <van-progress
+        <div class="boxCententTwoButton">
+          <button @click="jumpDetail(x.id)" v-if="titleSelect === 1">
+            立即挖矿
+          </button>
+        </div>
+        <!-- <van-progress
         :color="titleSelect <= 1 ? '#F9A03E' : '#B0B0B0'"
         :percentage="done((-x.collected_amount / -x.total) * 100, 2)"
       /> -->
+      </div>
     </div>
     <FootBox></FootBox>
   </div>
